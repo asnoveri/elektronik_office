@@ -11,20 +11,18 @@
         <!-- Content Row -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-            <!-- <?= $this->session->flashdata('pesan');
-                if(validation_errors()){?>
+            <?= $this->session->flashdata('pesanaddop');?>
+               <!-- <?php if(validation_errors()){?>
                     <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <?= validation_errors();?>
                     </div>
-            <?php  } ?> -->
+                <?php  } ?> -->
             <h5 class="m-0 font-weight-bold text-secondary">List <?= $role['role_name']?></h5>
         </div>
 
         <div class="card-body">
-            <button type="button" class="btn btn-primary mb-3" id="aad_menu" data-toggle="modal" data-target="#tbhModal">
-            Tambah <?= $role['role_name']?>
-            </button>
+            <a href="<?= base_url()?>User_managemen/addform/<?=$role['role_id']?>" class="btn btn-primary mb-3"> Tambah <?= $role['role_name']?> </a>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -32,7 +30,6 @@
                         <th>#</th>
                         <th>Nama Lengkap</th>
                         <th>Email</th>
-                        <th>Status</th>
                         <th width="34.9%">Action</th>
                         </tr>
                     </thead>
@@ -44,18 +41,10 @@
                             <td><?= $no?></td>
                             <td><?= $u_allt['fullname'] ?></td>
                             <td><?= $u_allt['email']?></td>
-                            <td><?php 
-                                if($u_allt['is_active']==1){
-                                echo "Aktiv";
-                                }else{
-                                echo "Non Aktiv";
-                                }?>
-                            </td>
                             <td width="20%">
                                 <div class="btn-group-vertical">
-                                    <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary" id="edit_mn" data-id_men="<?=$u_allt['role_id'] ?>"> Edit <i class="fa fa-edit"></i></a>
-                                    <a href="<?= base_url()?>" class="btn btn-success"> Aktivkan <i class="fa fa-check"></i></a>
-                                    <a href="<?= base_url()?>" class="btn btn-warning"> Non Aktivkan <i class="fa fa-times-circle"></i></a>
+                                    <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary" id="editpassop" data-id_men="<?=$u_allt['role_id'] ?>"> Ubah Password <i class="fa fa-edit"></i></a>
+                                    <a href="<?= base_url()?>User_Managemen/delOP/<?=$u_allt['id'] ?>/<?=$role['role_id']?>" class="btn btn-warning"> Hapus Operator <i class="fa fa-times-circle"></i></a>
                                 </div>
                             </td>
                         </tr> 
@@ -80,20 +69,12 @@
         <!-- Content Row -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-            <!-- <?= $this->session->flashdata('pesan');
-                if(validation_errors()){?>
-                    <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <?= validation_errors();?>
-                    </div>
-            <?php  } ?> -->
+            <?= $this->session->flashdata('pesanaddop') ?>
             <h5 class="m-0 font-weight-bold text-secondary">List <?= $role['role_name']?></h5>
         </div>
 
         <div class="card-body">
-            <button type="button" class="btn btn-primary mb-3" id="aad_menu" data-toggle="modal" data-target="#tbhModal">
-            Tambah <?= $role['role_name']?>
-            </button>
+                 <a href="<?= base_url()?>User_managemen/addform/<?=$role['role_id']?>" class="btn btn-primary mb-3"> Tambah <?= $role['role_name']?> </a>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -127,6 +108,7 @@
                                     <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary" id="edit_mn" data-id_men="<?=$u_allt['role_id'] ?>"> Edit <i class="fa fa-edit"></i></a>
                                     <a href="<?= base_url()?>" class="btn btn-success"> Aktivkan <i class="fa fa-check"></i></a>
                                     <a href="<?= base_url()?>" class="btn btn-warning"> Non Aktivkan <i class="fa fa-times-circle"></i></a>
+                                    <a href="<?= base_url()?>User_Managemen/delOP/<?=$u_allt['id'] ?>/<?=$role['role_id']?>" class="btn btn-danger"> Hapus User <i class="fa fa-times-circle"></i></a>
                                 </div>
                             </td>
                         </tr> 

@@ -8,7 +8,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
             <?= $this->session->flashdata('pesantambah');?>
-             <?php   if(validation_errors()){?>
+            <?php   if(validation_errors()){?>
                     <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <?= validation_errors();?>
