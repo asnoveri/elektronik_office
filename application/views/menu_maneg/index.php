@@ -57,11 +57,13 @@
                     }?>
                 </td>
                 <td><?= $lst_mn['posisi'] ?></td>
-                <td class="centerd">
+                <td width="20%">
+                  <div class="btn-group-vertical">
                   <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary" id="edit_mn" data-id_men="<?=$lst_mn['id_menu'] ?>"> Edit <i class="fa fa-edit"></i></a>
                   <a href="<?= base_url()?>Menu_Managemen/aktiv_mnu/<?= $lst_mn['id_menu']?>" class="btn btn-success"> Aktivkan <i class="fa fa-check"></i></a>
                   <a href="<?= base_url()?>Menu_Managemen/nonaktiv_mnu/<?= $lst_mn['id_menu']?>" class="btn btn-warning"> Non Aktivkan <i class="fa fa-times-circle"></i></a>
-                </td>
+                  </div>
+              </td>
               </tr> 
             <?php $no++; } ?>
           </tbody>

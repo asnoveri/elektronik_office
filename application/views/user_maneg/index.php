@@ -9,7 +9,7 @@
         <!-- Content Row -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">        
-            <h5 class="m-0 font-weight-bold text-secondary">List Role User</h5>
+            <h5 class="m-0 font-weight-bold text-secondary">List User</h5>
             </div>
             <div class="card-body">
                 <div class="row">  
@@ -37,6 +37,9 @@
                                         <?php $no++; } ?>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="col-sm-6">
+                        disni renca di buat gambar
                     </div>
                 </div>                
             </div>

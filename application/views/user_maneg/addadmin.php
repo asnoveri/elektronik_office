@@ -78,7 +78,7 @@
                       <input type="password" class="form-control" name="pass1" id="pass1"> 
                     </div>
                     <button type="submit" class="btn btn-primary" id="btn_add_admn">Tambah</button>
-                    <button type="reset" class="btn btn-danger">Batal</button>
+                    <button type="reset" class="btn btn-danger" data-dismiss="modal">Batal</button>
                   </form>
               </div>
             </div>

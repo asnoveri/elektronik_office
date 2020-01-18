@@ -4,27 +4,19 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $judul?></h1>
+        <a href="<?= base_url()?>Menu_Managemen/acces_user"><span class="badge badge-success"> << Role Acces User</span></a>
         </div>
 
         <!-- Content Row -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">      
             <?= $this->session->flashdata('pesan2');?> 
-                <div class="row">  
-                    <div class="col-sm-8">    
-                            <h5 class="m-0 font-weight-bold text-secondary">List Role User</h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <a href="<?= base_url()?>Menu_Managemen/acces_user">
-                            <h5><span class="badge badge-success"> Role Acces User << </span></h5>
-                        </a>
-                    </div>
-                </div>   
+                  <h5 class="m-0 font-weight-bold text-secondary">List Role User Acces Menu</h5>
             </div>
             <div class="card-body">
                 <div class="row">  
                     <div class="col-sm-6">
-                        <h5><?= $role['role_name'] ?></h5>
+                        <h5>Role Access: <?= $role['role_name'] ?></h5>
                         <table class="table table-striped">
                                 <thead>
                                 <tr>

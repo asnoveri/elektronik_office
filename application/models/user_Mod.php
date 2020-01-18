@@ -82,6 +82,28 @@ class user_Mod extends CI_Model {
                return false;
            }
         }
+
+        public function get_all_jabatan(){
+            return $this->db->get('jabatan_user')->result_array();
+        }
+
+        public function Add_jabatan($data){
+           $this->db->insert('jabatan_user',['jabatan'=>$data]);
+           if($this->db->affected_rows() > 0){
+               return true;
+           }else{
+               return false;
+           }
+        }
+
+        public function delJabtan($id){
+            $this->db->delete('jabatan_user',['id_jabatan'=>$id]);
+            if($this->db->affected_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
 }
 
 ?>

@@ -5,6 +5,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $judul?></h1>
+        <a href="<?= base_url()?>User_Managemen/"><span class="badge badge-success"> << List User</span></a>
         </div>
 
         <!-- Content Row -->
@@ -50,10 +51,12 @@
                                 echo "Non Aktiv";
                                 }?>
                             </td>
-                            <td class="centerd">
-                            <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary" id="edit_mn" data-id_men="<?=$u_allt['role_id'] ?>"> Edit <i class="fa fa-edit"></i></a>
-                            <a href="<?= base_url()?>" class="btn btn-success"> Aktivkan <i class="fa fa-check"></i></a>
-                            <a href="<?= base_url()?>" class="btn btn-warning"> Non Aktivkan <i class="fa fa-times-circle"></i></a>
+                            <td width="20%">
+                                <div class="btn-group-vertical">
+                                    <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary" id="edit_mn" data-id_men="<?=$u_allt['role_id'] ?>"> Edit <i class="fa fa-edit"></i></a>
+                                    <a href="<?= base_url()?>" class="btn btn-success"> Aktivkan <i class="fa fa-check"></i></a>
+                                    <a href="<?= base_url()?>" class="btn btn-warning"> Non Aktivkan <i class="fa fa-times-circle"></i></a>
+                                </div>
                             </td>
                         </tr> 
                         <?php $no++; } ?>
@@ -71,6 +74,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $judul?></h1>
+        <a href="<?= base_url()?>User_Managemen/"><span class="badge badge-success"> << List User</span></a>
         </div>
 
         <!-- Content Row -->
@@ -118,10 +122,12 @@
                                 echo "Non Aktiv";
                                 }?>
                             </td>
-                            <td class="centerd">
-                            <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary" id="edit_mn" data-id_men="<?=$u_allt['role_id'] ?>"> Edit <i class="fa fa-edit"></i></a>
-                            <a href="<?= base_url()?>" class="btn btn-success"> Aktivkan <i class="fa fa-check"></i></a>
-                            <a href="<?= base_url()?>" class="btn btn-warning"> Non Aktivkan <i class="fa fa-times-circle"></i></a>
+                            <td width="20%">
+                                <div class="btn-group-vertical">
+                                    <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary" id="edit_mn" data-id_men="<?=$u_allt['role_id'] ?>"> Edit <i class="fa fa-edit"></i></a>
+                                    <a href="<?= base_url()?>" class="btn btn-success"> Aktivkan <i class="fa fa-check"></i></a>
+                                    <a href="<?= base_url()?>" class="btn btn-warning"> Non Aktivkan <i class="fa fa-times-circle"></i></a>
+                                </div>
                             </td>
                         </tr> 
                         <?php $no++; } ?>
