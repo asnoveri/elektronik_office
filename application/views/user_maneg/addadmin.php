@@ -66,7 +66,7 @@
                       <input type="hidden" id="id" name="id">
                     </div>
                     <div class="form-group">
-                      <label id=em>Email</label>
+                      <label id="em">Email</label>
                       <input type="text"  class="form-control"  name="email" id="email">
                     </div>
                     <div class="form-group" id="pase">

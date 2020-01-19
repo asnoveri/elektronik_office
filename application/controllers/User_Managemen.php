@@ -168,8 +168,9 @@ class User_Managemen extends CI_Controller {
             ['required'=>'Password Verification Tidak Boleh Kosong',
             'min_length'=> 'Password Harus Lebih dari 6 Karakter',
             'matches'=> 'Password yang Di Inputkan Tidak sama']);    
-        $this->form_validation->set_rules('id_jabatan','Id_jabatan','required',
-            ['required'=>'Jabatan User Belum di Pilih, Silahkan Pilih jabatan']);    
+        $this->form_validation->set_rules('id_jabatan','Id_jabatan','required|is_unique[user.id_jabatan]',
+            ['required'=>'Jabatan User Belum di Pilih, Silahkan Pilih jabatan',
+            'is_unique'=>'Jabatan yang di Pilih Sudah Digunakan']);    
         if ($this->form_validation->run() == FALSE){
             $this->addform($id);
         }else{
@@ -216,5 +217,84 @@ class User_Managemen extends CI_Controller {
             redirect("User_Managemen/list_all_user/$id");
         }    
      }
+
+     public function getJabatanlike(){
+         $jabatan=$this->input->post('jbtn',true);
+            echo json_encode($this->user_mod->getJabatanlike($jabatan));
+        }
+      
+    public function get_operatorBYid(){
+        $data=[
+            'id'=>$this->input->post('idop',true)
+        ];
+       echo json_encode ($this->user_Mod->get_admin_BYID($data));
+    }    
+
+    public function edit_operator($idrl){
+        $this->form_validation->set_rules('pass1','Pass1','required|trim|min_length[6]',
+        ['required'=>'Password Tidak Boleh Kosong',
+        'min_length'=> 'Password Harus Lebih dari 6 Karakter']     
+        );     
+
+        if($this->form_validation->run() == FALSE){
+            $this->list_all_user($idrl);
+        }else{
+            $id=$this->input->post('id',true);
+            $data =[
+                'pass'=>password_hash($this->input->post('pass1',true),PASSWORD_DEFAULT) 
+            ];
+            $in=$this->user_Mod->editAdmin($id,$data);
+
+            if($in == true){
+                $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Berhasil Mengubah Password Operator 
+                </div>');
+                redirect("User_Managemen/list_all_user/$idrl");
+            }else{
+                $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    gagal Ubah Password Operator 
+                </div>');
+                redirect("User_Managemen/list_all_user/$idrl");
+            }
+        }
+    }
+
+    public function ubah_isactiveUser(){
+            $is_active=$this->input->post('idst',true);
+            $id=$this->input->post('id_user',true);
+            if($is_active == 1){
+                $data=[
+                    'is_active'=> 0
+            ];
+                if($this->user_Mod->change_isactive_User($data,$id)== true){
+                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        Berhasil  NON aktivkan User
+                    </div>');
+                }else{
+                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        Gagal NON aktivkan User
+                    </div>');
+                }
+            }else{
+                $data=[
+                    'is_active'=> 1
+            ];
+                if($this->user_Mod->change_isactive_User($data,$id)== true){
+                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        Berhasil Mengaktivkan User
+                    </div>');
+                }else{
+                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        Gagal Mengaktivkan User
+                    </div>');
+            }
+            }
+        }
 }
 ?>

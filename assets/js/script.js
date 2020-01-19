@@ -232,7 +232,7 @@ $(function () {
 		$("#lbpas").html("Password Verification");
 	});
 
-	//edit admin
+	//edit pass admin
 	$("a[id='edit_admn']").on('click', function () {
 		$("#label_tbhadmin").html("Ubah Password ");
 		$("#btn_add_admn").html("Edit Admin");
@@ -259,6 +259,50 @@ $(function () {
 				$("#id").val(data.id);
 			}
 		});
-
 	})
+
+	// edit pass operator
+	$("a[id='tbl_editop']").on('click', function () {
+
+		const idop = $(this).data('id_op');
+		$.ajax({
+			url: "http://localhost/disposisi/User_Managemen/get_operatorBYid",
+			data: {
+				idop: idop
+			},
+			method: 'POST',
+			dataType: 'JSON',
+			success: function (data) {
+				$("#nl").hide();
+				$("#em").hide();
+				$("#fullnameop").val(data.fullname).attr('readonly', true);
+				$("#emailop").val(data.email).attr('readonly', true);
+				$("#id").val(data.id);
+			}
+		});
+	});
+
+	//menaktivkan dan mennonaktifkan user
+	$(".status").on('change', function () {
+		const val_status = $(".status").val();
+		const idst = $(this).data('idst');
+		const role_id = $(this).data('role_id');
+		const id_user = $(this).data('id_user')
+		$.ajax({
+			url: 'http://localhost/disposisi/User_Managemen/ubah_isactiveUser',
+			type: 'post',
+			data: {
+				idst: idst,
+				id_user: id_user
+			},
+			success: function (data) {
+				//unutk meridirect dengan Ajax
+				document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
+
+			}
+		});
+	});
+
+
+
 });

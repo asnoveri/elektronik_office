@@ -38,7 +38,7 @@
                             <?php }?>
                             </select>
                         </div>
-                        <div class="form-group" id="pase">
+                        <div class="form-group">
                             <label>Password</label>
                             <input type="password" class="form-control" name="pass" value="<?= set_value('pass')?>"> 
                         </div>

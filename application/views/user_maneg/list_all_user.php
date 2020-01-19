@@ -12,12 +12,12 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
             <?= $this->session->flashdata('pesanaddop');?>
-               <!-- <?php if(validation_errors()){?>
+             <?php if(validation_errors()){?>
                     <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <?= validation_errors();?>
-                    </div>
-                <?php  } ?> -->
+                    </div> 
+                    <?php  } ?>
             <h5 class="m-0 font-weight-bold text-secondary">List <?= $role['role_name']?></h5>
         </div>
 
@@ -43,7 +43,7 @@
                             <td><?= $u_allt['email']?></td>
                             <td width="20%">
                                 <div class="btn-group-vertical">
-                                    <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary" id="editpassop" data-id_men="<?=$u_allt['role_id'] ?>"> Ubah Password <i class="fa fa-edit"></i></a>
+                                    <a href="" data-toggle="modal" data-target="#editpass_op" class="btn btn-primary" id="tbl_editop" data-id_op="<?=$u_allt['id'] ?>"> Ubah Password <i class="fa fa-edit"></i></a>
                                     <a href="<?= base_url()?>User_Managemen/delOP/<?=$u_allt['id'] ?>/<?=$role['role_id']?>" class="btn btn-warning"> Hapus Operator <i class="fa fa-times-circle"></i></a>
                                 </div>
                             </td>
@@ -53,8 +53,36 @@
                 </table>
             </div>
         </div>
+        <div class="modal" id="editpass_op">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="label_tbhadmin">Ubah Password </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                  <form action="<?= base_url()?>User_Managemen/edit_operator/<?=$role['role_id']?>" method="POST">
+                    <div class="form-group">
+                      <label id="nl">Nama Lengkap</label>
+                      <input type="text" class="form-control"  name="fullname" id="fullnameop">
+                      <input type="hidden" id="id" name="id">
+                    </div>
+                    <div class="form-group">
+                      <label id="em">Email</label>
+                      <input type="text"  class="form-control"  name="email" id="emailop">
+                    </div>
+                    <div class="form-group">
+                      <label>Masukan Password Baru</label>
+                      <input type="password" class="form-control" name="pass1" id="pass1op"> 
+                    </div>
+                    <button type="submit" class="btn btn-primary" >Tambah</button>
+                    <button type="reset" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                  </form>
+              </div>
+            </div>
+          </div>
     </div>
-    
+</div>
    
     <!-- /.container-fluid -->
     <?php }elseif($role['role_id']==3) { ?>
@@ -91,24 +119,22 @@
                         <?php
                         $no=1;
                         foreach ($user_all_list as $u_allt) {?> 
-                        <tr>
+                        <tr id="tr">
                             <td><?= $no?></td>
                             <td><?= $u_allt['fullname'] ?></td>
                             <td><?= $u_allt['email']?></td>
                             <td><?= $u_allt['jabatan']?></td>
-                            <td><?php 
-                                if($u_allt['is_active']==1){
-                                echo "Aktiv";
-                                }else{
-                                echo "Non Aktiv";
-                                }?>
+                            <td>
+                                <select class="form-control status"  name="status" data-idst="<?=$u_allt['is_active']?>"
+                                data-role_id="<?=$role['role_id']?>" data-id_user=<?= $u_allt['id'] ?>>  
+                                    <?=user_aktiv($u_allt['is_active'])?>
+                                </select>
                             </td>
                             <td width="20%">
                                 <div class="btn-group-vertical">
-                                    <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary" id="edit_mn" data-id_men="<?=$u_allt['role_id'] ?>"> Edit <i class="fa fa-edit"></i></a>
-                                    <a href="<?= base_url()?>" class="btn btn-success"> Aktivkan <i class="fa fa-check"></i></a>
-                                    <a href="<?= base_url()?>" class="btn btn-warning"> Non Aktivkan <i class="fa fa-times-circle"></i></a>
-                                    <a href="<?= base_url()?>User_Managemen/delOP/<?=$u_allt['id'] ?>/<?=$role['role_id']?>" class="btn btn-danger"> Hapus User <i class="fa fa-times-circle"></i></a>
+                                    <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary"> Edit <i class="fa fa-edit"></i></a>
+                                    <a href="<?= base_url()?>" class="btn btn-success"> Ubah Password <i class="fa fa-edit"></i></a>
+                                    <a href="<?= base_url()?>User_Managemen/delUser/<?=$u_allt['id'] ?>/<?=$role['role_id']?>" class="btn btn-danger"> Hapus User <i class="fa fa-times-circle"></i></a>
                                 </div>
                             </td>
                         </tr> 

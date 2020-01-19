@@ -104,6 +104,21 @@ class user_Mod extends CI_Model {
                 return false;
             }
         }
+
+        public function getJabatanlike($data){
+            $this->db->like('jabatan', $data);
+           return $this->db->get_where('jabatan_user')->result_array();
+          
+        }
+
+        public function change_isactive_User($data,$id){
+            $this->db->update('user', $data, array('id' => $id));
+          if($this->db->affected_rows() > 0){
+              return true;
+          }else{
+              return false;
+          }
+        }
 }
 
 ?>

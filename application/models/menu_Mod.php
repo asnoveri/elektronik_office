@@ -138,8 +138,7 @@ class menu_Mod extends CI_Model {
    }
 
    public function user_akses($data){
-       
-
+    
        $cek=$this->db->get_where('user_acess_menu',$data);
       
        if($cek->num_rows() > 0){

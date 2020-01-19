@@ -103,4 +103,15 @@
             
             }
 
+            function user_aktiv($is_active){
+              $ci= get_instance();
+              if($is_active==1){?>
+              <option value="<?=$is_active?>"> Aktiv  </option>
+                <option value="0"> Non Aktiv  </option>;
+             <?php } elseif($is_active==0){?>
+                <option value="<?=$is_active?>"> Non Aktiv  </option>
+                <option value="1"> Aktiv  </option>;
+             <?php } 
+            }
+
 ?>
