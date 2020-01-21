@@ -49,7 +49,7 @@
                             </table>
                         </div>    
                     </div>
-                    <div class="col-sm-5">disinia aka di buat semacam gambar poktekes</div>               
+                    <!-- <div class="col-sm-5">disinia aka di buat semacam gambar poktekes</div>                -->
                 </div> 
             </div>
         </div>    

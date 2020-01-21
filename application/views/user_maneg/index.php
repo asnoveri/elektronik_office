@@ -38,9 +38,9 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-sm-6">
+                    <!-- <div class="col-sm-6">
                         disni renca di buat gambar
-                    </div>
+                    </div> -->
                 </div>                
             </div>
         </div>    
