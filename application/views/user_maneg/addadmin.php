@@ -40,8 +40,8 @@
                             <td><?= $admnls['fullname'] ?></td>
                             <td><?= $admnls['email']?></td>
                             <td class="centerd">
-                            <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary" id="edit_admn" data-id_admin="<?=$admnls['id'] ?>"> Ubah Password <i class="fa fa-edit"></i></a>
-                            <a href="<?= base_url()?>Managemen_Admin/hapus_admin/<?= $admnls['id']?>" class="btn btn-warning"> Hapus Admin <i class="fa fa-times-circle"></i></a>
+                            <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-info" id="edit_admn" data-id_admin="<?=$admnls['id'] ?>"> Ubah Password <i class="fa fa-edit"></i></a>
+                            <a href="<?= base_url()?>Managemen_Admin/hapus_admin/<?= $admnls['id']?>" class="btn btn-warning"> Hapus Admin <i class="fas fa-trash"></i></a>
                             </td>
                         </tr> 
                         <?php $no++; } ?>

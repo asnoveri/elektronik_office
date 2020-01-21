@@ -4,7 +4,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $judul?></h1>
-        <a href="<?= base_url()?>Menu_Managemen/acces_user"><span class="badge badge-success"> << Role Acces User</span></a>
+        <a href="<?= base_url()?>Menu_Managemen/acces_user" class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-left"></i></span><span class="text">Role Access User</span></a></a>
         </div>
 
         <!-- Content Row -->

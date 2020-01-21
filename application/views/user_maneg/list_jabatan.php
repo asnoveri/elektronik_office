@@ -39,8 +39,8 @@
                                             <tr>
                                                 <td><?=$no?></td>
                                                 <td><?= $jbt['jabatan']?></td>
-                                                <td>
-                                                    <a href="<?= base_url()?>User_Managemen/hapusjbt/<?= $jbt['id_jabatan']?>" class="btn btn-info"> Hapus Jabatan 
+                                                <td width="33%">
+                                                    <a href="<?= base_url()?>User_Managemen/hapusjbt/<?= $jbt['id_jabatan']?>" class="btn btn-warning"> Hapus Jabatan   <i class="fas fa-trash"></i>
                                                     </a>
                                                 </td>
                                             </tr>

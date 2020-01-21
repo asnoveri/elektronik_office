@@ -114,4 +114,10 @@
              <?php } 
             }
 
+            function jabatanget($id){
+              $ci= get_instance();
+              $jbt=$ci->db->get_where('jabatan_user',['id_jabatan'=>$id])->row();
+              return $jbt->jabatan;
+            }
+
 ?>

@@ -18,7 +18,7 @@
        <?php  } ?>
    
        <div class="alert alert-info">
-        <strong>Info!</strong><br> 
+        <strong><i class="fas fa-info-circle"></i>Info!</strong><br> 
                               1.  Jika Parent Menu Belum ada, belum tampil di combobox atau belum di buat silahkan Tambahkan Menu baru disini <a href="<?= base_url()?>Menu_Managemen"><span class="badge badge-light">menu</span></a> <br>
                               2.  dan atur hak akses dari menu disini <a href="<?= base_url()?>Menu_Managemen/acces_user"><span class="badge badge-success">Role Access</span></a> 
       </div>

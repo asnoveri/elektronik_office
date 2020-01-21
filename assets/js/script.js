@@ -235,7 +235,7 @@ $(function () {
 	//edit pass admin
 	$("a[id='edit_admn']").on('click', function () {
 		$("#label_tbhadmin").html("Ubah Password ");
-		$("#btn_add_admn").html("Edit Admin");
+		$("#btn_add_admn").html("Edit Password");
 		$(".modal-body form").attr('action', 'http://localhost/disposisi/Managemen_Admin/edit_admin');
 		$(".modal-dialog").addClass("modal-dialog modal-sm");
 		$("#nm").hide();
@@ -301,6 +301,28 @@ $(function () {
 
 			}
 		});
+	});
+
+	//upload foto
+	$(":file[id='customFile']").change(function () {
+		const gambar = $(":file[id='customFile']").val();
+		const id_user = $(this).data('idgambar');
+		const idrole = $(this).data('idrole');
+		$.ajax({
+			url: 'http://localhost/disposisi/User_Managemen/do_edit_uploadimage',
+			type: 'post',
+			data: {
+				id_user: id_user,
+				gambar: gambar,
+				idrole: idrole
+			},
+			success: function (data) {
+				//unutk meridirect dengan Ajax
+				// document.location.href = "http://localhost/disposisi/User_Managemen/edit_user/" + id_user + "/" + idrole;
+				console.log(data);
+			}
+		});
+
 	});
 
 

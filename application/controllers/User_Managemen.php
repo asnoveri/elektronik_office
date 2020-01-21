@@ -296,5 +296,28 @@ class User_Managemen extends CI_Controller {
             }
             }
         }
+
+        public function edit_user($iduser,$id){
+            $judul="User Managemen";
+            $halaman='user_maneg/edit_usr';
+            $data['id']=$id;
+            $data['list_jabatan']=$this->user_Mod->get_all_jabatan();
+            $data1=[
+                'id'=>$iduser,
+                'role_id'=>3
+            ];
+           if($data['pegawai']=$this->user_Mod->get_userPEg_BYID($data1)) {
+               $this->template->TemplateGen($judul,$halaman,$data);
+           }else{
+               redirect('Blank_page');
+           }
+        }
+        public function do_edit_user(){
+                print_r($this->input->post());
+        }
+
+        public function do_edit_uploadimage(){
+           print_r($this->input->post());
+        }
 }
 ?>

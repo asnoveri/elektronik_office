@@ -5,7 +5,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $judul?></h1>
-        <a href="<?= base_url()?>User_Managemen/"><span class="badge badge-success"> << List User</span></a>
+        <a href="<?= base_url()?>User_Managemen/" class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-left"></i></span><span class="text">List User</span></a></a>
         </div>
 
         <!-- Content Row -->
@@ -43,8 +43,8 @@
                             <td><?= $u_allt['email']?></td>
                             <td width="20%">
                                 <div class="btn-group-vertical">
-                                    <a href="" data-toggle="modal" data-target="#editpass_op" class="btn btn-primary" id="tbl_editop" data-id_op="<?=$u_allt['id'] ?>"> Ubah Password <i class="fa fa-edit"></i></a>
-                                    <a href="<?= base_url()?>User_Managemen/delOP/<?=$u_allt['id'] ?>/<?=$role['role_id']?>" class="btn btn-warning"> Hapus Operator <i class="fa fa-times-circle"></i></a>
+                                    <a href="" data-toggle="modal" data-target="#editpass_op" class="btn btn-info" id="tbl_editop" data-id_op="<?=$u_allt['id'] ?>"> Ubah Password <i class="fa fa-edit"></i></a>
+                                    <a href="<?= base_url()?>User_Managemen/delOP/<?=$u_allt['id'] ?>/<?=$role['role_id']?>" class="btn btn-warning"> Hapus Operator   <i class="fas fa-trash"></i></i></a>
                                 </div>
                             </td>
                         </tr> 
@@ -53,34 +53,7 @@
                 </table>
             </div>
         </div>
-        <div class="modal" id="editpass_op">
-          <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title" id="label_tbhadmin">Ubah Password </h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-              <div class="modal-body">
-                  <form action="<?= base_url()?>User_Managemen/edit_operator/<?=$role['role_id']?>" method="POST">
-                    <div class="form-group">
-                      <label id="nl">Nama Lengkap</label>
-                      <input type="text" class="form-control"  name="fullname" id="fullnameop">
-                      <input type="hidden" id="id" name="id">
-                    </div>
-                    <div class="form-group">
-                      <label id="em">Email</label>
-                      <input type="text"  class="form-control"  name="email" id="emailop">
-                    </div>
-                    <div class="form-group">
-                      <label>Masukan Password Baru</label>
-                      <input type="password" class="form-control" name="pass1" id="pass1op"> 
-                    </div>
-                    <button type="submit" class="btn btn-primary" >Tambah</button>
-                    <button type="reset" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                  </form>
-              </div>
-            </div>
-          </div>
+       
     </div>
 </div>
    
@@ -91,7 +64,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $judul?></h1>
-        <a href="<?= base_url()?>User_Managemen/"><span class="badge badge-success"> << List User</span></a>
+        <a href="<?= base_url()?>User_Managemen/"class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-left"></i></span><span class="text">List User</span></a></a>
         </div>
 
         <!-- Content Row -->
@@ -132,9 +105,9 @@
                             </td>
                             <td width="20%">
                                 <div class="btn-group-vertical">
-                                    <a href="" data-toggle="modal" data-target="#tbhModal" class="btn btn-primary"> Edit <i class="fa fa-edit"></i></a>
-                                    <a href="<?= base_url()?>" class="btn btn-success"> Ubah Password <i class="fa fa-edit"></i></a>
-                                    <a href="<?= base_url()?>User_Managemen/delUser/<?=$u_allt['id'] ?>/<?=$role['role_id']?>" class="btn btn-danger"> Hapus User <i class="fa fa-times-circle"></i></a>
+                                    <a href="<?= base_url()?>User_Managemen/edit_user/<?=$u_allt['id'] ?>/<?=$role['role_id']?>"  class="btn btn-primary"> Edit <i class="fa fa-edit"></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#editpass_op" class="btn btn-info" id="tbl_editop" data-id_op="<?=$u_allt['id'] ?>"> Ubah Password <i class="fa fa-edit"></i></a>
+                                    <a href="<?= base_url()?>User_Managemen/delUser/<?=$u_allt['id'] ?>/<?=$role['role_id']?>" class="btn btn-warning"> Hapus User   <i class="fas fa-trash"></i></i></a>
                                 </div>
                             </td>
                         </tr> 
@@ -148,6 +121,33 @@
     <?php }else{
         redirect("User_Managemen");
     } ?>
-
+ <div class="modal" id="editpass_op">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="label_tbhadmin">Ubah Password </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                  <form action="<?= base_url()?>User_Managemen/edit_operator/<?=$role['role_id']?>" method="POST">
+                    <div class="form-group">
+                      <label id="nl">Nama Lengkap</label>
+                      <input type="text" class="form-control"  name="fullname" id="fullnameop">
+                      <input type="hidden" id="id" name="id">
+                    </div>
+                    <div class="form-group">
+                      <label id="em">Email</label>
+                      <input type="text"  class="form-control"  name="email" id="emailop">
+                    </div>
+                    <div class="form-group">
+                      <label>Masukan Password Baru</label>
+                      <input type="password" class="form-control" name="pass1" id="pass1op"> 
+                    </div>
+                    <button type="submit" class="btn btn-primary" >Edit Password</>
+                    <button type="reset" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                  </form>
+              </div>
+            </div>
+          </div>
 <!-- End of Main Content -->
 </div>

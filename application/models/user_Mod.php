@@ -72,6 +72,7 @@ class user_Mod extends CI_Model {
 
         public function get_admin_BYID($data){
             return $this->db->get_where('user',$data)->row_array();
+            
         }
         
         public function editAdmin($id,$data){
@@ -119,6 +120,15 @@ class user_Mod extends CI_Model {
               return false;
           }
         }
+
+        public function get_userPEg_BYID($data){
+            return $this->db->get_where('user',$data)->row();
+            
+        }
+
+        
+
+
 }
 
 ?>
