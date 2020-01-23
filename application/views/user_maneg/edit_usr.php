@@ -9,6 +9,7 @@
         <!-- Content Row -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">   
+            <?= $this->session->flashdata('pesanaddop')?>
             <?php   if(validation_errors()){?>
                     <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -18,7 +19,7 @@
             <h5 class="m-0 font-weight-bold text-secondary">Edit User / Pegawai</h5>
             </div>
             <div class="card-body">
-                <form action="<?= base_url()?>User_Managemen/do_edit_user/<?=$id?>" method="POST">
+                <form action="<?= base_url()?>User_Managemen/do_edit_user/<?=$iduser?>/<?=$id?>" method="POST"  enctype='multipart/form-data' id="form_upload_foto">
                     <div class="row">  
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -41,6 +42,8 @@
                             <br>
                             <br>
                             <br>
+                            <input type="hidden" value="<?= $pegawai->id?>" name="idgambar" id="idgambar">
+                            <input type="hidden" value="<?= $id?>" name="role_id" id="role_id">
                             <button type="submit" class="btn btn-primary" >Edit User / Pegawai</button>
                             <button type="reset" class="btn btn-danger">Batal</button>
                         </div>    
@@ -49,8 +52,9 @@
                                     <img class="card-img-top img-thumbnail" src="<?= base_url()?>assets/images/<?= $pegawai->image?>" alt="Card image">
                                     <div class="card-body">
                                     <label class="card-text">Ubah Foto Profil</label>
+                                    <?= $this->session->flashdata('erorogbr') ?>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="customFile" data-idgambar="<?= $pegawai->id?>" data-idrole="<?= $id?>">
+                                            <input type="file" class="custom-file-input" id="customFile" name="gambar">
                                             <label class="custom-file-label" for="customFile">Pilih file</label>
                                         </div>
                                     </div>

@@ -303,28 +303,31 @@ $(function () {
 		});
 	});
 
-	//upload foto
-	$(":file[id='customFile']").change(function () {
-		const gambar = $(":file[id='customFile']").val();
-		const id_user = $(this).data('idgambar');
-		const idrole = $(this).data('idrole');
+	//tampilkan nama file saat file upload di pilih
+	$(".custom-file-input").on('change', function () {
+		let filename = $(this).val().split('\\').pop();
+		$(this).next(".custom-file-label").addClass("selected").html(filename);
+	});
+	// split('\\').pop() digunakan untuk menghilangkan tanda \\ pada val input file
+
+
+	//upload edit foto
+	$(":input[id='customFile']").on('change', function () {
+		const form_data = new FormData($('#form_upload_foto')[0]);
+		const idgambar = $("#idgambar").val();
+		const role_id = $("#role_id").val();
+
 		$.ajax({
 			url: 'http://localhost/disposisi/User_Managemen/do_edit_uploadimage',
+			data: form_data,
+			contentType: false,
+			processData: false,
 			type: 'post',
-			data: {
-				id_user: id_user,
-				gambar: gambar,
-				idrole: idrole
-			},
 			success: function (data) {
 				//unutk meridirect dengan Ajax
-				// document.location.href = "http://localhost/disposisi/User_Managemen/edit_user/" + id_user + "/" + idrole;
-				console.log(data);
+				document.location.href = "http://localhost/disposisi/User_Managemen/edit_user/" + idgambar + "/" + role_id;
+
 			}
 		});
-
-	});
-
-
-
+	})
 });

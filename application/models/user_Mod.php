@@ -126,6 +126,37 @@ class user_Mod extends CI_Model {
             
         }
 
+        public function Update_images($new_images,$id){ 
+            $this->db->where('id', $id);
+            $this->db->update('user', $new_images);
+            if($this->db->affected_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function edit_pegawaiBYid($data,$id,$role_id){
+            $this->db->where('id', $id);
+            $this->db->where('role_id', $role_id);
+            $this->db->update('user', $data);
+            if($this->db->affected_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function cekPegJabatan($cekjbtn,$role_id){
+            $this->db->where('id_jabatan', $cekjbtn);
+            $this->db->where('role_id',$role_id);
+            if($this->db->get('user')->num_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
         
 
 

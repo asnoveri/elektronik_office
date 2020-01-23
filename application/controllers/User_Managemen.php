@@ -301,10 +301,11 @@ class User_Managemen extends CI_Controller {
             $judul="User Managemen";
             $halaman='user_maneg/edit_usr';
             $data['id']=$id;
+            $data['iduser']=$iduser;
             $data['list_jabatan']=$this->user_Mod->get_all_jabatan();
             $data1=[
                 'id'=>$iduser,
-                'role_id'=>3
+                'role_id'=>$id
             ];
            if($data['pegawai']=$this->user_Mod->get_userPEg_BYID($data1)) {
                $this->template->TemplateGen($judul,$halaman,$data);
@@ -312,12 +313,90 @@ class User_Managemen extends CI_Controller {
                redirect('Blank_page');
            }
         }
+
+
         public function do_edit_user(){
-                print_r($this->input->post());
+            $id= $this->input->post('idgambar',true);
+            $role_id= $this->input->post('role_id',true);
+            $this->form_validation->set_rules('fullname','Fullname','required|trim'
+            ,['required'=> 'Field  Nama Lengkap Tidak Boleh Kosong']);
+            $this->form_validation->set_rules('email','Email','trim|required|valid_email',[
+                'required'=> 'Field  Email  Tidak Boleh Kosong',
+                'valid_email'=> 'Email yang dimasukan Salah' ]);
+            $this->form_validation->set_rules('id_jabatan','Id_jabatan','required|trim',
+                ['required'=>'Jabatan User Belum di Pilih, Silahkan Pilih jabatan']);    
+
+            if ($this->form_validation->run() == FALSE){
+                $this->edit_user($id,$role_id);
+            }else{
+                $data=[
+                    'fullname'  =>$this->input->post('fullname',true),
+                    'email'     =>$this->input->post('email',true),
+                    'is_active' => 1,
+                    'role_id'   => $role_id,
+                    'id_jabatan'=>$this->input->post('id_jabatan',true)
+                ];
+                if($this->user_Mod->cekPegJabatan($this->input->post('id_jabatan',true),$role_id) == true){
+                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                       Gagal edit User Karena Jabatan Yang dipilih sudah di Set pada pegawai lain
+                    </div>');  
+                    redirect("User_Managemen/edit_user/$id/$role_id");
+                }else{
+                    if($this->user_Mod->edit_pegawaiBYid($data,$id,$role_id)){
+                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Berhasil edit User  
+                        </div>');
+                       redirect("User_Managemen/edit_user/$id/$role_id");
+                    }
+
+                }
+            }
         }
 
         public function do_edit_uploadimage(){
-           print_r($this->input->post());
+           $id= $this->input->post('idgambar',true);
+           $role_id= $this->input->post('role_id',true);
+           $data1=[
+            'id'=>$id,
+            'role_id'=>$role_id
+        ];
+           $data=$this->user_Mod->get_userPEg_BYID($data1);
+          
+           //mencek jika ada gambar yang akan di upload
+            $upload_image = $_FILES["gambar"]["name"];
+            if($upload_image){
+                $config['upload_path']          = "./assets/images/";
+                $config['allowed_types']        = 'gif|jpg|png';
+                $config['max_size']             = 3072;
+                $config['remove_spaces']        = true;
+                
+                //memangil libraires upload dan masukan configurasinya
+                $this->load->library('upload', $config);
+
+                if ( ! $this->upload->do_upload('gambar')) {
+                    $error =$this->upload->display_errors();
+                    $this->session->set_flashdata('erorogbr','<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                     .$error.    
+                    '</div>');
+                       
+                    }else {
+                        $old_images=$data->image;
+                        
+                        //mencek images lama yang tersimpan di drektory sistem tidak sama dengan  default.jpg
+                       if($old_images != 'default.png'){
+                        //   jika tidak sama hapus image selain default.jpg
+                        unlink(FCPATH.'/assets/images/'.$old_images);
+                       }
+                        $new_images =[
+                            // $this->upload->data('file_name')->untuk mengmbil nama dari file yang di upload
+                            'image'=>$this->upload->data('file_name')
+                        ];  
+                        $this->user_Mod->Update_images($new_images,$id);
+                }
+            }
         }
 }
 ?>
