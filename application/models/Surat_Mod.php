@@ -12,6 +12,10 @@ class Surat_Mod extends CI_Model {
         return false;
         }
     }
+
+    public function get_all_srtMSk(){
+        return $this->db->get('surat_masuk')->result();
+    }
 }
 
 ?>

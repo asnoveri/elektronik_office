@@ -68,7 +68,7 @@ class Managemen_surat extends CI_Controller {
             }
           }
           $data=[
-            'tgl_surat_masuk'=>nice_date($this->input->post('tgl_surat_masuk',true), 'd-m-Y'),
+            'tgl_surat_masuk'=>$this->input->post('tgl_surat_masuk',true),
             'no_surat'=> $this->input->post('no_surat',true),
             'sifat_surat'=> $this->input->post('sifat_surat',true),
             'di_teruskan_ke'=> $this->input->post('di_teruskan_ke',true),
@@ -82,20 +82,28 @@ class Managemen_surat extends CI_Controller {
           $jbtn=$this->user_Mod->get_jbtnBYid($this->input->post('di_teruskan_ke',true));
           if($this->Surat_Mod->upload_SRT_Msk($data)== true){
 
-            $this->session->set_flashdata('pesan_surat','<div class="alert alert-success alert-dismissible">
+            $this->session->set_flashdata('pesan_surat1','<div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-               Berhasil Mengirmkan Surat ke '. $jbtn->jabatan .'
+               Berhasil Meneruskan Surat ke '. $jbtn->jabatan .'
             </div>');
-            redirect('Managemen_surat');
+            redirect('Managemen_surat/list_dftr_srt_msk');
           }else{
-            $this->session->set_flashdata('pesan_surat','<div class="alert alert-danger alert-dismissible">
+            $this->session->set_flashdata('pesan_surat1','<div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-               gagal Mengirmkan Surat ke '. $jbtn->jabatan .'
+               gagal MengirmMeneruskan Surat ke '. $jbtn->jabatan .'
             </div>');
-            redirect('Managemen_surat');
+            redirect('Managemen_surat/list_dftr_srt_msk');
           }
       }
     }
+
+    public function list_dftr_srt_msk(){
+        $judul='Managemen Surat';
+        $halaman='Surat_maneg/list_dftr_srt_msk';
+        $data['srt_masuk']=$this->Surat_Mod->get_all_srtMSk();   
+        $this->template->TemplateGen($judul,$halaman,$data);     
+    }
+    
 
 
 }

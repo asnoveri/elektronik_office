@@ -120,4 +120,12 @@
               return $jbt->jabatan;
             }
 
+            function feedback($id){
+              $ci= get_instance();
+              $fdbk=$ci->db->get_where('feedback_surat',['id_feedback'=>$id])->row();
+              return $fdbk->feedback;
+            }
+
+
+
 ?>
