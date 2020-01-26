@@ -50,7 +50,7 @@ class Managemen_surat extends CI_Controller {
           $upload_file_srt= $_FILES["file_surat"]["name"];
           if($upload_file_srt){
             $config['upload_path']          = "./assets/upload_file_surat/";
-            $config['allowed_types']        = 'docx|pdf\jpg';
+            $config['allowed_types']        = 'docx|pdf|jpg';
             $config['max_size']             = 4096;
             $config['remove_spaces']        = true;
             //memangil libraires upload dan masukan configurasinya
