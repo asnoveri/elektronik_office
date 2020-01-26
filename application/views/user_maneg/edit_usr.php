@@ -48,11 +48,11 @@
                             <button type="reset" class="btn btn-danger">Batal</button>
                         </div>    
                         <div class="col-sm-6">
+                            <?= $this->session->flashdata('erorogbr') ?>
                             <div class="card" style="width:250px;">
                                     <img class="card-img-top img-thumbnail" src="<?= base_url()?>assets/images/<?= $pegawai->image?>" alt="Card image">
                                     <div class="card-body">
                                     <label class="card-text">Ubah Foto Profil</label>
-                                    <?= $this->session->flashdata('erorogbr') ?>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="customFile" name="gambar">
                                             <label class="custom-file-label" for="customFile">Pilih file</label>

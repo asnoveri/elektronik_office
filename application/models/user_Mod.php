@@ -126,6 +126,7 @@ class user_Mod extends CI_Model {
             
         }
 
+
         public function Update_images($new_images,$id){ 
             $this->db->where('id', $id);
             $this->db->update('user', $new_images);
@@ -155,6 +156,11 @@ class user_Mod extends CI_Model {
             }else{
                 return false;
             }
+        }
+
+        public function get_jbtnBYid($id){
+          return  $this->db->get_where('jabatan_user',['id_jabatan'=> $id])->row();
+
         }
 
         
