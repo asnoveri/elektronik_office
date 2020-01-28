@@ -7,7 +7,7 @@
         </div>
 
         <!-- Content Row -->
-        <div class="card shadow mb-4">
+        <div class="card shadow mb-4" >
             <div class="card-header py-3">    
             <h5 class="m-0 font-weight-bold text-secondary">Detail Surat Masuk</h5>
             </div>
@@ -17,7 +17,7 @@
                         <a class="nav-link active" data-toggle="tab" href="#detail_surat_masuk">Informasi Detail Surat Masuk</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#file_srtmsk">File Surat Masuk</a>
+                        <a class="nav-link" data-toggle="tab" href="#file_srtmsk" id="fl_in_mesage">File Surat Masuk</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -77,7 +77,7 @@
                                             <p><span  class="font-weight-bold">Perihal</span></p>
                                         </div>
                                         <div class ="col-sm-6">
-                                            <p><span  class="font-weight-bold">: <?= $detail_srt_masuk->perihal?> </span></p>
+                                            <p><span  class="font-weight-bold">: <?= $detail_srt_masuk->perihal ?> </span></p>
                                         </div>
                                     </div>    
                                 </div>
@@ -86,6 +86,10 @@
                         </div>
                     </div>
                     <div class="tab-pane container fade" id="file_srtmsk">
+                        <div class="card shadow mt-4" >    
+                            <div class="card-body py-2  pdfview" data-pdf="<?= $detail_srt_masuk->file_surat ?>">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

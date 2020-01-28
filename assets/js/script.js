@@ -330,6 +330,9 @@ $(function () {
 			}
 		});
 	})
+
+	// meampilkan "ditersukan input yang readonly" jika tidak ingin merubah diteruskan, Jika ingin Merubah diteruskan tampilkan ditersukan yang combo box.
+	// hide yang di bawah berfungis untuk menghilngkan comboboc di teruska jika program di buka
 	$(".slt").hide();
 	$(".cekter").on('change', function () {
 		if ($(this).is(':checked')) {
@@ -340,4 +343,17 @@ $(function () {
 			document.location.href = "http://localhost/disposisi/Managemen_Surat";
 		}
 	});
+	// membuat view file pdf
+	$("a[id='fl_in_mesage']").on('click', function () {
+		const pdfvw = $(".pdfview").data("pdf");
+		const options = {
+			height: "500px",
+			width: "100%",
+			pdfOpenParams: {
+				view: 'FitV',
+				page: '4'
+			}
+		};
+		PDFObject.embed("http://localhost/disposisi/assets/upload_file_surat/" + pdfvw, ".pdfview", options);
+	})
 });
