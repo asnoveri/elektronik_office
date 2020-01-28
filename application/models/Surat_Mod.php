@@ -16,6 +16,10 @@ class Surat_Mod extends CI_Model {
     public function get_all_srtMSk(){
         return $this->db->get('surat_masuk')->result();
     }
+
+    public function get_srtMSkBYID($id){
+        return $this->db->get_where('surat_masuk',['id_surat_masuk'=> $id])->row();
+    }
 }
 
 ?>

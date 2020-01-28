@@ -30,7 +30,7 @@
                                 <label for="">Asal Surat Masuk</label>
                                 <input type="text" class="form-control" name="asal_surat" value="<?=set_value('asal_surat') ?>">
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="">Sifat Surat</label>
                                 <select name="sifat_surat" class="custom-select custom-select mb-3">
                                     <option selected> Pilih Sifat Surat </option>
@@ -39,7 +39,7 @@
                                     <option value="Biasa"> Biasa </option>
                                     <option value="Segera"> Segera </option>
                                 </select>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="">Upload Surat Masuk</label>
                                 <div class="custom-file">
@@ -59,18 +59,20 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Di Teruskan Ke</label>
-                                <select name="di_teruskan_ke" class="custom-select custom-select mb-3">
+                                <input type="hidden" readonly  class=" form-control" name="di_teruskan_ke" value="<?= $adum->id_jabatan ?>">
+                                <input type="text" readonly  class=" form-control" value="<?= $adum->jabatan ?>">
+                                <!-- <select hidden name="di_teruskan_ke" class="custom-select custom-select mb-3">
                                     <option selected>Pilih</option>
                                     <?php
                                         foreach($jabatan as $jbt){?>
                                             <option value="<?=$jbt['id_jabatan']?>"> <?= $jbt['jabatan']?></option>
                                     <?php }?>
-                                </select>
+                                </select> -->
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="">Instruksi</label>
                                 <input type="text" class="form-control" name="instruksi"  value="<?=set_value('instruksi') ?>">
-                            </div>
+                            </div> -->
                         </div>
                     </div>
               

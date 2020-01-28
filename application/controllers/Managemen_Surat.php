@@ -18,6 +18,7 @@ class Managemen_surat extends CI_Controller {
         $judul='Managemen Surat';
         $halaman='Surat_maneg/index';
         $data['jabatan']=$this->user_Mod->get_all_jabatan();
+        $data['adum']=$this->user_Mod->get_jbtnBYid(14);
         $this->template->TemplateGen($judul,$halaman,$data);     
     }
 
@@ -28,9 +29,6 @@ class Managemen_surat extends CI_Controller {
         $this->form_validation->set_rules('asal_surat','Asal_Surat','required|trim',[
             'required'=>'Asal Surat Masuk Tidak boleh Kosng',
         ]);
-        $this->form_validation->set_rules('sifat_surat','Sifat_surat','required|trim',[
-            'required'=>'Sifat Surat Harus di Pilih',
-        ]);
         $this->form_validation->set_rules('no_surat','No_surat','required|trim',[
             'required'=>'No Surat Masuk Tidak Boleh Kosong',
         ]);
@@ -40,9 +38,6 @@ class Managemen_surat extends CI_Controller {
         $this->form_validation->set_rules('di_teruskan_ke','Di_teruskan_ke','required|trim',[
             'required'=>'Di Teruskan Ke  Harus di pilih',
         ]);
-        $this->form_validation->set_rules('instruksi','Instruksi','required|trim',[
-            'required'=>'Instruksi Tidak Boleh Kosong',
-        ]);
 
       if($this->form_validation->run()==false){
             $this->index();
@@ -50,7 +45,7 @@ class Managemen_surat extends CI_Controller {
           $upload_file_srt= $_FILES["file_surat"]["name"];
           if($upload_file_srt){
             $config['upload_path']          = "./assets/upload_file_surat/";
-            $config['allowed_types']        = 'docx|pdf|jpg';
+            $config['allowed_types']        = 'pdf|jpg';
             $config['max_size']             = 4096;
             $config['remove_spaces']        = true;
             //memangil libraires upload dan masukan configurasinya
@@ -70,9 +65,7 @@ class Managemen_surat extends CI_Controller {
           $data=[
             'tgl_surat_masuk'=>$this->input->post('tgl_surat_masuk',true),
             'no_surat'=> $this->input->post('no_surat',true),
-            'sifat_surat'=> $this->input->post('sifat_surat',true),
             'di_teruskan_ke'=> $this->input->post('di_teruskan_ke',true),
-            'instruksi'=> $this->input->post('instruksi',true),
             'di_kirimkan_oleh'=> $this->session->userdata('role_id'),
             'asal_surat'=> $this->input->post('asal_surat',true),
             'perihal'=> $this->input->post('perihal',true),
@@ -103,8 +96,21 @@ class Managemen_surat extends CI_Controller {
         $data['srt_masuk']=$this->Surat_Mod->get_all_srtMSk();   
         $this->template->TemplateGen($judul,$halaman,$data);     
     }
+
+    public function detail_srt_masuk($id){
+        $judul='Managemen Surat';
+        $halaman='Surat_maneg/detail_Surat_masuk';
+        $data['detail_srt_masuk']=$this->Surat_Mod->get_srtMSkBYID($id);   
+        $this->template->TemplateGen($judul,$halaman,$data);    
+    }
     
 
+    public function kelola_alur_srt(){
+        $judul='Managemen Surat';
+        $halaman='Surat_maneg/kelola_alr_srt';
+        $data="";   
+        $this->template->TemplateGen($judul,$halaman,$data);    
+    }
 
 }
 
