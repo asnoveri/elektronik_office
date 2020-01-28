@@ -330,5 +330,14 @@ $(function () {
 			}
 		});
 	})
-
+	$(".slt").hide();
+	$(".cekter").on('change', function () {
+		if ($(this).is(':checked')) {
+			$(".diter").empty();
+			$(".slt").show().attr('name', 'di_teruskan_ke');
+		} else {
+			console.log("not");
+			document.location.href = "http://localhost/disposisi/Managemen_Surat";
+		}
+	});
 });

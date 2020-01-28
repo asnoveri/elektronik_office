@@ -48,24 +48,36 @@
                                         <div class ="col-sm-4">
                                             <p><span  class="font-weight-bold">Tanggal / Nomor Surat </span></p>
                                         </div>
-                                        <div class ="col-sm-4">
-                                            <p><span  class="font-weight-bold">: </span></p>
+                                        <div class ="col-sm-6">
+                                            <p><span  class="font-weight-bold">: <?= $detail_srt_masuk->no_surat?></span></p>
                                         </div>
                                     </div>    
                                     <div class="row">
                                         <div class ="col-sm-4">
-                                            <p><span  class="font-weight-bold">Asal Nomor Surat </span></p>
+                                            <p><span  class="font-weight-bold">Asal  Surat </span></p>
                                         </div>
+                                        <div class ="col-sm-6">
+                                            <p><span  class="font-weight-bold">: <?= $detail_srt_masuk->asal_surat?> </span></p>
+                                        </div>
+                                    </div>    
+                                    <div class="row">
                                         <div class ="col-sm-4">
-                                            <p><span  class="font-weight-bold">: </span></p>
+                                            <p><span  class="font-weight-bold">Di Teruskan Oleh</span></p>
+                                        </div>
+                                        <div class ="col-sm-6">
+                                            <p><span  class="font-weight-bold">: <?php if($detail_srt_masuk->di_kirimkan_oleh==0){
+                                    echo "Admin/Operator";
+                                }else{
+                                    echo jabatanget($detail_srt_masuk->di_kirimkan_oleh);
+                                }?> </span></p>
                                         </div>
                                     </div>    
                                     <div class="row">
                                         <div class ="col-sm-4">
                                             <p><span  class="font-weight-bold">Perihal</span></p>
                                         </div>
-                                        <div class ="col-sm-4">
-                                            <p><span  class="font-weight-bold">: </span></p>
+                                        <div class ="col-sm-6">
+                                            <p><span  class="font-weight-bold">: <?= $detail_srt_masuk->perihal?> </span></p>
                                         </div>
                                     </div>    
                                 </div>

@@ -38,6 +38,8 @@ class Managemen_surat extends CI_Controller {
         $this->form_validation->set_rules('di_teruskan_ke','Di_teruskan_ke','required|trim',[
             'required'=>'Di Teruskan Ke  Harus di pilih',
         ]);
+        $this->form_validation->set_rules('sifat_surat','Sifat_surat','required|trim',[
+            'required'=>'Sifat surat Harus di pilih',]);
 
       if($this->form_validation->run()==false){
             $this->index();
@@ -61,12 +63,20 @@ class Managemen_surat extends CI_Controller {
                 }else{
                  $file=$this->upload->data('file_name');
             }
+          }else{
+            $this->session->set_flashdata('pesan_surat','<div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                File yang di Upload belum di pilih, Silahkan pilih dulu filenya
+            </div>');
+            redirect('Managemen_surat');
+               
           }
           $data=[
             'tgl_surat_masuk'=>$this->input->post('tgl_surat_masuk',true),
             'no_surat'=> $this->input->post('no_surat',true),
             'di_teruskan_ke'=> $this->input->post('di_teruskan_ke',true),
-            'di_kirimkan_oleh'=> $this->session->userdata('role_id'),
+            'sifat_surat'=>$this->input->post('sifat_surat',true),
+            'di_kirimkan_oleh'=> 0,
             'asal_surat'=> $this->input->post('asal_surat',true),
             'perihal'=> $this->input->post('perihal',true),
             'file_surat'=>$file,
@@ -105,12 +115,6 @@ class Managemen_surat extends CI_Controller {
     }
     
 
-    public function kelola_alur_srt(){
-        $judul='Managemen Surat';
-        $halaman='Surat_maneg/kelola_alr_srt';
-        $data="";   
-        $this->template->TemplateGen($judul,$halaman,$data);    
-    }
 
 }
 
