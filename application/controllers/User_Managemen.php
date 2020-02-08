@@ -218,10 +218,7 @@ class User_Managemen extends CI_Controller {
         }    
      }
 
-     public function getJabatanlike(){
-         $jabatan=$this->input->post('jbtn',true);
-            echo json_encode($this->user_mod->getJabatanlike($jabatan));
-        }
+
       
     public function get_operatorBYid(){
         $data=[
@@ -244,17 +241,21 @@ class User_Managemen extends CI_Controller {
                 'pass'=>password_hash($this->input->post('pass1',true),PASSWORD_DEFAULT) 
             ];
             $in=$this->user_Mod->editAdmin($id,$data);
-
+            if($idrl==2){
+                $type_user="Operator";
+            }else if($idrl==3){
+                $type_user="User";
+            }
             if($in == true){
                 $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    Berhasil Mengubah Password Operator 
+                    Berhasil Mengubah Password'. $type_user.'
                 </div>');
                 redirect("User_Managemen/list_all_user/$idrl");
             }else{
                 $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    gagal Ubah Password Operator 
+                    gagal Ubah Password'   . $type_user.'
                 </div>');
                 redirect("User_Managemen/list_all_user/$idrl");
             }

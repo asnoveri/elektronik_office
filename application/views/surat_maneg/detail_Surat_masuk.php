@@ -19,6 +19,9 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#file_srtmsk" id="fl_in_mesage">File Surat Masuk</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#history_srt_msk" id="history_srt">History</a>
+                    </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane container active" id="detail_surat_masuk">
@@ -62,18 +65,6 @@
                                     </div>    
                                     <div class="row">
                                         <div class ="col-sm-4">
-                                            <p><span  class="font-weight-bold">Di Teruskan Oleh</span></p>
-                                        </div>
-                                        <div class ="col-sm-6">
-                                            <p><span  class="font-weight-bold">: <?php if($detail_srt_masuk->di_kirimkan_oleh==0){
-                                    echo "Admin/Operator";
-                                }else{
-                                    echo jabatanget($detail_srt_masuk->di_kirimkan_oleh);
-                                }?> </span></p>
-                                        </div>
-                                    </div>    
-                                    <div class="row">
-                                        <div class ="col-sm-4">
                                             <p><span  class="font-weight-bold">Perihal</span></p>
                                         </div>
                                         <div class ="col-sm-6">
@@ -88,6 +79,23 @@
                     <div class="tab-pane container fade" id="file_srtmsk">
                         <div class="card shadow mt-4" >    
                             <div class="card-body py-2  pdfview" data-pdf="<?= $detail_srt_masuk->file_surat ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane container fade" id="history_srt_msk">
+                        <div class="card shadow mt-4" >    
+                            <div class="progress">
+                            <?php
+                                foreach($detail_srt_masuk_ter as $dtrsmk){?>
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-<?=$dtrsmk->bg_porgres?>" role="progressbar" style="width: 30%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
+                                    <?php if( $dtrsmk->di_kirimkan_oleh == 0){?>
+                                    <?php }else {?>
+                                        <?= " Dari ". jabatanget($dtrsmk->di_kirimkan_oleh)?>
+                                        <?php } ?>
+                                    <?= feedback($dtrsmk->id_feedback);?>   <?=jabatanget($dtrsmk->di_teruskan_ke)?>
+                                    </div>
+                                    
+                                <?php } ?>    
                             </div>
                         </div>
                     </div>

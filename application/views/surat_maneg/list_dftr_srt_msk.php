@@ -24,9 +24,7 @@
                         <th>Tanggal Surat Masuk</th>
                         <th>Asal Surat</th>
                         <th>Perihal</th>
-                        <th>Di Teruskan Oleh</th>
-                        <th>Di Teruskan Ke</th>
-                        <th>Status</th>
+                        <th>Sifat Surat</th>
                         <th>Action</th>
                         </tr>
                     </thead>
@@ -39,13 +37,7 @@
                                 <td><?= nice_date($sm->tgl_surat_masuk, 'd-m-Y')?></td>
                                 <td><?=$sm->asal_surat ?></td>
                                 <td><?=$sm->perihal?></td>
-                                <td><?php if($sm->di_kirimkan_oleh==0){
-                                    echo "Admin/Operator";
-                                }else{
-                                    echo jabatanget($sm->di_kirimkan_oleh);
-                                }?></td>
-                                <td><?=jabatanget($sm->di_teruskan_ke)?></td>
-                                <td><?=feedback($sm->id_feedback) ?></td>
+                                <td><?=$sm->sifat_surat?></td>
                                 <td>
                                     <div class="btn-group-vertical">
                                     <a href="<?= base_url()?>Managemen_Surat/detail_srt_masuk/<?=$sm->id_surat_masuk?>" class="btn btn-primary"> Detail </a>

@@ -74,16 +74,23 @@ class Managemen_surat extends CI_Controller {
           $data=[
             'tgl_surat_masuk'=>$this->input->post('tgl_surat_masuk',true),
             'no_surat'=> $this->input->post('no_surat',true),
-            'di_teruskan_ke'=> $this->input->post('di_teruskan_ke',true),
             'sifat_surat'=>$this->input->post('sifat_surat',true),
-            'di_kirimkan_oleh'=> 0,
             'asal_surat'=> $this->input->post('asal_surat',true),
             'perihal'=> $this->input->post('perihal',true),
             'file_surat'=>$file,
-            'id_feedback'=>'1'
           ]; 
+      
           $jbtn=$this->user_Mod->get_jbtnBYid($this->input->post('di_teruskan_ke',true));
-          if($this->Surat_Mod->upload_SRT_Msk($data)== true){
+          if($id_srt_msk=$this->Surat_Mod->upload_SRT_Msk($data)){
+            
+                 $data1=[
+                        'id_surat_masuk'=> $id_srt_msk->id_surat_masuk,
+                        'di_teruskan_ke'=> $this->input->post('di_teruskan_ke',true),
+                        'di_kirimkan_oleh'=> 0,
+                        'id_feedback'=>'1',
+                        'bg_porgres'=>'primary'
+                    ]; 
+                 $this->Surat_Mod->add_srt_msuk_diter($data1);
 
             $this->session->set_flashdata('pesan_surat1','<div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -111,6 +118,7 @@ class Managemen_surat extends CI_Controller {
         $judul='Managemen Surat';
         $halaman='Surat_maneg/detail_Surat_masuk';
         $data['detail_srt_masuk']=$this->Surat_Mod->get_srtMSkBYID($id);   
+        $data['detail_srt_masuk_ter']=$this->Surat_Mod->get_srtMSkBYID_ter($id);   
         $this->template->TemplateGen($judul,$halaman,$data);    
     }
     

@@ -356,4 +356,6 @@ $(function () {
 		};
 		PDFObject.embed("http://localhost/disposisi/assets/upload_file_surat/" + pdfvw, ".pdfview", options);
 	})
+
+
 });
