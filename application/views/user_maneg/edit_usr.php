@@ -30,15 +30,6 @@
                                 <label>Email</label>
                                 <input type="text"  class="form-control"  name="email" value="<?= $pegawai->email?>">
                             </div>
-                            <div class="form-group">
-                                <label for="jbtn">Jabatan</label>
-                                <select class="form-control"  name='id_jabatan'>  
-                                <option value="<?= $pegawai->id_jabatan?>"><?= jabatanget($pegawai->id_jabatan);?></option>
-                                <?php foreach($list_jabatan as $jbt){?>  
-                                    <option value="<?= $jbt['id_jabatan']?>"><?= $jbt['jabatan']?></option>
-                                <?php }?>
-                                </select>
-                            </div>
                             <br>
                             <br>
                             <br>

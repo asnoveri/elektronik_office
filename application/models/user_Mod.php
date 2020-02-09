@@ -148,9 +148,8 @@ class user_Mod extends CI_Model {
             }
         }
 
-        public function cekPegJabatan($cekjbtn,$role_id){
+        public function cekPegJabatan($cekjbtn){
             $this->db->where('id_jabatan', $cekjbtn);
-            $this->db->where('role_id',$role_id);
             if($this->db->get('user')->num_rows() > 0){
                 return true;
             }else{
@@ -163,6 +162,14 @@ class user_Mod extends CI_Model {
 
         }
 
+        public function change_Jabatan_User($data,$id){
+            $this->db->update('user', $data, array('id' => $id));
+          if($this->db->affected_rows() > 0){
+              return true;
+          }else{
+              return false;
+          }
+        }
         
 
 

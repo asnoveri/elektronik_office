@@ -126,6 +126,20 @@
               return $fdbk->feedback;
             }
 
+            function jabtan_combo($id){
+              $ci= get_instance();
+              $jbt=$ci->db->get_where('jabatan_user',['id_jabatan'=>$id])->row();
+              $jbt1=$ci->db->get('jabatan_user')->result();
+              if($id){?>
+                   <option> <?= $jbt->jabatan?>  </option>;
+                   <?php
+                      foreach($jbt1 as $jb){?>
+                        <option value="<?=$jb->id_jabatan?>"> <?= $jb->jabatan?>  </option>;
+                      <?php }
+                   ?>
+              <?php } 
+            }
+
 
 
 ?>

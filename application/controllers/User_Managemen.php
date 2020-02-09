@@ -324,9 +324,7 @@ class User_Managemen extends CI_Controller {
             $this->form_validation->set_rules('email','Email','trim|required|valid_email',[
                 'required'=> 'Field  Email  Tidak Boleh Kosong',
                 'valid_email'=> 'Email yang dimasukan Salah' ]);
-            $this->form_validation->set_rules('id_jabatan','Id_jabatan','required|trim',
-                ['required'=>'Jabatan User Belum di Pilih, Silahkan Pilih jabatan']);    
-
+                
             if ($this->form_validation->run() == FALSE){
                 $this->edit_user($id,$role_id);
             }else{
@@ -334,25 +332,21 @@ class User_Managemen extends CI_Controller {
                     'fullname'  =>$this->input->post('fullname',true),
                     'email'     =>$this->input->post('email',true),
                     'is_active' => 1,
-                    'role_id'   => $role_id,
-                    'id_jabatan'=>$this->input->post('id_jabatan',true)
+                    'role_id'   => $role_id
                 ];
-                if($this->user_Mod->cekPegJabatan($this->input->post('id_jabatan',true),$role_id) == true){
-                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                       Gagal edit User Karena Jabatan Yang dipilih sudah di Set pada pegawai lain
-                    </div>');  
-                    redirect("User_Managemen/edit_user/$id/$role_id");
-                }else{
-                    if($this->user_Mod->edit_pegawaiBYid($data,$id,$role_id)){
-                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            Berhasil edit User  
-                        </div>');
-                       redirect("User_Managemen/edit_user/$id/$role_id");
-                    }
-
-                }
+                        if($this->user_Mod->edit_pegawaiBYid($data,$id,$role_id)){
+                            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                Berhasil edit User  
+                            </div>');
+                           redirect("User_Managemen/edit_user/$id/$role_id");
+                        }else{
+                            $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                Gagal edit User  
+                            </div>');
+                           redirect("User_Managemen/edit_user/$id/$role_id");
+                        }
             }
         }
 
@@ -399,5 +393,28 @@ class User_Managemen extends CI_Controller {
                 }
             }
         }
+
+        public function ubh_jabtan_user(){
+            $ubhjbatan=$this->input->post('jbtn',true);
+            $id=$this->input->post('id_user',true);
+                if($this->user_Mod->cekPegJabatan($ubhjbatan) == true){
+                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Gagal edit User Karena Jabatan Yang dipilih sudah di Set pada pegawai lain
+                    </div>');
+                }else{
+                    $data=[
+                        'id_jabatan'=> $ubhjbatan
+                    ];
+                    if($this->user_Mod->change_Jabatan_User($data,$id)== true){
+                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Berhasil Edit Jabatan User
+                        </div>');
+                    }
+                }
+
+            }
+        
 }
 ?>

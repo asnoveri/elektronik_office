@@ -96,7 +96,12 @@
                             <td><?= $no?></td>
                             <td><?= $u_allt['fullname'] ?></td>
                             <td><?= $u_allt['email']?></td>
-                            <td><?= $u_allt['jabatan']?></td>
+                            <td>
+                                <select class="form-control jbt"  name="id_jabatan" data-id_jbtn="<?=$u_allt['id_jabatan']?>"
+                                data-role_id="<?=$role['role_id']?>" data-id_user=<?= $u_allt['id'] ?>>  
+                                    <?=jabtan_combo($u_allt['id_jabatan'])?>
+                                </select> 
+                            </td>
                             <td>
                                 <select class="form-control status"  name="status" data-idst="<?=$u_allt['is_active']?>"
                                 data-role_id="<?=$role['role_id']?>" data-id_user=<?= $u_allt['id'] ?>>  

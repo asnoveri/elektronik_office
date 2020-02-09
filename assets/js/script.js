@@ -357,5 +357,26 @@ $(function () {
 		PDFObject.embed("http://localhost/disposisi/assets/upload_file_surat/" + pdfvw, ".pdfview", options);
 	})
 
+	// edit Jbtn di list user
+	$(".jbt").on('change', function () {
+		const jbtn = $(".jbt").val();
+		const role_id = $(this).data('role_id');
+		const id_user = $(this).data('id_user')
+
+
+		$.ajax({
+			url: 'http://localhost/disposisi/User_Managemen/ubh_jabtan_user',
+			type: 'post',
+			data: {
+				jbtn: jbtn,
+				id_user: id_user
+			},
+			success: function (data) {
+				//unutk meridirect dengan Ajax
+				document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
+
+			}
+		});
+	});
 
 });
