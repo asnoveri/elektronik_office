@@ -88,7 +88,7 @@
                 
             }
 
-
+            //function cheked hak akses menu user
             function cek_akses_user($id_menu,$role_id){
               $ci= get_instance();
 
@@ -103,6 +103,7 @@
             
             }
 
+            // function combo box status user
             function user_aktiv($is_active){
               $ci= get_instance();
               if($is_active==1){?>
@@ -114,18 +115,21 @@
              <?php } 
             }
 
+            // function menampilkan jabatan user
             function jabatanget($id){
               $ci= get_instance();
               $jbt=$ci->db->get_where('jabatan_user',['id_jabatan'=>$id])->row();
               return $jbt->jabatan;
             }
 
+            // function menampilkan feedback surat
             function feedback($id){
               $ci= get_instance();
               $fdbk=$ci->db->get_where('feedback_surat',['id_feedback'=>$id])->row();
               return $fdbk->feedback;
             }
 
+            // function combo box menampilkan jabata user
             function jabtan_combo($id){
               $ci= get_instance();
               $jbt=$ci->db->get_where('jabatan_user',['id_jabatan'=>$id])->row();
@@ -140,6 +144,62 @@
               <?php } 
             }
 
+            // function menampilakn alert surat 
+            function get_data_srt_masuk($id_jabatan){?>
+              <?php $ci= get_instance();?>
+              <li class="nav-item dropdown no-arrow mx-1">
+                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-bell fa-fw"></i>
+                    <!-- Counter - Alerts -->
+                    <?php 
+                         $query= "SELECT * FROM surat_masuk_diter WHERE di_teruskan_ke=$id_jabatan and id_feedback='1'
+                         ";
+                         $query1=$ci->db->query($query)->result();
+                       if($query1){?>
+                         <span class="badge badge-danger badge-counter">
+                             <?= count($query1);?>
+                         </span>
+                       <?php }else{?>
+                         
+                       <?php }
+                   ?>
+                </a>
+                <!-- Dropdown - Alerts -->
+                       <?php
+                            if($query1){
+                             $kondisi="";
+                            }else{
+                             $kondisi="hidden";
+                            }
+                        ?>
+                <div <?= $kondisi?> class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                      <h6 class="dropdown-header bg-success ">
+                        Alerts Center
+                      </h6>
+                      <?php
+                          foreach ($query1 as $smk){?>
+                              
+                              <?php
+                               $data_surat= $ci->db->get_where('surat_masuk',['id_surat_masuk'=>$smk->id_surat_masuk])->result(); 
+                                foreach($data_surat as $ds){?>
+                              <a class="dropdown-item d-flex align-items-center" href="<?= base_url()?>User">
+                                  <div class="mr-3">
+                                    <div class="icon-circle bg-success">
+                                      <i class="fas fa-file-alt text-white"></i>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <div class="small text-gray-500"><?= nice_date($ds->tgl_surat_masuk, 'd-m-Y')?></div>
+                                    <span class="font-weight-bold"><?= $ds->tipe_surat?></span></br>
+                                    <p class="font-weight-tiny"><?= $ds->perihal?></p>
+                                  </div>
+                              </a>
+                                <?php }?>
+                       <?php  }?>
+                      <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                </div>
+              </li>
+           <?php }
 
 
 ?>

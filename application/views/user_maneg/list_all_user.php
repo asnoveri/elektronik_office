@@ -64,13 +64,19 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $judul?></h1>
-        <a href="<?= base_url()?>User_Managemen/"class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-left"></i></span><span class="text">List User</span></a></a>
+        <a href="<?= base_url()?>User_Managemen/"class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-left"></i></span><span class="text">List User</span></a>
         </div>
 
         <!-- Content Row -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
             <?= $this->session->flashdata('pesanaddop') ?>
+            <?php if(validation_errors()){?>
+                    <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <?= validation_errors();?>
+                    </div> 
+                    <?php  } ?>
             <h5 class="m-0 font-weight-bold text-secondary">List <?= $role['role_name']?></h5>
         </div>
 

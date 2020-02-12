@@ -249,13 +249,13 @@ class User_Managemen extends CI_Controller {
             if($in == true){
                 $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    Berhasil Mengubah Password'. $type_user.'
+                    Berhasil Mengubah Password ' . $type_user.'
                 </div>');
                 redirect("User_Managemen/list_all_user/$idrl");
             }else{
                 $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    gagal Ubah Password'   . $type_user.'
+                    gagal Ubah Password '   . $type_user.'
                 </div>');
                 redirect("User_Managemen/list_all_user/$idrl");
             }

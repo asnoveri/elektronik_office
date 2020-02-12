@@ -78,6 +78,7 @@ class Managemen_surat extends CI_Controller {
             'asal_surat'=> $this->input->post('asal_surat',true),
             'perihal'=> $this->input->post('perihal',true),
             'file_surat'=>$file,
+            'tipe_surat'=>"Surat Masuk"
           ]; 
       
           $jbtn=$this->user_Mod->get_jbtnBYid($this->input->post('di_teruskan_ke',true));

@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $this->CI->load->model('menu_Mod');
                    
         }
-        //libraries  function untuk menataur template dan halam secara lebih dinamis 
+        //libraries  function untuk mengataur template dan halam secara lebih dinamis 
         public function TemplateGen($judul=null,$halaman=null,$data1=null){
             // data1 adalah data yang dikirmkan dari controller
             // data doank adalah data yang set pada libraries
