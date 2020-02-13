@@ -12,8 +12,8 @@ class Operator extends CI_Controller {
     public function index(){
         $judul='Dashboard';
         $halaman='Operator/index';
-        $data1="";
-        $this->template->TemplateGen($judul,$halaman,$data1);   
+        $data="";
+        $this->template->TemplateGen($judul,$halaman,$data);   
       
        
     }
@@ -21,8 +21,8 @@ class Operator extends CI_Controller {
     public function profil_op(){
         $judul='Profil Operator';
         $halaman='Operator/profil_operator';
-        $data1="";
-        $this->template->TemplateGen($judul,$halaman,$data1);   
+        $data="";
+        $this->template->TemplateGen($judul,$halaman,$data);   
     }
 
    

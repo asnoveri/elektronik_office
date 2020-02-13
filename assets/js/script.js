@@ -379,4 +379,43 @@ $(function () {
 		});
 	});
 
+
+
+	//mengubah fedback ketika mengklik alert srt masuk
+	$(".ubah_feedback").on('click', function () {
+		const id_terus = $(this).data('id_terus_srt_msk');
+		$.ajax({
+			url: 'http://localhost/disposisi/User/ubh_feedback_srtmsk_user',
+			type: 'post',
+			data: {
+				id_terus: id_terus
+			},
+			success: function (data) {
+				//unutk meridirect dengan Ajax
+				// document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
+				console.log(data);
+			}
+		});
+	});
+	$(".ubah_feedback1").on('click', function () {
+		const id_terus = $(this).data('id_terus_srt_msk');
+		$.ajax({
+			url: 'http://localhost/disposisi/User/ubh_feedback_srtmsk_user',
+			type: 'post',
+			data: {
+				id_terus: id_terus
+			},
+			success: function (data) {
+				//unutk meridirect dengan Ajax
+				// document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
+				console.log(data);
+			}
+		});
+	});
+
+});
+
+// buat tooltip
+$(document).ready(function () {
+	$('[data-toggle="tooltip"]').tooltip();
 });

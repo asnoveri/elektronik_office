@@ -182,7 +182,12 @@
                               <?php
                                $data_surat= $ci->db->get_where('surat_masuk',['id_surat_masuk'=>$smk->id_surat_masuk])->result(); 
                                 foreach($data_surat as $ds){?>
-                              <a class="dropdown-item d-flex align-items-center" href="<?= base_url()?>User">
+                                <?php
+                                    if($ds->tipe_surat=="Surat Masuk"){?>
+                                      <a class="dropdown-item d-flex align-items-center ubah_feedback" data-id_terus_srt_msk="<?=$smk->id_terus ?>"  href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>">
+                                   <?php  } elseif($ds->tipe_surat="Surat Keluar"){?>
+                                      <a class="dropdown-item d-flex align-items-center" href="<?= base_url()?>User">
+                                   <?php }?>
                                   <div class="mr-3">
                                     <div class="icon-circle bg-success">
                                       <i class="fas fa-file-alt text-white"></i>
@@ -192,6 +197,7 @@
                                     <div class="small text-gray-500"><?= nice_date($ds->tgl_surat_masuk, 'd-m-Y')?></div>
                                     <span class="font-weight-bold"><?= $ds->tipe_surat?></span></br>
                                     <p class="font-weight-tiny"><?= $ds->perihal?></p>
+                                    <span class="font-weight-bold"><?= $ds->asal_surat?></span></br>
                                   </div>
                               </a>
                                 <?php }?>
@@ -201,5 +207,63 @@
               </li>
            <?php }
 
+          //  function menampilkan data surat masuk ke dalam tabel per id user
+            function get_tabel_srt_msk_peruser($id_jabatan){?>
+              <?php $ci= get_instance();
+              $query= "SELECT * FROM surat_masuk_diter WHERE di_teruskan_ke=$id_jabatan";
+              $query1=$ci->db->query($query)->result();?>
+               
+              <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                        <th>#</th>
+                        <th>Tanggal Surat Masuk</th>
+                        <th>Asal Surat</th>
+                        <th>Perihal</th>
+                        <th>Sifat Surat</th>
+                        <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($query1 as $smk){?>
+                        <?php
+                               $data_surat= $ci->db->get_where('surat_masuk',['id_surat_masuk'=>$smk->id_surat_masuk])->result(); 
+                              
+                                foreach($data_surat as $sm){  ?>
+                                      <tr>
+                                          <td> 
+                                          <?php
+                                              if($smk->id_feedback==1){?>
+                                                <span class="mr-2">
+                                                  <a href="#" data-toggle="tooltip" data-placement="right" title="Surat Masuk Belum di Lihat!"> 
+                                                    <i class="fas fa-circle text-success" data-toggle="tooltip" data-placement="right"></i>
+                                                  </a>
+                                               </span>
+                                              <?php }elseif($smk->id_feedback==2){?>
+                                                <span class="mr-2">
+                                                  <i class="fas fa-circle text-gray-500"></i>
+                                                </span>
+                                              <?php }
+                                          ?>
+                                          </td>
+                                          <td><?= nice_date($sm->tgl_surat_masuk, 'd-m-Y')?></td>
+                                          <td><?=$sm->asal_surat ?></td>
+                                          <td><?=$sm->perihal?></td>
+                                          <td><?=$sm->sifat_surat?></td>
+                                          <td>
+                                              <div class="btn-group-vertical">
+                                              <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$sm->id_surat_masuk?>" class="btn btn-primary ubah_feedback1" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> Detail </a>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                      <?php ?> 
+                                <?php  }?>
+                        <?php  }?>    
+                    </tbody>
+                    </table>
+                </div>
+            <?php }                          
 
 ?>

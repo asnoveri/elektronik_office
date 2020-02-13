@@ -16,16 +16,16 @@ class Admin extends CI_Controller {
     public function index(){
         $judul='Dashboard';
         $halaman='Admin/index';
-        $data1="";
-        $this->template->TemplateGen($judul,$halaman,$data1);     
+        $data="";
+        $this->template->TemplateGen($judul,$halaman,$data);     
         
     }
 
     public function profil_admin(){
         $judul='Profil Admin';
         $halaman='Admin/profil';
-        $data1="";
-        $this->template->TemplateGen($judul,$halaman,$data1);     
+        $data="";
+        $this->template->TemplateGen($judul,$halaman,$data);     
         
     }
     
