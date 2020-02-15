@@ -61,8 +61,11 @@
   <!-- sctipt js untuk edit data menu -->
   <script src="<?= base_url()?>assets/js/script.js"></script>
 
-<!-- script pdfobject.js -->
-<script src="<?= base_url()?>assets/js/PDFObject-master/pdfobject.js"></script>
+  <!-- script pdfobject.js -->
+  <script src="<?= base_url()?>assets/js/PDFObject-master/pdfobject.js"></script>
+
+ <!-- date time picker js -->
+ <script src="<?= base_url()?>assets/js/jquery.datetimepicker.full.min.js"></script>
 
 </body>
 

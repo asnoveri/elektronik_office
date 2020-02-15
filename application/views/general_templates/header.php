@@ -22,6 +22,9 @@
   <!-- asno css -->
   <link href="<?= base_url()?>assets/css/asno.css" rel="stylesheet">
 
+  <!-- css date pciker -->
+  <link href="<?= base_url()?>assets/css/jquery.datetimepicker.css" rel="stylesheet">
+
 </head>
 
 <body id="page-top">

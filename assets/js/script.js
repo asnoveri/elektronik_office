@@ -413,9 +413,70 @@ $(function () {
 		});
 	});
 
+
+	// costume date time picker js
+	$('#datetimepicker').datetimepicker({
+		i18n: {
+			de: {
+				months: [
+					'Januari', 'Februari', 'Maret', 'April',
+					'Mai', 'Juni', 'Juli', 'Augustus',
+					'September', 'Oktober', 'November', 'Desember',
+				],
+				dayOfWeek: [
+					"So.", "Mo", "Di", "Mi",
+					"Do", "Fr", "Sa.",
+				]
+			}
+		},
+		timepicker: false,
+		format: 'd-m-Y'
+	});
+	$('#datetimepicker1').datetimepicker({
+		i18n: {
+			de: {
+				months: [
+					'Januari', 'Februari', 'Maret', 'April',
+					'Mai', 'Juni', 'Juli', 'Augustus',
+					'September', 'Oktober', 'November', 'Desember',
+				],
+				dayOfWeek: [
+					"So.", "Mo", "Di", "Mi",
+					"Do", "Fr", "Sa.",
+				]
+			}
+		},
+		timepicker: false,
+		format: 'Y-m-d'
+	});
+
+
+
 });
 
 // buat tooltip
-$(document).ready(function () {
+$(function () {
 	$('[data-toggle="tooltip"]').tooltip();
+});
+
+//filter list surat masuk user dengan text input
+$(function () {
+	$("#myInput").on("keyup", function () {
+		const value = $(this).val().toLowerCase();
+
+		$("#myList li").filter(function () {
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});
+});
+
+//filter list surat masuk user dengan date input
+$(function () {
+	$("#datetimepicker").on("change", function () {
+		const value = $(this).val().toLowerCase();
+		console.log(value);
+		$("#myList li").filter(function () {
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});
 });

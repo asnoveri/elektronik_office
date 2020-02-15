@@ -202,7 +202,7 @@
                               </a>
                                 <?php }?>
                        <?php  }?>
-                      <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                      <a class="dropdown-item text-center small text-gray-500" href="<?= base_url()?>User/list_srt_msk_user">Show All Alerts</a>
                 </div>
               </li>
            <?php }
@@ -213,27 +213,16 @@
               $query= "SELECT * FROM surat_masuk_diter WHERE di_teruskan_ke=$id_jabatan";
               $query1=$ci->db->query($query)->result();?>
                
-              <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                        <th>#</th>
-                        <th>Tanggal Surat Masuk</th>
-                        <th>Asal Surat</th>
-                        <th>Perihal</th>
-                        <th>Sifat Surat</th>
-                        <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
                         <?php
                         foreach ($query1 as $smk){?>
                         <?php
                                $data_surat= $ci->db->get_where('surat_masuk',['id_surat_masuk'=>$smk->id_surat_masuk])->result(); 
                               
                                 foreach($data_surat as $sm){  ?>
-                                      <tr>
-                                          <td> 
+                                    <ul class="list-group" id="myList">
+                                      <li class="list-group-item">
+                                        <div class="row">
+                                          <div class="col-sm-1">
                                           <?php
                                               if($smk->id_feedback==1){?>
                                                 <span class="mr-2">
@@ -247,23 +236,24 @@
                                                 </span>
                                               <?php }
                                           ?>
-                                          </td>
-                                          <td><?= nice_date($sm->tgl_surat_masuk, 'd-m-Y')?></td>
-                                          <td><?=$sm->asal_surat ?></td>
-                                          <td><?=$sm->perihal?></td>
-                                          <td><?=$sm->sifat_surat?></td>
-                                          <td>
-                                              <div class="btn-group-vertical">
-                                              <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$sm->id_surat_masuk?>" class="btn btn-primary ubah_feedback1" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> Detail </a>
-                                              </div>
-                                          </td>
-                                      </tr>
+                                          </div>
+                                          <div class="col-sm-4">
+                                            <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$sm->id_surat_masuk?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
+                                              <span class="text-gray-500 font-weight-lighter font-italic"><?= nice_date($sm->tgl_surat_masuk, 'd-m-Y')?> -</span>
+                                              <span class="text-black-50 font-font-weight-bolder text-uppercase"><?=$sm->asal_surat ?></span>
+                                            </a>
+                                          </div>
+                                          <div class="col-sm-7">
+                                            <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$sm->id_surat_masuk?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
+                                              <span class="text-gray-500 text-capitalize "><?=$sm->perihal?></span>
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </li>
+                                    </ul>
                                       <?php ?> 
                                 <?php  }?>
                         <?php  }?>    
-                    </tbody>
-                    </table>
-                </div>
             <?php }                          
 
 ?>

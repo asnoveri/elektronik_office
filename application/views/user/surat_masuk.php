@@ -12,6 +12,22 @@
             <h5 class="m-0 font-weight-bold text-secondary">List Surat Masuk</h5>
             </div>
             <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-4">
+                        <div class="form-inline">
+                            <label class="mr-sm-3">Tanggal:</label>
+                            <input class="form-control" id="datetimepicker" type="text" placeholder="Pilih Tanggal.." >
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-inline">
+                            <label class="mr-sm-3">Search:</label>
+                            <input class="form-control" id="myInput" type="text" placeholder="Cari disini.." >
+                        </div>
+                    </div>
+                </div>
+          
+            
                <?= get_tabel_srt_msk_peruser($this->session->userdata('id_jabatan'))?>
             </div>
         </div>
