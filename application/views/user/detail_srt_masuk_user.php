@@ -84,7 +84,34 @@
                     </div>
                     <div class="tab-pane container fade" id="action_srt_msk_user">
                         <div class="card shadow mt-4" >    
-                           
+                            <div class="card-header py-3">
+                                <p class="m-0 font-weight-bold text-secondary text-center">Aksi Disposisi Surat Masuk</p>
+                            </div>
+                            <div class="card-body">
+                                <form  method="POST" action="<?= base_url()?>user/add_suratmasuk_diteruskan">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                             <input type="hidden" class="form-control" name="id_surat_masuk" value="<?= $detail_srt_masuk_ter->id_surat_masuk?>">
+                                                
+                                            <div class="form-group ">
+                                                <label for="">Teruskan Disposisi Surat Masuk</label>
+                                                <select  class="custom-select custom-select mb-" name="di_teruskan_ke">
+                                                    <option selected>Pilih</option>
+                                                    <?php
+                                                        foreach($jabatan as $jbt){?>
+                                                            <option value="<?=$jbt['id_jabatan']?>"> <?= $jbt['jabatan']?></option>
+                                                    <?php }?>
+                                                </select>
+                                            </div>
+                                            <!-- <div class="form-group">
+                                                <label for="">Instruksi</label>
+                                                <input type="text" class="form-control" name="instruksi">
+                                            </div> -->
+                                            <button type="submit" class="btn btn-primary" >Teruskan</button>
+                                             <button type="reset" class="btn btn-danger">Batal</button>
+                                    </div>        
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -152,8 +152,7 @@
                   <i class="fas fa-bell fa-fw"></i>
                     <!-- Counter - Alerts -->
                     <?php 
-                         $query= "SELECT * FROM surat_masuk_diter WHERE di_teruskan_ke=$id_jabatan and id_feedback='1'
-                         ";
+                         $query= $query= "SELECT * FROM surat_masuk_diter,surat_masuk WHERE di_teruskan_ke=$id_jabatan and id_feedback='1' and surat_masuk_diter.id_surat_masuk=surat_masuk.id_surat_masuk order by tgl_surat_masuk desc";
                          $query1=$ci->db->query($query)->result();
                        if($query1){?>
                          <span class="badge badge-danger badge-counter">
@@ -172,7 +171,7 @@
                              $kondisi="hidden";
                             }
                         ?>
-                <div <?= $kondisi?> class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <div <?= $kondisi?> class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown" style="overflow: auto; height:350px;">
                       <h6 class="dropdown-header bg-success ">
                         Alerts Center
                       </h6>
@@ -210,7 +209,7 @@
           //  function menampilkan data surat masuk ke dalam tabel per id user
             function get_tabel_srt_msk_peruser($id_jabatan){?>
               <?php $ci= get_instance();
-              $query= "SELECT * FROM surat_masuk_diter WHERE di_teruskan_ke=$id_jabatan";
+              $query= "SELECT * FROM surat_masuk_diter,surat_masuk WHERE di_teruskan_ke=$id_jabatan and surat_masuk_diter.id_surat_masuk=surat_masuk.id_surat_masuk order by tgl_surat_masuk desc";
               $query1=$ci->db->query($query)->result();?>
                
                         <?php
@@ -219,7 +218,7 @@
                                $data_surat= $ci->db->get_where('surat_masuk',['id_surat_masuk'=>$smk->id_surat_masuk])->result(); 
                               
                                 foreach($data_surat as $sm){  ?>
-                                    <ul class="list-group" id="myList">
+                                    <ul class="list-group" id="myList" >
                                       <li class="list-group-item">
                                         <div class="row">
                                           <div class="col-sm-1">
