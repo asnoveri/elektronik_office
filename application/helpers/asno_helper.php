@@ -167,11 +167,21 @@
                        <?php
                             if($query1){
                              $kondisi="";
+                            
                             }else{
                              $kondisi="hidden";
                             }
+                            if(count($query1)==0){
+                              $hg="auto";
+                            }elseif(count($query1)==1){
+                                $hg="auto";
+                              }elseif(count($query1)==2){
+                                $hg="300px";
+                              }elseif(count($query1)>=3){
+                                $hg="450px";
+                              }
                         ?>
-                <div <?= $kondisi?> class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown" style="overflow: auto; height:350px;">
+                <div <?= $kondisi?> class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown" style="overflow: auto; height:<?= $hg?>">
                       <h6 class="dropdown-header bg-success ">
                         Alerts Center
                       </h6>
@@ -242,10 +252,19 @@
                                               <span class="text-black-50 font-font-weight-bolder text-uppercase"><?=$sm->asal_surat ?></span>
                                             </a>
                                           </div>
-                                          <div class="col-sm-7">
+                                          <div class="col-sm-5">
                                             <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$sm->id_surat_masuk?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
                                               <span class="text-gray-500 text-capitalize "><?=$sm->perihal?></span>
                                             </a>
+                                          </div>
+                                          <div class="col-sm-2 text-center">
+                                          <?php
+                                              if($smk->id_feedback==1){?>
+                                              <?php }elseif($smk->id_feedback==2){?>
+                                                <button type="button" class="btn btn-info">Arsipkan Surat</button>
+                                              <?php }
+                                          ?>
+                                             
                                           </div>
                                         </div>
                                       </li>

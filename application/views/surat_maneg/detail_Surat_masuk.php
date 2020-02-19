@@ -65,10 +65,11 @@
                                     </div>    
                                     <div class="row">
                                         <div class ="col-sm-4">
-                                            <p><span  class="font-weight-bold">Perihal</span></p>
+                                            <p><span  class="font-weight-bold">si Ringkas</span></p>
                                         </div>
                                         <div class ="col-sm-6">
-                                            <p><span  class="font-weight-bold">: <?= $detail_srt_masuk->perihal ?> </span></p>
+                                            <p><span  class="font-weight-bold">: <?= $detail_srt_masuk->perihal ?> 
+                                            </span></p>
                                         </div>
                                     </div>    
                                 </div>
@@ -85,17 +86,44 @@
                     <div class="tab-pane container fade" id="history_srt_msk">
                         <div class="card shadow mt-4" >    
                             <div class="progress">
-                            <?php
+                            <!-- <?php
                                 foreach($detail_srt_masuk_ter as $dtrsmk){?>
                                     <div class="progress-bar progress-bar-striped progress-bar-animated bg-<?=$dtrsmk->bg_porgres?>" role="progressbar" style="width: 30%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
                                     <?php if( $dtrsmk->di_kirimkan_oleh == 0){?>
                                     <?php }else {?>
-                                        <?= " Dari ". jabatanget($dtrsmk->di_kirimkan_oleh)?>
+                                        <?= " Surat Masuk Dari ". jabatanget($dtrsmk->di_kirimkan_oleh)?>
                                         <?php } ?>
                                     <?= feedback($dtrsmk->id_feedback);?>   <?=jabatanget($dtrsmk->di_teruskan_ke)?>
                                     </div>
                                     
-                                <?php } ?>    
+                                <?php } ?>     -->
+                            </div>
+                            <div class="card-body">
+                            <?php
+                                foreach($detail_srt_masuk_ter as $dtrsmk){?>
+                                <h4 class="small font-weight-bold">
+                                <?php 
+                                    if( $dtrsmk->di_kirimkan_oleh == 0){?>
+                                    <?php }else {?>
+                                            <?= " Surat Masuk Dari ". jabatanget($dtrsmk->di_kirimkan_oleh)?>
+                                    <?php } ?>
+                                    <?= feedback($dtrsmk->id_feedback);?>   <?=jabatanget($dtrsmk->di_teruskan_ke)?>
+                                    <span class="float-right">
+                                        <?php 
+                                        if($dtrsmk->id_feedback==1){
+                                            echo $prog="50%";
+                                        }elseif($dtrsmk->id_feedback==2){
+                                            echo $prog="100%";
+                                        }elseif($dtrsmk->id_feedback==3){
+                                            echo $prog="100%";
+                                        }    
+                                        ?>
+                                     </span>
+                                </h4>
+                                <div class="progress mb-4">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-<?=$dtrsmk->bg_porgres?>" role="progressbar" style="width: <?= $prog ?>" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <?php } ?>        
                             </div>
                         </div>
                     </div>

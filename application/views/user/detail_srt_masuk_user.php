@@ -65,12 +65,14 @@
                                     </div>    
                                     <div class="row">
                                         <div class ="col-sm-4">
-                                            <p><span  class="font-weight-bold">Perihal</span></p>
+                                            <p><span  class="font-weight-bold">Isi Ringkas</span></p>
+                                            <?= $this->session->userdata('id_jabatan')?>
                                         </div>
                                         <div class ="col-sm-6">
                                             <p><span  class="font-weight-bold">: <?= $detail_srt_masuk->perihal ?> </span></p>
                                         </div>
                                     </div>    
+                                    
                                 </div>
                                 
                             </div>
@@ -91,8 +93,7 @@
                                 <form  method="POST" action="<?= base_url()?>user/add_suratmasuk_diteruskan">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                             <input type="hidden" class="form-control" name="id_surat_masuk" value="<?= $detail_srt_masuk_ter->id_surat_masuk?>">
-                                                
+                                            <input type="hidden" class="form-control" name="id_surat_masuk" value="<?= $detail_srt_masuk_ter->id_surat_masuk?>">
                                             <div class="form-group ">
                                                 <label for="">Teruskan Disposisi Surat Masuk</label>
                                                 <select  class="custom-select custom-select mb-" name="di_teruskan_ke">
