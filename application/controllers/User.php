@@ -37,11 +37,11 @@ class User extends CI_Controller {
         $this->template->TemplateGen($judul,$halaman,$data);   
     }
 
-    public function detail_srt_masuk_user($id){
+    public function detail_srt_masuk_user($id,$idterus=""){
         $judul='Disposisi Surat';
         $halaman='user/detail_srt_masuk_user';
         $data['detail_srt_masuk']=$this->Surat_Mod->get_srtMSkBYID($id);   
-        $data['detail_srt_masuk_ter']=$this->Surat_Mod->get_srtMSkBYID_terSingle($id);   
+        $data['detail_srt_masuk_ter']=$this->Surat_Mod->get_srtMSkBYID_terSingle($id,$idterus); 
         $data['jabatan']=$this->user_Mod->get_all_jabatan();
         $this->template->TemplateGen($judul,$halaman,$data);    
     }

@@ -193,7 +193,7 @@
                                 foreach($data_surat as $ds){?>
                                 <?php
                                     if($ds->tipe_surat=="Surat Masuk"){?>
-                                      <a class="dropdown-item d-flex align-items-center ubah_feedback" data-id_terus_srt_msk="<?=$smk->id_terus ?>"  href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>">
+                                      <a class="dropdown-item d-flex align-items-center ubah_feedback" data-id_terus_srt_msk="<?=$smk->id_terus ?>"  href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>">
                                    <?php  } elseif($ds->tipe_surat="Surat Keluar"){?>
                                       <a class="dropdown-item d-flex align-items-center" href="<?= base_url()?>User">
                                    <?php }?>
@@ -247,13 +247,13 @@
                                           ?>
                                           </div>
                                           <div class="col-sm-4">
-                                            <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$sm->id_surat_masuk?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
+                                            <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
                                               <span class="text-gray-500 font-weight-lighter font-italic"><?= nice_date($sm->tgl_surat_masuk, 'd-m-Y')?> -</span>
                                               <span class="text-black-50 font-font-weight-bolder text-uppercase"><?=$sm->asal_surat ?></span>
                                             </a>
                                           </div>
                                           <div class="col-sm-5">
-                                            <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$sm->id_surat_masuk?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
+                                            <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
                                               <span class="text-gray-500 text-capitalize "><?=$sm->perihal?></span>
                                             </a>
                                           </div>

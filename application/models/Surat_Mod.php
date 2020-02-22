@@ -37,8 +37,11 @@ class Surat_Mod extends CI_Model {
     public function get_srtMSkBYID_diterke($id){
         return $this->db->get_where('surat_masuk_diter',['di_teruskan_ke'=> $id])->result();
     }
-    public function get_srtMSkBYID_terSingle($id){
-        return $this->db->get_where('surat_masuk_diter',['id_surat_masuk'=> $id])->row();
+    public function get_srtMSkBYID_terSingle($id,$idterus){
+            $this->db->where('id_surat_masuk',$id);
+            $this->db->where('id_terus',$idterus);
+        return $this->db->get('surat_masuk_diter')->row();
+      
     }
 
     public function edit_feedback_srtMSK($data,$id){
