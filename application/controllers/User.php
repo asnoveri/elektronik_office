@@ -74,6 +74,12 @@ class User extends CI_Controller {
             </div>');
             redirect('User/list_srt_msk_user');
             }
+
+        public function status_srt_masuk_user($id_surat_masuk,$di_kirimkan_oleh){
+            $a=$this->Surat_Mod->get_srtMskditerByIdKirim($id_surat_masuk,$di_kirimkan_oleh);
+
+             print_r($a);
+            }
 }
 
 

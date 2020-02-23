@@ -28,9 +28,7 @@
                         </div>
                     </div>
                 </div>
-          
-            
-               <?= get_tabel_srt_msk_peruser($this->session->userdata('id_jabatan'))?>
+                <?= get_tabel_srt_msk_peruser($this->session->userdata('id_jabatan'))?>
             </div>
         </div>
     </div>

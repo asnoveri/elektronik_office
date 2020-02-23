@@ -22,9 +22,6 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#action_srt_msk_user" id="action_srt_msk">Action</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#status_srt_msk_user" id="status_srt_msk">Status</a>
-                    </li>
                 </ul>
                 <div class="tab-content mt-4">
                     <div class="tab-pane container active" id="detail_surat_masuk_user">
@@ -98,9 +95,6 @@
                         <div class="card-body py-2  pdfview" data-pdf="<?= $detail_srt_masuk->file_surat ?>">
                         </div>
                     </div>
-                    <div class="tab-pane container fade" id="status_srt_msk_user">
-                        asdad
-                    </div>
                     <div class="tab-pane container fade" id="action_srt_msk_user">
                         <div class="row">
                             <div class="col-sm-6">
@@ -115,6 +109,7 @@
                                                 <option value="<?=$jbt['id_jabatan']?>"> <?= $jbt['jabatan']?></option>
                                                     <?php }?>
                                             </select>
+                                    </div>        
                                             <button type="submit" class="btn btn-primary" >Teruskan</button>
                                             <button type="reset" class="btn btn-danger">Batal</button>
                                 </form>

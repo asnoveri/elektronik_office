@@ -148,8 +148,8 @@
             function get_data_srt_masuk($id_jabatan){?>
               <?php $ci= get_instance();?>
               <li class="nav-item dropdown no-arrow mx-1">
-                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fas fa-bell fa-fw"></i>
+                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
                     <!-- Counter - Alerts -->
                     <?php 
                          $query= $query= "SELECT * FROM surat_masuk_diter,surat_masuk WHERE di_teruskan_ke=$id_jabatan and id_feedback='1' and surat_masuk_diter.id_surat_masuk=surat_masuk.id_surat_masuk order by tgl_surat_masuk desc";
@@ -176,14 +176,14 @@
                             }elseif(count($query1)==1){
                                 $hg="auto";
                               }elseif(count($query1)==2){
-                                $hg="300px";
+                                $hg="235px";
                               }elseif(count($query1)>=3){
-                                $hg="450px";
+                                $hg="313px";
                               }
                         ?>
-                <div <?= $kondisi?> class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown" style="overflow: auto; height:<?= $hg?>">
-                      <h6 class="dropdown-header bg-success ">
-                        Alerts Center
+                <div <?= $kondisi?> class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in " aria-labelledby="messagesDropdown" style="overflow: auto; height:<?= $hg?>">
+                      <h6 class="dropdown-header ">
+                      Disposisi Surat
                       </h6>
                       <?php
                           foreach ($query1 as $smk){?>
@@ -194,24 +194,28 @@
                                 <?php
                                     if($ds->tipe_surat=="Surat Masuk"){?>
                                       <a class="dropdown-item d-flex align-items-center ubah_feedback" data-id_terus_srt_msk="<?=$smk->id_terus ?>"  href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>">
+                                        <div class="dropdown-list-image mr-3">
+                                          <div class="status-indicator bg-success"></div>
+                                        </div>
+                                        <div class="">
+                                          <?php
+                                            if($smk->di_kirimkan_oleh==0){
+                                              $pengirim= "Admin/Operator";
+                                            }else{
+                                              $pengirim= jabatanget($smk->di_kirimkan_oleh);
+                                            }
+                                          ?>
+                                          <div class="text-truncate font-weight-bold"><?= $ds->tipe_surat?> (<?= $pengirim?>)</div>
+                                          <div class="text-truncate"><?= $ds->perihal?></div>
+                                          <div class="small text-gray-500">dari <?= $ds->asal_surat?> / <?= nice_date($ds->tgl_surat_masuk, 'd-m-Y')?></div>
+                                        </div>
+                                      </a>
                                    <?php  } elseif($ds->tipe_surat="Surat Keluar"){?>
                                       <a class="dropdown-item d-flex align-items-center" href="<?= base_url()?>User">
                                    <?php }?>
-                                  <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                      <i class="fas fa-file-alt text-white"></i>
-                                    </div>
-                                  </div>
-                                  <div>
-                                    <div class="small text-gray-500"><?= nice_date($ds->tgl_surat_masuk, 'd-m-Y')?></div>
-                                    <span class="font-weight-bold"><?= $ds->tipe_surat?></span></br>
-                                    <p class="font-weight-tiny"><?= $ds->perihal?></p>
-                                    <span class="font-weight-bold"><?= $ds->asal_surat?></span></br>
-                                  </div>
-                              </a>
                                 <?php }?>
-                       <?php  }?>
-                      <a class="dropdown-item text-center small text-gray-500" href="<?= base_url()?>User/list_srt_msk_user">Show All Alerts</a>
+                      <?php  }?>
+                      <a class="dropdown-item text-center small text-gray-500" href="<?= base_url()?>User/list_srt_msk_user">Tampilkan Semua Surat</a>
                 </div>
               </li>
            <?php }
@@ -258,13 +262,21 @@
                                             </a>
                                           </div>
                                           <div class="col-sm-2 text-center">
-                                          <?php
-                                              if($smk->id_feedback==1){?>
-                                              <?php }elseif($smk->id_feedback==2){?>
-                                                <button type="button" class="btn btn-info">Arsipkan Surat</button>
-                                              <?php }
-                                          ?>
-                                             
+                                            <div class="dropdown">
+                                              <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                                              <i class="fas fa-fw fa-cog"></i>
+                                              </button>
+                                              <div class="dropdown-menu">
+                                                <a class="dropdown-item ubah_feedback1" data-id_terus_srt_msk="<?=$smk->id_terus ?>"  href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>">Lihat Surat Masuk</a>
+                                                <a class="dropdown-item" href="<?= base_url()?>user/status_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$ci->session->userdata('id_jabatan')?>">Status Surat Masuk</a>
+                                                <?php
+                                                    if($smk->id_feedback==1){?>
+                                                    <?php }elseif($smk->id_feedback==2){?>
+                                                      <a class="dropdown-item" href="">Arsipkan Surat Masuk</a>
+                                                    <?php }
+                                                ?>
+                                              </div>
+                                            </div>
                                           </div>
                                         </div>
                                       </li>
