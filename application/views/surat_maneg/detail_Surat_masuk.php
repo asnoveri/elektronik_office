@@ -114,7 +114,7 @@
                                             echo $prog="50%";
                                         }elseif($dtrsmk->id_feedback==2){
                                             echo $prog="100%";
-                                        }elseif($dtrsmk->id_feedback==3){
+                                        }elseif($dtrsmk->id_feedback==3||$dtrsmk->id_feedback==5){
                                             echo $prog="100%";
                                         }    
                                         ?>

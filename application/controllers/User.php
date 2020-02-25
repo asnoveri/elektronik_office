@@ -76,9 +76,11 @@ class User extends CI_Controller {
             }
 
         public function status_srt_masuk_user($id_surat_masuk,$di_kirimkan_oleh){
-            $a=$this->Surat_Mod->get_srtMskditerByIdKirim($id_surat_masuk,$di_kirimkan_oleh);
-
-             print_r($a);
+            $judul='Disposisi Surat';
+            $halaman='user/status_surat_masuk';
+            $data['surat_masukter']=$this->Surat_Mod->get_srtMskditerByIdKirim($id_surat_masuk,$di_kirimkan_oleh);
+            $data['surat_masuk']=$this->Surat_Mod->get_srtMSkBYID($id_surat_masuk);
+            $this->template->TemplateGen($judul,$halaman,$data);    
             }
 }
 

@@ -242,7 +242,7 @@
                                                   <a href="#" data-toggle="tooltip" data-placement="right" title="Surat Masuk Belum di Lihat!"> 
                                                     <i class="fas fa-circle text-success" data-toggle="tooltip" data-placement="right"></i>
                                                   </a>
-                                               </span>
+                                                </span>
                                               <?php }elseif($smk->id_feedback==2){?>
                                                 <span class="mr-2">
                                                   <i class="fas fa-circle text-gray-500"></i>
@@ -250,15 +250,28 @@
                                               <?php }
                                           ?>
                                           </div>
-                                          <div class="col-sm-4">
+                                          <div class="col-sm-3">
                                             <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
                                               <span class="text-gray-500 font-weight-lighter font-italic"><?= nice_date($sm->tgl_surat_masuk, 'd-m-Y')?> -</span>
                                               <span class="text-black-50 font-font-weight-bolder text-uppercase"><?=$sm->asal_surat ?></span>
                                             </a>
                                           </div>
-                                          <div class="col-sm-5">
+                                          <div class="col-sm-4">
                                             <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
                                               <span class="text-gray-500 text-capitalize "><?=$sm->perihal?></span>
+                                            </a>
+                                          </div>
+                                          <div class="col-sm-2">
+                                            <a href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
+                                              <span class="text-gray-500 font-weight-lighter font-italic">
+                                                <?php
+                                                  if($smk->di_kirimkan_oleh==0){
+                                                    echo "(Admin/Operator)";
+                                                  }else{
+                                                    echo "(".jabatanget($smk->di_kirimkan_oleh).")";
+                                                  }
+                                                ?>
+                                              </span>
                                             </a>
                                           </div>
                                           <div class="col-sm-2 text-center">
@@ -268,11 +281,11 @@
                                               </button>
                                               <div class="dropdown-menu">
                                                 <a class="dropdown-item ubah_feedback1" data-id_terus_srt_msk="<?=$smk->id_terus ?>"  href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>">Lihat Surat Masuk</a>
-                                                <a class="dropdown-item" href="<?= base_url()?>user/status_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$ci->session->userdata('id_jabatan')?>">Status Surat Masuk</a>
                                                 <?php
                                                     if($smk->id_feedback==1){?>
                                                     <?php }elseif($smk->id_feedback==2){?>
                                                       <a class="dropdown-item" href="">Arsipkan Surat Masuk</a>
+                                                      <a class="dropdown-item" href="<?= base_url()?>user/status_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$ci->session->userdata('id_jabatan')?>">Status Surat Masuk Teruskan</a>
                                                     <?php }
                                                 ?>
                                               </div>
