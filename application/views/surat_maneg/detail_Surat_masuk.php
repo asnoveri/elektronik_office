@@ -120,8 +120,8 @@
                                         ?>
                                      </span>
                                 </h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-<?=$dtrsmk->bg_porgres?>" role="progressbar" style="width: <?= $prog ?>" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress mb-4" style="height:10px">
+                                    <div class="progress-bar bg-<?=$dtrsmk->bg_porgres?>" role="progressbar" style="width: <?= $prog ?>;height:10px" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <?php } ?>        
                             </div>

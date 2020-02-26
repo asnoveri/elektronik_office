@@ -57,23 +57,34 @@ class User extends CI_Controller {
          }
     }
 
-    public function add_suratmasuk_diteruskan(){
+    public function add_suratmasuk_diteruskan($id,$idterus=""){
+        $this->form_validation->set_rules('instruksi','Instruksi','trim|max_length[200]
+        ', ['max_length'=> 'Instruksi Maksimal 200 Karakter tidak boleh lebih']     
+        );   
+        $this->form_validation->set_rules('di_teruskan_ke','Di_teruskan_ke','required',
+         ['required'=> 'Teruskan Disposisi Surat Masuk Tidak Boleh Kosong']     
+        );    
         
-        $jbtn=$this->user_Mod->get_jbtnBYid($this->input->post('di_teruskan_ke',true));
-        $data1=[
-            'id_surat_masuk'=> $this->input->post('id_surat_masuk',true),
-            'di_teruskan_ke'=> $this->input->post('di_teruskan_ke',true),
-            'di_kirimkan_oleh'=> $this->session->userdata('id_jabatan'),
-            'id_feedback'=>'1',
-            'bg_porgres'=>'primary'
-        ]; 
-            $this->Surat_Mod->add_srt_msuk_diter($data1);
-            $this->session->set_flashdata('pesan_surat1','<div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            Berhasil Meneruskan Surat ke '. $jbtn->jabatan .'
-            </div>');
-            redirect('User/list_srt_msk_user');
-            }
+        if($this->form_validation->run() == FALSE){
+            $this->detail_srt_masuk_user($id,$idterus);
+        }else{
+            $jbtn=$this->user_Mod->get_jbtnBYid($this->input->post('di_teruskan_ke',true));
+            $data1=[
+                'id_surat_masuk'=> $this->input->post('id_surat_masuk',true),
+                'di_teruskan_ke'=> $this->input->post('di_teruskan_ke',true),
+                'di_kirimkan_oleh'=> $this->session->userdata('id_jabatan'),
+                'id_feedback'=>'1',
+                'bg_porgres'=>'primary',
+                'instruksi'=> $this->input->post('instruksi',true)
+            ]; 
+                $this->Surat_Mod->add_srt_msuk_diter($data1);
+                $this->session->set_flashdata('pesan_surat1','<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Berhasil Meneruskan Surat ke '. $jbtn->jabatan .'
+                </div>');
+                redirect('User/list_srt_msk_user');
+        }
+    }
 
         public function status_srt_masuk_user($id_surat_masuk,$di_kirimkan_oleh){
             $judul='Disposisi Surat';
