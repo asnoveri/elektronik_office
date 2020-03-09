@@ -93,6 +93,10 @@ class User extends CI_Controller {
             $data['surat_masuk']=$this->Surat_Mod->get_srtMSkBYID($id_surat_masuk);
             $this->template->TemplateGen($judul,$halaman,$data);    
             }
+
+        public function arsip_srt_masuk(){
+            
+        }    
 }
 
 

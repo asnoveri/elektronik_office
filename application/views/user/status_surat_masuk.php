@@ -21,7 +21,7 @@
                                         <th>#</th>
                                         <th>Surat Masuk Teruskan</th>
                                         <th>Status</th>
-                                        <th>Feddback</th>
+                                        <!-- <th>Feddback</th> -->
                                     </tr>
                             </thead>
                                 <tbody>
@@ -34,15 +34,14 @@
                                                 <td>
                                                     <button type="button" class="w-100 btn btn-<?=$sm->bg_porgres?>"><?= feedback($sm->id_feedback)?></button>
                                                 </td>
-                                                <td class="text-capitalize">
+                                                <!-- <td class="text-capitalize">
                                                     <?php 
                                                         if($sm->id_feedback==5){
                                                             echo $sm->di_tindak_lanjuti;
                                                         }else{
                                                         }
                                                     ?>
-                                                </td>
-                                                
+                                                </td> -->
                                             </tr>
                                             <?php $no++; } ?>
                                 </tbody>

@@ -191,8 +191,7 @@
                               <?php
                                $data_surat= $ci->db->get_where('surat_masuk',['id_surat_masuk'=>$smk->id_surat_masuk])->result(); 
                                 foreach($data_surat as $ds){?>
-                                <?php
-                                    if($ds->tipe_surat=="Surat Masuk"){?>
+                               
                                       <a class="dropdown-item d-flex align-items-center ubah_feedback" data-id_terus_srt_msk="<?=$smk->id_terus ?>"  href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>">
                                         <div class="dropdown-list-image mr-3">
                                           <div class="status-indicator bg-success"></div>
@@ -210,15 +209,12 @@
                                           <div class="small text-gray-500">dari <?= $ds->asal_surat?> / <?= nice_date($ds->tgl_surat_masuk, 'd-m-Y')?></div>
                                         </div>
                                       </a>
-                                   <?php  } elseif($ds->tipe_surat="Surat Keluar"){?>
-                                      <a class="dropdown-item d-flex align-items-center" href="<?= base_url()?>User">
-                                   <?php }?>
                                 <?php }?>
                       <?php  }?>
                       <a class="dropdown-item text-center small text-gray-500" href="<?= base_url()?>User/list_srt_msk_user">Tampilkan Semua Surat</a>
                 </div>
               </li>
-           <?php }
+          <?php }
 
           //  function menampilkan data surat masuk ke dalam tabel per id user
             function get_tabel_srt_msk_peruser($id_jabatan){?>

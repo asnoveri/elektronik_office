@@ -123,7 +123,9 @@ class Managemen_surat extends CI_Controller {
         $this->template->TemplateGen($judul,$halaman,$data);    
     }
     
-
+    public function srt_keluar(){
+        echo "ini surat keluar";
+    }
 
 }
 
