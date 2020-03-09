@@ -57,6 +57,15 @@ class Surat_Mod extends CI_Model {
             return false;
         }
       }
+
+      public function edit_kondisiSrtMSK($idterus,$data){
+        $this->db->update('surat_masuk_diter', $data,['id_terus'=>$idterus]);
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+      }
     
 }
 

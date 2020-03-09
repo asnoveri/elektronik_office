@@ -219,7 +219,7 @@
           //  function menampilkan data surat masuk ke dalam tabel per id user
             function get_tabel_srt_msk_peruser($id_jabatan){?>
               <?php $ci= get_instance();
-              $query= "SELECT * FROM surat_masuk_diter,surat_masuk WHERE di_teruskan_ke=$id_jabatan and surat_masuk_diter.id_surat_masuk=surat_masuk.id_surat_masuk order by tgl_surat_masuk desc";
+              $query= "SELECT * FROM surat_masuk_diter,surat_masuk WHERE di_teruskan_ke=$id_jabatan and surat_masuk_diter.id_surat_masuk=surat_masuk.id_surat_masuk and surat_masuk_diter.kondisi_surat='' order by tgl_surat_masuk desc";
               $query1=$ci->db->query($query)->result();?>
                
                         <?php
@@ -280,7 +280,11 @@
                                                 <?php
                                                     if($smk->id_feedback==1){?>
                                                     <?php }elseif($smk->id_feedback==2){?>
-                                                      <a class="dropdown-item" href="">Arsipkan Surat Masuk</a>
+                                                      <form action="<?= base_url()?>user/arsipkan_surat_masuk" method="post">
+                                                      <input type="hidden" name="idterus" value="<?=$smk->id_terus?>">
+                                                      <button type="submit" class="dropdown-item" >Arsipkan Surat Masuk</button>
+                                                      </form>
+                                                      <!-- <a class="dropdown-item" href="<?= base_url()?>user/arsipkan_surat_masuk/<?=$smk->id_surat_masuk?>">Arsipkan Surat Masuk</a> -->
                                                       <a class="dropdown-item" href="<?= base_url()?>user/status_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$ci->session->userdata('id_jabatan')?>">Status Surat Masuk Teruskan</a>
                                                     <?php }
                                                 ?>
@@ -295,4 +299,76 @@
                         <?php  }?>    
             <?php }                          
 
+
+          //function menampilakn surat masuk yang sudah di arsipkan
+          function get_tabel_srt_msk_peruser_DIarsipkan($id_jabatan){?>
+            <?php $ci= get_instance();
+            $query= "SELECT * FROM surat_masuk_diter,surat_masuk WHERE di_teruskan_ke=$id_jabatan and surat_masuk_diter.id_surat_masuk=surat_masuk.id_surat_masuk and surat_masuk_diter.kondisi_surat='Di Arsipkan' order by tgl_surat_masuk desc";
+            $query1=$ci->db->query($query)->result();?>
+          
+                      <?php
+                      foreach ($query1 as $smk){?>
+                      <?php
+                            $data_surat= $ci->db->get_where('surat_masuk',['id_surat_masuk'=>$smk->id_surat_masuk])->result(); 
+                            
+                              foreach($data_surat as $sm){  ?>
+                                  <ul class="list-group" id="myList" >
+                                    <li class="list-group-item">
+                                      <div class="row">
+                                        <div class="col-sm-1">
+                                        <?php
+                                            if($smk->id_feedback==1){?>
+                                              <span class="mr-2">
+                                                <a href="#" data-toggle="tooltip" data-placement="right" title="Surat Masuk Belum di Lihat!"> 
+                                                  <i class="fas fa-circle text-success" data-toggle="tooltip" data-placement="right"></i>
+                                                </a>
+                                              </span>
+                                            <?php }elseif($smk->id_feedback==2){?>
+                                              <span class="mr-2">
+                                                <i class="fas fa-circle text-gray-500"></i>
+                                              </span>
+                                            <?php }
+                                        ?>
+                                        </div>
+                                        <div class="col-sm-3">
+                                          <a href="<?= base_url()?>user/detail_srt_masuk_userPerArsip/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
+                                            <span class="text-gray-500 font-weight-lighter font-italic"><?= nice_date($sm->tgl_surat_masuk, 'd-m-Y')?> -</span>
+                                            <span class="text-black-50 font-font-weight-bolder text-uppercase"><?=$sm->asal_surat ?></span>
+                                          </a>
+                                        </div>
+                                        <div class="col-sm-4">
+                                          <a href="<?= base_url()?>user/detail_srt_masuk_userPerArsip/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
+                                            <span class="text-gray-500 text-capitalize "><?=$sm->perihal?></span>
+                                          </a>
+                                        </div>
+                                        <div class="col-sm-2">
+                                          <a href="<?= base_url()?>user/detail_srt_masuk_userPerArsip/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>" class="ubah_feedback1 text-decoration-none" data-id_terus_srt_msk="<?=$smk->id_terus ?>"> 
+                                            <span class="text-gray-500 font-weight-lighter font-italic">
+                                              <?php
+                                                if($smk->di_kirimkan_oleh==0){
+                                                  echo "(Admin/Operator)";
+                                                }else{
+                                                  echo "(".jabatanget($smk->di_kirimkan_oleh).")";
+                                                }
+                                              ?>
+                                            </span>
+                                          </a>
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                          <div class="dropdown">
+                                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fas fa-fw fa-cog"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                              <a class="dropdown-item ubah_feedback1" data-id_terus_srt_msk="<?=$smk->id_terus ?>"  href="<?= base_url()?>user/detail_srt_masuk_userPerArsip/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>">Lihat Surat Masuk Di Arsipkan</a>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                    <?php ?> 
+                              <?php  }?>
+                      <?php  }?>    
+          <?php }                                            
 ?>

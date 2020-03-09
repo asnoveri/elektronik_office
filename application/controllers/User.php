@@ -95,8 +95,42 @@ class User extends CI_Controller {
             }
 
         public function arsip_srt_masuk(){
-            
+            $judul='Disposisi Surat';
+            $halaman='user/arsip_surat_masuk';
+            $data='';
+            $this->template->TemplateGen($judul,$halaman,$data);   
+           
         }    
+
+        public function detail_srt_masuk_userPerArsip($id,$idterus=""){
+            $judul='Disposisi Surat';
+            $halaman='user/detail_srt_masuk_userPerArsip';
+            $data['detail_srt_masuk']=$this->Surat_Mod->get_srtMSkBYID($id);   
+            $data['detail_srt_masuk_ter']=$this->Surat_Mod->get_srtMSkBYID_terSingle($id,$idterus); 
+            $data['jabatan']=$this->user_Mod->get_all_jabatan();
+            $this->template->TemplateGen($judul,$halaman,$data);    
+        }
+
+        public function arsipkan_surat_masuk(){
+            $idterus= $this->input->post('idterus');
+            $data=[
+                'kondisi_surat'=>'Di Arsipkan'
+            ];
+            if($this->Surat_Mod->edit_kondisiSrtMSK($idterus,$data)==true){
+                $this->session->set_flashdata('pesan_surat1','<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Berhasil MengArsipkan Surat Masuk
+                </div>');
+                redirect('User/list_srt_msk_user');
+            }else{
+                $this->session->set_flashdata('pesan_surat1','<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Gagal MengArsipkan Surat Masuk
+                </div>');
+                redirect('User/list_srt_msk_user');
+            }
+        }
+
 }
 
 
