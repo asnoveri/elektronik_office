@@ -13,8 +13,28 @@ class Surat_Mod extends CI_Model {
         return false;
         }
     }
+
+    public function upload_SRT_keluar($data){
+        $this->db->insert('surat_keluar',$data);
+        if($this->db->affected_rows()> 0){
+            $this->db->select_max('id_surat_keluar');
+            return $this->db->get('surat_keluar')->row();
+        }else{
+           return false;
+           }
+       }
+
     public function add_srt_msuk_diter($data){
         $this->db->insert('surat_masuk_diter',$data);
+        if($this->db->affected_rows()> 0){
+            return true;
+        }else{
+           return false;
+           }
+       }
+
+       public function add_srt_keluar_diter($data){
+        $this->db->insert('surat_keluar_diter',$data);
         if($this->db->affected_rows()> 0){
             return true;
         }else{

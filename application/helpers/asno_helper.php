@@ -204,14 +204,13 @@
                                               $pengirim= jabatanget($smk->di_kirimkan_oleh);
                                             }
                                           ?>
-                                          <div class="text-truncate font-weight-bold"><?= $ds->tipe_surat?> (<?= $pengirim?>)</div>
                                           <div class="text-truncate"><?= $ds->perihal?></div>
                                           <div class="small text-gray-500">dari <?= $ds->asal_surat?> / <?= nice_date($ds->tgl_surat_masuk, 'd-m-Y')?></div>
                                         </div>
                                       </a>
                                 <?php }?>
                       <?php  }?>
-                      <a class="dropdown-item text-center small text-gray-500" href="<?= base_url()?>User/list_srt_msk_user">Tampilkan Semua Surat</a>
+                      <a class="dropdown-item text-center small text-gray-500" href="<?= base_url()?>User/list_srt_msk_user">Tampilkan Semua Surat Masuk</a>
                 </div>
               </li>
           <?php }

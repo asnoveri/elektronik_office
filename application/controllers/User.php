@@ -131,6 +131,90 @@ class User extends CI_Controller {
             }
         }
 
+        public function surat_keluar(){
+            $judul='Disposisi Surat';
+            $halaman='user/surat_keluar';
+            $data['jabatan']=$this->user_Mod->get_all_jabatan();
+            $data['adum']=$this->user_Mod->get_jbtnBYid(14);
+            $this->template->TemplateGen($judul,$halaman,$data);     
+        }
+
+        public function add_surat_keluar(){
+            $this->form_validation->set_rules('tgl_surat_keluar','Tgl_surat_keluar','required|trim',[
+                'required'=>'Tanggal Surat Harus di pilih',
+            ]);
+            $this->form_validation->set_rules('no_surat_keluar','No_surat_keluar','required|trim',[
+                'required'=>'No Surat Masuk Tidak Boleh Kosong',
+            ]);
+            $this->form_validation->set_rules('perihal','perihal','required|trim',[
+                'required'=>'Perihal Tidak Boleh Kosong',
+            ]);
+            $this->form_validation->set_rules('sifat_surat','Sifat_surat','required|trim',[
+                'required'=>'Sifat surat Harus di pilih',]);
+    
+          if($this->form_validation->run()==false){
+                $this->surat_keluar();
+          }else{
+              $upload_file_srt= $_FILES["file_surat"]["name"];
+              if($upload_file_srt){
+                $config['upload_path']          = "./assets/upload_file_surat/";
+                $config['allowed_types']        = 'pdf|jpg';
+                $config['max_size']             = 4096;
+                $config['remove_spaces']        = true;
+                //memangil libraires upload dan masukan configurasinya
+                $this->load->library('upload', $config);
+                if ( ! $this->upload->do_upload('file_surat')) {
+                    $error =$this->upload->display_errors();
+                    $this->session->set_flashdata('pesan_surat_keluar','<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                     .$error.    
+                    '</div>');
+                    redirect('user/surat_keluar');
+                       
+                    }else{
+                     $file=$this->upload->data('file_name');
+                }
+              }else{
+                $this->session->set_flashdata('pesan_surat_keluar','<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    File yang di Upload belum di pilih, Silahkan pilih dulu filenya
+                </div>');
+                redirect('user/surat_keluar');
+                   
+              }
+              $data=[
+                'tgl_surat_keluar'=>$this->input->post('tgl_surat_keluar',true),
+                'no_surat_keluar'=> $this->input->post('no_surat_keluar',true),
+                'sifat_surat'=>$this->input->post('sifat_surat',true),
+                'asal_surat'=> $this->session->userdata('id_jabatan'),
+                'perihal'=> $this->input->post('perihal',true),
+                'file_surat'=>$file
+              ]; 
+          
+              if($id_srt_keluar=$this->Surat_Mod->upload_SRT_keluar($data)){
+                     $data1=[
+                            'id_surat_keluar'=> $id_srt_keluar->id_surat_keluar,
+                            'di_teruskan_ke_srt_klr'=> 0,
+                            'id_feedback'=>'1',
+                            'bg_porgres_srt_keluar'=>'primary'
+                        ]; 
+                     $this->Surat_Mod->add_srt_keluar_diter($data1);
+    
+                $this->session->set_flashdata('pesan_surat_keluar','<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                   Berhasil Mengajukan Disposisi Surat Keluar
+                </div>');
+                redirect('user/surat_keluar');
+              }else{
+                $this->session->set_flashdata('pesan_surat_keluar','<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                   gagal  Mengajukan Disposisi Surat Keluar
+                </div>');
+                redirect('user/surat_keluar');
+              }
+          }
+        }
+
 }
 
 
