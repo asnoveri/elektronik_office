@@ -3,7 +3,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $judul?></h1>
-        <a href="<?= base_url()?>User" class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-right"></i></span><span class="text">List Surat Keluar</span></a>
+        <a href="<?= base_url()?>User/list_dftr_srt_keluarPerUser" class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-right"></i></span><span class="text">List Surat Keluar</span></a>
         </div>
 
         <!-- Content Row -->

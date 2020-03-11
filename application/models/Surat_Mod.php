@@ -86,6 +86,14 @@ class Surat_Mod extends CI_Model {
             return false;
         }
       }
+
+      public function get_all_srtkeluarPeruser($id){
+        return $this->db->get_where('surat_keluar',['asal_surat'=> $id])->result();
+      }
+
+      public function get_surat_keluarByid($id){
+        return $this->db->get_where('surat_keluar',['id_surat_keluar'=> $id])->row();
+      }
     
 }
 

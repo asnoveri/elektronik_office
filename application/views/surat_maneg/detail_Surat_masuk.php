@@ -65,7 +65,7 @@
                                     </div>    
                                     <div class="row">
                                         <div class ="col-sm-4">
-                                            <p><span  class="font-weight-bold">si Ringkas</span></p>
+                                            <p><span  class="font-weight-bold">Isi Ringkas</span></p>
                                         </div>
                                         <div class ="col-sm-6">
                                             <p><span  class="font-weight-bold">: <?= $detail_srt_masuk->perihal ?> 

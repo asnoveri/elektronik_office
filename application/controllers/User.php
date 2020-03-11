@@ -188,6 +188,8 @@ class User extends CI_Controller {
                 'sifat_surat'=>$this->input->post('sifat_surat',true),
                 'asal_surat'=> $this->session->userdata('id_jabatan'),
                 'perihal'=> $this->input->post('perihal',true),
+                'id_feedback'=> 8,
+                'bg_porgres'=>'info',
                 'file_surat'=>$file
               ]; 
           
@@ -204,15 +206,30 @@ class User extends CI_Controller {
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                    Berhasil Mengajukan Disposisi Surat Keluar
                 </div>');
-                redirect('user/surat_keluar');
+                redirect('user/list_dftr_srt_keluarPerUser');
               }else{
                 $this->session->set_flashdata('pesan_surat_keluar','<div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                    gagal  Mengajukan Disposisi Surat Keluar
                 </div>');
-                redirect('user/surat_keluar');
+                redirect('user/list_dftr_srt_keluarPerUser');
               }
           }
+        }
+
+        public function list_dftr_srt_keluarPeruser(){
+            $judul='Disposisi Surat';
+            $halaman='user/list_dftr_srt_keluarPerUser';
+            $data['srt_keluar']=$this->Surat_Mod->get_all_srtkeluarPeruser($this->session->userdata('id_jabatan'));   
+            $this->template->TemplateGen($judul,$halaman,$data);     
+        }
+
+        public function lihatFile_suratKlr($id_surat_keluar){
+            $judul='Disposisi Surat';
+            $halaman='user/Lihat_file_suratKLR';
+            $data['srt_keluarbyId']=$this->Surat_Mod->get_surat_keluarByid($id_surat_keluar);   
+            $data['pjbtn_mndt']=$this->user_Mod->get_user_BYIDjabtan($data['srt_keluarbyId']->yang_mendisposisi);
+            $this->template->TemplateGen($judul,$halaman,$data);   
         }
 
 }

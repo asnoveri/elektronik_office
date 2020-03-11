@@ -32,6 +32,12 @@ class user_Mod extends CI_Model {
                 return $this->db->get_where('role_user',['role_id'=>$id])->row_array();
         }
 
+        public function get_user_BYIDjabtan($id){
+            $this->db->where('id_jabatan !=', 0);
+            $this->db->where('id_jabatan',$id);
+            return $this->db->get('user')->row();
+    }
+
         public function get_all_user_not_admin(){
             $query="SELECT * FROM  role_user where role_id !=1";
             return $this->db->query($query)->result_array();
