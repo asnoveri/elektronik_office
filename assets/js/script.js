@@ -71,7 +71,7 @@ $(function () {
 
 		$(".modal-body form").attr('action', 'http://localhost/disposisi/Menu_Managemen/edit_submenu');
 		const id_submenu = $(this).data('id_submn');
-
+		console.log(id_submenu);
 		$.ajax({
 			url: 'http://localhost/disposisi/Menu_Managemen/get_submenu_byid',
 			data: {

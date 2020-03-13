@@ -124,7 +124,47 @@ class Managemen_surat extends CI_Controller {
     }
     
     public function srt_keluar(){
-        echo "ini surat keluar";
+        $judul='Managemen Surat';
+        $halaman='Surat_maneg/list_dftr_srt_keluar_BYopadmn';
+        $data['srt_keluar_ter']=$this->Surat_Mod->get_surat_keluar_diterBYopadmn();   
+        $de=$data['srt_keluar_ter'];
+        foreach($de as $idsk){
+            $srt_keluar[]=$this->Surat_Mod->get_surat_keluarByid($idsk->id_surat_keluar);
+        }
+      $data['srt_keluar']= $srt_keluar;
+        $this->template->TemplateGen($judul,$halaman,$data);     
+    }
+
+    public function detail_srt_keluar($id_surat_keluar){
+        $judul='Managemen Surat';
+        $halaman='Surat_maneg/detail_Surat_keluar';
+        $data['srt_keluarbyId']=$this->Surat_Mod->get_surat_keluarByid($id_surat_keluar);   
+        $data['pjbtn_mndt']=$this->user_Mod->get_user_BYIDjabtan($data['srt_keluarbyId']->yang_mendisposisi);
+        $data['jabatan']=$this->user_Mod->get_all_jabatan();
+        $this->template->TemplateGen($judul,$halaman,$data);    
+    }
+
+    public function add_suratkeluar_diteruskan($id){
+        $this->form_validation->set_rules('di_teruskan_ke_srt_klr','Di_teruskan_ke_srt_klr','required',
+         ['required'=> 'Teruskan Pengajuan Disposisi Keluar Tidak Boleh Kosong']     
+        );  
+        if($this->form_validation->run() == FALSE){
+            $this->detail_srt_keluar($id);
+        }else{  
+            $jbtn=$this->user_Mod->get_jbtnBYid($this->input->post('di_teruskan_ke_srt_klr',true));
+            $data1=[
+                'id_surat_keluar'=> $this->input->post('id_surat_keluar',true),
+                'di_teruskan_ke_srt_klr'=> $this->input->post('di_teruskan_ke_srt_klr',true),
+                'id_feedback'=>'1',
+                'bg_porgres_srt_keluar'=>'primary'
+            ]; 
+                $this->Surat_Mod->add_srt_keluar_diter($data1);
+                $this->session->set_flashdata('pesan_surat1','<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Berhasil Meneruskan Pengajuan Disposis Surat ke '. $jbtn->jabatan .'
+                </div>');
+                redirect('Managemen_Surat/srt_keluar');
+        }
     }
 
 }

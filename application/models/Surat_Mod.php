@@ -94,6 +94,11 @@ class Surat_Mod extends CI_Model {
       public function get_surat_keluarByid($id){
         return $this->db->get_where('surat_keluar',['id_surat_keluar'=> $id])->row();
       }
+
+      public function get_surat_keluar_diterBYopadmn(){
+        $this->db->order_by('id_surat_keluar', 'DESC');
+        return $this->db->get_where('surat_keluar_diter',['di_teruskan_ke_srt_klr'=>0])->result();
+      }
     
 }
 

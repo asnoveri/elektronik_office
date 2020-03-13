@@ -21,7 +21,7 @@
                     <thead>
                         <tr>
                         <th>#</th>
-                        <th>Tanggal Surat Keluar</th>
+                        <!-- <th>Tanggal Surat Keluar</th> -->
                         <th>Perihal</th>
                         <th>Sifat Surat</th>
                         <th>Status Pengajuan</th>
@@ -36,7 +36,7 @@
                             foreach($srt_keluar as $sk){?>
                             <tr>
                                 <td><?=$no?></td>
-                                <td><?= nice_date($sk->tgl_surat_keluar, 'd-m-Y')?></td>
+                                <!-- <td><?= nice_date($sk->tgl_surat_keluar, 'd-m-Y')?></td> -->
                                 <td><?=$sk->perihal?></td>
                                 <td><?=$sk->sifat_surat?></td>
                                 <td><button class="btn btn-<?= $sk->bg_porgres?>"><?= feedback($sk->id_feedback)?></button> </td>
