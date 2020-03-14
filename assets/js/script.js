@@ -62,13 +62,11 @@ $(function () {
 		$('#pos').html("");
 
 	});
-
-
+	
 	//edit sub menu
 	$("a[id='edit_sb_mn']").on('click', function () {
 		$("#lbl_sb_mn").html("Edit Sub Menu");
 		$("#btn_sb_mn").html("Edit Sub Menu");
-
 		$(".modal-body form").attr('action', 'http://localhost/disposisi/Menu_Managemen/edit_submenu');
 		const id_submenu = $(this).data('id_submn');
 		console.log(id_submenu);
@@ -79,7 +77,6 @@ $(function () {
 			},
 			method: 'post',
 			dataType: 'JSON',
-
 			success: function (data) {
 				$("#sub_menu").val(data.title);
 				$("#id_menu").val(data.id_menu);

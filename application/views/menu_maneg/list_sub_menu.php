@@ -60,7 +60,13 @@
                 <td><?= $lst_mn['posisi_sub'] ?></td>
                 <td>
                     <div class="btn-group-vertical">
+                        
+                        
                         <a href="#" class="btn btn-primary" id="edit_sb_mn" data-toggle="modal" data-target="#tbhsubmenu" data-id_submn="<?= $lst_mn['id_submenu']?>"> Edit <i class="fa fa-edit"></i></a>
+                        
+                        
+                        
+                        
                         <a href="<?= base_url()?>Menu_Managemen/aktiv_sub_mnu/<?= $lst_mn['id_submenu']?>" class="btn btn-success"> Aktivkan <i class="fa fa-check"></i></a>
                         <a href="<?= base_url()?>Menu_Managemen/nonaktiv_sub_mnu/<?= $lst_mn['id_submenu']?>" class="btn btn-warning"> Non Aktivkan <i class="fa fa-times-circle"></i></a>
                     </div>
