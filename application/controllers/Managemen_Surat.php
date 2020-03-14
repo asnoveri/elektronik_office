@@ -155,7 +155,7 @@ class Managemen_surat extends CI_Controller {
             $data1=[
                 'id_surat_keluar'=> $this->input->post('id_surat_keluar',true),
                 'di_teruskan_ke_srt_klr'=> $this->input->post('di_teruskan_ke_srt_klr',true),
-                'id_feedback'=>'1',
+                'id_feedback_terSrtKlr'=>'1',
                 'bg_porgres_srt_keluar'=>'primary'
             ]; 
                 $this->Surat_Mod->add_srt_keluar_diter($data1);
@@ -165,6 +165,14 @@ class Managemen_surat extends CI_Controller {
                 </div>');
                 redirect('Managemen_Surat/srt_keluar');
         }
+    }
+
+    public function status_srt_keluar_kepjbt($id){
+        $judul='Managemen Surat';
+        $halaman='Surat_maneg/status_srt_keluar_kepjbt';
+        $data['surat_keluarter']=$this->Surat_Mod->get_surat_keluarByidMulti($id);
+        $data['surat_keluar']=$this->Surat_Mod->get_surat_keluarByid($id);
+        $this->template->TemplateGen($judul,$halaman,$data);    
     }
 
 }

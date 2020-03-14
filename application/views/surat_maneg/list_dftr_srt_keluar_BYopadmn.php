@@ -37,12 +37,18 @@
                                 <td><?=$sk->perihal?></td>
                                 <td><?=$sk->sifat_surat?></td>
                                 <td>
-                                    <div class="btn-group-vertical">
-                                    <a href="<?= base_url()?>Managemen_Surat/detail_srt_keluar/<?=$sk->id_surat_keluar?>" class="btn btn-primary"> Detail </a>
-                                    </div>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fas fa-fw fa-cog"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a href="<?= base_url()?>Managemen_Surat/detail_srt_keluar/<?=$sk->id_surat_keluar?>" class="dropdown-item"> Detail </a>
+                                            <a href="<?= base_url()?>Managemen_Surat/status_srt_keluar_kepjbt/<?=$sk->id_surat_keluar?>" class="dropdown-item"> Status Surat Keluar Teruskan </a>
+                                        </div>    
+                                    </div>          
                                 </td>
                             </tr> 
-                          <?php $no++; }?>
+                        <?php $no++; }?>
                     </tbody>
                     </table>
                 </div>

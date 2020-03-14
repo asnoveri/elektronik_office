@@ -76,30 +76,53 @@ class Surat_Mod extends CI_Model {
         }else{
             return false;
         }
-      }
+    }
 
-      public function edit_kondisiSrtMSK($idterus,$data){
+    public function edit_kondisiSrtMSK($idterus,$data){
         $this->db->update('surat_masuk_diter', $data,['id_terus'=>$idterus]);
         if($this->db->affected_rows() > 0){
             return true;
         }else{
             return false;
         }
-      }
+    }
 
-      public function get_all_srtkeluarPeruser($id){
+    public function get_all_srtkeluarPeruser($id){
+        $this->db->order_by('tgl_surat_keluar', 'DESC');
         return $this->db->get_where('surat_keluar',['asal_surat'=> $id])->result();
-      }
+    }
 
-      public function get_surat_keluarByid($id){
+    public function get_surat_keluarByid($id){
         return $this->db->get_where('surat_keluar',['id_surat_keluar'=> $id])->row();
-      }
+    }
 
       public function get_surat_keluar_diterBYopadmn(){
         $this->db->order_by('id_surat_keluar', 'DESC');
         return $this->db->get_where('surat_keluar_diter',['di_teruskan_ke_srt_klr'=>0])->result();
-      }
-    
+    }
+
+    public function get_surat_keluarByidMulti($id){
+        $this->db->where('di_teruskan_ke_srt_klr !=', 0);
+        $this->db->where('id_surat_keluar',$id);
+        return $this->db->get('surat_keluar_diter')->result();
+    }
+
+    public function edit_feedback_srtkelter($data,$id){
+        $this->db->update('surat_keluar_diter', $data, array('id_terus_srt_keluar' => $id));
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function edit_feedback_srtkel($data,$id){
+        $this->db->update('surat_keluar', $data, array('id_surat_keluar' => $id));
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
 
 ?>

@@ -62,7 +62,7 @@ $(function () {
 		$('#pos').html("");
 
 	});
-	
+
 	//edit sub menu
 	$("a[id='edit_sb_mn']").on('click', function () {
 		$("#lbl_sb_mn").html("Edit Sub Menu");
@@ -295,7 +295,6 @@ $(function () {
 			success: function (data) {
 				//unutk meridirect dengan Ajax
 				document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
-
 			}
 		});
 	});
@@ -377,7 +376,6 @@ $(function () {
 	});
 
 
-
 	//mengubah fedback ketika mengklik alert srt masuk
 	$(".ubah_feedback").on('click', function () {
 		const id_terus = $(this).data('id_terus_srt_msk');
@@ -409,6 +407,25 @@ $(function () {
 			}
 		});
 	});
+	// mengubah feedback ketika mengklik alert surat keluar
+	$(".ubah_feedback_sk").on('click', function () {
+		const id_terus_srt_keluar = $(this).data('id_terus_srt_klr');
+		const id_surat_keluar = $(this).data('id_surat_keluar');
+
+		$.ajax({
+			url: 'http://localhost/disposisi/User/ubh_feedback_srtklr_user',
+			type: 'post',
+			data: {
+				id_terus_srt_keluar: id_terus_srt_keluar,
+				id_surat_keluar: id_surat_keluar
+			},
+			success: function (data) {
+				//unutk meridirect dengan Ajax
+				// document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
+				console.log(data);
+			}
+		});
+	});
 
 
 	// costume date time picker js
@@ -429,26 +446,6 @@ $(function () {
 		timepicker: false,
 		format: 'd-m-Y'
 	});
-	$('#datetimepicker1').datetimepicker({
-		i18n: {
-			de: {
-				months: [
-					'Januari', 'Februari', 'Maret', 'April',
-					'Mai', 'Juni', 'Juli', 'Augustus',
-					'September', 'Oktober', 'November', 'Desember',
-				],
-				dayOfWeek: [
-					"So.", "Mo", "Di", "Mi",
-					"Do", "Fr", "Sa.",
-				]
-			}
-		},
-		timepicker: false,
-		format: 'Y-m-d'
-	});
-
-
-
 });
 
 // buat tooltip
@@ -461,7 +458,7 @@ $(function () {
 	$("#myInput").on("keyup", function () {
 		const value = $(this).val().toLowerCase();
 
-		$("#myList li").filter(function () {
+		$("#myList ").filter(function () {
 			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		});
 	});
@@ -472,7 +469,7 @@ $(function () {
 	$("#datetimepicker").on("change", function () {
 		const value = $(this).val().toLowerCase();
 		console.log(value);
-		$("#myList li").filter(function () {
+		$("#myList ").filter(function () {
 			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		});
 	});

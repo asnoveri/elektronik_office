@@ -165,7 +165,8 @@
                             </div>
                         </div>    
                                     <?php }?>
-                        <div class="row">            
+                        <div class="row">  
+                        <div class="table-responsive">          
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -179,7 +180,8 @@
                                         <td class="text-capitalize"><?= $detail_srt_masuk_ter->instruksi?></td>
                                     </tr>
                                 </tbody>
-                            </table>      
+                            </table> 
+                        </div>         
                         </div>             
                     </div>
                     <div class="tab-pane container fade" id="file_srtmsk_user">

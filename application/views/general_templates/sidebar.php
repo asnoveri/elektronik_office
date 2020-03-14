@@ -32,8 +32,9 @@
        <?php } ?>
       <hr class="sidebar-divider">
         <!-- menampilkan menu dinamis dari asno_helper -->
+     
         <?= Menu_dinamis()?>
-    
+       
       <li class="nav-item">  
         <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
             <i class="fas fa-sign-out-alt"></i>

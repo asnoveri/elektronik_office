@@ -18,12 +18,13 @@
           <ul class="navbar-nav ml-auto">            
             <!-- Nav Item - Alerts -->
 
-            <?php
-        if($data_user['role_id'] == 1){?>
-          
-       <?php }else{?>
-        <?= get_data_srt_masuk($data_user['id_jabatan'])?>
-          
+        <?php
+        if($this->session->userdata('id_jabatan')== 1 || $this->session->userdata('id_jabatan')== 4 || $this->session->userdata('id_jabatan'== 12) || $this->session->userdata('id_jabatan'== 13) || $this->session->userdata('id_jabatan')== 14 ){?>  
+              <?= get_data_srt_keluar($data_user['id_jabatan'])?>
+              <?= get_data_srt_masuk($data_user['id_jabatan'])?>
+        <?php } elseif($data_user['role_id'] == 1){?>
+        <?php }else {?>
+          <?= get_data_srt_masuk($data_user['id_jabatan'])?>
       <?php } ?>
             
 

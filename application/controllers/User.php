@@ -47,14 +47,14 @@ class User extends CI_Controller {
     }
 
     public function ubh_feedback_srtmsk_user (){
-         $id=$this->input->post('id_terus', true);
+        $id=$this->input->post('id_terus', true);
         $data=[
             'id_feedback'=> 2,
             'bg_porgres'=>'success'
-         ];
-         if($this->Surat_Mod->edit_feedback_srtMSK($data,$id)){
+        ];
+        if($this->Surat_Mod->edit_feedback_srtMSK($data,$id)){
 
-         }
+        }
     }
 
     public function add_suratmasuk_diteruskan($id,$idterus=""){
@@ -231,7 +231,20 @@ class User extends CI_Controller {
             $data['pjbtn_mndt']=$this->user_Mod->get_user_BYIDjabtan($data['srt_keluarbyId']->yang_mendisposisi);
             $this->template->TemplateGen($judul,$halaman,$data);   
         }
-
+        public function ubh_feedback_srtklr_user (){
+            $id=$this->input->post('id_terus_srt_keluar', true);
+            $data=[
+                'id_feedback_terSrtKlr'=> 2,
+                'bg_porgres_srt_keluar'=>'success'
+            ];
+            $this->Surat_Mod->edit_feedback_srtkelter($data,$id);
+            $id1=$this->input->post('id_surat_keluar', true);
+            $data1=[
+                'id_feedback'=> 2,
+                'bg_porgres'=>'success'
+            ];
+            $this->Surat_Mod->edit_feedback_srtkel($data1,$id1);
+        }
 }
 
 
