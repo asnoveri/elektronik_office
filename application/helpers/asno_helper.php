@@ -470,7 +470,7 @@
                                               <i class="fas fa-fw fa-cog"></i>
                                               </button>
                                               <div class="dropdown-menu">
-                                              <a class="dropdown-item ubah_feedback1" data-id_terus_srt_msk="<?=$smk->id_terus ?>"  href="<?= base_url()?>user/detail_srt_masuk_userPerArsip/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>">Lihat Surat Masuk Di Arsipkan</a>
+                                              <a class="dropdown-item" data-id_terus_srt_msk="<?=$smk->id_terus ?>"  href="<?= base_url()?>user/detail_srt_masuk_userPerArsip/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>">Lihat Surat Masuk Di Arsipkan</a>
                                               </div>
                                             </div>
                                         </td>

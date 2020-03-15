@@ -123,6 +123,11 @@ class Surat_Mod extends CI_Model {
             return false;
         }
     }
+
+    public function get_surat_keluarterBY($id){
+       return $this->db->get_where('surat_keluar_diter',['di_teruskan_ke_srt_klr'=>$id])->result();
+       
+    }
 }
 
 ?>

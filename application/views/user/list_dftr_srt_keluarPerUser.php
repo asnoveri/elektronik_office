@@ -11,7 +11,7 @@
             <div class="card-header py-3">
             <?= $this->session->flashdata('pesan_surat1');?>
         
-            <h5 class="m-0 font-weight-bold text-secondary">List Pengajuan Disposisi Surat Keluar</h5>
+            <h5 class="m-0 font-weight-bold text-secondary">Pengajuan Surat Keluar <?= jabatanget($this->session->userdata('id_jabatan'))?></h5>
             </div>
             <div class="card-body">
                 <a href="<?= base_url()?>User/surat_keluar" class="btn btn-primary btn-icon-split mb-3 "><span class="text">Tambah Surat Keluar</span>
@@ -50,7 +50,7 @@
                                 </td>   
                                 <td><?php
                                         if($sk->id_feedback1==7){?>
-                                           <?= jabatanget($sk->yang_mendisposisi)?>
+                                        <?= jabatanget($sk->yang_mendisposisi)?>
                                         <?php }  elseif($sk->id_feedback1==9) {?>
                                             <?= jabatanget($sk->yang_mendisposisi)?>
                                         <?php }
@@ -62,7 +62,7 @@
                                     </div>
                                 </td>
                             </tr> 
-                          <?php $no++; }?>
+                        <?php $no++; }?>
                     </tbody>
                     </table>
                 </div>

@@ -245,6 +245,21 @@ class User extends CI_Controller {
             ];
             $this->Surat_Mod->edit_feedback_srtkel($data1,$id1);
         }
+
+        public function list_pengajuan_srt_klr(){
+            $judul='Disposisi Surat';
+            $halaman='user/list_pengajuan_srt_klr';
+            $data['surat_keluarter']=$this->Surat_Mod->get_surat_keluarterBY($this->session->userdata('id_jabatan'));
+            foreach($data['surat_keluarter'] as $skt){
+                    $ambil_isi[]=$this->Surat_Mod->get_surat_keluarByid($skt->id_surat_keluar);
+                    $fdbk[]=$skt->id_feedback_terSrtKlr;
+                    $id_trsk[]=$skt->id_terus_srt_keluar;
+            }
+            $data['data_srtklr']=$ambil_isi;
+            $data['fedbk']=$fdbk;
+            $data['id_trsk']=$id_trsk;
+            $this->template->TemplateGen($judul,$halaman,$data);   
+        }
 }
 
 
