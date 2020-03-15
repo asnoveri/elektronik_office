@@ -34,27 +34,27 @@
                                 if($ci->session->userdata('id_jabatan')== 1 && $mn['menu']=="Disposis Surat" ){?>
                                   <a class="collapse-item" href="<?= base_url()?>User/list_pengajuan_srt_klr">
                                     <i class="fa fa-envelope"></i>
-                                    <span>Surat Keluar</span>
+                                    <span>List Surat Keluar</span>
                                   </a>
                                 <?php } elseif($ci->session->userdata('id_jabatan')== 4 && $mn['menu']=="Disposis Surat" ){ ?>
                                   <a class="collapse-item" href="<?= base_url()?>User/list_pengajuan_srt_klr">
                                     <i class="fa fa-envelope"></i>
-                                    <span>Surat Keluar</span>
+                                    <span>List Surat Keluar</span>
                                   </a>
                                   <?php } elseif($ci->session->userdata('id_jabatan')== 12 && $mn['menu']=="Disposis Surat" ){ ?>
                                   <a class="collapse-item" href="<?= base_url()?>User/list_pengajuan_srt_klr">
                                     <i class="fa fa-envelope"></i>
-                                    <span>Surat Keluar</span>
+                                    <span>List Surat Keluar</span>
                                   </a>
                                   <?php } elseif($ci->session->userdata('id_jabatan')== 13 && $mn['menu']=="Disposis Surat" ){ ?>
                                   <a class="collapse-item" href="<?= base_url()?>User/list_pengajuan_srt_klr">
                                     <i class="fa fa-envelope"></i>
-                                    <span>Surat Keluar</span>
+                                    <span>List Surat Keluar</span>
                                   </a>
                                   <?php } elseif($ci->session->userdata('id_jabatan')== 14 && $mn['menu']=="Disposis Surat" ){ ?>
                                   <a class="collapse-item" href="<?= base_url()?>User/list_pengajuan_srt_klr">
                                     <i class="fa fa-envelope"></i>
-                                    <span>Surat Keluar</span>
+                                    <span>List Surat Keluar</span>
                                   </a>
                                 <?php }
 
