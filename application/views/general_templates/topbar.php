@@ -23,6 +23,7 @@
               <?= get_data_srt_keluar($data_user['id_jabatan'])?>
               <?= get_data_srt_masuk($data_user['id_jabatan'])?>
         <?php } elseif($data_user['role_id'] == 1){?>
+            <?= get_data_srt_keluaradmn_op(0) ?>
         <?php }else {?>
           <?= get_data_srt_masuk($data_user['id_jabatan'])?>
       <?php } ?>

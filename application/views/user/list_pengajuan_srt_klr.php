@@ -78,9 +78,9 @@
                                     <div class="dropdown-menu">
                                         <?php
                                             if($fedbk[$i]==1){?>
-                                            <a class="dropdown-item ubah_feedback_sk" data-id_terus_srt_klr="<?= $id_trsk[$i]?>"data-id_surat_keluar="<?=$dsk->id_surat_keluar ?>" href="<?= base_url()?>user/">Lihat Surat Keluar</a>
+                                            <a class="dropdown-item ubah_feedback_sk" data-id_terus_srt_klr="<?= $id_trsk[$i]?>"data-id_surat_keluar="<?=$dsk->id_surat_keluar ?>" href="<?= base_url()?>user/lihat_srt_klr/<?=$dsk->id_surat_keluar?>">Lihat Surat Keluar</a>
                                         <?php }elseif($fedbk[$i]==2){?>
-                                            <a class="dropdown-item ubah_feedback_sk" data-id_terus_srt_klr="<?= $id_trsk[$i]?>"data-id_surat_keluar="<?=$dsk->id_surat_keluar ?>" href="<?= base_url()?>user/">Lihat Surat Keluar</a>
+                                            <a class="dropdown-item ubah_feedback_sk" data-id_terus_srt_klr="<?= $id_trsk[$i]?>"data-id_surat_keluar="<?=$dsk->id_surat_keluar ?>" href="<?= base_url()?>user/lihat_srt_klr/<?=$dsk->id_surat_keluar?>">Lihat Surat Keluar</a>
                                             <a class="dropdown-item" href="<?= base_url()?>user/">Arsipkan Surat Keluar</a>
                                         <?php }?>
                                 </div>

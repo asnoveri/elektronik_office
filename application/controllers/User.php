@@ -197,7 +197,7 @@ class User extends CI_Controller {
                      $data1=[
                             'id_surat_keluar'=> $id_srt_keluar->id_surat_keluar,
                             'di_teruskan_ke_srt_klr'=> 0,
-                            'id_feedback'=>'1',
+                            'id_feedback_terSrtKlr'=>'1',
                             'bg_porgres_srt_keluar'=>'primary'
                         ]; 
                      $this->Surat_Mod->add_srt_keluar_diter($data1);
@@ -245,6 +245,14 @@ class User extends CI_Controller {
             ];
             $this->Surat_Mod->edit_feedback_srtkel($data1,$id1);
         }
+        public function ubh_feedback_srtklr_useradmop (){
+            $id=$this->input->post('id_terus_srt_keluar', true);
+            $data=[
+                'id_feedback_terSrtKlr'=> 2,
+                'bg_porgres_srt_keluar'=>'success'
+            ];
+            $this->Surat_Mod->edit_feedback_srtkelter($data,$id);
+        }
 
         public function list_pengajuan_srt_klr(){
             $judul='Disposisi Surat';
@@ -259,6 +267,24 @@ class User extends CI_Controller {
             $data['fedbk']=$fdbk;
             $data['id_trsk']=$id_trsk;
             $this->template->TemplateGen($judul,$halaman,$data);   
+        }
+
+        public function lihat_srt_klr($id_surat_keluar){
+            $judul='Disposisi Surat';
+            $halaman='user/lihat_srt_klr';
+            $data['srt_keluarbyId']=$this->Surat_Mod->get_surat_keluarByid($id_surat_keluar);   
+            // $data['pjbtn_mndt']=$this->user_Mod->get_user_BYIDjabtan($data['srt_keluarbyId']->yang_mendisposisi);
+            $this->template->TemplateGen($judul,$halaman,$data);    
+        }
+
+        public function add_feedback_srtkeluar(){
+            $id1=$this->input->post('id_surat_keluar', true);
+            $data1=[
+                'id_feedback1'=> $this->input->post('id_feedback1', true),
+                'yang_mendisposisi'=> $this->session->userdata('id_jabatan')
+            ];
+            $this->Surat_Mod->edit_feedback_srtkel($data1,$id1);
+            redirect('user/list_pengajuan_srt_klr');
         }
 }
 

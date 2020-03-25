@@ -24,7 +24,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="">Tanggal Surat Keluar</label>
-                                <input type="text" class="form-control" id="datetimepicker1" autocomplete="off" name="tgl_surat_keluar" value="<?=set_value('tgl_surat_keluar') ?>">
+                                <input type="text" class="form-control" id="datetimepicker" autocomplete="off" name="tgl_surat_keluar" value="<?=set_value('tgl_surat_keluar') ?>">
                             </div>
                             <div class="form-group">
                                 <label for="">Sifat Surat Keluar</label>

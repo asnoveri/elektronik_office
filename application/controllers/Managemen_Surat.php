@@ -130,8 +130,12 @@ class Managemen_surat extends CI_Controller {
         $de=$data['srt_keluar_ter'];
         foreach($de as $idsk){
             $srt_keluar[]=$this->Surat_Mod->get_surat_keluarByid($idsk->id_surat_keluar);
+            $fdbk[]= $idsk->id_feedback_terSrtKlr;
+            $idtrsk[]=$idsk->id_terus_srt_keluar;
         }
       $data['srt_keluar']= $srt_keluar;
+      $data['feeback']= $fdbk;
+      $data['id_terus_srt_keluar']= $idtrsk;
         $this->template->TemplateGen($judul,$halaman,$data);     
     }
 
@@ -139,7 +143,7 @@ class Managemen_surat extends CI_Controller {
         $judul='Managemen Surat';
         $halaman='Surat_maneg/detail_Surat_keluar';
         $data['srt_keluarbyId']=$this->Surat_Mod->get_surat_keluarByid($id_surat_keluar);   
-        $data['pjbtn_mndt']=$this->user_Mod->get_user_BYIDjabtan($data['srt_keluarbyId']->yang_mendisposisi);
+        // $data['pjbtn_mndt']=$this->user_Mod->get_user_BYIDjabtan($data['srt_keluarbyId']->yang_mendisposisi);
         $data['jabatan']=$this->user_Mod->get_all_jabatan();
         $this->template->TemplateGen($judul,$halaman,$data);    
     }
@@ -174,7 +178,14 @@ class Managemen_surat extends CI_Controller {
         $data['surat_keluar']=$this->Surat_Mod->get_surat_keluarByid($id);
         $this->template->TemplateGen($judul,$halaman,$data);    
     }
-
+    public function ubh_feedback_srtklr_useradmop (){
+        $id=$this->input->post('id_terus_srt_keluar', true);
+        $data=[
+            'id_feedback_terSrtKlr'=> 2,
+            'bg_porgres_srt_keluar'=>'success'
+        ];
+        $this->Surat_Mod->edit_feedback_srtkelter($data,$id);
+    }
 }
 
 

@@ -28,10 +28,24 @@
                     </thead>
                     <tbody>
                         <?php
-                        $no=1;
+                        $i=0;
                             foreach($srt_keluar as $sk){?>
                             <tr>
-                                <td><?=$no?></td>
+                                <td>
+                                    <?php
+                                        if($feeback[$i]==1){?>
+                                            <span class="mr-2">
+                                                <a href="#" data-toggle="tooltip" data-placement="right" title="Surat Keluar Belum di Lihat!"> 
+                                                    <i class="fas fa-circle text-success" data-toggle="tooltip" data-placement="right"></i>
+                                                </a>
+                                            </span>
+                                    <?php }elseif($feeback[$i]==2){?>
+                                            <span class="mr-2">
+                                                <i class="fas fa-circle text-gray-500"></i>
+                                            </span>
+                                    <?php }
+                                    ?>
+                                </td>
                                 <td><?= nice_date($sk->tgl_surat_keluar, 'd-m-Y')?></td>
                                 <td><?=jabatanget($sk->asal_surat) ?></td>
                                 <td><?=$sk->perihal?></td>
@@ -42,13 +56,19 @@
                                             <i class="fas fa-fw fa-cog"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a href="<?= base_url()?>Managemen_Surat/detail_srt_keluar/<?=$sk->id_surat_keluar?>" class="dropdown-item"> Detail </a>
-                                            <a href="<?= base_url()?>Managemen_Surat/status_srt_keluar_kepjbt/<?=$sk->id_surat_keluar?>" class="dropdown-item"> Status Surat Keluar Teruskan </a>
+                                            <?php
+                                                if($feeback[$i]==1){?>
+                                                    <a href="<?= base_url()?>Managemen_Surat/detail_srt_keluar/<?=$sk->id_surat_keluar?>" class="dropdown-item ubah_feedback_skopadmn" data-id_terus_srt_klr="<?=$id_terus_srt_keluar[$i] ?>"> Detail </a>
+                                                <?php } elseif($feeback[$i]==2){?>
+                                                    <a href="<?= base_url()?>Managemen_Surat/detail_srt_keluar/<?=$sk->id_surat_keluar?>" class="dropdown-item"> Detail </a>
+                                                    <a href="<?= base_url()?>Managemen_Surat/status_srt_keluar_kepjbt/<?=$sk->id_surat_keluar?>" class="dropdown-item"> Status Surat Keluar Teruskan </a>
+                                                <?php }
+                                            ?>
                                         </div>    
                                     </div>          
                                 </td>
                             </tr> 
-                        <?php $no++; }?>
+                        <?php  $i++; }?>
                     </tbody>
                     </table>
                 </div>

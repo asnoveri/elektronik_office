@@ -427,6 +427,25 @@ $(function () {
 		});
 	});
 
+	// mengubah feedback ketika mengklik alert surat keluar admin op
+	$(".ubah_feedback_skopadmn").on('click', function () {
+		const id_terus_srt_keluar = $(this).data('id_terus_srt_klr');
+		const id_surat_keluar = $(this).data('id_surat_keluar');
+		$.ajax({
+			url: 'http://localhost/disposisi/Managemen_Surat/ubh_feedback_srtklr_useradmop',
+			type: 'post',
+			data: {
+				id_terus_srt_keluar: id_terus_srt_keluar,
+				id_surat_keluar: id_surat_keluar
+			},
+			success: function (data) {
+				//unutk meridirect dengan Ajax
+				// document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
+				console.log(data);
+			}
+		});
+	});
+
 
 	// costume date time picker js
 	$('#datetimepicker').datetimepicker({

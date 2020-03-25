@@ -172,6 +172,69 @@
               <?php } 
             }
 
+              //function menampilkan surat keluar by admin/op alert
+              function get_data_srt_keluaradmn_op($role_id){?>
+                <?php $ci= get_instance();?>
+                <li class="nav-item dropdown no-arrow mx-1">
+                  <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-bell fa-fw"></i>
+                      <!-- Counter - Alerts -->
+                      <?php 
+                           $query=  "SELECT * FROM surat_keluar_diter,surat_keluar WHERE di_teruskan_ke_srt_klr=$role_id and id_feedback_terSrtKlr='1' and surat_keluar_diter.id_surat_keluar=surat_keluar.id_surat_keluar order by tgl_surat_keluar desc";
+                           $query1=$ci->db->query($query)->result();
+                         if($query1){?>
+                           <span class="badge badge-danger badge-counter">
+                               <?= count($query1);?>
+                           </span>
+                         <?php }else{?>
+                           
+                         <?php }
+                     ?>
+                  </a>
+                  <!-- Dropdown - Alerts -->
+                         <?php
+                              if($query1){
+                               $kondisi="";
+                              
+                              }else{
+                               $kondisi="hidden";
+                              }
+                              if(count($query1)==0){
+                                $hg="auto";
+                              }elseif(count($query1)==1){
+                                  $hg="auto";
+                                }elseif(count($query1)==2){
+                                  $hg="235px";
+                                }elseif(count($query1)>=3){
+                                  $hg="313px";
+                                }
+                          ?>
+                  <div <?= $kondisi?> class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in " aria-labelledby="messagesDropdown" style="overflow: auto; height:<?= $hg?>">
+                        <h6 class="dropdown-header ">
+                        Disposisi Surat Keluar
+                        </h6>
+                        <?php
+                            foreach ($query1 as $sk){?>
+                                
+                                <?php
+                                 $data_surat= $ci->db->get_where('surat_keluar',['id_surat_keluar'=>$sk->id_surat_keluar])->result(); 
+                                  foreach($data_surat as $ds){?>
+                                      <a class="dropdown-item d-flex align-items-center ubah_feedback_skopadmn" data-id_terus_srt_klr="<?=$sk->id_terus_srt_keluar ?>"  data-id_surat_keluar="<?=$sk->id_surat_keluar ?>" href="<?= base_url()?>Managemen_Surat/detail_srt_keluar/<?=$sk->id_surat_keluar ?>">
+                                          <div class="dropdown-list-image ">
+                                            <div class="status-indicator bg-success mr-3"></div>
+                                          </div>
+                                          <div class="">
+                                            <div class="text-truncate"><?= $ds->perihal?></div>
+                                            <div class="small text-gray-500">dari <?=  jabatanget($ds->asal_surat)?> / <?= nice_date($ds->tgl_surat_keluar, 'd-m-Y')?></div>
+                                          </div>
+                                      </a>
+                                  <?php }?>
+                        <?php  }?>
+                        <a class="dropdown-item text-center small text-gray-500" href="<?= base_url()?>Managemen_Surat/srt_keluar">Tampilkan Semua Dispsosi Surat Keluar</a>
+                  </div>
+                </li>
+            <?php }
+
             //function menampilkan surat keluar alert
             function get_data_srt_keluar($id_jabatan){?>
               <?php $ci= get_instance();?>
@@ -219,9 +282,9 @@
                               <?php
                                $data_surat= $ci->db->get_where('surat_keluar',['id_surat_keluar'=>$sk->id_surat_keluar])->result(); 
                                 foreach($data_surat as $ds){?>
-                                    <a class="dropdown-item d-flex align-items-center ubah_feedback_sk" data-id_terus_srt_klr="<?=$sk->id_terus_srt_keluar ?>"  data-id_surat_keluar="<?=$sk->id_surat_keluar ?>" href="<?= base_url()?>user">
-                                        <div class="dropdown-list-image mr-3">
-                                          <div class="status-indicator bg-success"></div>
+                                    <a class="dropdown-item d-flex align-items-center ubah_feedback_sk" data-id_terus_srt_klr="<?=$sk->id_terus_srt_keluar ?>"  data-id_surat_keluar="<?=$sk->id_surat_keluar ?>" href="<?= base_url()?>user/lihat_srt_klr/<?=$sk->id_surat_keluar ?>">
+                                        <div class="dropdown-list-image ">
+                                          <div class="status-indicator bg-success mr-3"></div>
                                         </div>
                                         <div class="">
                                           <div class="text-truncate"><?= $ds->perihal?></div>
@@ -289,7 +352,7 @@
                         ?>
                 <div <?= $kondisi?> class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in " aria-labelledby="messagesDropdown" style="overflow: auto; height:<?= $hg?>">
                       <h6 class="dropdown-header ">
-                      Disposisi Surat Keluar
+                      Disposisi Surat Masuk
                       </h6>
                       <?php
                           foreach ($query1 as $smk){?>
@@ -299,8 +362,8 @@
                                 foreach($data_surat as $ds){?>
                                
                                       <a class="dropdown-item d-flex align-items-center ubah_feedback" data-id_terus_srt_msk="<?=$smk->id_terus ?>"  href="<?= base_url()?>user/detail_srt_masuk_user/<?=$smk->id_surat_masuk?>/<?=$smk->id_terus ?>">
-                                        <div class="dropdown-list-image mr-3">
-                                          <div class="status-indicator bg-success"></div>
+                                        <div class="dropdown-list-image ">
+                                          <div class="status-indicator bg-success mr-3"></div>
                                         </div>
                                         <div class="">
                                           <?php
