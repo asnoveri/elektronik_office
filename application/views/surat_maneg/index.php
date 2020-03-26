@@ -24,7 +24,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="">Tanggal Surat Masuk</label>
-                                <input type="text" class="form-control" id="datetimepicker" autocomplete="off" name="tgl_surat_masuk" value="<?=set_value('tgl_surat_masuk') ?>">
+                                <input type="text" class="form-control" id="datetimepicker1" autocomplete="off" name="tgl_surat_masuk" value="<?=set_value('tgl_surat_masuk') ?>">
                             </div>
                             <div class="form-group">
                                 <label for="">Asal Surat Masuk</label>

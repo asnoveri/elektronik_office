@@ -465,6 +465,23 @@ $(function () {
 		timepicker: false,
 		format: 'd-m-Y'
 	});
+	$('#datetimepicker1').datetimepicker({
+		i18n: {
+			de: {
+				months: [
+					'Januari', 'Februari', 'Maret', 'April',
+					'Mai', 'Juni', 'Juli', 'Augustus',
+					'September', 'Oktober', 'November', 'Desember',
+				],
+				dayOfWeek: [
+					"So.", "Mo", "Di", "Mi",
+					"Do", "Fr", "Sa.",
+				]
+			}
+		},
+		timepicker: false,
+		format: 'Y-m-d'
+	});
 });
 
 // buat tooltip
