@@ -17,18 +17,7 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">            
             <!-- Nav Item - Alerts -->
-
-        <?php
-        if($this->session->userdata('id_jabatan')== 1 || $this->session->userdata('id_jabatan')== 4 || $this->session->userdata('id_jabatan'== 12) || $this->session->userdata('id_jabatan'== 13) || $this->session->userdata('id_jabatan')== 14 ){?>  
-              <?= get_data_srt_keluar($data_user['id_jabatan'])?>
-              <?= get_data_srt_masuk($data_user['id_jabatan'])?>
-        <?php } elseif($data_user['role_id'] == 1){?>
-            <?= get_data_srt_keluaradmn_op(0) ?>
-        <?php }else {?>
-          <?= get_data_srt_masuk($data_user['id_jabatan'])?>
-      <?php } ?>
             
-
       
             <!-- Nav Item - Messages -->
            
@@ -40,7 +29,7 @@
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $data_user['fullname'] ?>
                   <sup>
                     <?php
-                      if($data_user['role_id']==1 || $data_user['role_id']==2 ){
+                      if($data_user['role_id']==1 || $data_user['role_id']==2 || $data_user['role_id']==4){
                         echo $data_user['role_name'];
                       }else{
                         echo $data_user['jabatan'];
@@ -60,6 +49,11 @@
                 </a>
               <?php } elseif($data_user['role_id'] == 2 ){?>
                 <a class="dropdown-item" href="<?= base_url()?>Operator/profil_op">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile <?= $data_user['role_name']?>
+                </a>
+              <?php } elseif($data_user['role_id'] == 4 ){?>
+                <a class="dropdown-item" href="<?= base_url()?>Direktur/profil_dr">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile <?= $data_user['role_name']?>
                 </a>

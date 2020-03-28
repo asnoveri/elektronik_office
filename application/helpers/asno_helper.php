@@ -1,5 +1,4 @@
 <?php
-
         // function menu dinamis
         function Menu_dinamis(){
             $ci= get_instance();
@@ -30,7 +29,7 @@
                                         <span><?= $sb_mn['title']?></span>
                                   </a>
                                <?php } ?>
-                              <?php 
+                              <!-- <?php 
                                 if($ci->session->userdata('id_jabatan')== 1 && $mn['menu']=="Disposis Surat" ){?>
                                   <a class="collapse-item" href="<?= base_url()?>User/list_pengajuan_srt_klr">
                                     <i class="fa fa-envelope"></i>
@@ -55,10 +54,10 @@
                                   <a class="collapse-item" href="<?= base_url()?>User/list_pengajuan_srt_klr">
                                     <i class="fa fa-envelope"></i>
                                     <span>List Surat Keluar</span>
-                                  </a>
-                                <?php }
+                                  </a> -->
+                                <!-- <?php }
 
-                              ?>
+                              ?> -->
                           </div>
                   </div>
                 </li>
@@ -98,6 +97,12 @@
                     }else{
                     redirect('Blank_page');
                     }
+                }elseif($controller=='direktur'||$controller=='Direktur'){
+                  $ctr=4;
+                    if($ctr==$role_id){
+                    }else{
+                    redirect('Blank_page');
+                    }
                 }else{
                   $get_ctrl=$ci->db->get_where('menu',['ctrl_menu'=>$controller])->row_array();
                   $user_acces=$ci->db->get_where('user_acess_menu',[
@@ -110,8 +115,6 @@
                   }
                 }
 
-                
-                
               }
                 
             }

@@ -4,20 +4,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class user_Mod extends CI_Model {
 
-        public function get_data_user($role_id,$id_jabatan,$email){
-
-            if($role_id == 3 && !$id_jabatan==null){
-                $query="SELECT * FROM user, role_user, jabatan_user WHERE
-            user.role_id=role_user.role_id and user.id_jabatan=jabatan_user.id_jabatan and role_user.role_id=$role_id and jabatan_user.id_jabatan=$id_jabatan";
-            return $this->db->query($query)->row_array();
-            }else{
-                $query="SELECT * FROM user, role_user WHERE
-            `user`.`role_id`=`role_user`.`role_id`  and `role_user`.`role_id`='$role_id' and `user`.`email`='$email'";
-            return $this->db->query($query)->row_array();
+        public function get_data_user($role_id,$id){
+            if($role_id==1){
+                $this->db->select('*');
+                $this->db->from('admin');
+                $this->db->join('user', 'user.id = admin.id');
+                $this->db->join('role_user', 'role_user.role_id = admin.role_id');
+                return $query = $this->db->get()->row_array();
+            }else if($role_id==2){
+                $this->db->select('*');
+                $this->db->from('sekretaris');
+                $this->db->join('user', 'user.id = sekretaris.id');
+                $this->db->join('role_user', 'role_user.role_id = sekretaris.role_id');
+                return $query = $this->db->get()->row_array();
+            }else if($role_id==4){
+                $this->db->select('*');
+                $this->db->from('direktur');
+                $this->db->join('user', 'user.id = direktur.id');
+                $this->db->join('role_user', 'role_user.role_id = direktur.role_id');
+                return $query = $this->db->get()->row_array();
+            
             }
             
-            
+            // if($role_id == 3 && !$id_jabatan==null){
+            //     $query="SELECT * FROM user, role_user, jabatan_user WHERE
+            // user.role_id=role_user.role_id and user.id_jabatan=jabatan_user.id_jabatan and role_user.role_id=$role_id and jabatan_user.id_jabatan=$id_jabatan";
+            // return $this->db->query($query)->row_array();
+            // }else{
+            //     $query="SELECT * FROM user, role_user WHERE
+            // `user`.`role_id`=`role_user`.`role_id`  and `role_user`.`role_id`='$role_id' and `user`.`email`='$email'";
+            // return $this->db->query($query)->row_array();
+            // }
         }
+
         
         // public function get_data(){
         //     return $this->db->get('user')->result_array();

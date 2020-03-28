@@ -19,7 +19,7 @@ class Operator extends CI_Controller {
     }
 
     public function profil_op(){
-        $judul='Profil Operator';
+        $judul='Profil Sekretaris';
         $halaman='Operator/profil_operator';
         $data="";
         $this->template->TemplateGen($judul,$halaman,$data);   

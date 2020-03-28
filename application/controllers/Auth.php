@@ -30,20 +30,26 @@ class Auth extends CI_Controller {
 
             if($datalogin){
                 if($datalogin['is_active'] == 1){
+                    $role=$this->login_Mod->get_role($datalogin['id']);
+                    // die();
                     $data=[
                         'email'     => $datalogin['email'],
-                        'role_id'   => $datalogin['role_id'],
-                        'id_jabatan'=> $datalogin['id_jabatan']
+                        'role_id'   => $role,
+                        'id'        => $datalogin['id']
+                        // 'id_jabatan'=> $datalogin['id_jabatan']
                     ];
                     $this->session->set_userdata($data);
                     if(password_verify($pass,$datalogin['pass'])){
-                        if($datalogin['role_id'] == 1){
+                        if($role == 1){
                              redirect('Admin');
                             
-                        }elseif($datalogin['role_id'] == 2){
+                        }elseif($role == 2){
                             redirect('Operator');
-                        }elseif($datalogin['role_id'] == 3){
+                        }elseif($role == 3){
                             redirect('User');
+                        }
+                        elseif($role == 4){
+                            redirect('Direktur');
                         }
                     }else{
                         $this->session->set_flashdata('pesan','<div class="alert alert-danger alert-dismissible">

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Direktur extends CI_Controller {
 
     public function __construct(){
         parent::__construct();
@@ -9,20 +9,21 @@ class Admin extends CI_Controller {
         $this->load->model('user_Mod');
         $this->load->model('menu_Mod');
 
-        is_login();
+       is_login();
+    
     }
 
     public function index(){
         $judul='Dashboard';
-        $halaman='Admin/index';
+        $halaman='Direktur/index';
         $data="";
         $this->template->TemplateGen($judul,$halaman,$data);     
         
     }
 
-    public function profil_admin(){
-        $judul='Profil Admin';
-        $halaman='Admin/profil';
+    public function profil_dr(){
+        $judul='Profil Direktur';
+        $halaman='Direktur/profil_dr';
         $data="";
         $this->template->TemplateGen($judul,$halaman,$data);     
         

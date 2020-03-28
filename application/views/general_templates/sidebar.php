@@ -14,12 +14,12 @@
       <hr class="sidebar-divider">
       <!-- untuk menampilkan dashboard sesuai role id -->
         <?php
-            if($data_user['role_id'] == 1){?>
+            if($this->session->userdata('role_id') == 1){?>
             <li class="nav-item">
               <a class="nav-link" href="<?= base_url()?>Admin">
                 <span>Dashboard</span></a>
             </li>
-        <?php } elseif($data_user['role_id'] == 2) {?>
+        <?php } elseif($this->session->userdata('role_id') == 2) {?>
             <li class="nav-item">
               <a class="nav-link" href="<?= base_url()?>Operator">
                 <span>Dashboard</span></a>

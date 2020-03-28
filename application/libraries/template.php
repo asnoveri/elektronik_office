@@ -17,8 +17,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         public function TemplateGen($judul=null,$halaman=null,$data1=null){
             // data1 adalah data yang dikirmkan dari controller
             // data doank adalah data yang set pada libraries
-            $data['judul']=$judul;
-            $data['data_user']=$this->CI->user_Mod->get_data_user($this->CI->session->userdata('role_id'),$this->CI->session->userdata('id_jabatan'),$this->CI->session->userdata('email'));
+            $data['judul']=$judul;   
+            $data['data_user']=$this->CI->user_Mod->get_data_user($this->CI->session->userdata('role_id'),$this->CI->session->userdata('id'));
             
             $this->CI->load->view('general_templates/header',$data);
             $this->CI->load->view('general_templates/sidebar');
