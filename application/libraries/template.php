@@ -18,8 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             // data1 adalah data yang dikirmkan dari controller
             // data doank adalah data yang set pada libraries
             $data['judul']=$judul;   
-            $data['data_user']=$this->CI->user_Mod->get_data_user($this->CI->session->userdata('role_id'),$this->CI->session->userdata('id'));
-            
+            $data['data_user']=$this->CI->user_Mod->get_data_user($this->CI->session->userdata('role_id'),$this->CI->session->userdata('id'));  
             $this->CI->load->view('general_templates/header',$data);
             $this->CI->load->view('general_templates/sidebar');
             $this->CI->load->view('general_templates/topbar',$data);

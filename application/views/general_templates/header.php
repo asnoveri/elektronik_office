@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Disposisi -<?= $judul?></title>
+  <title>Elektronik Office -<?= $judul?></title>
 
   <!-- Custom fonts for this template-->
   <link href="<?= base_url()?>vendor/sb-admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

@@ -29,9 +29,9 @@
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $data_user['fullname'] ?>
                   <sup>
                     <?php
-                      if($data_user['role_id']==1 || $data_user['role_id']==2 || $data_user['role_id']==4){
+                      if($data_user['role_id']==1 || $data_user['role_id']==2 || $data_user['role_id']==4 || $data_user['role_id']==6){
                         echo $data_user['role_name'];
-                      }else{
+                      }elseif($data_user['role_id']==3 || $data_user['role_id']==5){
                         echo $data_user['jabatan'];
                       }
                     ?>

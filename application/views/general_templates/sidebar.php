@@ -9,7 +9,8 @@
         <div class="sidebar-brand-icon">
           <img class="img-profile rounded-circle" width="50" height="45" src="<?= base_url()?>assets/images/pkr.png">
         </div>
-        <div class="sidebar-brand-text mx-3">Disposisi</div>
+        <div class="sidebar-brand-text mx-3">Elektronik Office
+        </div>
       </a>
       <hr class="sidebar-divider">
       <!-- untuk menampilkan dashboard sesuai role id -->

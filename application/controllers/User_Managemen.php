@@ -13,8 +13,7 @@ class User_Managemen extends CI_Controller {
     public function index(){
         $judul="User Managemen";
         $halaman='user_maneg/index';
-        $data['user_all_rolelist']=$this->user_Mod->get_all_user_not_admin();
-        $this->template->TemplateGen($judul,$halaman,$data);  
+        $this->template->TemplateGen($judul,$halaman);  
     }
 
     public function list_all_user($id){
@@ -153,7 +152,7 @@ class User_Managemen extends CI_Controller {
         }    
      }
 
-     public function add_user($id){
+     public function add_user(){
         $this->form_validation->set_rules('fullname','Fullname','required|trim'
         ,['required'=> 'Field  Nama Lengkap Tidak Boleh Kosong']);
         $this->form_validation->set_rules('email','Email','trim|required|valid_email|is_unique[user.email]' ,[
@@ -161,18 +160,15 @@ class User_Managemen extends CI_Controller {
             'valid_email'=> 'Email yang dimasukan Salah',
             'is_unique'=> 'Email Sudah Terdaftar di Database' ]);
         $this->form_validation->set_rules('pass','Pass','required|trim|min_length[6]|matches[pass1]',
-            ['required'=>'Password Tidak Boleh Kosong',
-            'min_length'=> 'Password Harus Lebih dari 6 Karakter',
-            'matches'=> 'Password yang Di Inputkan Tidak sama']); 
+            ['required'=>'Kata Sandi Tidak Boleh Kosong',
+            'min_length'=> 'Kata Sandi Harus Lebih dari 6 Karakter',
+            'matches'=> 'Kata Sandi yang Di Inputkan Tidak sama']); 
         $this->form_validation->set_rules('pass1','Pass1','required|trim|min_length[6]|matches[pass]',
-            ['required'=>'Password Verification Tidak Boleh Kosong',
-            'min_length'=> 'Password Harus Lebih dari 6 Karakter',
-            'matches'=> 'Password yang Di Inputkan Tidak sama']);    
-        $this->form_validation->set_rules('id_jabatan','Id_jabatan','required|is_unique[user.id_jabatan]',
-            ['required'=>'Jabatan User Belum di Pilih, Silahkan Pilih jabatan',
-            'is_unique'=>'Jabatan yang di Pilih Sudah Digunakan']);    
+            ['required'=>'Ulang Kata Sandi Tidak Boleh Kosong',
+            'min_length'=> 'Kata Sandi Harus Lebih dari 6 Karakter',
+            'matches'=> 'Kata Sandi yang Di Inputkan Tidak sama']);    
         if ($this->form_validation->run() == FALSE){
-            $this->addform($id);
+            $this->index();
         }else{
             $data=[
                 'id'        =>'' ,
@@ -181,40 +177,38 @@ class User_Managemen extends CI_Controller {
                 'is_active' => 1,
                 'image'     => "default.png",
                 'pass'      =>password_hash($this->input->post('pass1',true), PASSWORD_DEFAULT),
-                'date_created'=> time(),
-                'role_id'   => 3,
-                'id_jabatan'=>$this->input->post('id_jabatan',true)
+                'date_created'=> time()
             ];
             //passwor operator= operator12345
             
-            if($this->user_Mod->Add_Admin($data)){
+            if($this->user_Mod->Add_user($data)){
                 $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                     Berhasil Menambahkan User Baru 
                 </div>');
-               redirect("User_Managemen/list_all_user/$id");
+               redirect("User_Managemen");
             }else{
                 $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                    Gagal Menambahkan User Baru
                 </div>');  
-                redirect("User_Managemen/list_all_user/$id");
+                redirect("User_Managemen");
             }
         }
     }
-    public function delUser($iduser,$id){
-        if($this->user_Mod->del_Admin($iduser)== true){
+    public function delUser($iduser){
+        if($this->user_Mod->del_User($iduser)== true){
             $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
               Berhasil Menghapus User
             </div>');  
-            redirect("User_Managemen/list_all_user/$id");
+            redirect("User_Managemen");
         }else{
             $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
                Gagal Menghapus User 
             </div>');  
-            redirect("User_Managemen/list_all_user/$id");
+            redirect("User_Managemen");
         }    
      }
 
@@ -263,12 +257,14 @@ class User_Managemen extends CI_Controller {
     }
 
     public function ubah_isactiveUser(){
-            $is_active=$this->input->post('idst',true);
-            $id=$this->input->post('id_user',true);
-            if($is_active == 1){
-                $data=[
-                    'is_active'=> 0
+        $id=$this->input->post('id',true);
+        $is_active=$this->input->post('status'); 
+        // echo json_encode($is_active);die();
+        if($is_active == 0){
+            $data=[
+                'is_active'=> 0
             ];
+            // echo json_encode($data);die();    
                 if($this->user_Mod->change_isactive_User($data,$id)== true){
                     $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -280,7 +276,7 @@ class User_Managemen extends CI_Controller {
                         Gagal NON aktivkan User
                     </div>');
                 }
-            }else{
+            }elseif($is_active == 1){
                 $data=[
                     'is_active'=> 1
             ];
@@ -416,5 +412,78 @@ class User_Managemen extends CI_Controller {
 
             }
         
+    public function get_tesdatatabel(){
+        $length=intval($this->input->post('length'));
+        $draw=intval($this->input->post('draw'));
+        $start=intval($this->input->post('start'));
+        $order=$this->input->post('order'); 
+        $search=$this->input->post('search');
+        $search = $search['value'];
+        $col=0;
+        $dir="";
+
+            if(!empty($order)){
+                foreach($order as $or){
+                    $col = $or['column'];
+                    $dir = $or['dir'];
+                }
+            }
+           
+            if($dir!='asc' && $dir!='desc'){
+                $dir = 'desc';
+            }
+
+            $valid_columns=[
+                1=>'fullname',
+                2=>'email',
+                3=>'is_active'
+            ];
+
+            if(!isset($valid_columns[$col])){
+                $order=null;
+            }else{
+                $order= $valid_columns[$col];
+            }
+
+        $dta=$this->user_Mod->get_all_user($length,$start,$order,$dir,$search);
+        $json = [];
+        $no=$start+1;
+        foreach($dta as $data){
+            if($data->is_active==1){
+                $sts= "Aktiv";
+            }else{
+                $sts= "Non Aktiv";
+            }
+                $status= '<div class="dropdown ">
+                                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                                    '.$sts.'
+                                </button>  
+                                <div class="dropdown-menu">
+                                    <button  class="dropdown-item sel1" values="1" data-id='.$data->id.'> Aktiv </button>
+                                    <button  class="dropdown-item sel2" values="0" data-id='.$data->id.'> Non Aktiv </button>
+                                </div>    
+                        </div>';
+                            
+            $json[]=[
+                $no++,
+                $data->fullname,  
+                $data->email,
+                $status,
+                '<div class="btn-group w-100">
+                <a href="#" type="button" class="btn btn-warning  edt-usr" data-id='.$data->id.'>Edit</a>
+                <a href="'.base_url().'User_Managemen/delUser/'.$data->id.'" type="button" class="btn btn-danger   del-usr" data-id='.$data->id.'>Delete</a>
+                </div>'
+            ];
+        }
+        $tot=$this->user_Mod->get_all_user_count();
+        $respon=[
+            'draw'=>$draw,
+            'recordsTotal'=>$tot,
+            'recordsFiltered'=>$tot,
+            'data'=>$json
+        ];
+        echo json_encode($respon);
+        die();
+    }
 }
 ?>

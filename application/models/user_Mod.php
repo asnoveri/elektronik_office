@@ -6,47 +6,50 @@ class user_Mod extends CI_Model {
 
         public function get_data_user($role_id,$id){
             if($role_id==1){
-                $this->db->select('*');
-                $this->db->from('admin');
-                $this->db->join('user', 'user.id = admin.id');
-                $this->db->join('role_user', 'role_user.role_id = admin.role_id');
-                return $query = $this->db->get()->row_array();
+                $query="SELECT * FROM user, `admin`, role_user WHERE user.id=`admin`.id AND `admin`.role_id=role_user.role_id AND `admin`.id=$id";
+                return $query = $this->db->query($query)->row_array();
             }else if($role_id==2){
-                $this->db->select('*');
-                $this->db->from('sekretaris');
-                $this->db->join('user', 'user.id = sekretaris.id');
-                $this->db->join('role_user', 'role_user.role_id = sekretaris.role_id');
-                return $query = $this->db->get()->row_array();
+                $query="SELECT * FROM user, sekretaris, role_user WHERE user.id=sekretaris.id AND sekretaris.role_id=role_user.role_id AND sekretaris.id=$id";
+                return $query = $this->db->query($query)->row_array();
             }else if($role_id==4){
-                $this->db->select('*');
-                $this->db->from('direktur');
-                $this->db->join('user', 'user.id = direktur.id');
-                $this->db->join('role_user', 'role_user.role_id = direktur.role_id');
-                return $query = $this->db->get()->row_array();
-            
+                $query="SELECT * FROM user, direktur, role_user WHERE user.id=direktur.id AND direktur.role_id=role_user.role_id AND direktur.id=$id";
+                return $query = $this->db->query($query)->row_array();
+            }else if($role_id==3){
+                $query="SELECT * FROM user, pegawai, role_user WHERE user.id=pegawai.id AND pegawai.role_id=role_user.role_id AND pegawai.id=$id";
+                return $query = $this->db->query($query)->row_array();
+            }else if($role_id==5){
+                $query="SELECT * FROM user, wadir, role_user WHERE user.id=wadir.id AND wadir.role_id=role_user.role_id AND wadir.id=$id";
+                return $query = $this->db->query($query)->row_array();
             }
-            
-            // if($role_id == 3 && !$id_jabatan==null){
-            //     $query="SELECT * FROM user, role_user, jabatan_user WHERE
-            // user.role_id=role_user.role_id and user.id_jabatan=jabatan_user.id_jabatan and role_user.role_id=$role_id and jabatan_user.id_jabatan=$id_jabatan";
-            // return $this->db->query($query)->row_array();
-            // }else{
-            //     $query="SELECT * FROM user, role_user WHERE
-            // `user`.`role_id`=`role_user`.`role_id`  and `role_user`.`role_id`='$role_id' and `user`.`email`='$email'";
-            // return $this->db->query($query)->row_array();
-            // }
+            else if($role_id==6){
+                $query="SELECT * FROM user, adum, role_user WHERE user.id=adum.id AND adum.role_id=role_user.role_id AND adum.id=$id";
+                return $query = $this->db->query($query)->row_array();
+            }
         }
 
         
-        // public function get_data(){
-        //     return $this->db->get('user')->result_array();
-        // }
-
-        public function get_all_user(){
-            $query="SELECT * FROM  role_user";
-            return $this->db->query($query)->result_array();
+        public function get_all_user($length="",$start="",$order="",$dir="",$search=""){
+            if($order){
+                $this->db->order_by($order,$dir); 
+                $this->db->limit($length,$start);  
+                return $this->db->get('user')->result();
+            }
+            if($search){
+                $this->db->like('fullname',$search);
+                $this->db->or_like('email',$search);
+                $this->db->limit($length,$start);  
+                return $this->db->get('user')->result();
+            }
+                $this->db->order_by('fullname','asc');
+                $this->db->limit($length,$start);  
+                return $this->db->get('user')->result();
         }
 
+        public function get_all_user_count(){
+            return $this->db->count_all_results('user');
+        }
+        
+        
         public function get_user_BYID($id){
                 return $this->db->get_where('role_user',['role_id'=>$id])->row_array();
         }
@@ -77,7 +80,7 @@ class user_Mod extends CI_Model {
             return $this->db->get_where('user',['role_id'=>1])->result_array();
         }
 
-        public function Add_Admin($data){
+        public function Add_user($data){
             $this->db->insert('user',$data);
             if($this->db->affected_rows()> 0){
                 return true;
@@ -86,7 +89,7 @@ class user_Mod extends CI_Model {
             }
         }
 
-        public function del_Admin($id){
+        public function del_User($id){
             $this->db->delete('user',['id'=>$id]);
             if($this->db->affected_rows() > 0){
                 return true;

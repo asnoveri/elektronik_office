@@ -1,7 +1,5 @@
 // untuk memulai jquery
 $(function () {
-
-
 	// tambah menu
 	$("#aad_menu").on('click', function () {
 		$("#label_nm").html("Tambah Menu");
@@ -47,8 +45,6 @@ $(function () {
 		});
 	});
 
-
-
 	//tambah sub menu
 	$("#add_sb_mn").on('click', function () {
 		$("#lbl_sb_mn").html("Tambah Sub Menu");
@@ -60,7 +56,6 @@ $(function () {
 		$("#posisi_sub").val("");
 		$("#id_submenu").val("");
 		$('#pos').html("");
-
 	});
 
 	//edit sub menu
@@ -88,14 +83,11 @@ $(function () {
 		});
 	});
 
-
 	// script untuk menampilkan url berdasarkan parent menu yang di pilih pada form sub_menu
 	// on change event berjalan berdasarkan Parent menu yang di pilih
 	$("#id_menu").on('change', function () {
-
 		// const ctrl_menu menampung data value berdasarkan parent menu yang dipilih
 		const ctrl_menu = $("#id_menu").val();
-
 		$.ajax({
 			url: 'http://localhost/disposisi/Menu_Managemen/get_menu_byid',
 			data: {
@@ -126,16 +118,11 @@ $(function () {
 				// menambahkan  class daro boostrap  pada isi text p id note
 				$("#note").addClass("text-danger");
 			}
-
 		});
-
 	});
-
-
 
 	// cek posisi menu
 	$("#posisi_menu").keyup(function () {
-
 		const posisi_menu = $("#posisi_menu").val();
 		const id_menu = $("#id_menu").val();
 		$.ajax({
@@ -165,10 +152,8 @@ $(function () {
 
 	// mencek posisi sub menu
 	$("#posisi_sub").keyup(function () {
-
 		const posisi_sub = $("#posisi_sub").val();
 		const ctrl_menu = $("#id_menu").val();
-
 		$.ajax({
 			url: 'http://localhost/disposisi/Menu_Managemen/cek_posisi_sub_menu',
 			data: {
@@ -279,33 +264,12 @@ $(function () {
 		});
 	});
 
-	//menaktivkan dan mennonaktifkan user
-	$(".status").on('change', function () {
-		const val_status = $(".status").val();
-		const idst = $(this).data('idst');
-		const role_id = $(this).data('role_id');
-		const id_user = $(this).data('id_user')
-		$.ajax({
-			url: 'http://localhost/disposisi/User_Managemen/ubah_isactiveUser',
-			type: 'post',
-			data: {
-				idst: idst,
-				id_user: id_user
-			},
-			success: function (data) {
-				//unutk meridirect dengan Ajax
-				document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
-			}
-		});
-	});
-
 	//tampilkan nama file saat file upload di pilih
 	$(".custom-file-input").on('change', function () {
 		let filename = $(this).val().split('\\').pop();
+		// split('\\').pop() digunakan untuk menghilangkan tanda \\ pada val input file
 		$(this).next(".custom-file-label").addClass("selected").html(filename);
 	});
-	// split('\\').pop() digunakan untuk menghilangkan tanda \\ pada val input file
-
 
 	//upload edit foto
 	$(":input[id='customFile']").on('change', function () {
@@ -339,6 +303,7 @@ $(function () {
 			document.location.href = "http://localhost/disposisi/Managemen_Surat";
 		}
 	});
+
 	// membuat view file pdf
 	$("a[id='fl_in_mesage']").on('click', function () {
 		const pdfvw = $(".pdfview").data("pdf");
@@ -358,8 +323,6 @@ $(function () {
 		const jbtn = $(".jbt").val();
 		const role_id = $(this).data('role_id');
 		const id_user = $(this).data('id_user')
-
-
 		$.ajax({
 			url: 'http://localhost/disposisi/User_Managemen/ubh_jabtan_user',
 			type: 'post',
@@ -370,11 +333,9 @@ $(function () {
 			success: function (data) {
 				//unutk meridirect dengan Ajax
 				document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
-
 			}
 		});
 	});
-
 
 	//mengubah fedback ketika mengklik alert srt masuk
 	$(".ubah_feedback").on('click', function () {
@@ -392,6 +353,7 @@ $(function () {
 			}
 		});
 	});
+
 	$(".ubah_feedback1").on('click', function () {
 		const id_terus = $(this).data('id_terus_srt_msk');
 		$.ajax({
@@ -407,6 +369,7 @@ $(function () {
 			}
 		});
 	});
+
 	// mengubah feedback ketika mengklik alert surat keluar
 	$(".ubah_feedback_sk").on('click', function () {
 		const id_terus_srt_keluar = $(this).data('id_terus_srt_klr');
@@ -446,7 +409,6 @@ $(function () {
 		});
 	});
 
-
 	// costume date time picker js
 	$('#datetimepicker').datetimepicker({
 		i18n: {
@@ -482,6 +444,7 @@ $(function () {
 		timepicker: false,
 		format: 'Y-m-d'
 	});
+
 });
 
 // buat tooltip
@@ -493,7 +456,6 @@ $(function () {
 $(function () {
 	$("#myInput").on("keyup", function () {
 		const value = $(this).val().toLowerCase();
-
 		$("#myList ").filter(function () {
 			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		});
@@ -510,3 +472,62 @@ $(function () {
 		});
 	});
 });
+
+// list user data tabel
+$(function () {
+	$('#example').DataTable({
+		"pageLength": 10,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		"ajax": {
+			url: 'http://localhost/disposisi/User_Managemen/get_tesdatatabel',
+			type: 'POST'
+		},
+	});
+});
+
+// change status user NON aktiv
+$(document).on('click', '.sel2', function () {
+	const status = 0;
+	const id = $(this).data('id');
+	$.ajax({
+		url: 'http://localhost/disposisi/User_Managemen/ubah_isactiveUser',
+		type: 'post',
+		data: {
+			id: id,
+			status: status
+		},
+		success: function (data) {
+			//unutk meridirect dengan Ajax
+			document.location.href = "http://localhost/disposisi/User_Managemen";
+			// console.log(data);
+		}
+	});
+});
+
+// change status user aktiv
+$(document).on('click', '.sel1', function () {
+	const status = 1;
+	const id = $(this).data('id');;
+	$.ajax({
+		url: 'http://localhost/disposisi/User_Managemen/ubah_isactiveUser',
+		type: 'post',
+		data: {
+			id: id,
+			status: status
+		},
+		success: function (data) {
+			//unutk meridirect dengan Ajax
+			document.location.href = "http://localhost/disposisi/User_Managemen";
+			// console.log(data);
+		}
+	});
+});
+
+// del user
+// $(document).on('click', '.del-usr', function () {
+// 	const id = $(this).data('id');
+// 	console.log(id);
+// });
