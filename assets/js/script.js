@@ -275,7 +275,6 @@ $(function () {
 	$(":input[id='customFile']").on('change', function () {
 		const form_data = new FormData($('#form_upload_foto')[0]);
 		const idgambar = $("#idgambar").val();
-		const role_id = $("#role_id").val();
 
 		$.ajax({
 			url: 'http://localhost/disposisi/User_Managemen/do_edit_uploadimage',
@@ -285,8 +284,8 @@ $(function () {
 			type: 'post',
 			success: function (data) {
 				//unutk meridirect dengan Ajax
-				document.location.href = "http://localhost/disposisi/User_Managemen/edit_user/" + idgambar + "/" + role_id;
-
+				document.location.href = "http://localhost/disposisi/User_Managemen/edit_user/" + idgambar;
+				// console.log(data);
 			}
 		});
 	})

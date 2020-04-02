@@ -32,7 +32,8 @@
                                         <th>Nama Lengkap</th>
                                         <th>User Name</th>
                                         <th>Email</th>
-                                        <th style="width:9%">Status</th>
+                                        <th>Status</th>
+                                        <th>Foto</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>

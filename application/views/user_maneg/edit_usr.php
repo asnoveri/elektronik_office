@@ -3,7 +3,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $judul?></h1>
-        <a href="<?= base_url()?>User_Managemen/list_all_user/<?=$id?>" class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-left"></i></span><span class="text">List User / Pegawai</span></a>
+        <a href="<?= base_url()?>User_Managemen/" class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-left"></i></span><span class="text">List User </span></a>
         </div>
 
         <!-- Content Row -->
@@ -16,32 +16,35 @@
                         <?= validation_errors();?>
                     </div>
             <?php  } ?>   
-            <h5 class="m-0 font-weight-bold text-secondary">Edit User / Pegawai</h5>
+            <h5 class="m-0 font-weight-bold text-secondary">Edit User</h5>
             </div>
             <div class="card-body">
-                <form action="<?= base_url()?>User_Managemen/do_edit_user/<?=$iduser?>/<?=$id?>" method="POST"  enctype='multipart/form-data' id="form_upload_foto">
+                <form action="<?= base_url()?>User_Managemen/do_edit_user" method="POST"  enctype='multipart/form-data' id="form_upload_foto">
                     <div class="row">  
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Nama Lengkap</label>
-                                <input type="text" class="form-control"  name="fullname" value="<?= $pegawai->fullname?>">
+                                <input type="text" class="form-control"  name="fullname" value="<?= $user->fullname?>">
+                            </div>
+                            <div class="form-group">
+                                <label>User Name</label>
+                                <input type="text"  class="form-control"  name="user_name" value="<?= $user->user_name?>">
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="text"  class="form-control"  name="email" value="<?= $pegawai->email?>">
+                                <input type="text"  class="form-control"  name="email" value="<?= $user->email?>">
                             </div>
                             <br>
                             <br>
                             <br>
-                            <input type="hidden" value="<?= $pegawai->id?>" name="idgambar" id="idgambar">
-                            <input type="hidden" value="<?= $id?>" name="role_id" id="role_id">
-                            <button type="submit" class="btn btn-primary" >Edit User / Pegawai</button>
+                            <input type="hidden" id="idgambar" value="<?= $user->id?>" name="id" id="id">
+                            <button type="submit" class="btn btn-primary" >Edit User</button>
                             <button type="reset" class="btn btn-danger">Batal</button>
                         </div>    
                         <div class="col-sm-6">
                             <?= $this->session->flashdata('erorogbr') ?>
                             <div class="card" style="width:250px;">
-                                    <img class="card-img-top img-thumbnail" src="<?= base_url()?>assets/images/<?= $pegawai->image?>" alt="Card image">
+                                    <img class="card-img-top img-thumbnail" src="<?= base_url()?>assets/images/<?= $user->image?>" alt="Card image">
                                     <div class="card-body">
                                     <label class="card-text">Ubah Foto Profil</label>
                                         <div class="custom-file">

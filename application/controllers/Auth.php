@@ -18,7 +18,8 @@ class Auth extends CI_Controller {
 
     public function login(){
         // $this->form_validation->set_rules('email','Email','required|valid_email|trim');
-        $this->form_validation->set_rules('user_name','User_name','required|trim|min_length[3]');
+        $this->form_validation->set_rules('user_name','User_name','required|trim|min_length[3]|alpha_dash', 
+        ['alpha_dash'=>'User Name Tidak Mengizinkan Spasi Pada Karakter Yang di Masukkan']);
         $this->form_validation->set_rules('pass','Pass','required|trim');
 		
         if($this->form_validation->run() == false){

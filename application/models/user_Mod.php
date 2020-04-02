@@ -49,7 +49,25 @@ class user_Mod extends CI_Model {
             return $this->db->count_all_results('user');
         }
         
+        public function cek_username($data){
+            $this->db->where('user_name', $data);
+            if($this->db->get('user')->num_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
         
+        public function get_user($id){
+            if($user=$this->db->get_where('user',['id'=>$id])->row()){
+                return $user->user_name;
+            }else{
+                return false;
+            }
+            
+        }
+
+
         public function get_user_BYID($id){
                 return $this->db->get_where('role_user',['role_id'=>$id])->row_array();
         }
@@ -149,8 +167,8 @@ class user_Mod extends CI_Model {
           }
         }
 
-        public function get_userPEg_BYID($data){
-            return $this->db->get_where('user',$data)->row();
+        public function get_userEdit($id){
+            return $this->db->get_where('user',['id'=>$id])->row();
             
         }
 
@@ -165,9 +183,8 @@ class user_Mod extends CI_Model {
             }
         }
 
-        public function edit_pegawaiBYid($data,$id,$role_id){
+        public function edit_pegawaiBYid($data,$id){
             $this->db->where('id', $id);
-            $this->db->where('role_id', $role_id);
             $this->db->update('user', $data);
             if($this->db->affected_rows() > 0){
                 return true;
