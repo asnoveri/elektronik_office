@@ -30,6 +30,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nama Lengkap</th>
+                                        <th>User Name</th>
                                         <th>Email</th>
                                         <th style="width:9%">Status</th>
                                         <th>Action</th>
@@ -57,6 +58,10 @@
                     <div class="form-group">
                         <label>Nama lengkap</label>
                         <input type="text" class="form-control" id="fullname" name="fullname">
+                    </div>
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input type="text" class="form-control" id="user_name" name="user_name">
                     </div>
                     <div class="form-group">
                         <label>Email</label>

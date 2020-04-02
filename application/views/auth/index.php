@@ -70,9 +70,13 @@
                           <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                         </div>
                         <form class="user" action="<?=base_url()?>auth/login" method="POST">
-                          <div class="form-group">
+                          <!-- <div class="form-group">
                             <input type="text" class="form-control form-control-user" id="exampleInputEmail" name="email" placeholder="Enter Email Address..." value="<?= set_value('email'); ?>">
                             <?= form_error('email','<div class="text-danger"><i>', '</i></div>'); ?>
+                          </div> -->
+                          <div class="form-group">
+                            <input type="text" class="form-control form-control-user" id="exampleInputUser_name" name="user_name" placeholder="Masukan User Name..." value="<?= set_value('user_name'); ?>">
+                            <?= form_error('user_name','<div class="text-danger"><i>', '</i></div>'); ?>
                           </div>
                           <div class="form-group">
                             <input type="password" class="form-control form-control-user" name="pass" id="exampleInputPassword" placeholder="Password">

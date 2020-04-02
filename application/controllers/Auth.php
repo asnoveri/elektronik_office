@@ -17,13 +17,15 @@ class Auth extends CI_Controller {
     }
 
     public function login(){
-        $this->form_validation->set_rules('email','Email','required|valid_email|trim');
+        // $this->form_validation->set_rules('email','Email','required|valid_email|trim');
+        $this->form_validation->set_rules('user_name','User_name','required|trim|min_length[3]');
         $this->form_validation->set_rules('pass','Pass','required|trim');
 		
         if($this->form_validation->run() == false){
             $this->index();
         }else{
-            $data=$this->input->post('email',true);
+            // $data=$this->input->post('email',true);
+            $data=$this->input->post('user_name',true);
             $pass=$this->input->post('pass',true);
             $datalogin=$this->login_Mod->get_User($data);
 

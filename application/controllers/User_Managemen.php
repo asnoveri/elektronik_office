@@ -155,6 +155,10 @@ class User_Managemen extends CI_Controller {
      public function add_user(){
         $this->form_validation->set_rules('fullname','Fullname','required|trim'
         ,['required'=> 'Field  Nama Lengkap Tidak Boleh Kosong']);
+        $this->form_validation->set_rules('user_name','User_name','required|trim|min_length[3]',
+            ['required'=>'User Name Tidak Boleh Kosong',
+            'min_length'=> 'User Name Harus Lebih dari 3 Karakter',
+            'matches'=> 'Kata Sandi yang Di Inputkan Tidak sama']); 
         $this->form_validation->set_rules('email','Email','trim|required|valid_email|is_unique[user.email]' ,[
             'required'=> 'Field  Email  Tidak Boleh Kosong',
             'valid_email'=> 'Email yang dimasukan Salah',
@@ -173,6 +177,7 @@ class User_Managemen extends CI_Controller {
             $data=[
                 'id'        =>'' ,
                 'fullname'  =>$this->input->post('fullname',true),
+                'user_name'  =>$this->input->post('user_name',true),
                 'email'     =>$this->input->post('email',true),
                 'is_active' => 1,
                 'image'     => "default.png",
@@ -435,8 +440,9 @@ class User_Managemen extends CI_Controller {
 
             $valid_columns=[
                 1=>'fullname',
-                2=>'email',
-                3=>'is_active'
+                2=>'user_name',
+                3=>'email',
+                4=>'is_active'
             ];
 
             if(!isset($valid_columns[$col])){
@@ -466,7 +472,8 @@ class User_Managemen extends CI_Controller {
                             
             $json[]=[
                 $no++,
-                $data->fullname,  
+                $data->fullname,
+                $data->user_name,  
                 $data->email,
                 $status,
                 '<div class="btn-group w-100">

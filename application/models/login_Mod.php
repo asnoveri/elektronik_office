@@ -4,10 +4,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class login_Mod extends CI_Model {
 
+		// public function get_User($data){
+        //     return $this->db->get_where('user',['email'=>$data])->row_array();
+			
+		// }
+
 		public function get_User($data){
-            return $this->db->get_where('user',['email'=>$data])->row_array();
+            return $this->db->get_where('user',['user_name'=>$data])->row_array();
 			
 		}
+
 		public function get_role($id){
 			if($admin=$this->db->get_where('admin',['id'=>$id])->row()){
 				return $admin->role_id;
