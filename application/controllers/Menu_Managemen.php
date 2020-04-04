@@ -398,7 +398,8 @@ class Menu_Managemen extends CI_Controller {
     public function acces_user(){
         $judul="Role Access User ";
         $halaman='menu_maneg/acces_user';
-        $data['user_all']=$this->user_Mod->get_all_user();
+        $data['user_all']=$this->user_Mod->get_all_role();
+        
         $this->template->TemplateGen($judul,$halaman,$data);  
         
     }

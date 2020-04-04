@@ -20,7 +20,7 @@
             </div>
             <div class="card-body">
             <button type="button" class="btn btn-primary mb-3" id="aad_user" data-toggle="modal" data-target="#tbhuser">
-            Tambah Menu
+            Tambah User
             </button>
                 <div class="row">  
                     <div class="col-sm-12">

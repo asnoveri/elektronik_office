@@ -42,25 +42,34 @@
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
               <?php if($data_user['role_id'] == 1){?>
-
                 <a class="dropdown-item" href="<?= base_url()?>admin/profil_admin">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile <?= $data_user['role_name']?>
+                  Profile <?= $data_user['role_name']?> "(<?= $data_user['fullname'] ?>)"
                 </a>
               <?php } elseif($data_user['role_id'] == 2 ){?>
                 <a class="dropdown-item" href="<?= base_url()?>Operator/profil_op">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile <?= $data_user['role_name']?>
+                  Profile <?= $data_user['role_name']?> "(<?= $data_user['fullname'] ?>)"
+                </a>
+                <?php } elseif($data_user['role_id'] == 3 ){?>
+                <a class="dropdown-item" href="<?= base_url()?>User/profil_user">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile <?= $data_user['jabatan']?> "(<?= $data_user['fullname'] ?>)"
                 </a>
               <?php } elseif($data_user['role_id'] == 4 ){?>
                 <a class="dropdown-item" href="<?= base_url()?>Direktur/profil_dr">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile <?= $data_user['role_name']?>
+                  Profile <?= $data_user['role_name']?> "(<?= $data_user['fullname'] ?>)"
                 </a>
-              <?php } else {?>
-                <a class="dropdown-item" href="<?= base_url()?>user/profil_user">
+              <?php } elseif($data_user['role_id'] == 5 ){?>
+                <a class="dropdown-item" href="<?= base_url()?>Wadir/profil_wadir">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile <?= @$data_user['jabatan']?>
+                  Profile <?= $data_user['jabatan']?> "(<?= $data_user['fullname'] ?>)"
+                </a>
+                <?php } elseif($data_user['role_id'] == 6 ){?>
+                <a class="dropdown-item" href="<?= base_url()?>Adum/profil_adum">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile <?= $data_user['jabatan']?> "(<?= $data_user['fullname'] ?>)"
                 </a> 
               <?php } ?>
                 <div class="dropdown-divider"></div>
