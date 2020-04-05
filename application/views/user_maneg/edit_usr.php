@@ -34,14 +34,7 @@
                                 <label>Email</label>
                                 <input type="text"  class="form-control"  name="email" value="<?= $user->email?>">
                             </div>
-                            <div class="form-group">
-                                <label>Kata Sandi</label>
-                                <input type="password" class="form-control" id="pass"  name="pass">
-                            </div>
-                            <div class="form-group">
-                                <label>Ulang Kata Sandi</label>
-                                <input type="password" class="form-control" id="pass1"  name="pass1">
-                            </div>
+                           
                             <input type="hidden" id="idgambar" value="<?= $user->id?>" name="id" id="id">
                             <button type="submit" class="btn btn-primary" >Edit User</button>
                             <button type="reset" class="btn btn-danger">Batal</button>

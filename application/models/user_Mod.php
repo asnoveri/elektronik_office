@@ -29,7 +29,8 @@ class user_Mod extends CI_Model {
 
         
         public function get_all_user($length="",$start="",$order="",$dir="",$search=""){
-                $this->db->order_by($order,$dir); 
+                $this->db->order_by($order,$dir);
+                $this->db->order_by('fullname','asc'); 
                 $this->db->like('fullname',$search);
                 $this->db->or_like('email',$search);
                 $this->db->limit($length,$start);  
@@ -39,7 +40,17 @@ class user_Mod extends CI_Model {
         public function get_all_user_count(){
             return $this->db->count_all_results('user');
         }
-        
+
+        public function get_all_op($length="",$start="",$order="",$dir="",$search=""){
+            $this->db->order_by($order,$dir); 
+            $this->db->like('fullname',$search);
+            $this->db->or_like('email',$search);
+            $this->db->limit($length,$start);
+            $this->db->from('user');
+            $this->db->join('sekretaris', 'sekretaris.id = user.id');
+            return  $query = $this->db->get()->result();
+        }
+
         public function get_all_sek_count(){
             return $this->db->count_all_results('sekretaris');
         }
@@ -57,10 +68,12 @@ class user_Mod extends CI_Model {
                 return $user->user_name;
             }else{
                 return false;
-            }
-            
+            }   
         }
 
+        public function get_userpswd($id){
+            return $this->db->get_where('user',['id'=>$id])->row();
+        }
         public function get_user_BYID($id){
                 return $this->db->get_where('role_user',['role_id'=>$id])->row_array();
         }
@@ -69,15 +82,6 @@ class user_Mod extends CI_Model {
                 return $this->db->get('role_user')->result_array();
         }
 
-        public function get_all_op($length="",$start="",$order="",$dir="",$search=""){
-            $this->db->order_by($order,$dir); 
-            $this->db->like('fullname',$search);
-            $this->db->or_like('email',$search);
-            $this->db->limit($length,$start);
-            $this->db->from('user');
-            $this->db->join('sekretaris', 'sekretaris.id = user.id');
-            return  $query = $this->db->get()->result();
-        }
     //     public function get_user_BYIDjabtan($id){
     //         $this->db->where('id_jabatan !=', 0);
     //         $this->db->where('id_jabatan',$id);
@@ -196,15 +200,15 @@ class user_Mod extends CI_Model {
             }
         }
 
-        // public function edit_pegawaiBYid($data,$id){
-        //     $this->db->where('id', $id);
-        //     $this->db->update('user', $data);
-        //     if($this->db->affected_rows() > 0){
-        //         return true;
-        //     }else{
-        //         return false;
-        //     }
-        // }
+        public function edit_userBYid($data,$id){
+            $this->db->where('id', $id);
+            $this->db->update('user', $data);
+            if($this->db->affected_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
 
         // public function cekPegJabatan($cekjbtn){
         //     $this->db->where('id_jabatan', $cekjbtn);

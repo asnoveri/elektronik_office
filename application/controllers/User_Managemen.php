@@ -328,24 +328,16 @@ class User_Managemen extends CI_Controller {
             'alpha_dash'=>'User Name Tidak Mengizinkan Spasi Pada Karakter Yang di Masukkan']); 
             $this->form_validation->set_rules('email','Email','trim|valid_email',[
                 'valid_email'=> 'Email yang dimasukan Salah' ]);
-                $this->form_validation->set_rules('pass','Pass','required|trim|min_length[6]|matches[pass1]',
-                ['required'=>'Kata Sandi Tidak Boleh Kosong',
-                'min_length'=> 'Kata Sandi Harus Lebih dari 6 Karakter',
-                'matches'=> 'Kata Sandi yang Di Inputkan Tidak sama']); 
-            $this->form_validation->set_rules('pass1','Pass1','required|trim|min_length[6]|matches[pass]',
-                ['required'=>'Ulang Kata Sandi Tidak Boleh Kosong',
-                'min_length'=> 'Kata Sandi Harus Lebih dari 6 Karakter',
-                'matches'=> 'Kata Sandi yang Di Inputkan Tidak sama']);    
             if ($this->form_validation->run() == FALSE){
                 $this->edit_user($id);
             }else{
                 $data=[
                     'fullname'  =>$this->input->post('fullname',true),
                     'user_name' =>$this->input->post('user_name',true),
-                    'email'     =>$this->input->post('email',true),
-                    'pass'      =>password_hash($this->input->post('pass1',true), PASSWORD_DEFAULT),
+                    'email'     =>$this->input->post('email',true)
+                
                 ];
-                        if($this->user_Mod->edit_pegawaiBYid($data,$id)){
+                        if($this->user_Mod->edit_userBYid($data,$id)){
                             $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
                                 Berhasil edit User  
@@ -482,9 +474,10 @@ class User_Managemen extends CI_Controller {
                 $data->email,
                 $status,
                 '<img class="img-profile rounded-circle mx-auto d-block" width="50" src="'.base_url().'assets/images/'.$data->image.'">',
-                '<div class="btn-group w-100">
-                <a href="'.base_url().'User_Managemen/edit_user/'.$data->id.'" type="button" class="btn btn-warning  edt-usr"  data-id='.$data->id.'>Edit</a>
-                <a href="'.base_url().'User_Managemen/delUser/'.$data->id.'" type="button" class="btn btn-danger   del-usr" data-id='.$data->id.'>Delete</a>
+                '<div class="btn-group-vertical w-100">
+                <button type="button" class="btn btn-success  edtpswd"  data-id='.$data->id.'>Edit kataSandi</button>
+                <a href="'.base_url().'User_Managemen/edit_user/'.$data->id.'" type="button" class="btn btn-warning"  data-id='.$data->id.'>Edit</a>
+                <a href="'.base_url().'User_Managemen/delUser/'.$data->id.'" type="button" class="btn btn-danger" data-id='.$data->id.'>Delete</a>
                 </div>'
             ];
         }
@@ -571,6 +564,37 @@ class User_Managemen extends CI_Controller {
             </div>');  
             redirect("User_Managemen/list_op");
         }    
+    }
+    public function ubahaPswd(){
+        $id= $this->input->post('id',true);
+        $this->form_validation->set_rules('pass','Pass','required|trim|min_length[6]|matches[pass1]',
+            ['required'=>'Kata Sandi Tidak Boleh Kosong',
+            'min_length'=> 'Kata Sandi Harus Lebih dari 6 Karakter',
+            'matches'=> 'Kata Sandi yang Di Inputkan Tidak sama']); 
+        $this->form_validation->set_rules('pass1','Pass1','required|trim|min_length[6]|matches[pass]',
+            ['required'=>'Ulang Kata Sandi Tidak Boleh Kosong',
+            'min_length'=> 'Kata Sandi Harus Lebih dari 6 Karakter',
+            'matches'=> 'Kata Sandi yang Di Inputkan Tidak sama']);    
+        if ($this->form_validation->run() == FALSE){
+            $this->index();
+        }else{
+            $data=[
+                'pass'      =>password_hash($this->input->post('pass1',true), PASSWORD_DEFAULT),
+            ];
+                    if($this->user_Mod->edit_userBYid($data,$id)){
+                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Berhasil edit Kata sandi User  
+                        </div>');
+                       redirect("User_Managemen");
+                    }else{
+                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Gagal edit Kata Sandi User  
+                        </div>');
+                       redirect("User_Managemen");
+                    }
+        }
     }
     
 }

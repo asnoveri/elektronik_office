@@ -243,26 +243,6 @@ $(function () {
 		});
 	})
 
-	// edit pass operator
-	$("a[id='tbl_editop']").on('click', function () {
-
-		const idop = $(this).data('id_op');
-		$.ajax({
-			url: "http://localhost/disposisi/User_Managemen/get_operatorBYid",
-			data: {
-				idop: idop
-			},
-			method: 'POST',
-			dataType: 'JSON',
-			success: function (data) {
-				$("#nl").hide();
-				$("#em").hide();
-				$("#fullnameop").val(data.fullname).attr('readonly', true);
-				$("#emailop").val(data.email).attr('readonly', true);
-				$("#id").val(data.id);
-			}
-		});
-	});
 
 	//tampilkan nama file saat file upload di pilih
 	$(".custom-file-input").on('change', function () {
@@ -317,24 +297,24 @@ $(function () {
 		PDFObject.embed("http://localhost/disposisi/assets/upload_file_surat/" + pdfvw, ".pdfview", options);
 	})
 
-	// edit Jbtn di list user
-	$(".jbt").on('change', function () {
-		const jbtn = $(".jbt").val();
-		const role_id = $(this).data('role_id');
-		const id_user = $(this).data('id_user')
-		$.ajax({
-			url: 'http://localhost/disposisi/User_Managemen/ubh_jabtan_user',
-			type: 'post',
-			data: {
-				jbtn: jbtn,
-				id_user: id_user
-			},
-			success: function (data) {
-				//unutk meridirect dengan Ajax
-				document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
-			}
-		});
-	});
+	// // edit Jbtn di list user
+	// $(".jbt").on('change', function () {
+	// 	const jbtn = $(".jbt").val();
+	// 	const role_id = $(this).data('role_id');
+	// 	const id_user = $(this).data('id_user')
+	// 	$.ajax({
+	// 		url: 'http://localhost/disposisi/User_Managemen/ubh_jabtan_user',
+	// 		type: 'post',
+	// 		data: {
+	// 			jbtn: jbtn,
+	// 			id_user: id_user
+	// 		},
+	// 		success: function (data) {
+	// 			//unutk meridirect dengan Ajax
+	// 			document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
+	// 		}
+	// 	});
+	// });
 
 	//mengubah fedback ketika mengklik alert srt masuk
 	$(".ubah_feedback").on('click', function () {
@@ -540,8 +520,45 @@ $(document).on('click', '.sel1', function () {
 	});
 });
 
-// del user
-// $(document).on('click', '.del-usr', function () {
-// 	const id = $(this).data('id');
-// 	console.log(id);
-// });
+//add_user
+$(document).on('click', '#aad_user', function () {
+	// $('#tbhuser').modal('show');
+	$("#label_Tambah").html("Tambah User");
+	$("#fullname").show();
+	$("#user_name").show();
+	$("#email").show();
+	$(".modal-dialog").removeClass(" modal-sm");
+	$('#tbhuser').modal('show');
+	$('#id').hide();
+	$(".modal-body form").attr('action', 'http://localhost/disposisi/User_Managemen/add_user');
+	$('#tbl_proses').html('Tambah');
+});
+
+// edit pass user
+$(document).on('click', '.edtpswd', function () {
+	const id = $(this).data('id');
+	$("#label_Tambah").html("Edit Kata Sandi");
+	$("#fullname").hide();
+	$("#user_name").hide();
+	$("#email").hide();
+	$(".modal-dialog").addClass("modal-dialog modal-sm");
+	$('#tbhuser').modal('show');
+	$('#id').val(id);
+	$(".modal-body form").attr('action', 'http://localhost/disposisi/User_Managemen/ubahaPswd');
+	$('#tbl_proses').html('Edit');
+	// $.ajax({
+	// 	url: 'http://localhost/disposisi/User_Managemen/ubahaPswd',
+	// 	method: 'post',
+	// 	dataType: 'json',
+	// 	data: {
+	// 		id: id,
+	// 	},
+	// 	success: function (data) {
+	// 		//unutk meridirect dengan Ajax
+	// 		// document.location.href = "http://localhost/disposisi/User_Managemen";
+	// 		// console.log(data);
+	// 		$('#tbhuser').modal('show');
+	// 		$('#id').val(data.id);
+	// 	}
+	// });
+});

@@ -56,23 +56,22 @@
               </div>
               <div class="modal-body">
                   <form action="<?= base_url()?>User_Managemen/add_user" method="POST">
-                    <div class="form-group">
+                    <div class="form-group" id="fullname">
                         <label>Nama lengkap</label>
-                        <input type="text" class="form-control" id="fullname" name="fullname">
+                        <input type="text" class="form-control"  name="fullname">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group"  id="user_name">
                         <label>User Name</label>
-                        <input type="text" class="form-control" id="user_name" name="user_name">
+                        <input type="text" class="form-control" name="user_name">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="email">
                         <label>Email</label>
-                        <input type="text" class="form-control" id="email"  name="email">
+                        <input type="text" class="form-control"  name="email">
                     </div>
                     <div class="form-group">
                         <label>Kata Sandi</label>
-                        <!-- <p id="pom"></p> -->
                         <input type="password" class="form-control" id="pass"  name="pass">
-                        <!-- <input type="hidden" name="id_menu" id="id_menu">  -->
+                        <input type="hidden" id="id"  name="id">
                     </div>
                     <div class="form-group">
                         <label>Ulang Kata Sandi</label>
