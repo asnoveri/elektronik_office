@@ -66,6 +66,9 @@
 
  <!-- date time picker js -->
  <script src="<?= base_url()?>assets/js/jquery.datetimepicker.full.min.js"></script>
+ 
+ <!-- select2 js -->
+ <script src="<?= base_url()?>assets/js/select2.min.js"></script>
 
 </body>
 

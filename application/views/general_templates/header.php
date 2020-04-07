@@ -25,6 +25,9 @@
   <!-- css date pciker -->
   <link href="<?= base_url()?>assets/css/jquery.datetimepicker.css" rel="stylesheet">
 
+<!-- select2 css -->
+<link href="<?= base_url()?>assets/css/select2.min.css" rel="stylesheet">
+
 </head>
 
 <body id="page-top">

@@ -16,145 +16,6 @@ class User_Managemen extends CI_Controller {
         $this->template->TemplateGen($judul,$halaman);  
     }
 
-    // public function list_all_user($id){
-    //     $judul="User Managemen";
-    //     $halaman='user_maneg/list_all_user';
-    //     $data['role']=$this->user_Mod->get_user_BYID($id);
-    //     $data['user_all_list']=$this->user_Mod->get_user_bytipe_roleID($id);
-    //     $this->template->TemplateGen($judul,$halaman,$data);
-    // }
-
-    // public function  jabatan(){
-    //     $judul="Jabatan Pegawai ";
-    //     $halaman='user_maneg/list_jabatan';
-    //     $data['jabatan']=$this->user_Mod->get_all_jabatan();
-    //     $this->template->TemplateGen($judul,$halaman,$data);
-    // }
-
-    // public function add_jabatan(){
-    //     $this->form_validation->set_rules('jabatan','Jabatan','required|trim|is_unique[jabatan_user.jabatan]',
-    //     [
-    //         'required'=>'Jabatan Tidak Boleh Kosong',
-    //         'is_unique'=>'Jabatan yang Di Masukan Sudah Ada Di Database'
-    //         ]);
-    //     if($this->form_validation->run() == false){
-    //         $this->jabatan();
-    //     }else{
-    //        $add= $this->user_Mod->Add_jabatan($this->input->post('jabatan',true));
-    //         if($add == true){
-    //             $this->session->set_flashdata('msgjbtn','<div class="alert alert-success alert-dismissible">
-    //             <button type="button" class="close" data-dismiss="alert">&times;</button>
-    //                 Berhasil Menambahkan Jabatan Baru
-    //             </div>');
-    //            redirect("User_Managemen/jabatan");
-    //         }else{
-    //             $this->session->set_flashdata('msgjbtn','<div class="alert alert-danger alert-dismissible">
-    //             <button type="button" class="close" data-dismiss="alert">&times;</button>
-    //                 Gagal Menambahkan Jabatan Baru
-    //             </div>');
-    //            redirect("User_Managemen/jabatan");
-    //         }
-    //     }
-    // }
-
-    // public function hapusjbt($id){
-    //    if($this->user_Mod->delJabtan($id) == true){
-    //             $this->session->set_flashdata('msgjbtn','<div class="alert alert-success alert-dismissible">
-    //             <button type="button" class="close" data-dismiss="alert">&times;</button>
-    //             Berhasil Mengahapus Jabatan 
-    //             </div>');
-    //             redirect("User_Managemen/jabatan");
-    //    } else{
-    //             $this->session->set_flashdata('msgjbtn','<div class="alert alert-danger alert-dismissible">
-    //             <button type="button" class="close" data-dismiss="alert">&times;</button>
-    //                 Gagal Menghapus Jabatan 
-    //             </div>');
-    //             redirect("User_Managemen/jabatan");
-    //    }
-    // }
-
-    // public function addform($id){
-    //   if($id==2){
-    //     $judul="User Managemen";
-    //     $halaman='user_maneg/add_operator';
-    //     $data['id']=$id;
-    //     $this->template->TemplateGen($judul,$halaman,$data);  
-    //   }elseif($id==3){
-    //     $judul="User Managemen";
-    //     $halaman='user_maneg/add_user';
-    //     $data['id']=$id;
-    //     $data['list_jabatan']=$this->user_Mod->get_all_jabatan();
-    //     $this->template->TemplateGen($judul,$halaman,$data);  
-    //   }else{
-    //     redirect("User_Managemen");
-    //   }
-    // }
-
-    // public function add_operator($id){
-    //     $this->form_validation->set_rules('fullname','Fullname','required|trim'
-    //     ,['required'=> 'Field  Nama Lengkap Tidak Boleh Kosong']);
-    //     $this->form_validation->set_rules('email','Email','trim|required|valid_email|is_unique[user.email]' ,[
-    //         'required'=> 'Field  Email  Tidak Boleh Kosong',
-    //         'valid_email'=> 'Email yang dimasukan Salah',
-    //         'is_unique'=> 'Email Sudah Terdaftar di Database'
-    //         ]);
-    //     $this->form_validation->set_rules('pass','Pass','required|trim|min_length[6]|matches[pass1]',
-    //     ['required'=>'Password Tidak Boleh Kosong',
-    //     'min_length'=> 'Password Harus Lebih dari 6 Karakter',
-    //     'matches'=> 'Password yang Di Inputkan Tidak sama']); 
-    //     $this->form_validation->set_rules('pass1','Pass1','required|trim|min_length[6]|matches[pass]',
-    //     ['required'=>'Password Verification Tidak Boleh Kosong',
-    //     'min_length'=> 'Password Harus Lebih dari 6 Karakter',
-    //     'matches'=> 'Password yang Di Inputkan Tidak sama']     
-    //     );    
-        
-    //     if ($this->form_validation->run() == FALSE){
-    //         $this->addform($id);
-    //     }else{
-    //         $data=[
-    //             'id'        =>'' ,
-    //             'fullname'  =>$this->input->post('fullname',true),
-    //             'email'     =>$this->input->post('email',true),
-    //             'is_active' => 1,
-    //             'image'     => "default.png",
-    //             'pass'      =>password_hash($this->input->post('pass1',true), PASSWORD_DEFAULT),
-    //             'date_created'=> time(),
-    //             'role_id'   => 2
-    //         ];
-    //         //passwor operator= operator12345
-            
-    //         if($this->user_Mod->Add_Admin($data)){
-    //             $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-    //             <button type="button" class="close" data-dismiss="alert">&times;</button>
-    //                 Berhasil Menambahkan Operator Baru 
-    //             </div>');
-    //            redirect("User_Managemen/list_all_user/$id");
-    //         }else{
-    //             $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
-    //             <button type="button" class="close" data-dismiss="alert">&times;</button>
-    //                Gagal Menambahkan Operator Baru
-    //             </div>');  
-    //             redirect("User_Managemen/list_all_user/$id");
-    //         }
-    //     }
-    // }
-    
-    // public function delOP($idop,$id){
-    //     if($this->user_Mod->del_Admin($idop)== true){
-    //         $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-    //         <button type="button" class="close" data-dismiss="alert">&times;</button>
-    //           Berhasil Menghapus Operator
-    //         </div>');  
-    //         redirect("User_Managemen/list_all_user/$id");
-    //     }else{
-    //         $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
-    //         <button type="button" class="close" data-dismiss="alert">&times;</button>
-    //            Gagal Menghapus Operator 
-    //         </div>');  
-    //         redirect("User_Managemen/list_all_user/$id");
-    //     }    
-    //  }
-
      public function add_user(){
         $this->form_validation->set_rules('fullname','Fullname','required|trim'
         ,['required'=> 'Field  Nama Lengkap Tidak Boleh Kosong']);
@@ -222,55 +83,13 @@ class User_Managemen extends CI_Controller {
         }else{
             $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-               Gagal Menghapus User '.$cek_user.'
+               Gagal Menghapus User '.$cek_user.' 
             </div>');  
+            
             redirect("User_Managemen");
         }    
-     }
+    }
 
-
-      
-    // public function get_operatorBYid(){
-    //     $data=[
-    //         'id'=>$this->input->post('idop',true)
-    //     ];
-    //    echo json_encode ($this->user_Mod->get_admin_BYID($data));
-    // }    
-
-    // public function edit_operator($idrl){
-    //     $this->form_validation->set_rules('pass1','Pass1','required|trim|min_length[6]',
-    //     ['required'=>'Password Tidak Boleh Kosong',
-    //     'min_length'=> 'Password Harus Lebih dari 6 Karakter']     
-    //     );     
-
-    //     if($this->form_validation->run() == FALSE){
-    //         $this->list_all_user($idrl);
-    //     }else{
-    //         $id=$this->input->post('id',true);
-    //         $data =[
-    //             'pass'=>password_hash($this->input->post('pass1',true),PASSWORD_DEFAULT) 
-    //         ];
-    //         $in=$this->user_Mod->editAdmin($id,$data);
-    //         if($idrl==2){
-    //             $type_user="Operator";
-    //         }else if($idrl==3){
-    //             $type_user="User";
-    //         }
-    //         if($in == true){
-    //             $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-    //             <button type="button" class="close" data-dismiss="alert">&times;</button>
-    //                 Berhasil Mengubah Password ' . $type_user.'
-    //             </div>');
-    //             redirect("User_Managemen/list_all_user/$idrl");
-    //         }else{
-    //             $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
-    //             <button type="button" class="close" data-dismiss="alert">&times;</button>
-    //                 gagal Ubah Password '   . $type_user.'
-    //             </div>');
-    //             redirect("User_Managemen/list_all_user/$idrl");
-    //         }
-    //     }
-    // }
 
     public function ubah_isactiveUser(){
         $id=$this->input->post('id',true);
@@ -392,27 +211,6 @@ class User_Managemen extends CI_Controller {
             }
         }
 
-        public function ubh_jabtan_user(){
-            $ubhjbatan=$this->input->post('jbtn',true);
-            $id=$this->input->post('id_user',true);
-                if($this->user_Mod->cekPegJabatan($ubhjbatan) == true){
-                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    Gagal edit User Karena Jabatan Yang dipilih sudah di Set pada pegawai lain
-                    </div>');
-                }else{
-                    $data=[
-                        'id_jabatan'=> $ubhjbatan
-                    ];
-                    if($this->user_Mod->change_Jabatan_User($data,$id)== true){
-                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            Berhasil Edit Jabatan User
-                        </div>');
-                    }
-                }
-
-            }
         
     public function get_tesdatatabel(){
         $length=intval($this->input->post('length'));
@@ -536,8 +334,8 @@ class User_Managemen extends CI_Controller {
                 $row->fullname,
                 $row->user_name,  
                 $row->email,
-                '<a href="#" type="button" class="btn btn-warning  edt-usr">Edit</a>
-                <a href="'.base_url().'User_Managemen/delSekre/'.$row->id.'/'.$row->id_sekretaris.'" type="button" class="btn btn-danger" >Delete</a>
+                '<div class="btn-group-vertical w-100">
+                <a href="'.base_url().'User_Managemen/delSekre/'.$row->id.'/'.$row->id_sekretaris.'" type="button" class="btn btn-warning" >Delete</a>
                 </div>'
             ];
         }
@@ -548,23 +346,7 @@ class User_Managemen extends CI_Controller {
         $respon['data']=$json;
         echo json_encode($respon);die();
     }
-    public function delSekre($iduser,$id_sekretaris){
-        $cek_user=$this->user_Mod->get_user($iduser);
 
-        if($this->user_Mod->del_Sekre($id_sekretaris)== true){
-            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-              Berhasil Menghapus '.$cek_user.' Sebagai Sekretaris
-            </div>');  
-            redirect("User_Managemen/list_op");
-        }else{
-            $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-               Gagal Menghapus  '.$cek_user.' Sebagai Sekretaris
-            </div>');  
-            redirect("User_Managemen/list_op");
-        }    
-    }
     public function ubahaPswd(){
         $id= $this->input->post('id',true);
         $this->form_validation->set_rules('pass','Pass','required|trim|min_length[6]|matches[pass1]',
@@ -596,6 +378,70 @@ class User_Managemen extends CI_Controller {
                     }
         }
     }
-    
+
+    public function delSekre($iduser,$id_sekretaris){
+        $cek_user=$this->user_Mod->get_user($iduser);
+
+        if($this->user_Mod->del_Sekre($id_sekretaris)== true){
+            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+              Berhasil Menghapus '.$cek_user.' Sebagai Sekretaris
+            </div>');  
+            redirect("User_Managemen/list_op");
+        }else{
+            $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+               Gagal Menghapus  '.$cek_user.' Sebagai Sekretaris
+            </div>');  
+            redirect("User_Managemen/list_op");
+        }    
+    }  
+
+    public function get_alluser_combobox(){
+        $search=$this->input->post('searchTerm');
+        $data=$this->user_Mod->get_alluser_combobox($search,);
+        foreach($data as $row){
+            $json[]=[
+               "id"      => $row->id,
+               "text"    => $row->fullname,
+            ];
+        }
+        echo json_encode($json);die();
+    }
+
+    public function add_sekretaris(){
+        $this->form_validation->set_rules('pegawai','Pegawai','required|trim',
+            ['required'=>'Pegawai Belum Di Pilih']); 
+            if ($this->form_validation->run() == FALSE){
+                $this->list_op();
+            }else{
+                $id=$this->input->post('pegawai',true);
+                $cekSekre=$this->user_mod->get_OPByid($id);
+                $cek_user=$this->user_Mod->get_user($id);
+                if($cekSekre){
+                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                       Gagal Menambahkan  '.$cek_user.' Sebagai Sekretaris Karena '.$cek_user.' Sudah Terdaftar Sebagai Sekeretaris
+                    </div>');  
+                    redirect("User_Managemen/list_op");
+                }else{
+                    $data=[
+                        'id'=>$id,
+                        'role_id'=>2
+                    ];
+                    if($this->user_Mod->add_sekeretaris($data)){
+                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                         Berhasil Menambahkan  '.$cek_user.' Sebagai Sekretaris 
+                        </div>');  
+                        redirect("User_Managemen/list_op");
+                    }
+                }
+            }
+    }
+
+    public function listdirektur(){
+
+    }
 }
 ?>

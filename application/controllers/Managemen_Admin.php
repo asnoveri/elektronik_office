@@ -13,67 +13,99 @@ class Managemen_Admin extends CI_Controller {
     public function index(){
         $judul="Managemen Admin";
         $halaman='user_maneg/addadmin';
-        $data['admin_all_list']=$this->user_Mod->get_admin();
+        $data="";
         $this->template->TemplateGen($judul,$halaman,$data);  
     }
 
+    public function get_admin(){
+        $length= intval($this->input->post('length'));
+        $start= intval($this->input->post('start'));
+        $draw= intval($this->input->post('draw'));
+        $order= $this->input->post('order');
+        $search= $this->input->post('search');
+        $search = $search['value'];
+        $col=0;
+        $dir="";
+
+        if(!empty($order)){
+            foreach($order as $or){
+                $col = $or['column'];
+                $dir = $or['dir'];
+            }
+        }
+        if($dir!='asc' && $dir!='desc'){
+            $dir='desc';
+        }
+        $valid_columns=[
+            1=>'fullname',
+            2=>'user_name',
+            3=>'email',
+        ];
+        if(!isset($valid_columns[$col])){
+            $order=null;
+        }else{
+            $order= $valid_columns[$col];
+        }
+
+        $data=$this->user_mod->get_admin($length,$start,$order,$dir,$search);
+        $json=[];
+        $no=1+$start;
+        foreach($data as $row){
+            $json[]=[
+                $no++,
+                $row->fullname,
+                $row->user_name,
+                $row->email,
+                '<div class="btn-group-vertical w-100">
+                <a href="'.base_url().'Managemen_Admin/hapus_admin/'.$row->id.'/'.$row->id_admin.'" type="button" class="btn btn-warning" >Delete</a>
+                </div>'
+            ];
+        }
+        $tot=$this->user_mod->get_all_admin_count();
+        $respon['recordsTotal']=$tot;
+        $respon['recordsFiltered']=$tot;
+        $respon['data']=$json;
+        echo json_encode($respon);
+    }
+
     public function add_admin(){
-        
-        $this->form_validation->set_rules('fullname','Fullname','required|trim'
-        ,['required'=> 'Field  Nama Lengkap Tidak Boleh Kosong']);
-        $this->form_validation->set_rules('email','Email','trim|required|valid_email|is_unique[user.email]' ,[
-            'required'=> 'Field  Email  Tidak Boleh Kosong',
-            'valid_email'=> 'Email yang dimasukan Salah',
-            'is_unique'=> 'Email Sudah Terdaftar di Database'
-            ]);
-        $this->form_validation->set_rules('pass','Pass','required|trim|min_length[6]|matches[pass1]',
-        ['required'=>'Password Tidak Boleh Kosong',
-        'min_length'=> 'Password Harus Lebih dari 6 Karakter',
-        'matches'=> 'Password yang Di Inputkan Tidak sama']); 
-        $this->form_validation->set_rules('pass1','Pass1','required|trim|min_length[6]|matches[pass]',
-        ['required'=>'Password Verification Tidak Boleh Kosong',
-        'min_length'=> 'Password Harus Lebih dari 6 Karakter',
-        'matches'=> 'Password yang Di Inputkan Tidak sama']     
-        );    
-        
+        $this->form_validation->set_rules('pegawai','Pegawai','required|trim',
+        ['required'=>'Pegawai Belum Di Pilih']); 
         if ($this->form_validation->run() == FALSE){
             $this->index();
         }else{
-            $data=[
-                'id'        =>'' ,
-                'fullname'  =>$this->input->post('fullname',true),
-                'email'     =>$this->input->post('email',true),
-                'is_active' => 1,
-                'image'     => "default.png",
-                'pass'      =>password_hash($this->input->post('pass1',true), PASSWORD_DEFAULT),
-                'date_created'=> time(),
-                'role_id'   => 1
-            ];
-            //passwor asno= asno12345
-            
-            if($this->user_Mod->Add_Admin($data)){
-                $this->session->set_flashdata('pesantambah','<div class="alert alert-success alert-dismissible">
+            $id=$this->input->post('pegawai',true);
+            $cekAdmin=$this->user_mod->get_admin_BYID($id);
+            $cek_user=$this->user_Mod->get_user($id);
+            if($cekAdmin){
+                $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    Berhasil Menambahkan Admin Baru
-                </div>');
-               redirect("Managemen_Admin");
-            }else{
-                $this->session->set_flashdata('pesantambah','<div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                   Gagal Menambahkan Admin Baru
+                   Gagal Menambahkan  '.$cek_user.' Sebagai Sekretaris Karena '.$cek_user.' Sudah Terdaftar Sebagai Sekeretaris
                 </div>');  
-               redirect("Managemen_Admin");
+                redirect("Managemen_Admin");
+            }else{
+                $data=[
+                    'id'=>$id,
+                    'role_id'=>1
+                ];
+                if($this->user_Mod->Add_admin($data)){
+                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                     Berhasil Menambahkan  '.$cek_user.' Sebagai Sekretaris 
+                    </div>');  
+                    redirect("Managemen_Admin");
+                }
             }
         }
-        // redirect("Managemen_Admin");
     }
 
-    public function hapus_admin($id){
-        if($this->user_Mod->del_Admin($id)){
-            $this->session->set_flashdata('pesantambah','<div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                   Berhasil Menghapus Admin 
-                </div>');  
+    public function hapus_admin($iduser,$id_admin){
+        $cek_user=$this->user_Mod->get_user($iduser);
+        if($this->user_Mod->del_Admin($id_admin)){
+            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+              Berhasil Menghapus '.$cek_user.' Sebagai Admin
+            </div>');  
                redirect("Managemen_Admin");
         }else{
             $this->session->set_flashdata('pesantambah','<div class="alert alert-danger alert-dismissible">

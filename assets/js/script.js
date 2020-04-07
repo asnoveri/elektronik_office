@@ -199,51 +199,6 @@ $(function () {
 		});
 	});
 
-	//add admin
-	$("#aad_admn").on('click', function () {
-		$("#label_tbhadmin").html("Tambahkan Admin Baru");
-		$("#fullname").val("").removeAttr('readonly');
-		$("#email").val("").removeAttr('readonly');
-		$("#pass").val("");
-		$("#pass1").val("");
-		$("#btn_add_admn").html("Tambahkan");
-		$(".modal-dialog").removeClass("modal-sm");
-		$("#nm").show();
-		$("#em").show();
-		$("#pase").show();
-		$("#lbpas").html("Password Verification");
-	});
-
-	//edit pass admin
-	$("a[id='edit_admn']").on('click', function () {
-		$("#label_tbhadmin").html("Ubah Password ");
-		$("#btn_add_admn").html("Edit Password");
-		$(".modal-body form").attr('action', 'http://localhost/disposisi/Managemen_Admin/edit_admin');
-		$(".modal-dialog").addClass("modal-dialog modal-sm");
-		$("#nm").hide();
-		$("#em").hide();
-		$("#pase").hide();
-		$("#lbpas").html("Masukan Password Baru");
-		const id = $(this).data('id_admin');
-
-		$.ajax({
-			url: "http://localhost/disposisi/Managemen_Admin/get_adminBYID",
-			data: {
-				id: id
-			},
-			// type dan method memiliki fungsi yang sama
-			method: 'post',
-			dataType: 'JSON',
-			success: function (data) {
-				console.log(data);
-				$("#fullname").val(data.fullname).attr('readonly', true);
-				$("#email").val(data.email).attr('readonly', true);
-				$("#id").val(data.id);
-			}
-		});
-	})
-
-
 	//tampilkan nama file saat file upload di pilih
 	$(".custom-file-input").on('change', function () {
 		let filename = $(this).val().split('\\').pop();
@@ -297,24 +252,6 @@ $(function () {
 		PDFObject.embed("http://localhost/disposisi/assets/upload_file_surat/" + pdfvw, ".pdfview", options);
 	})
 
-	// // edit Jbtn di list user
-	// $(".jbt").on('change', function () {
-	// 	const jbtn = $(".jbt").val();
-	// 	const role_id = $(this).data('role_id');
-	// 	const id_user = $(this).data('id_user')
-	// 	$.ajax({
-	// 		url: 'http://localhost/disposisi/User_Managemen/ubh_jabtan_user',
-	// 		type: 'post',
-	// 		data: {
-	// 			jbtn: jbtn,
-	// 			id_user: id_user
-	// 		},
-	// 		success: function (data) {
-	// 			//unutk meridirect dengan Ajax
-	// 			document.location.href = "http://localhost/disposisi/User_Managemen/list_all_user/" + role_id;
-	// 		}
-	// 	});
-	// });
 
 	//mengubah fedback ketika mengklik alert srt masuk
 	$(".ubah_feedback").on('click', function () {
@@ -482,6 +419,21 @@ $(function () {
 	});
 });
 
+// list admin tabel
+$(function () {
+	$('#listAdmin').DataTable({
+		"pageLength": 10,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		"ajax": {
+			url: 'http://localhost/disposisi/Managemen_Admin/get_admin',
+			type: 'post'
+		}
+	});
+});
+
 // change status user NON aktiv
 $(document).on('click', '.sel2', function () {
 	const status = 0;
@@ -546,19 +498,59 @@ $(document).on('click', '.edtpswd', function () {
 	$('#id').val(id);
 	$(".modal-body form").attr('action', 'http://localhost/disposisi/User_Managemen/ubahaPswd');
 	$('#tbl_proses').html('Edit');
-	// $.ajax({
-	// 	url: 'http://localhost/disposisi/User_Managemen/ubahaPswd',
-	// 	method: 'post',
-	// 	dataType: 'json',
-	// 	data: {
-	// 		id: id,
-	// 	},
-	// 	success: function (data) {
-	// 		//unutk meridirect dengan Ajax
-	// 		// document.location.href = "http://localhost/disposisi/User_Managemen";
-	// 		// console.log(data);
-	// 		$('#tbhuser').modal('show');
-	// 		$('#id').val(data.id);
-	// 	}
-	// });
+});
+
+// tambah admin
+$(function () {
+	$("#aad_admn").on('click', function () {
+		$("#adminModal").modal('show');
+		$('#sel1').select2({
+			ajax: {
+				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				method: 'post',
+				dataType: 'json',
+				// delay: 250,
+				data: function (params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+
+			}
+		});
+	});
+});
+
+
+//tambah sekretaris
+$(function () {
+	$("#tbhsekre").on('click', function () {
+		$('#modal_skre').modal('show');
+		$('#sel1').select2({
+			ajax: {
+				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				method: 'post',
+				dataType: 'json',
+				// delay: 250,
+				data: function (params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+
+			}
+		});
+	});
 });

@@ -65,7 +65,7 @@ class user_Mod extends CI_Model {
         
         public function get_user($id){
             if($user=$this->db->get_where('user',['id'=>$id])->row()){
-                return $user->user_name;
+                return $user->fullname;
             }else{
                 return false;
             }   
@@ -74,6 +74,7 @@ class user_Mod extends CI_Model {
         public function get_userpswd($id){
             return $this->db->get_where('user',['id'=>$id])->row();
         }
+
         public function get_user_BYID($id){
                 return $this->db->get_where('role_user',['role_id'=>$id])->row_array();
         }
@@ -82,31 +83,42 @@ class user_Mod extends CI_Model {
                 return $this->db->get('role_user')->result_array();
         }
 
-    //     public function get_user_BYIDjabtan($id){
-    //         $this->db->where('id_jabatan !=', 0);
-    //         $this->db->where('id_jabatan',$id);
-    //         return $this->db->get('user')->row();
-    // }
+        public function get_alluser_combobox($search=""){
+            if($search){
+                $this->db->like('fullname',$search);
+                return $this->db->get('user')->result();
+            }else{
+                return $this->db->get('user')->result();
+            }
+        }
 
-        // public function get_all_user_not_admin(){
-        //     $query="SELECT * FROM  role_user where role_id !=1";
-        //     return $this->db->query($query)->result_array();
-        // }
+        public function get_OPByid($id){
+            return $this->db->get_where('sekretaris',['id'=>$id])->row();
+        }
 
-        // public function get_user_bytipe_roleID($id){
-        //     if($id==1 || $id==2){
-        //     return $this->db->get_where('user',['role_id'=>$id])->result_array();
-            
-        //     }else{
-        //       $query="SELECT * FROM user, jabatan_user WHERE
-        //        user.id_jabatan=jabatan_user.id_jabatan and user.role_id=$id";
-        //       return $this->db->query($query)->result_array();
-        //     }
-        // }
+        public function get_admin($length="",$start="",$order="",$dir="",$search=""){
+            $this->db->order_by($order,$dir); 
+            $this->db->like('fullname',$search);
+            $this->db->or_like('email',$search);
+            $this->db->limit($length,$start);
+            $this->db->from('user');
+            $this->db->join('admin', 'admin.id = user.id');
+            return  $query = $this->db->get()->result();
+        }
 
-        // public function get_admin(){
-        //     return $this->db->get_where('user',['role_id'=>1])->result_array();
-        // }
+        public function get_all_admin_count(){
+            return $this->db->count_all_results('admin');
+        }
+
+        public function del_Admin($id_admin){
+            $this->db->delete('admin',['id_admin'=>$id_admin]);
+            if($this->db->affected_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }    
+
 
         public function Add_user($data){
             $this->db->insert('user',$data);
@@ -122,6 +134,16 @@ class user_Mod extends CI_Model {
             if($this->db->affected_rows() > 0){
                 return true;
             }else{
+                // return false;
+                return $this->db->error();
+            }
+        }
+
+        public function add_sekeretaris($data){
+            $this->db->insert('sekretaris',$data);
+            if($this->db->affected_rows()> 0){
+                return true;
+            }else{
                 return false;
             }
         }
@@ -134,47 +156,11 @@ class user_Mod extends CI_Model {
                 return false;
             }
         }
-        // public function get_admin_BYID($data){
-        //     return $this->db->get_where('user',$data)->row_array();
-            
-        // }
         
-        // public function editAdmin($id,$data){
-        //    $this->db->update('user',$data, ['id'=>$id]);
-        //    if($this->db->affected_rows() > 0){
-        //        return true;
-        //    }else{
-        //        return false;
-        //    }
-        // }
-
-        // public function get_all_jabatan(){
-        //     return $this->db->get('jabatan_user')->result_array();
-        // }
-
-        // public function Add_jabatan($data){
-        //    $this->db->insert('jabatan_user',['jabatan'=>$data]);
-        //    if($this->db->affected_rows() > 0){
-        //        return true;
-        //    }else{
-        //        return false;
-        //    }
-        // }
-
-        // public function delJabtan($id){
-        //     $this->db->delete('jabatan_user',['id_jabatan'=>$id]);
-        //     if($this->db->affected_rows() > 0){
-        //         return true;
-        //     }else{
-        //         return false;
-        //     }
-        // }
-
-        // public function getJabatanlike($data){
-        //     $this->db->like('jabatan', $data);
-        //    return $this->db->get_where('jabatan_user')->result_array();
-        // }
-
+        public function get_admin_BYID($id){
+            return $this->db->get_where('admin',['id'=>$id])->row();
+        }
+        
         public function change_isactive_User($data,$id){
             $this->db->update('user', $data, array('id' => $id));
           if($this->db->affected_rows() > 0){
@@ -188,7 +174,6 @@ class user_Mod extends CI_Model {
             return $this->db->get_where('user',['id'=>$id])->row();
             
         }
-
 
         public function Update_images($new_images,$id){ 
             $this->db->where('id', $id);
@@ -210,31 +195,14 @@ class user_Mod extends CI_Model {
             }
         }
 
-        // public function cekPegJabatan($cekjbtn){
-        //     $this->db->where('id_jabatan', $cekjbtn);
-        //     if($this->db->get('user')->num_rows() > 0){
-        //         return true;
-        //     }else{
-        //         return false;
-        //     }
-        // }
-
-        // public function get_jbtnBYid($id){
-        //   return  $this->db->get_where('jabatan_user',['id_jabatan'=> $id])->row();
-
-        // }
-
-        // public function change_Jabatan_User($data,$id){
-        //     $this->db->update('user', $data, array('id' => $id));
-        //   if($this->db->affected_rows() > 0){
-        //       return true;
-        //   }else{
-        //       return false;
-        //   }
-        // }
-        
-
-
+        public function Add_admin($data){
+            $this->db->insert('admin',$data);
+            if($this->db->affected_rows()> 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
 }
 
 ?>
