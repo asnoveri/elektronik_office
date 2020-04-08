@@ -38,7 +38,8 @@ class Auth extends CI_Controller {
                     $wadir=$this->login_Mod->get_wadir($datalogin['id']);
                     $adum=$this->login_Mod->get_adum($datalogin['id']);
                     $pegawai=$this->login_Mod->get_pegawai($datalogin['id']);
-                    $data= count($admin) + count($direktur) + count($sekretaris) + count($wadir) + count($adum) + count($pegawai);
+                    $adminkepeg=$this->login_Mod->get_adminkepeg($datalogin['id']);
+                    $data= count($admin) + count($direktur) + count($sekretaris) + count($wadir) + count($adum) + count($pegawai) + count($adminkepeg);
                     if($data >1){
                         if(password_verify($pass,$datalogin['pass'])){
                             $data=[
@@ -76,6 +77,8 @@ class Auth extends CI_Controller {
                                 redirect('Wadir');
                             }elseif($role == 6){
                                 redirect('Adum');
+                            }elseif($role == 7){
+                                redirect('admin_kepeg');
                             }else{
                                 $this->session->set_flashdata('pesan','<div class="alert alert-danger alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -169,6 +172,11 @@ class Auth extends CI_Controller {
                 $role_id=$param;
                 $id=$this->session->userdata('id');
                 $redirect="Adum";
+            }elseif($param==7){
+                $email=$this->session->userdata('email');
+                $role_id=$param;
+                $id=$this->session->userdata('id');
+                $redirect="admin_kepeg";
             }
             $datasession=[
                 'email'     => $email,
@@ -185,6 +193,7 @@ class Auth extends CI_Controller {
             $dtwadir=$this->login_Mod->get_wadir($id);
             $dtadum=$this->login_Mod->get_adum($id);
             $dtpegawai=$this->login_Mod->get_pegawai($id);
+            $dtadminkepeg=$this->login_Mod->get_adminkepeg($id);
 
             $data['pilih_akun']=1;
             if($dtadmin){
@@ -204,8 +213,10 @@ class Auth extends CI_Controller {
                 $data['adum']=$dtadum[0]->role_id;
             }
             if($dtpegawai){
-                $data['pegawai']=$dtpegawai[0]->role_id;
-                
+                $data['pegawai']=$dtpegawai[0]->role_id;   
+            }
+            if($dtadminkepeg){
+                $data['adminkepeg']=$dtadminkepeg[0]->role_id;   
             }
             $this->index($data);
         } 

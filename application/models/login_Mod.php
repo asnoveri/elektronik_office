@@ -27,6 +27,8 @@ class login_Mod extends CI_Model {
 				return $adum->role_id;
 			}elseif($pegawai=$this->db->get_where('pegawai',['id'=>$id])->row()){
 				return $pegawai->role_id;
+			}elseif($admin_kepeg=$this->db->get_where('admin_kepeg',['id'=>$id])->row()){
+				return $admin_kepeg->role_id;
 			}
 		}
 		public function get_admin($id){
@@ -56,6 +58,11 @@ class login_Mod extends CI_Model {
 
 		public function get_pegawai($id){
 			return $pegawai=$this->db->get_where('pegawai',['id'=>$id])->result();
+			// return $adum->role_id;
+		}
+
+		public function get_adminkepeg($id){
+			return $admin_kepeg=$this->db->get_where('admin_kepeg',['id'=>$id])->result();
 			// return $adum->role_id;
 		}
 }

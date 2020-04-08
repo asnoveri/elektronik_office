@@ -110,6 +110,38 @@ class user_Mod extends CI_Model {
             return $this->db->count_all_results('admin');
         }
 
+        public function get_direktur($length="",$start="",$order="",$dir="",$search=""){
+            $this->db->order_by($order,$dir); 
+            $this->db->like('fullname',$search);
+            $this->db->or_like('email',$search);
+            $this->db->limit($length,$start);
+            $this->db->from('user');
+            $this->db->join('direktur', 'direktur.id = user.id');
+            return  $query = $this->db->get()->result();
+        }
+
+        public function get_all_direk_count(){
+            return $this->db->count_all_results('direktur');
+        }
+
+        
+        public function del_Direk($id_direktur){
+            $this->db->delete('direktur',['id_direktur'=>$id_direktur]);
+            if($this->db->affected_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function add_direktur($data){
+            $this->db->insert('direktur',$data);
+            if($this->db->affected_rows()> 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
         public function del_Admin($id_admin){
             $this->db->delete('admin',['id_admin'=>$id_admin]);
             if($this->db->affected_rows() > 0){

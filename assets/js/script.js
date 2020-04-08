@@ -434,6 +434,21 @@ $(function () {
 	});
 });
 
+// list direktur
+$(function () {
+	$("#tabl_dirut").DataTable({
+		"pageLength": 10,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		"ajax": {
+			url: 'http://localhost/disposisi/User_Managemen/get_direktur',
+			type: 'post'
+		},
+	});
+});
+
 // change status user NON aktiv
 $(document).on('click', '.sel2', function () {
 	const status = 0;
@@ -527,6 +542,33 @@ $(function () {
 	});
 });
 
+// tambah direktur
+$(function () {
+	$("#tbhdirut").on('click', function () {
+		$("#modal_dirut").modal('show');
+		$(".modal-body form").attr('action', 'http://localhost/disposisi/User_Managemen/addDirektur');
+		$(".modal-body form").attr('method', 'post');
+		$("#sel1").select2({
+			ajax: {
+				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				method: 'post',
+				dataType: 'json',
+				// delay: 250,
+				data: function (params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+			}
+		});
+	});
+});
 
 //tambah sekretaris
 $(function () {

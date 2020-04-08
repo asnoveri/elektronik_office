@@ -340,7 +340,7 @@ class User_Managemen extends CI_Controller {
             ];
         }
         $tot=$this->user_Mod->get_all_sek_count();
-        // $respon['draw']=$draw;
+        $respon['draw']=$draw;
         $respon['recordsTotal']=$tot;
         $respon['recordsFiltered']=$tot;
         $respon['data']=$json;
@@ -441,7 +441,113 @@ class User_Managemen extends CI_Controller {
     }
 
     public function listdirektur(){
+        $judul="User Managemen";
+        $halaman='user_maneg/listdirut';
+        $this->template->TemplateGen($judul,$halaman);  
+    }
 
+    public function get_direktur(){
+        $length=intval($this->input->post('length'));
+        $start=intval($this->input->post('start'));
+        $draw= intval($this->input->post('draw'));
+        $order= $this->input->post('order');
+        $search= $this->input->post('search');
+        $search = $search['value'];
+        $col=0;
+        $dir="";
+            
+            if(!empty($order)){
+                foreach($order as $or){
+                    $col = $or['column'];
+                    $dir = $or['dir'];
+                }
+            }
+
+            if($dir!='asc' && $dir!='desc'){
+                $dir='desc';
+            }
+            
+            $valid_columns=[
+                1=>'fullname',
+                2=>'user_name',
+                3=>'email',
+            ];
+            if(!isset($valid_columns[$col])){
+                $order=null;
+            }else{
+                $order= $valid_columns[$col];
+            }
+            
+        $data=$this->user_mod->get_direktur($length,$start,$order,$dir,$search);
+        $no=1+$start;
+        $json=[];
+        foreach($data as $row){
+            $json[]=[
+                $no++,
+                $row->fullname,
+                $row->user_name,
+                $row->email,
+                '<div class="btn-group-vertical w-100">
+                <a href="'.base_url().'User_Managemen/deldirek/'.$row->id.'/'.$row->id_direktur.'" type="button" class="btn btn-warning" >Delete</a>
+                </div>'
+            ];
+        }
+        $tot=$this->user_mod->get_all_direk_count();
+        $respon['draw']=$draw;
+        $respon['recordsTotal']=$tot;
+        $respon['recordsFiltered']=$tot;
+        $respon['totalRecords']=$tot;
+        $respon['data']=$json;
+        echo json_encode($respon);die();
+    }
+
+    public function deldirek($iduser,$id_direktur){
+        $cek_user=$this->user_Mod->get_user($iduser);
+
+        if($this->user_Mod->del_Direk($id_direktur)== true){
+            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+              Berhasil Menghapus '.$cek_user.' Sebagai Direktur
+            </div>');  
+            redirect("User_Managemen/listdirektur");
+        }else{
+            $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+               Gagal Menghapus  '.$cek_user.' Sebagai Sekretaris
+            </div>');  
+            redirect("User_Managemen/listdirektur");
+        }    
+    }
+
+    public function addDirektur(){
+        $this->form_validation->set_rules('pegawai','Pegawai','required|trim',
+            ['required'=>'Pegawai Belum Di Pilih']); 
+            if ($this->form_validation->run() == FALSE){
+                $this->listdirektur();
+            }else{
+                $id=$this->input->post('pegawai',true);
+                $cekdirek=$this->user_mod->get_all_direk_count();;
+                $cek_user=$this->user_Mod->get_user($id);
+                if($cekdirek > 0){
+                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                       Gagal Menambahkan  '.$cek_user.' Sebagai Direktur Karena Role Direktur Hanya di Gunakan Oleh Seorang Pegawai
+                    </div>');  
+                    redirect("User_Managemen/listdirektur");
+                }else{
+                    $data=[
+                        'id'=>$id,
+                        'role_id'=>4
+                    ];
+                    if($this->user_Mod->add_direktur($data)){
+                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                         Berhasil Menambahkan  '.$cek_user.' Sebagai Direktur 
+                        </div>');  
+                        redirect("User_Managemen/listdirektur");
+                    }
+                }
+            }
     }
 }
 ?>

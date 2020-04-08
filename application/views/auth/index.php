@@ -55,7 +55,12 @@
                                   </div>
                                 <?php }else{?>
                                 <?php }  
-                                  
+                                if(@$adminkepeg){?>
+                                  <div class="col-lg-6 mt-2">
+                                    <a href="<?= base_url()?>auth/pilih_Role/<?= $adminkepeg?>" class="btn btn-success btn-user btn-block">Admin Kepegawaian</a>
+                                  </div>
+                                <?php }else{?>
+                                <?php }  
                             ?>
                           </div>
                         </div>

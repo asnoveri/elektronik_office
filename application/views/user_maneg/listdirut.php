@@ -16,16 +16,16 @@
                             <?= validation_errors();?>
                         </div>
                 <?php  } ?>
-            <h5 class="m-0 font-weight-bold text-secondary">List Sekretaris</h5>
+            <h5 class="m-0 font-weight-bold text-secondary">List Direktur</h5>
             </div>
             <div class="card-body">
-            <button type="button" class="btn btn-primary mb-3" id="tbhsekre">
-            Tambah Sekretaris
+            <button type="button" class="btn btn-primary mb-3" id="tbhdirut">
+            Tambah Direktur
             </button>
                 <div class="row">  
                     <div class="col-sm-12">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="tabl_sekre" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="tabl_dirut" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
                                         <th>#</th>
@@ -45,15 +45,15 @@
         </div>    
     </div>
 
-    <div class="modal" id="modal_skre">
+    <div class="modal" id="modal_dirut">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="label_Tambahsk">Tambah Sekretaris</h4>
+                    <h4 class="modal-title" id="label_Tambahdir">Tambah Direktur</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= base_url()?>User_Managemen/add_sekretaris" method="POST">
+                    <form action="" method="">
                         <div class="form-group">
                             <label>Pilih Pegawai</label>
                             <!-- <input type="text" class="form-control" id="pegawai" name="id"> -->
@@ -61,7 +61,7 @@
                                 <option value=''>-- Pilih Pegawai --</option>   
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary" id="tbl_prosessk">Tambah</button>
+                        <button type="submit" class="btn btn-primary" id="tbl_prosesdir">Tambah</button>
                         <button type="reset" class="btn btn-danger" data-dismiss="modal">Batal</button>
                     </form>
                 </div>
