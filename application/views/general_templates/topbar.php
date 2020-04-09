@@ -12,8 +12,6 @@
             <i class="fa fa-bars"></i>
           </button>
 
-        
-
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">            
             <!-- Nav Item - Alerts -->
@@ -69,7 +67,12 @@
                 <?php } elseif($data_user['role_id'] == 6 ){?>
                 <a class="dropdown-item" href="<?= base_url()?>Adum/profil_adum">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile <?= $data_user['jabatan']?> "(<?= $data_user['fullname'] ?>)"
+                  Profile <?= $data_user['role_name']?> "(<?= $data_user['fullname'] ?>)"
+                </a> 
+                <?php } elseif($data_user['role_id'] == 7 ){?>
+                <a class="dropdown-item" href="<?= base_url()?>admin_kepeg/profil_adminkepg">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile <?= $data_user['role_name']?> "(<?= $data_user['fullname'] ?>)"
                 </a> 
               <?php } ?>
                 <div class="dropdown-divider"></div>

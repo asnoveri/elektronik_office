@@ -15,6 +15,8 @@ class login_Mod extends CI_Model {
 		}
 
 		public function get_role($id){
+			// $jbtn=$this->db->get_where('penguna',['id'=>$id])->row();
+			// return $jbtn->role_id;
 			if($admin=$this->db->get_where('admin',['id'=>$id])->row()){
 				return $admin->role_id;
 			} elseif($sekretaris=$this->db->get_where('sekretaris',['id'=>$id])->row()){
@@ -31,6 +33,13 @@ class login_Mod extends CI_Model {
 				return $admin_kepeg->role_id;
 			}
 		}
+
+		// public function get_penguna($id){
+		// 	return $this->db->get_where('penguna',['id'=>$id])->result();
+		// }
+
+		
+
 		public function get_admin($id){
 			return $admin=$this->db->get_where('admin',['id'=>$id])->result();
 			// return $admin->role_id;

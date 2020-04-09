@@ -25,7 +25,7 @@
                 <div class="row">  
                     <div class="col-sm-12">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="example" width="100%" cellspacing="0">>
+                            <table class="table table-bordered" id="example" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
                                         <th>#</th>
