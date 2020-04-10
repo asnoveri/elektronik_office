@@ -10,7 +10,84 @@ class User_Managemen extends CI_Controller {
       
     }
 
-    public function index(){
+    public function index($param=""){
+        if($param=='listuser'){
+            $length=intval($this->input->post('length'));
+            $draw=intval($this->input->post('draw'));
+            $start=intval($this->input->post('start'));
+            $order=$this->input->post('order'); 
+            $search=$this->input->post('search');
+            $search = $search['value'];
+            $col=0;
+            $dir="";
+    
+                if(!empty($order)){
+                    foreach($order as $or){
+                        $col = $or['column'];
+                        $dir = $or['dir'];
+                    }
+                }
+               
+                if($dir!='asc' && $dir!='desc'){
+                    $dir = 'desc';
+                }
+    
+                $valid_columns=[
+                    1=>'fullname',
+                    2=>'user_name',
+                    3=>'email',
+                    4=>'is_active'
+                ];
+    
+                if(!isset($valid_columns[$col])){
+                    $order=null;
+                }else{
+                    $order= $valid_columns[$col];
+                }
+    
+            $dta=$this->user_Mod->get_all_user($length,$start,$order,$dir,$search);
+            $json = [];
+            $no=$start+1;
+            foreach($dta as $data){
+                if($data->is_active==1){
+                    $sts= "Aktiv";
+                }else{
+                    $sts= "Non Aktiv";
+                }
+                    $status= '<div class="dropdown ">
+                                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                                        '.$sts.'
+                                    </button>  
+                                    <div class="dropdown-menu">
+                                        <button  class="dropdown-item sel1" values="1"  data-id='.$data->id.'> Aktiv </button>
+                                        <button  class="dropdown-item sel2" values="0" data-id='.$data->id.'> Non Aktiv </button>
+                                    </div>    
+                            </div>';
+                                
+                $json[]=[
+                    $no++,
+                    $data->fullname,
+                    $data->user_name,  
+                    $data->email,
+                    $status,
+                    '<img class="img-profile rounded-circle mx-auto d-block" width="50" src="'.base_url().'assets/images/'.$data->image.'">',
+                    '<div class="btn-group-vertical w-100">
+                    <button type="button" class="btn btn-success  edtpswd"  data-id='.$data->id.'>Edit kataSandi</button>
+                    <a href="'.base_url().'User_Managemen/edit_user/'.$data->id.'" type="button" class="btn btn-warning"  data-id='.$data->id.'>Edit</a>
+                    <a href="'.base_url().'User_Managemen/delUser/'.$data->id.'" type="button" class="btn btn-danger" data-id='.$data->id.'>Delete</a>
+                    </div>'
+                ];
+            }
+            $tot=$this->user_Mod->get_all_user_count();
+            $respon=[
+                'draw'=>$draw,
+                'recordsTotal'=>$tot,
+                'recordsFiltered'=>$tot,
+                'data'=>$json
+            ];
+            echo json_encode($respon);
+            die();
+        }
         $judul="User Managemen";
         $halaman='user_maneg/index';
         $this->template->TemplateGen($judul,$halaman);  
@@ -211,91 +288,9 @@ class User_Managemen extends CI_Controller {
             }
         }
 
-        
-    public function get_tesdatatabel(){
-        $length=intval($this->input->post('length'));
-        $draw=intval($this->input->post('draw'));
-        $start=intval($this->input->post('start'));
-        $order=$this->input->post('order'); 
-        $search=$this->input->post('search');
-        $search = $search['value'];
-        $col=0;
-        $dir="";
-
-            if(!empty($order)){
-                foreach($order as $or){
-                    $col = $or['column'];
-                    $dir = $or['dir'];
-                }
-            }
-           
-            if($dir!='asc' && $dir!='desc'){
-                $dir = 'desc';
-            }
-
-            $valid_columns=[
-                1=>'fullname',
-                2=>'user_name',
-                3=>'email',
-                4=>'is_active'
-            ];
-
-            if(!isset($valid_columns[$col])){
-                $order=null;
-            }else{
-                $order= $valid_columns[$col];
-            }
-
-        $dta=$this->user_Mod->get_all_user($length,$start,$order,$dir,$search);
-        $json = [];
-        $no=$start+1;
-        foreach($dta as $data){
-            if($data->is_active==1){
-                $sts= "Aktiv";
-            }else{
-                $sts= "Non Aktiv";
-            }
-                $status= '<div class="dropdown ">
-                                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                                    '.$sts.'
-                                </button>  
-                                <div class="dropdown-menu">
-                                    <button  class="dropdown-item sel1" values="1"  data-id='.$data->id.'> Aktiv </button>
-                                    <button  class="dropdown-item sel2" values="0" data-id='.$data->id.'> Non Aktiv </button>
-                                </div>    
-                        </div>';
-                            
-            $json[]=[
-                $no++,
-                $data->fullname,
-                $data->user_name,  
-                $data->email,
-                $status,
-                '<img class="img-profile rounded-circle mx-auto d-block" width="50" src="'.base_url().'assets/images/'.$data->image.'">',
-                '<div class="btn-group-vertical w-100">
-                <button type="button" class="btn btn-success  edtpswd"  data-id='.$data->id.'>Edit kataSandi</button>
-                <a href="'.base_url().'User_Managemen/edit_user/'.$data->id.'" type="button" class="btn btn-warning"  data-id='.$data->id.'>Edit</a>
-                <a href="'.base_url().'User_Managemen/delUser/'.$data->id.'" type="button" class="btn btn-danger" data-id='.$data->id.'>Delete</a>
-                </div>'
-            ];
-        }
-        $tot=$this->user_Mod->get_all_user_count();
-        $respon=[
-            'draw'=>$draw,
-            'recordsTotal'=>$tot,
-            'recordsFiltered'=>$tot,
-            'data'=>$json
-        ];
-        echo json_encode($respon);
-        die();
-    }
 
     public function list_op($param=""){
-            $judul="User Managemen";
-            $halaman='user_maneg/list_op';
-            $this->template->TemplateGen($judul,$halaman);  
-    }
-    public function get_op(){
+        if($param=='listoprator'){
         $length= intval($this->input->post('length'));
         $start= intval($this->input->post('start'));
         $draw= intval($this->input->post('draw'));
@@ -304,28 +299,17 @@ class User_Managemen extends CI_Controller {
         $search = $search['value'];
         $col=0;
         $dir="";
-
+        $id=2;
             if(!empty($order)){
                 foreach($order as $or){
-                    $col = $or['column'];
                     $dir = $or['dir'];
                 }
             }
             if($dir!='asc' && $dir!='desc'){
                 $dir='desc';
             }
-            $valid_columns=[
-                1=>'fullname',
-                2=>'user_name',
-                3=>'email',
-            ];
-            if(!isset($valid_columns[$col])){
-                $order=null;
-            }else{
-                $order= $valid_columns[$col];
-            }
 
-        $data=$this->user_Mod->get_all_op($length,$start,$order,$dir,$search);
+        $data=$this->user_Mod->get_allpenguna($length,$start,$dir,$search,$id);
         $json = [];
         $no=1+$start;
         foreach($data as $row){
@@ -335,17 +319,23 @@ class User_Managemen extends CI_Controller {
                 $row->user_name,  
                 $row->email,
                 '<div class="btn-group-vertical w-100">
-                <a href="'.base_url().'User_Managemen/delSekre/'.$row->id.'/'.$row->id_sekretaris.'" type="button" class="btn btn-warning" >Delete</a>
+                <a href="'.base_url().'User_Managemen/delSekre/'.$row->id.'/'.$row->id_penguna.'" type="button" class="btn btn-warning" >Delete</a>
                 </div>'
             ];
         }
-        $tot=$this->user_Mod->get_all_sek_count();
+        $tot1=$this->user_mod->get_allpengunan_count($id);
+        $tot=count($tot1);
         $respon['draw']=$draw;
         $respon['recordsTotal']=$tot;
         $respon['recordsFiltered']=$tot;
         $respon['data']=$json;
         echo json_encode($respon);die();
+        }
+            $judul="User Managemen";
+            $halaman='user_maneg/list_op';
+            $this->template->TemplateGen($judul,$halaman);  
     }
+
 
     public function ubahaPswd(){
         $id= $this->input->post('id',true);
@@ -379,22 +369,24 @@ class User_Managemen extends CI_Controller {
         }
     }
 
-    public function delSekre($iduser,$id_sekretaris){
+    public function delSekre($iduser,$id_penguna){
         $cek_user=$this->user_Mod->get_user($iduser);
-
-        if($this->user_Mod->del_Sekre($id_sekretaris)== true){
+        $data=[
+            'status'=>0
+        ];
+        if($this->user_Mod->ubahstatus($id_penguna,$data)){
             $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
               Berhasil Menghapus '.$cek_user.' Sebagai Sekretaris
             </div>');  
-            redirect("User_Managemen/list_op");
+               redirect("User_Managemen/list_op");
         }else{
-            $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-               Gagal Menghapus  '.$cek_user.' Sebagai Sekretaris
-            </div>');  
-            redirect("User_Managemen/list_op");
-        }    
+            $this->session->set_flashdata('pesantambah','<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                   Gagal Menghapus '.$cek_user.' Sebagai Sekretaris
+                </div>');  
+                redirect("User_Managemen/list_op");
+        }  
     }  
 
     public function get_alluser_combobox(){
@@ -416,107 +408,110 @@ class User_Managemen extends CI_Controller {
                 $this->list_op();
             }else{
                 $id=$this->input->post('pegawai',true);
-                $cekSekre=$this->user_mod->get_OPByid($id);
                 $cek_user=$this->user_Mod->get_user($id);
-                if($cekSekre){
+                $role_id=2;
+                if($this->user_mod->get_penguna_BYID($id,$status=1,$role_id)){
                     $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                       Gagal Menambahkan  '.$cek_user.' Sebagai Sekretaris Karena '.$cek_user.' Sudah Terdaftar Sebagai Sekeretaris
+                       Gagal Menambahkan  '.$cek_user.' Sebagai Sekretaris Karena '.$cek_user.' Sudah Terdaftar Sebagai Sekretaris
                     </div>');  
                     redirect("User_Managemen/list_op");
-                }else{
-                    $data=[
-                        'id'=>$id,
-                        'role_id'=>2
-                    ];
-                    if($this->user_Mod->add_sekeretaris($data)){
+                }elseif($cekpenguna=$this->user_mod->get_penguna_BYID($id,$status=0,$role_id)){
+                    $id_penguna=$cekpenguna->id_penguna;
+                        $data=[
+                            'status'=>1
+                            ];  
+                        if($this->user_Mod->ubahstatus($id_penguna,$data)){
+                            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Berhasil Menambahkan  '.$cek_user.' Sebagai Sekretaris
+                            </div>');  
+                            redirect("User_Managemen/list_op");
+                        }
+                }elseif($this->user_mod->get_penguna_BYID($id,$status='',$role_id)==false){  
+                            $data=[
+                                'id'=>$id,
+                                'role_id'=>2,
+                                'status'=>1
+                            ];
+                        if($this->user_Mod->Add_Penguna($data)){
                         $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                         Berhasil Menambahkan  '.$cek_user.' Sebagai Sekretaris 
+                        Berhasil Menambahkan  '.$cek_user.' Sebagai Sekretaris
                         </div>');  
                         redirect("User_Managemen/list_op");
                     }
                 }
             }
+            
     }
 
-    public function listdirektur(){
+    public function listdirektur($param=""){
+        if($param=='listdirek'){
+            $length= intval($this->input->post('length'));
+            $start= intval($this->input->post('start'));
+            $draw= intval($this->input->post('draw'));
+            $order= $this->input->post('order');
+            $search= $this->input->post('search');
+            $search = $search['value'];
+            $col=0;
+            $dir="";
+            $id=4;
+                if(!empty($order)){
+                    foreach($order as $or){
+                        $dir = $or['dir'];
+                    }
+                }
+                if($dir!='asc' && $dir!='desc'){
+                    $dir='desc';
+                }
+    
+            $data=$this->user_Mod->get_allpenguna($length,$start,$dir,$search,$id);
+            $json = [];
+            $no=1+$start;
+            foreach($data as $row){
+                $json[]=[
+                    $no++,
+                    $row->fullname,
+                    $row->user_name,  
+                    $row->email,
+                    '<div class="btn-group-vertical w-100">
+                    <a href="'.base_url().'User_Managemen/deldirek/'.$row->id.'/'.$row->id_penguna.'" type="button" class="btn btn-warning" >Delete</a>
+                    </div>'
+                ];
+            }
+            $tot1=$this->user_mod->get_allpengunan_count($id);
+            $tot=count($tot1);
+            $respon['draw']=$draw;
+            $respon['recordsTotal']=$tot;
+            $respon['recordsFiltered']=$tot;
+            $respon['data']=$json;
+            echo json_encode($respon);die();
+        }
         $judul="User Managemen";
         $halaman='user_maneg/listdirut';
         $this->template->TemplateGen($judul,$halaman);  
     }
+    
 
-    public function get_direktur(){
-        $length=intval($this->input->post('length'));
-        $start=intval($this->input->post('start'));
-        $draw= intval($this->input->post('draw'));
-        $order= $this->input->post('order');
-        $search= $this->input->post('search');
-        $search = $search['value'];
-        $col=0;
-        $dir="";
-            
-            if(!empty($order)){
-                foreach($order as $or){
-                    $col = $or['column'];
-                    $dir = $or['dir'];
-                }
-            }
-
-            if($dir!='asc' && $dir!='desc'){
-                $dir='desc';
-            }
-            
-            $valid_columns=[
-                1=>'fullname',
-                2=>'user_name',
-                3=>'email',
-            ];
-            if(!isset($valid_columns[$col])){
-                $order=null;
-            }else{
-                $order= $valid_columns[$col];
-            }
-            
-        $data=$this->user_mod->get_direktur($length,$start,$order,$dir,$search);
-        $no=1+$start;
-        $json=[];
-        foreach($data as $row){
-            $json[]=[
-                $no++,
-                $row->fullname,
-                $row->user_name,
-                $row->email,
-                '<div class="btn-group-vertical w-100">
-                <a href="'.base_url().'User_Managemen/deldirek/'.$row->id.'/'.$row->id_direktur.'" type="button" class="btn btn-warning" >Delete</a>
-                </div>'
-            ];
-        }
-        $tot=$this->user_mod->get_all_direk_count();
-        $respon['draw']=$draw;
-        $respon['recordsTotal']=$tot;
-        $respon['recordsFiltered']=$tot;
-        $respon['totalRecords']=$tot;
-        $respon['data']=$json;
-        echo json_encode($respon);die();
-    }
-
-    public function deldirek($iduser,$id_direktur){
+    public function deldirek($iduser,$id_penguna){
         $cek_user=$this->user_Mod->get_user($iduser);
-
-        if($this->user_Mod->del_Direk($id_direktur)== true){
+        $data=[
+            'status'=>0
+        ];
+        if($this->user_Mod->ubahstatus($id_penguna,$data)){
             $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
               Berhasil Menghapus '.$cek_user.' Sebagai Direktur
             </div>');  
-            redirect("User_Managemen/listdirektur");
+               redirect("User_Managemen/listdirektur");
         }else{
-            $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-               Gagal Menghapus  '.$cek_user.' Sebagai Sekretaris
-            </div>');  
-            redirect("User_Managemen/listdirektur");
-        }    
+            $this->session->set_flashdata('pesantambah','<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                   Gagal Menghapus '.$cek_user.' Sebagai Direktur
+                </div>');  
+                redirect("User_Managemen/listdirektur");
+        }  
     }
 
     public function addDirektur(){
@@ -524,25 +519,38 @@ class User_Managemen extends CI_Controller {
             ['required'=>'Pegawai Belum Di Pilih']); 
             if ($this->form_validation->run() == FALSE){
                 $this->listdirektur();
-            }else{
+            }else{       
                 $id=$this->input->post('pegawai',true);
-                $cekdirek=$this->user_mod->get_all_direk_count();;
                 $cek_user=$this->user_Mod->get_user($id);
-                if($cekdirek > 0){
+                $role_id=4;
+                if($this->user_mod->get_penguna_BYID($id,$status=1,$role_id)){
                     $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                       Gagal Menambahkan  '.$cek_user.' Sebagai Direktur Karena Role Direktur Hanya di Gunakan Oleh Seorang Pegawai
+                       Gagal Menambahkan  '.$cek_user.' Sebagai Direktur Karena '.$cek_user.' Sudah Terdaftar Sebagai Direktur
                     </div>');  
                     redirect("User_Managemen/listdirektur");
-                }else{
-                    $data=[
-                        'id'=>$id,
-                        'role_id'=>4
-                    ];
-                    if($this->user_Mod->add_direktur($data)){
+                }elseif($cekpenguna=$this->user_mod->get_penguna_BYID($id,$status=0,$role_id)){
+                    $id_penguna=$cekpenguna->id_penguna;
+                        $data=[
+                            'status'=>1
+                            ];  
+                        if($this->user_Mod->ubahstatus($id_penguna,$data)){
+                            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Berhasil Menambahkan  '.$cek_user.' Sebagai Direktur
+                            </div>');  
+                            redirect("User_Managemen/list_op");
+                        }
+                }elseif($this->user_mod->get_penguna_BYID($id,$status='',$role_id)==false){  
+                            $data=[
+                                'id'=>$id,
+                                'role_id'=>4,
+                                'status'=>1
+                            ];
+                        if($this->user_Mod->Add_Penguna($data)){
                         $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
-                         Berhasil Menambahkan  '.$cek_user.' Sebagai Direktur 
+                        Berhasil Menambahkan  '.$cek_user.' Sebagai Direktur 
                         </div>');  
                         redirect("User_Managemen/listdirektur");
                     }

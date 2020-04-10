@@ -398,7 +398,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/User_Managemen/get_tesdatatabel',
+			url: 'http://localhost/disposisi/User_Managemen/index/listuser',
 			type: 'POST'
 		},
 	});
@@ -413,7 +413,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/User_Managemen/get_op',
+			url: 'http://localhost/disposisi/User_Managemen/list_op/listoprator',
 			type: 'POST'
 		},
 	});
@@ -428,7 +428,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/Managemen_Admin/get_admin',
+			url: 'http://localhost/disposisi/Managemen_Admin/index/get_admin',
 			type: 'post'
 		}
 	});
@@ -443,7 +443,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/User_Managemen/get_direktur',
+			url: 'http://localhost/disposisi/User_Managemen/listdirektur/listdirek',
 			type: 'post'
 		},
 	});

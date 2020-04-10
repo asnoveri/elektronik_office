@@ -14,7 +14,47 @@
                             <h1 class="h4 text-gray-900 mb-4">Pilih Account</h1>
                           </div>
                           <div class="row">
-                              <?php
+                          <?php 
+                            foreach($peguna as $pgn){
+                              if($pgn->role_id==1 && $pgn->status==1){
+                                $role="Admin";
+                                echo  '<div class="col-lg-6 mt-2">
+                                <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
+                              </div>';
+                              }elseif($pgn->role_id==2 && $pgn->status==1){
+                                $role="Sekretaris";
+                                echo  '<div class="col-lg-6 mt-2">
+                                <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
+                              </div>';
+                              }elseif($pgn->role_id==3 && $pgn->status==1){
+                                $role=$pgn->unit_kerja;
+                                echo  '<div class="col-lg-6 mt-2">
+                                <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
+                              </div>';
+                              }elseif($pgn->role_id==4 && $pgn->status==1){
+                                $role="Direktur";
+                                echo  '<div class="col-lg-6 mt-2">
+                                <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
+                              </div>';
+                              }elseif($pgn->role_id==5 && $pgn->status==1){
+                                $role=$pgn->unit_kerja;
+                                echo  '<div class="col-lg-6 mt-2">
+                                <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
+                              </div>';
+                              }elseif($pgn->role_id==6 && $pgn->status==1){
+                                $role="Adum";
+                                echo  '<div class="col-lg-6 mt-2">
+                                <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
+                              </div>';
+                              }elseif($pgn->role_id==7 && $pgn->status==1){
+                                $role="Admin Kepegawaian";
+                                echo  '<div class="col-lg-6 mt-2">
+                                <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
+                              </div>';
+                              }
+                            }
+                          ?>
+                              <!-- <?php
                                 if(@$admin){?>
                                   <div class="col-lg-6 mt-2">
                                     <a href="<?= base_url()?>auth/pilih_Role/<?= $admin?>" class="btn btn-success btn-user btn-block">Admin </a>
@@ -61,7 +101,7 @@
                                   </div>
                                 <?php }else{?>
                                 <?php }  
-                            ?>
+                            ?> -->
                           </div>
                         </div>
                     </div>    
