@@ -30,7 +30,7 @@
                       if($data_user['role_id']==1 || $data_user['role_id']==2 || $data_user['role_id']==4 || $data_user['role_id']==6 ||$data_user['role_id']==7){
                         echo $data_user['role_name'];
                       }elseif($data_user['role_id']==3 || $data_user['role_id']==5){
-                        echo $data_user['unit_kerja'];
+                        echo $data_user['jabatan'];
                       }
                     ?>
                   </sup>
@@ -52,7 +52,7 @@
                 <?php } elseif($data_user['role_id'] == 3 ){?>
                 <a class="dropdown-item" href="<?= base_url()?>User/profil_user">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile <?= $data_user['unit_kerja']?> "(<?= $data_user['fullname'] ?>)"
+                  Profile <?= $data_user['jabatan']?> "(<?= $data_user['fullname'] ?>)"
                 </a>
               <?php } elseif($data_user['role_id'] == 4 ){?>
                 <a class="dropdown-item" href="<?= base_url()?>Direktur/profil_dr">
@@ -62,7 +62,7 @@
               <?php } elseif($data_user['role_id'] == 5 ){?>
                 <a class="dropdown-item" href="<?= base_url()?>Wadir/profil_wadir">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile <?= $data_user['unit_kerja']?> "(<?= $data_user['fullname'] ?>)"
+                  Profile <?= $data_user['jabatan']?> "(<?= $data_user['fullname'] ?>)"
                 </a>
                 <?php } elseif($data_user['role_id'] == 6 ){?>
                 <a class="dropdown-item" href="<?= base_url()?>Adum/profil_adum">

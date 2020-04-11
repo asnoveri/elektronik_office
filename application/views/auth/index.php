@@ -27,7 +27,7 @@
                                 <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
                               </div>';
                               }elseif($pgn->role_id==3 && $pgn->status==1){
-                                $role=$pgn->unit_kerja;
+                                $role=$pgn->jabatan;
                                 echo  '<div class="col-lg-6 mt-2">
                                 <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
                               </div>';
@@ -37,7 +37,7 @@
                                 <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
                               </div>';
                               }elseif($pgn->role_id==5 && $pgn->status==1){
-                                $role=$pgn->unit_kerja;
+                                $role=$pgn->jabatan;
                                 echo  '<div class="col-lg-6 mt-2">
                                 <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
                               </div>';

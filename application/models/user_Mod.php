@@ -77,14 +77,16 @@ class user_Mod extends CI_Model {
             return $this->db->get_where('user',['id'=>$id])->row();
         }
 
-        // public function get_user_BYID($id){
-        //         return $this->db->get_where('role_user',['role_id'=>$id])->row_array();
-        // }
+    
+        public function get_user_BYID($id){
+                return $this->db->get_where('role_user',['role_id'=>$id])->row_array();
+        }
 
-        // public function get_all_role(){
-        //         return $this->db->get('role_user')->result_array();
-        // }
+        public function get_all_role(){
+                return $this->db->get('role_user')->result_array();
+        }
 
+        
         public function get_alluser_combobox($search=""){
             if($search){
                 $this->db->like('fullname',$search);
