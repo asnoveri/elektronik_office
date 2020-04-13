@@ -16,6 +16,7 @@
                             <?= validation_errors();?>
                         </div>
                 <?php  } ?>
+                
             <h5 class="m-0 font-weight-bold text-secondary">List Sekretaris</h5>
             </div>
             <div class="card-body">

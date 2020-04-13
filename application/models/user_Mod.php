@@ -73,6 +73,20 @@ class user_Mod extends CI_Model {
             }   
         }
 
+        public function get_wadir($id){
+                    $this->db->where('id',$id);
+                    $this->db->where('role_id',5);
+                    $this->db->where('status',1);
+            return $wadir=$this->db->get('peguna')->row();
+        }
+
+        public function get_cek_jabatan_user($jabatan){
+            $this->db->where('jabatan',$jabatan);
+            $this->db->where('role_id',5);
+            $this->db->where('status',1);
+            return $this->db->get('peguna')->row();   
+        }
+
         public function get_userpswd($id){
             return $this->db->get_where('user',['id'=>$id])->row();
         }
@@ -96,6 +110,17 @@ class user_Mod extends CI_Model {
             }
         }
 
+        public function get_allwadir_combobox($search=""){
+            if($search){
+                $this->db->like('unitkerja',$search);
+                $this->db->where('parent_unit',14);
+                return $this->db->get('unit_kerja')->result();
+            }else{
+                        $this->db->where('parent_unit',14);
+                return $this->db->get('unit_kerja')->result();
+            }
+        }
+
         // public function get_OPByid($id){
         //     return $this->db->get_where('sekretaris',['id'=>$id])->row();
         // }
@@ -106,7 +131,7 @@ class user_Mod extends CI_Model {
         }else{
             $like='';
         }
-                $query="SELECT user.id,fullname,user_name,email, peguna.id_penguna, role_user.role_id  FROM user,peguna,role_user
+                $query="SELECT user.id,fullname,user_name,email, peguna.id_penguna,jabatan, role_user.role_id  FROM user,peguna,role_user
                 WHERE user.id=peguna.id AND peguna.role_id=role_user.role_id
                 AND peguna.role_id=$id  AND status=1 $like  ORDER by fullname $dir  LIMIT $start,$length";
                 return  $this->db->query($query)->result();
@@ -174,14 +199,20 @@ class user_Mod extends CI_Model {
         }
 
         public function del_User($id){
+            if (!$this->db->simple_query("DELETE FROM `user` WHERE `user`.`id` = $id")){
+                return $error = $this->db->error(); 
+            }else{
+                return false;
+            }
+        }
+
+        public function del_User1($id){
             $this->db->delete('user',['id'=>$id]);
             if($this->db->affected_rows() > 0){
                 return true;
-            }else{
-                // return false;
-                return $this->db->error();
             }
-        }
+        }    
+
 
         // public function add_sekeretaris($data){
         //     $this->db->insert('sekretaris',$data);

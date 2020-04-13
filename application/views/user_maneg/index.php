@@ -16,6 +16,10 @@
                             <?= validation_errors();?>
                         </div>
                 <?php  } ?>
+                <div class="alert alert-info">
+                    <strong><i class="fas fa-info-circle"></i> Info :</strong> 
+                    Jika User dihapus Role/Jabatan yang dimiliki User juga Akan Ikut terhapus !!!
+                </div>
             <h5 class="m-0 font-weight-bold text-secondary">List User</h5>
             </div>
             <div class="card-body">

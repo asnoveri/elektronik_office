@@ -404,6 +404,21 @@ $(function () {
 	});
 });
 
+//list wadir
+$(function () {
+	$('#tabl_wadir').DataTable({
+		"pageLength": 10,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		"ajax": {
+			url: 'http://localhost/disposisi/User_Managemen/listwadir/listwadir',
+			type: 'POST'
+		},
+	});
+});
+
 //list sekretaris tabel
 $(function () {
 	$('#tabl_sekre').DataTable({
@@ -537,6 +552,51 @@ $(function () {
 				},
 				cache: true
 
+			}
+		});
+	});
+});
+
+// tambah Wadir
+$(function () {
+	$("#tbhwadir").on('click', function () {
+		$("#modal_wadir").modal('show');
+		$('#sel1').select2({
+			ajax: {
+				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				method: 'post',
+				dataType: 'json',
+				// delay: 250,
+				data: function (params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+			}
+		});
+		$('#sel2').select2({
+			ajax: {
+				url: 'http://localhost/disposisi/User_Managemen/get_allwadir_combobox',
+				method: 'post',
+				dataType: 'json',
+				// delay: 250,
+				data: function (params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
 			}
 		});
 	});
