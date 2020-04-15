@@ -424,7 +424,7 @@ class Menu_Managemen extends CI_Controller {
         if($cek==true){
             $this->session->set_flashdata('pesan2','<div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-                Berhasil Menugubah Role Akses 
+                Berhasil Mengubah Role Akses 
             </div>');
         }
     }

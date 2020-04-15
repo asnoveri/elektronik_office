@@ -4,6 +4,7 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $judul?></h1>
+        <a href="<?= base_url()?>User_Managemen/penjabat" class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-left"></i></span><span class="text">List Penjabat</span></a>
         </div>
 
         <!-- Content Row -->
@@ -17,7 +18,7 @@
                         </div>
                 <?php  } ?>
                 
-            <h5 class="m-0 font-weight-bold text-secondary">List Wakil Direktu</h5>
+            <h5 class="m-0 font-weight-bold text-secondary">List Wakil Direktur</h5>
             </div>
             <div class="card-body">
             <button type="button" class="btn btn-primary mb-3" id="tbhwadir">

@@ -536,42 +536,45 @@ class User_Managemen extends CI_Controller {
             }else{       
                 $id=$this->input->post('pegawai',true);
                 $cek_user=$this->user_Mod->get_user($id);
+                $cek_direktur=$this->user_Mod->get_direktur();
                 $role_id=4;
-                if($this->user_mod->get_penguna_BYID($id,$status=1,$role_id)){
+                if(count($cek_direktur) >= 1){
                     $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                       Gagal Menambahkan  '.$cek_user.' Sebagai Direktur Karena '.$cek_user.' Sudah Terdaftar Sebagai Direktur
+                       Gagal Menambahkan  '.$cek_user.' Sebagai Direktur, Karena Direktur Hanya Bisa digunakan seorang Pegawai/User
                     </div>');  
                     redirect("User_Managemen/listdirektur");
-                }elseif($cekpenguna=$this->user_mod->get_penguna_BYID($id,$status=0,$role_id)){
-                    $id_penguna=$cekpenguna->id_penguna;
-                        $data=[
-                            'status'=>1,
-                            'id_unitkerja'=>1
-                            ];  
-                        if($this->user_Mod->ubahstatus($id_penguna,$data)){
-                            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            Berhasil Menambahkan  '.$cek_user.' Sebagai Direktur
-                            </div>');  
-                            redirect("User_Managemen/listdirektur");
-                        }
-                }elseif($this->user_mod->get_penguna_BYID($id,$status='',$role_id)==false){  
+                }elseif(count($cek_direktur) < 1){
+                    if($cekpenguna=$this->user_mod->get_penguna_BYID($id,$status=0,$role_id)){
+                        $id_penguna=$cekpenguna->id_penguna;
+                            $data=[
+                                'status'=>1,
+                                'id_unitkerja'=>1
+                                ];  
+                            if($this->user_Mod->ubahstatus($id_penguna,$data)){
+                                $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                Berhasil Menambahkan  '.$cek_user.' Sebagai Direktur
+                                </div>');  
+                                redirect("User_Managemen/listdirektur");
+                            }
+                    }elseif($this->user_mod->get_penguna_BYID($id,$status='',$role_id)==false){  
                             $data=[
                                 'id'=>$id,
                                 'role_id'=>4,
                                 'status'=>1,
                                 'id_unitkerja'=>1
                             ];
-                        if($this->user_Mod->Add_Penguna($data)){
-                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        Berhasil Menambahkan  '.$cek_user.' Sebagai Direktur 
-                        </div>');  
-                        redirect("User_Managemen/listdirektur");
+                            if($this->user_Mod->Add_Penguna($data)){
+                            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Berhasil Menambahkan  '.$cek_user.' Sebagai Direktur 
+                            </div>');  
+                            redirect("User_Managemen/listdirektur");
+                        }
                     }
                 }
-            }
+        }
     }
 
     public function listwadir($param=""){
@@ -673,7 +676,8 @@ class User_Managemen extends CI_Controller {
                 }elseif($cekpenguna=$this->user_mod->get_penguna_BYID($id,$status=0,$role_id)){
                     $id_penguna=$cekpenguna->id_penguna;
                         $data=[
-                            'status'=>1
+                            'status'=>1,
+                            'jabatan'=> $jabatan
                             ];  
                         if($this->user_Mod->ubahstatus($id_penguna,$data)){
                             $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
@@ -699,6 +703,294 @@ class User_Managemen extends CI_Controller {
                     }
                 }
             }
+    }
+
+    public function Adum($param=""){
+        if($param=='listadum'){
+            $length= intval($this->input->post('length'));
+            $start= intval($this->input->post('start'));
+            $draw= intval($this->input->post('draw'));
+            $order= $this->input->post('order');
+            $search= $this->input->post('search');
+            $search = $search['value'];
+            $col=0;
+            $dir="";
+            $id=6;
+                if(!empty($order)){
+                    foreach($order as $or){
+                        $dir = $or['dir'];
+                    }
+                }
+                if($dir!='asc' && $dir!='desc'){
+                    $dir='desc';
+                }
+    
+            $data=$this->user_Mod->get_allpenguna($length,$start,$dir,$search,$id);
+            $json = [];
+            $no=1+$start;
+            foreach($data as $row){
+                $json[]=[
+                    $no++,
+                    $row->fullname,
+                    $row->user_name,  
+                    $row->email,
+                    '<div class="btn-group-vertical w-100">
+                    <a href="'.base_url().'User_Managemen/deladum/'.$row->id.'/'.$row->id_penguna.'" type="button" class="btn btn-warning" >Delete</a>
+                    </div>'
+                ];
+            }
+            $tot1=$this->user_mod->get_allpengunan_count($id);
+            $tot=count($tot1);
+            $respon['draw']=$draw;
+            $respon['recordsTotal']=$tot;
+            $respon['recordsFiltered']=$tot;
+            $respon['data']=$json;
+            echo json_encode($respon);die();
+        }
+
+        $judul="User Managemen";
+        $halaman='user_maneg/list_adum';
+        $this->template->TemplateGen($judul,$halaman);
+    }
+
+    public function deladum($iduser,$id_penguna){
+        $cek_user=$this->user_Mod->get_user($iduser);
+        $cek_wadir=$this->user_Mod->get_wadir($iduser);
+        $data=[
+            'status'=>0
+        ];
+        if($this->user_Mod->ubahstatus($id_penguna,$data)){
+            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+              Berhasil Menghapus '.$cek_user.' Sebagai Adum
+            </div>');  
+               redirect("User_Managemen/Adum");
+        }else{
+            $this->session->set_flashdata('pesantambah','<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                   Gagal Menghapus '.$cek_user.' Sebagai Adum
+                </div>');  
+                redirect("User_Managemen/Adum");
+        }  
+    }
+
+    public function add_adum(){
+        $this->form_validation->set_rules('pegawai','Pegawai','required|trim',
+        ['required'=>'Pegawai Belum Di Pilih']); 
+        if ($this->form_validation->run() == FALSE){
+            $this->Adum();
+        }else{       
+            $id=$this->input->post('pegawai',true);
+            $cek_user=$this->user_Mod->get_user($id);
+            $cek_adum=$this->user_Mod->get_adum();
+            $role_id=6;
+            if(count($cek_adum) >= 1){
+                $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                   Gagal Menambahkan  '.$cek_user.' Sebagai Adum, Karena Adum Hanya Bisa digunakan seorang Pegawai/User
+                </div>');  
+                redirect("User_Managemen/Adum");
+            }elseif(count($cek_adum) < 1){
+                if($cekpenguna=$this->user_mod->get_penguna_BYID($id,$status=0,$role_id)){
+                    $id_penguna=$cekpenguna->id_penguna;
+                        $data=[
+                            'status'=>1,
+                            'id_unitkerja'=>2
+                            ];  
+                        if($this->user_Mod->ubahstatus($id_penguna,$data)){
+                            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Berhasil Menambahkan  '.$cek_user.' Sebagai Adum
+                            </div>');  
+                            redirect("User_Managemen/Adum");
+                        }
+                }elseif($this->user_mod->get_penguna_BYID($id,$status='',$role_id)==false){  
+                        $data=[
+                            'id'=>$id,
+                            'role_id'=>6,
+                            'status'=>1,
+                            'id_unitkerja'=>2
+                        ];
+                        if($this->user_Mod->Add_Penguna($data)){
+                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        Berhasil Menambahkan  '.$cek_user.' Sebagai Adum 
+                        </div>');  
+                        redirect("User_Managemen/Adum");
+                    }
+                }
+            }
+        }
+    }
+
+    public function admn_kep($param=''){
+        if($param=='listadmnkepeg'){
+            $length= intval($this->input->post('length'));
+            $start= intval($this->input->post('start'));
+            $draw= intval($this->input->post('draw'));
+            $order= $this->input->post('order');
+            $search= $this->input->post('search');
+            $search = $search['value'];
+            $col=0;
+            $dir="";
+            $id=7;
+                if(!empty($order)){
+                    foreach($order as $or){
+                        $dir = $or['dir'];
+                    }
+                }
+                if($dir!='asc' && $dir!='desc'){
+                    $dir='desc';
+                }
+    
+            $data=$this->user_Mod->get_allpenguna($length,$start,$dir,$search,$id);
+            $json = [];
+            $no=1+$start;
+            foreach($data as $row){
+                $json[]=[
+                    $no++,
+                    $row->fullname,
+                    $row->user_name,  
+                    $row->email,
+                    '<div class="btn-group-vertical w-100">
+                    <a href="'.base_url().'User_Managemen/deladmn_kep/'.$row->id.'/'.$row->id_penguna.'" type="button" class="btn btn-warning" >Delete</a>
+                    </div>'
+                ];
+            }
+            $tot1=$this->user_mod->get_allpengunan_count($id);
+            $tot=count($tot1);
+            $respon['draw']=$draw;
+            $respon['recordsTotal']=$tot;
+            $respon['recordsFiltered']=$tot;
+            $respon['data']=$json;
+            echo json_encode($respon);die();
+        }
+        
+        $judul="User Managemen";
+        $halaman='user_maneg/list_amn_kep';
+        $this->template->TemplateGen($judul,$halaman);
+    }
+
+    public function deladmn_kep($iduser,$id_penguna){
+        $cek_user=$this->user_Mod->get_user($iduser);
+        $cek_wadir=$this->user_Mod->get_wadir($iduser);
+        $data=[
+            'status'=>0
+        ];
+        if($this->user_Mod->ubahstatus($id_penguna,$data)){
+            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+              Berhasil Menghapus '.$cek_user.' Sebagai Admin Kepegawaiaan
+            </div>');  
+               redirect("User_Managemen/admn_kep");
+        }else{
+            $this->session->set_flashdata('pesantambah','<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                   Gagal Menghapus '.$cek_user.' Sebagai Admin Kepegawaiaan
+                </div>');  
+                redirect("User_Managemen/admn_kep");
+        }  
+    }
+
+    public function add_admn_kepeg(){
+        $this->form_validation->set_rules('pegawai','Pegawai','required|trim',
+            ['required'=>'Pegawai Belum Di Pilih']); 
+            if ($this->form_validation->run() == FALSE){
+                $this->admn_kep();
+            }else{
+                $id=$this->input->post('pegawai',true);
+                $cek_user=$this->user_Mod->get_user($id);
+                $role_id=7;
+                if($this->user_mod->get_penguna_BYID($id,$status=1,$role_id)){
+                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                       Gagal Menambahkan  '.$cek_user.' Sebagai Admin Kepegawaian Karena '.$cek_user.' Sudah Terdaftar Sebagai Admin Kepegawaian
+                    </div>');  
+                    redirect("User_Managemen/admn_kep");
+                }elseif($cekpenguna=$this->user_mod->get_penguna_BYID($id,$status=0,$role_id)){
+                    $id_penguna=$cekpenguna->id_penguna;
+                        $data=[
+                            'status'=>1,
+                            'id_unitkerja'=>2
+                            ];  
+                        if($this->user_Mod->ubahstatus($id_penguna,$data)){
+                            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Berhasil Menambahkan  '.$cek_user.' Sebagai Sekretaris
+                            </div>');  
+                            redirect("User_Managemen/admn_kep");
+                        }
+                }elseif($this->user_mod->get_penguna_BYID($id,$status='',$role_id)==false){  
+                            $data=[
+                                'id'=>$id,
+                                'role_id'=>7,
+                                'status'=>1,
+                                'id_unitkerja'=>2
+                            ];
+                        if($this->user_Mod->Add_Penguna($data)){
+                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        Berhasil Menambahkan  '.$cek_user.' Sebagai Sekretaris
+                        </div>');  
+                        redirect("User_Managemen/admn_kep");
+                    }
+                }
+            }
+    }
+
+    public function penjabat($param=''){
+        if($param=='listpjbt'){
+            $length= intval($this->input->post('length'));
+            $start= intval($this->input->post('start'));
+            $draw= intval($this->input->post('draw'));
+            $order= $this->input->post('order');
+            $search= $this->input->post('search');
+            $search = $search['value'];
+            $col=0;
+            $dir="";
+    
+            if(!empty($order)){
+                    foreach($order as $or){
+                        $dir = $or['dir'];
+                    }
+                }
+                if($dir!='asc' && $dir!='desc'){
+                    $dir='desc';
+                }
+    
+            $dta=$this->user_Mod->get_all_jabatan($length,$start,$order,$dir,$search);
+            $json = [];
+            $no=$start+1;
+            foreach($dta as $data){                
+                if($data->role_id==4){
+                    $link="listdirektur";
+                }elseif($data->role_id==5){
+                    $link="listwadir";
+                }elseif($data->role_id==6){
+                    $link="Adum";
+                }
+                $json[]=[
+                    $no++,
+                    $data->role_name,
+                    '<div class="btn-group-vertical w-100">
+                    <a href="'.base_url().'User_Managemen/'.$link.'" type="button" class="btn btn-info">Cek '.$data->role_name.'</a>
+                    </div>'
+                ];
+            }
+            $tot=count($this->user_Mod->get_all_jabatan_count());
+            $respon=[
+                'draw'=>$draw,
+                'recordsTotal'=>$tot,
+                'recordsFiltered'=>$tot,
+                'data'=>$json
+            ];
+            echo json_encode($respon);
+            die();
+        }
+
+        $judul="User Managemen";
+        $halaman='user_maneg/list_penjabat';
+        $this->template->TemplateGen($judul,$halaman);      
     }
 }
 ?>

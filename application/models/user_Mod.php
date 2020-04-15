@@ -43,6 +43,24 @@ class user_Mod extends CI_Model {
             return $this->db->count_all_results('user');
         }
 
+
+        public function get_all_jabatan($length="",$start="",$order="",$dir="",$search=""){
+            if($search){
+                $like= " AND role_name like '$search%'";
+            }else{
+                $like='';
+            }
+                    $query="SELECT  * FROM role_user
+                    WHERE role_id BETWEEN 4 AND 6  $like  ORDER by role_name $dir  LIMIT $start,$length";
+                    return  $this->db->query($query)->result();
+    }
+
+    public function get_all_jabatan_count(){
+        $query="SELECT  * FROM role_user
+        WHERE role_id BETWEEN 4 AND 6 ";
+        return  $this->db->query($query)->result();
+    }
+
         // public function get_all_op($length="",$start="",$order="",$dir="",$search="",$id){
         //     $this->db->order_by($order,$dir); 
         //     $this->db->like('fullname',$search);
@@ -79,6 +97,18 @@ class user_Mod extends CI_Model {
                     $this->db->where('status',1);
             return $wadir=$this->db->get('peguna')->row();
         }
+
+        public function get_direktur(){
+                $this->db->where('role_id',4);
+                $this->db->where('status',1);
+            return $direktur=$this->db->get('peguna')->result();
+        }
+
+        public function get_adum(){
+            $this->db->where('role_id',6);
+            $this->db->where('status',1);
+        return $direktur=$this->db->get('peguna')->result();
+    }
 
         public function get_cek_jabatan_user($jabatan){
             $this->db->where('jabatan',$jabatan);

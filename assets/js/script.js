@@ -389,6 +389,36 @@ $(function () {
 	});
 });
 
+// list Penjabat
+$(function () {
+	$('#tabl_jbtn').DataTable({
+		"pageLength": 10,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		"ajax": {
+			url: 'http://localhost/disposisi/User_Managemen/penjabat/listpjbt',
+			type: 'POST'
+		},
+	});
+});
+
+// list adum data tabel
+$(function () {
+	$('#tabl_adum').DataTable({
+		"pageLength": 10,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		"ajax": {
+			url: 'http://localhost/disposisi/User_Managemen/Adum/listadum',
+			type: 'POST'
+		},
+	});
+});
+
 // list user data tabel
 $(function () {
 	$('#example').DataTable({
@@ -459,6 +489,21 @@ $(function () {
 		],
 		"ajax": {
 			url: 'http://localhost/disposisi/User_Managemen/listdirektur/listdirek',
+			type: 'post'
+		},
+	});
+});
+
+// list Admin Kepegawaiaan
+$(function () {
+	$("#tabl_admn_kep").DataTable({
+		"pageLength": 10,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		"ajax": {
+			url: 'http://localhost/disposisi/User_Managemen/admn_kep/listadmnkepeg',
 			type: 'post'
 		},
 	});
@@ -557,6 +602,34 @@ $(function () {
 	});
 });
 
+//tambah admin kepegawaiaan
+$(function () {
+	$("#tbhadmkep").on('click', function () {
+		$("#modal_admn_kep").modal('show');
+		$('#sel1').select2({
+			ajax: {
+				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				method: 'post',
+				dataType: 'json',
+				// delay: 250,
+				data: function (params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+
+			}
+		});
+	});
+});
+
+
 // tambah Wadir
 $(function () {
 	$("#tbhwadir").on('click', function () {
@@ -652,6 +725,32 @@ $(function () {
 				},
 				cache: true
 
+			}
+		});
+	});
+});
+
+//tambah adum
+$(function () {
+	$("#tbhadum").on('click', function () {
+		$('#modal_adum').modal('show');
+		$('#sel1').select2({
+			ajax: {
+				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				method: 'post',
+				dataType: 'json',
+				// delay: 250,
+				data: function (params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
 			}
 		});
 	});
