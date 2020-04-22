@@ -74,6 +74,15 @@ class login_Mod extends CI_Model {
 			return $admin_kepeg=$this->db->get_where('admin_kepeg',['id'=>$id])->result();
 			// return $adum->role_id;
 		}
+
+		public function addlog($data){
+			$this->db->insert('log',$data);
+			if($this->db->affected_rows() > 0 ){
+				return true;
+			}else{
+				return false;
+			}
+		}
 }
 
 ?>

@@ -503,7 +503,22 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/User_Managemen/admn_kep/listadmnkepeg',
+			url: 'http://localhost/disposisi/Managemen_Admin/admn_kep/listadmnkepeg',
+			type: 'post'
+		},
+	});
+});
+
+//list pegawai
+$(function () {
+	$("#tabl_pegawai").DataTable({
+		"pageLength": 10,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		"ajax": {
+			url: 'http://localhost/disposisi/User_Managemen/list_pegawai/data_pegawai',
 			type: 'post'
 		},
 	});

@@ -823,8 +823,8 @@ class User_Managemen extends CI_Controller {
         }
     }
 
-    public function admn_kep($param=''){
-        if($param=='listadmnkepeg'){
+    public function list_pegawai($param=''){
+        if($param=='data_pegawai'){
             $length= intval($this->input->post('length'));
             $start= intval($this->input->post('start'));
             $draw= intval($this->input->post('draw'));
@@ -833,7 +833,7 @@ class User_Managemen extends CI_Controller {
             $search = $search['value'];
             $col=0;
             $dir="";
-            $id=7;
+            $id=3;
                 if(!empty($order)){
                     foreach($order as $or){
                         $dir = $or['dir'];
@@ -844,16 +844,20 @@ class User_Managemen extends CI_Controller {
                 }
     
             $data=$this->user_Mod->get_allpenguna($length,$start,$dir,$search,$id);
+            // echo json_encode($data);die();
             $json = [];
             $no=1+$start;
             foreach($data as $row){
+                
                 $json[]=[
                     $no++,
                     $row->fullname,
                     $row->user_name,  
                     $row->email,
+                    $this->user_Mod->get_unitkerjabyID($row->id_unitkerja),
+                    $row->jabatan,
                     '<div class="btn-group-vertical w-100">
-                    <a href="'.base_url().'User_Managemen/deladmn_kep/'.$row->id.'/'.$row->id_penguna.'" type="button" class="btn btn-warning" >Delete</a>
+                    <a href="'.base_url().'User_Managemen/del_pegawai/'.$row->id.'/'.$row->id_penguna.'" type="button" class="btn btn-warning" >Delete</a>
                     </div>'
                 ];
             }
@@ -867,76 +871,76 @@ class User_Managemen extends CI_Controller {
         }
         
         $judul="User Managemen";
-        $halaman='user_maneg/list_amn_kep';
+        $halaman='user_maneg/List_pegawai';
         $this->template->TemplateGen($judul,$halaman);
     }
 
-    public function deladmn_kep($iduser,$id_penguna){
-        $cek_user=$this->user_Mod->get_user($iduser);
-        $cek_wadir=$this->user_Mod->get_wadir($iduser);
-        $data=[
-            'status'=>0
-        ];
-        if($this->user_Mod->ubahstatus($id_penguna,$data)){
-            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-              Berhasil Menghapus '.$cek_user.' Sebagai Admin Kepegawaiaan
-            </div>');  
-               redirect("User_Managemen/admn_kep");
-        }else{
-            $this->session->set_flashdata('pesantambah','<div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                   Gagal Menghapus '.$cek_user.' Sebagai Admin Kepegawaiaan
-                </div>');  
-                redirect("User_Managemen/admn_kep");
-        }  
-    }
+    // public function deladmn_kep($iduser,$id_penguna){
+    //     $cek_user=$this->user_Mod->get_user($iduser);
+    //     $cek_wadir=$this->user_Mod->get_wadir($iduser);
+    //     $data=[
+    //         'status'=>0
+    //     ];
+    //     if($this->user_Mod->ubahstatus($id_penguna,$data)){
+    //         $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+    //         <button type="button" class="close" data-dismiss="alert">&times;</button>
+    //           Berhasil Menghapus '.$cek_user.' Sebagai Admin Kepegawaiaan
+    //         </div>');  
+    //            redirect("User_Managemen/admn_kep");
+    //     }else{
+    //         $this->session->set_flashdata('pesantambah','<div class="alert alert-danger alert-dismissible">
+    //             <button type="button" class="close" data-dismiss="alert">&times;</button>
+    //                Gagal Menghapus '.$cek_user.' Sebagai Admin Kepegawaiaan
+    //             </div>');  
+    //             redirect("User_Managemen/admn_kep");
+    //     }  
+    // }
 
-    public function add_admn_kepeg(){
-        $this->form_validation->set_rules('pegawai','Pegawai','required|trim',
-            ['required'=>'Pegawai Belum Di Pilih']); 
-            if ($this->form_validation->run() == FALSE){
-                $this->admn_kep();
-            }else{
-                $id=$this->input->post('pegawai',true);
-                $cek_user=$this->user_Mod->get_user($id);
-                $role_id=7;
-                if($this->user_mod->get_penguna_BYID($id,$status=1,$role_id)){
-                    $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                       Gagal Menambahkan  '.$cek_user.' Sebagai Admin Kepegawaian Karena '.$cek_user.' Sudah Terdaftar Sebagai Admin Kepegawaian
-                    </div>');  
-                    redirect("User_Managemen/admn_kep");
-                }elseif($cekpenguna=$this->user_mod->get_penguna_BYID($id,$status=0,$role_id)){
-                    $id_penguna=$cekpenguna->id_penguna;
-                        $data=[
-                            'status'=>1,
-                            'id_unitkerja'=>2
-                            ];  
-                        if($this->user_Mod->ubahstatus($id_penguna,$data)){
-                            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            Berhasil Menambahkan  '.$cek_user.' Sebagai Sekretaris
-                            </div>');  
-                            redirect("User_Managemen/admn_kep");
-                        }
-                }elseif($this->user_mod->get_penguna_BYID($id,$status='',$role_id)==false){  
-                            $data=[
-                                'id'=>$id,
-                                'role_id'=>7,
-                                'status'=>1,
-                                'id_unitkerja'=>2
-                            ];
-                        if($this->user_Mod->Add_Penguna($data)){
-                        $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        Berhasil Menambahkan  '.$cek_user.' Sebagai Sekretaris
-                        </div>');  
-                        redirect("User_Managemen/admn_kep");
-                    }
-                }
-            }
-    }
+    // public function add_admn_kepeg(){
+    //     $this->form_validation->set_rules('pegawai','Pegawai','required|trim',
+    //         ['required'=>'Pegawai Belum Di Pilih']); 
+    //         if ($this->form_validation->run() == FALSE){
+    //             $this->admn_kep();
+    //         }else{
+    //             $id=$this->input->post('pegawai',true);
+    //             $cek_user=$this->user_Mod->get_user($id);
+    //             $role_id=7;
+    //             if($this->user_mod->get_penguna_BYID($id,$status=1,$role_id)){
+    //                 $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+    //                 <button type="button" class="close" data-dismiss="alert">&times;</button>
+    //                    Gagal Menambahkan  '.$cek_user.' Sebagai Admin Kepegawaian Karena '.$cek_user.' Sudah Terdaftar Sebagai Admin Kepegawaian
+    //                 </div>');  
+    //                 redirect("User_Managemen/admn_kep");
+    //             }elseif($cekpenguna=$this->user_mod->get_penguna_BYID($id,$status=0,$role_id)){
+    //                 $id_penguna=$cekpenguna->id_penguna;
+    //                     $data=[
+    //                         'status'=>1,
+    //                         'id_unitkerja'=>2
+    //                         ];  
+    //                     if($this->user_Mod->ubahstatus($id_penguna,$data)){
+    //                         $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+    //                         <button type="button" class="close" data-dismiss="alert">&times;</button>
+    //                         Berhasil Menambahkan  '.$cek_user.' Sebagai Sekretaris
+    //                         </div>');  
+    //                         redirect("User_Managemen/admn_kep");
+    //                     }
+    //             }elseif($this->user_mod->get_penguna_BYID($id,$status='',$role_id)==false){  
+    //                         $data=[
+    //                             'id'=>$id,
+    //                             'role_id'=>7,
+    //                             'status'=>1,
+    //                             'id_unitkerja'=>2
+    //                         ];
+    //                     if($this->user_Mod->Add_Penguna($data)){
+    //                     $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+    //                     <button type="button" class="close" data-dismiss="alert">&times;</button>
+    //                     Berhasil Menambahkan  '.$cek_user.' Sebagai Sekretaris
+    //                     </div>');  
+    //                     redirect("User_Managemen/admn_kep");
+    //                 }
+    //             }
+    //         }
+    // }
 
     public function penjabat($param=''){
         if($param=='listpjbt'){

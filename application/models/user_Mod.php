@@ -7,28 +7,7 @@ class user_Mod extends CI_Model {
         public function get_data_user($role_id,$id){
             $query="SELECT * FROM user, `peguna`, role_user WHERE user.id=`peguna`.id AND `peguna`.role_id=role_user.role_id AND `peguna`.id=$id and `peguna`.role_id=$role_id";
                 return $query = $this->db->query($query)->row_array();
-            // if($role_id==1){
-            //     $query="SELECT * FROM user, `admin`, role_user WHERE user.id=`admin`.id AND `admin`.role_id=role_user.role_id AND `admin`.id=$id";
-            //     return $query = $this->db->query($query)->row_array();
-            // }else if($role_id==2){
-            //     $query="SELECT * FROM user, sekretaris, role_user WHERE user.id=sekretaris.id AND sekretaris.role_id=role_user.role_id AND sekretaris.id=$id";
-            //     return $query = $this->db->query($query)->row_array();
-            // }else if($role_id==4){
-            //     $query="SELECT * FROM user, direktur, role_user WHERE user.id=direktur.id AND direktur.role_id=role_user.role_id AND direktur.id=$id";
-            //     return $query = $this->db->query($query)->row_array();
-            // }else if($role_id==3){
-            //     $query="SELECT * FROM user, pegawai, role_user WHERE user.id=pegawai.id AND pegawai.role_id=role_user.role_id AND pegawai.id=$id";
-            //     return $query = $this->db->query($query)->row_array();
-            // }else if($role_id==5){
-            //     $query="SELECT * FROM user, wadir, role_user WHERE user.id=wadir.id AND wadir.role_id=role_user.role_id AND wadir.id=$id";
-            //     return $query = $this->db->query($query)->row_array();
-            // }
-            // else if($role_id==6){
-            //     $query="SELECT * FROM user, adum, role_user WHERE user.id=adum.id AND adum.role_id=role_user.role_id AND adum.id=$id";
-            //     return $query = $this->db->query($query)->row_array();
-            // }
         }
-
         
         public function get_all_user($length="",$start="",$order="",$dir="",$search=""){
                 $this->db->order_by($order,$dir);
@@ -61,19 +40,6 @@ class user_Mod extends CI_Model {
         return  $this->db->query($query)->result();
     }
 
-        // public function get_all_op($length="",$start="",$order="",$dir="",$search="",$id){
-        //     $this->db->order_by($order,$dir); 
-        //     $this->db->like('fullname',$search);
-        //     $this->db->or_like('email',$search);
-        //     $this->db->limit($length,$start);
-        //     $this->db->from('user');
-        //     $this->db->join('sekretaris', 'sekretaris.id = user.id');
-        //     return  $query = $this->db->get()->result();
-        // }
-
-        // public function get_all_sek_count(){
-        //     return $this->db->count_all_results('sekretaris');
-        // }
         public function cek_username($data){
             $this->db->where('user_name', $data);
             if($this->db->get('user')->num_rows() > 0){
@@ -151,17 +117,13 @@ class user_Mod extends CI_Model {
             }
         }
 
-        // public function get_OPByid($id){
-        //     return $this->db->get_where('sekretaris',['id'=>$id])->row();
-        // }
-
         public function get_allpenguna($length="",$start="",$dir="",$search="",$id){
         if($search){
             $like= " AND fullname like '$search%' AND  email like '$search%'";
         }else{
             $like='';
         }
-                $query="SELECT user.id,fullname,user_name,email, peguna.id_penguna,jabatan, role_user.role_id  FROM user,peguna,role_user
+                $query="SELECT user.id,fullname,user_name,email, peguna.id_penguna,jabatan,id_unitkerja, role_user.role_id  FROM user,peguna,role_user
                 WHERE user.id=peguna.id AND peguna.role_id=role_user.role_id
                 AND peguna.role_id=$id  AND status=1 $like  ORDER by fullname $dir  LIMIT $start,$length";
                 return  $this->db->query($query)->result();
@@ -175,38 +137,7 @@ class user_Mod extends CI_Model {
                 return  $this->db->query($query)->result();
         }
 
-        // public function get_direktur($length="",$start="",$order="",$dir="",$search=""){
-        //     $this->db->order_by($order,$dir); 
-        //     $this->db->like('fullname',$search);
-        //     $this->db->or_like('email',$search);
-        //     $this->db->limit($length,$start);
-        //     $this->db->from('user');
-        //     $this->db->join('direktur', 'direktur.id = user.id');
-        //     return  $query = $this->db->get()->result();
-        // }
-
-        // public function get_all_direk_count(){
-        //     return $this->db->count_all_results('direktur');
-        // }
-
         
-        // public function del_Direk($id_direktur){
-        //     $this->db->delete('direktur',['id_direktur'=>$id_direktur]);
-        //     if($this->db->affected_rows() > 0){
-        //         return true;
-        //     }else{
-        //         return false;
-        //     }
-        // }
-
-        // public function add_direktur($data){
-        //     $this->db->insert('direktur',$data);
-        //     if($this->db->affected_rows()> 0){
-        //         return true;
-        //     }else{
-        //         return false;
-        //     }
-        // }
 
         public function ubahstatus($id_penguna,$data){
             $this->db->where('id_penguna', $id_penguna);
@@ -243,25 +174,6 @@ class user_Mod extends CI_Model {
             }
         }    
 
-
-        // public function add_sekeretaris($data){
-        //     $this->db->insert('sekretaris',$data);
-        //     if($this->db->affected_rows()> 0){
-        //         return true;
-        //     }else{
-        //         return false;
-        //     }
-        // }
-
-        // public function del_Sekre($id_sekretaris){
-        //     $this->db->delete('sekretaris',['id_sekretaris'=>$id_sekretaris]);
-        //     if($this->db->affected_rows() > 0){
-        //         return true;
-        //     }else{
-        //         return false;
-        //     }
-        // }
-        
         public function get_penguna_BYID($id,$status='',$role_id){
                     $this->db->where('status',$status);
                     $this->db->where('role_id',$role_id);
@@ -310,6 +222,11 @@ class user_Mod extends CI_Model {
             }else{
                 return false;
             }
+        }
+
+        public function get_unitkerjabyID($id){
+            $unit_kerja=$this->db->get_where('unit_kerja',['id_unitkerja'=>$id])->row();
+            return $unit_kerja->unitkerja;
         }
 }
 

@@ -5,7 +5,9 @@ class Auth extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model('login_Mod');
+        $this->load->helper('date');
         date_default_timezone_set('Asia/Jakarta');
+       
     }
 
     public function index($data1=""){
@@ -25,7 +27,7 @@ class Auth extends CI_Controller {
             $this->index();
         }else{
             // $data=$this->input->post('email',true);
-            $data=$this->input->post('user_name',true);
+            $data=$this->input->post('user_name',false);
             $pass=$this->input->post('pass',true);
             $datalogin=$this->login_Mod->get_User($data);
             if($datalogin){
@@ -59,20 +61,31 @@ class Auth extends CI_Controller {
                             $this->session->set_userdata($data);
                             if(password_verify($pass,$datalogin['pass'])){
                                 if($role->role_id == 1){
-                                    redirect('Admin');
+                                    $redirect='Admin';
                                 }elseif($role->role_id == 2){
-                                    redirect('Operator');
+                                    $redirect='Operator';
                                 }elseif($role->role_id == 3){
-                                    redirect('User');
+                                    $redirect='User';
                                 }elseif($role->role_id == 4){
-                                    redirect('Direktur');
+                                    $redirect='Direktur';
                                 }elseif($role->role_id == 5){
-                                    redirect('Wadir');
+                                    $redirect='Wadir';
                                 }elseif($role->role_id == 6){
-                                    redirect('Adum');
+                                    $redirect='Adum';
                                 }elseif($role->role_id == 7){
-                                    redirect('admin_kepeg');
+                                    $redirect='admin_kepeg';
                                 }
+                                $data=[
+                                    'tanggal'=>date("Y-m-d G:i:s"),
+                                    'aksi'=> "Login",
+                                    'Keterangan'=>'Login Sistem',
+                                    'ip'=>$this->input->ip_address(),
+                                    'tipe_login'=>$this->session->userdata('role_id'),
+                                    'id_user'=>$this->session->userdata('id'),
+                                    'status'=>1   
+                                ];
+                                $this->login_Mod->addlog($data);
+                                redirect($redirect);
                             }else{
                                 $this->session->set_flashdata('pesan','<div class="alert alert-danger alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -122,6 +135,17 @@ class Auth extends CI_Controller {
 
 
     public function logout(){
+        $data=[
+            'tanggal'=>date("Y-m-d G:i:s"),
+            'aksi'=> "Logout",
+            'Keterangan'=>"Logou Sistem",
+            'ip'=>$this->input->ip_address(),
+            'tipe_login'=>$this->session->userdata('role_id'),
+            'id_user'=>$this->session->userdata('id'),
+            'status'=>1   
+        ];
+
+        $this->login_Mod->addlog($data);
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role_id');
         $this->session->unset_userdata('id_jabatan');
@@ -177,6 +201,16 @@ class Auth extends CI_Controller {
                 'id'        => $id
             ];
             $this->session->set_userdata($datasession);
+            $data=[
+                'tanggal'=>date("Y-m-d G:i:s"),
+                'aksi'=> "Login",
+                'Keterangan'=>"Login Sistem",
+                'ip'=>$this->input->ip_address(),
+                'tipe_login'=>$this->session->userdata('role_id'),
+                'id_user'=>$this->session->userdata('id'),
+                'status'=>1   
+            ];
+            $this->login_Mod->addlog($data);
             redirect($redirect);
         }else{
             $id= $this->session->userdata('id');  

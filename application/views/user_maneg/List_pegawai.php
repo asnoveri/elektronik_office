@@ -17,22 +17,24 @@
                         </div>
                 <?php  } ?>
                 
-            <h5 class="m-0 font-weight-bold text-secondary">List Admin Kepegawaian</h5>
+            <h5 class="m-0 font-weight-bold text-secondary">List Pegawai Poltekkes</h5>
             </div>
             <div class="card-body">
-            <button type="button" class="btn btn-primary mb-3" id="tbhadmkep">
-            Tambah 
+            <button type="button" class="btn btn-primary mb-3" id="tbhpegawai">
+            Tambah Pegawai
             </button>
                 <div class="row">  
                     <div class="col-sm-12">
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="tabl_admn_kep" width="100%" cellspacing="0">
+                            <table class="table table-bordered" id="tabl_pegawai" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Nama Pegawai</th>
                                         <th>User Name</th>
                                         <th>Email</th>
+                                        <th>Unit Kerja</th>
+                                        <th>Jabatan</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -46,15 +48,15 @@
         </div>    
     </div>
 
-    <div class="modal" id="modal_admn_kep">
-        <div class="modal-dialog ">
+    <div class="modal" id="modal_adum">
+        <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="label_Tambahadmkp">Tambah Admin Kepegawaiaan</h4>
+                    <h4 class="modal-title" id="label_Tambpeg">Tambah Pegawai</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= base_url()?>Managemen_Admin/add_admn_kepeg" method="POST">
+                    <form action="<?= base_url()?>User_Managemen/add_adum" method="POST">
                         <div class="form-group">
                             <label>Pilih Pegawai</label>
                             <!-- <input type="text" class="form-control" id="pegawai" name="id"> -->
