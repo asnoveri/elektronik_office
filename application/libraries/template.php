@@ -5,18 +5,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     class template{
         protected $CI;
                
-        public function __construct()
-        {
-        
-                $this->CI =& get_instance();
-                $this->CI->load->model('user_Mod');
-                $this->CI->load->model('menu_Mod');
-                   
+        public function __construct(){
+            $this->CI =& get_instance();
+            $this->CI->load->model('user_Mod');
+            $this->CI->load->model('menu_Mod');
+            date_default_timezone_set('Asia/Jakarta');      
         }
+
         //libraries  function untuk mengataur template dan halam secara lebih dinamis 
         public function TemplateGen($judul=null,$halaman=null,$data1=null){
             // data1 adalah data yang dikirmkan dari controller
             // data doank adalah data yang set pada libraries
+            // $waktu=$this->CI->db->select_max('tanggal');
+            // $query = $this->CI->db->get_where('log',['tipe_login'=>$this->CI->session->userdata('role_id'),
+            // 'id_user'=>$this->CI->session->userdata('id')])->row();
+            // $datestring = '%G:%i:%s';
+            // if(time()- $query->tanggal > (60*15) ){
+            //    redirect('Auth/logout');
+            // }
             $data['judul']=$judul;   
             $data['data_user']=$this->CI->user_Mod->get_data_user($this->CI->session->userdata('role_id'),$this->CI->session->userdata('id'));  
             $this->CI->load->view('general_templates/header',$data);

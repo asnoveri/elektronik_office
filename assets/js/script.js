@@ -599,7 +599,7 @@ $(function () {
 				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
-				// delay: 250,
+				delay: 250,
 				data: function (params) {
 					return {
 						searchTerm: params.term
@@ -626,7 +626,7 @@ $(function () {
 				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
-				// delay: 250,
+				delay: 250,
 				data: function (params) {
 					return {
 						searchTerm: params.term
@@ -654,7 +654,7 @@ $(function () {
 				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
-				// delay: 250,
+				delay: 250,
 				data: function (params) {
 					return {
 						searchTerm: params.term
@@ -668,12 +668,13 @@ $(function () {
 				cache: true
 			}
 		});
+
 		$('#sel2').select2({
 			ajax: {
 				url: 'http://localhost/disposisi/User_Managemen/get_allwadir_combobox',
 				method: 'post',
 				dataType: 'json',
-				// delay: 250,
+				delay: 250,
 				data: function (params) {
 					return {
 						searchTerm: params.term
@@ -701,7 +702,7 @@ $(function () {
 				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
-				// delay: 250,
+				delay: 250,
 				data: function (params) {
 					return {
 						searchTerm: params.term

@@ -27,7 +27,7 @@
                                 <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
                               </div>';
                               }elseif($pgn->role_id==3 && $pgn->status==1){
-                                $role=$pgn->jabatan;
+                                $role="Pegawai Poltekkes Riau";
                                 echo  '<div class="col-lg-6 mt-2">
                                 <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
                               </div>';
@@ -37,7 +37,7 @@
                                 <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
                               </div>';
                               }elseif($pgn->role_id==5 && $pgn->status==1){
-                                $role=$pgn->jabatan;
+                                $role=jabatanget($pgn->id_penguna);
                                 echo  '<div class="col-lg-6 mt-2">
                                 <a href="'.base_url().'auth/pilih_Role/'.$pgn->role_id.'" class="btn btn-success btn-user btn-block">'.$role.'</a>
                               </div>';
@@ -54,54 +54,6 @@
                               }
                             }
                           ?>
-                              <!-- <?php
-                                if(@$admin){?>
-                                  <div class="col-lg-6 mt-2">
-                                    <a href="<?= base_url()?>auth/pilih_Role/<?= $admin?>" class="btn btn-success btn-user btn-block">Admin </a>
-                                  </div>
-                                <?php }else{?>
-                                <?php }
-                            
-                                if(@$direktur){?>
-                                  <div class="col-lg-6 mt-2">
-                                    <a href="<?= base_url()?>auth/pilih_Role/<?= $direktur?>" class="btn btn-success btn-user btn-block">Direktur</a>
-                                  </div>
-                                <?php }else{?>
-                                <?php }
-
-                                if(@$sekretaris){?>
-                                  <div class="col-lg-6 mt-2">
-                                    <a href="<?= base_url()?>auth/pilih_Role/<?= $sekretaris?>" class="btn btn-success btn-user btn-block">Sekretaris</a>
-                                  </div>
-                                <?php }else{?>
-                                <?php }  
-
-                                if(@$wadir){?>
-                                  <div class="col-lg-6 mt-2">
-                                    <a href="<?= base_url()?>auth/pilih_Role/<?= $wadir?>" class="btn btn-success btn-user btn-block"><?= $jabatan_wadir?></a>
-                                  </div>
-                                <?php }else{?>
-                                <?php }  
-                            
-                                if(@$adum){?>
-                                  <div class="col-lg-6 mt-2">
-                                    <a href="<?= base_url()?>auth/pilih_Role/<?= $adum?>" class="btn btn-success btn-user btn-block">Adum</a>
-                                  </div>
-                                <?php }else{?>
-                                <?php }
-                                if(@$pegawai){?>
-                                  <div class="col-lg-6 mt-2">
-                                    <a href="<?= base_url()?>auth/pilih_Role/<?= $pegawai?>" class="btn btn-success btn-user btn-block">Pegawai</a>
-                                  </div>
-                                <?php }else{?>
-                                <?php }  
-                                if(@$adminkepeg){?>
-                                  <div class="col-lg-6 mt-2">
-                                    <a href="<?= base_url()?>auth/pilih_Role/<?= $adminkepeg?>" class="btn btn-success btn-user btn-block">Admin Kepegawaian</a>
-                                  </div>
-                                <?php }else{?>
-                                <?php }  
-                            ?> -->
                           </div>
                         </div>
                     </div>    

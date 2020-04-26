@@ -23,8 +23,6 @@
             <button type="button" class="btn btn-primary mb-3" id="tbhpegawai">
             Tambah Pegawai
             </button>
-                <div class="row">  
-                    <div class="col-sm-12">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="tabl_pegawai" width="100%" cellspacing="0">
                                     <thead>
@@ -41,9 +39,7 @@
                                 <tbody>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                </div>                
+                        </div>            
             </div>
         </div>    
     </div>

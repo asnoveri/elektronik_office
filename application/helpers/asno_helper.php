@@ -134,24 +134,37 @@
             
             }
 
-            // function combo box status user
-            function user_aktiv($is_active){
-              $ci= get_instance();
-              if($is_active==1){?>
-              <option value="<?=$is_active?>"> Aktiv  </option>
-                <option value="0"> Non Aktiv  </option>;
-             <?php } elseif($is_active==0){?>
-                <option value="<?=$is_active?>"> Non Aktiv  </option>
-                <option value="1"> Aktiv  </option>;
-             <?php } 
-            }
-
             // function menampilkan jabatan user
             function jabatanget($id){
               $ci= get_instance();
-              $jbt=$ci->db->get_where('jabatan_user',['id_jabatan'=>$id])->row();
-              return $jbt->jabatan;
+              $query="SELECT `jabatan`.`id_jabatan`,`nama_jabatan`,`id_peguna`, `unit_kerja`.`unitkerja` FROM `jabatan`,`unit_kerja` WHERE `jabatan`.`nama_jabatan`=`unit_kerja`.`id_unitkerja` AND `jabatan`.`id_peguna`=$id AND jabatan.`status`=1";
+              $jbt=$ci->db->query($query)->result();
+                if(count($jbt) > 0){
+                  foreach($jbt as $row){
+                    $jabatan[]=$row->unitkerja;
+                  }
+                  return implode(",<br>",$jabatan);
+                }else{
+                  return $jbt[0]->unitkerja;
+                }
             }
+
+            function unitkerja($id){
+              $ci= get_instance();
+              $query="SELECT `jabatan`.`id_jabatan`,`nama_jabatan`,`id_peguna`, `unit_kerja`.`unitkerja` FROM `jabatan`,`unit_kerja` WHERE `jabatan`.`id_unitkerja`=`unit_kerja`.`id_unitkerja` AND `jabatan`.`id_peguna`=$id AND jabatan.`status`=1";
+              $jbt=$ci->db->query($query)->result();
+                if(count($jbt) > 0){
+                  foreach($jbt as $row){
+                    $jabatan[]=$row->unitkerja;
+                  }
+                  return implode(",<br>",$jabatan);
+                }else{
+                  return $jbt[0]->unitkerja;
+                }
+            }
+
+
+
 
             // function menampilkan feedback surat
             function feedback($id){
@@ -160,20 +173,6 @@
               return $fdbk->feedback;
             }
 
-            // function combo box menampilkan jabata user
-            function jabtan_combo($id){
-              $ci= get_instance();
-              $jbt=$ci->db->get_where('jabatan_user',['id_jabatan'=>$id])->row();
-              $jbt1=$ci->db->get('jabatan_user')->result();
-              if($id){?>
-                   <option> <?= $jbt->jabatan?>  </option>;
-                   <?php
-                      foreach($jbt1 as $jb){?>
-                        <option value="<?=$jb->id_jabatan?>"> <?= $jb->jabatan?>  </option>;
-                      <?php }
-                   ?>
-              <?php } 
-            }
 
               //function menampilkan surat keluar by admin/op alert
               function get_data_srt_keluaradmn_op($role_id){?>

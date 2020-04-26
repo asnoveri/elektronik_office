@@ -6,11 +6,27 @@ class Auth extends CI_Controller {
         parent::__construct();
         $this->load->model('login_Mod');
         $this->load->helper('date');
-        date_default_timezone_set('Asia/Jakarta');
-       
+        date_default_timezone_set('Asia/Jakarta');        
     }
 
     public function index($data1=""){
+        if(!empty($this->session->userdata('role_id'))){
+            if($this->session->userdata('role_id')==1){
+                redirect("admin");
+            }elseif($this->session->userdata('role_id')==2){
+                redirect("Operator");
+            }elseif($this->session->userdata('role_id')== 3){
+                redirect("User");
+            }elseif($this->session->userdata('role_id') == 4){
+                redirect("Direktur");
+            }elseif($this->session->userdata('role_id') == 5){
+                redirect("Wadir");
+            }elseif($this->session->userdata('role_id') == 6){
+                redirect("Adum");
+            }elseif($this->session->userdata('role_id')== 7){
+                redirect("admin_kepeg");
+            }
+        }
         $data['judul']='Elektronik Office -Login';
         $this->load->view('auth_templates/header',$data);
         $this->load->view('auth/index',$data1);
@@ -76,7 +92,8 @@ class Auth extends CI_Controller {
                                     $redirect='admin_kepeg';
                                 }
                                 $data=[
-                                    'tanggal'=>date("Y-m-d G:i:s"),
+                                    // 'tanggal'=>date("Y-m-d G:i:s"),
+                                    'tanggal'=>time(),
                                     'aksi'=> "Login",
                                     'Keterangan'=>'Login Sistem',
                                     'ip'=>$this->input->ip_address(),
@@ -136,7 +153,7 @@ class Auth extends CI_Controller {
 
     public function logout(){
         $data=[
-            'tanggal'=>date("Y-m-d G:i:s"),
+            'tanggal'=>time(),
             'aksi'=> "Logout",
             'Keterangan'=>"Logou Sistem",
             'ip'=>$this->input->ip_address(),
@@ -202,7 +219,7 @@ class Auth extends CI_Controller {
             ];
             $this->session->set_userdata($datasession);
             $data=[
-                'tanggal'=>date("Y-m-d G:i:s"),
+                'tanggal'=>time(),
                 'aksi'=> "Login",
                 'Keterangan'=>"Login Sistem",
                 'ip'=>$this->input->ip_address(),

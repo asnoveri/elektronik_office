@@ -1,5 +1,4 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class user_Mod extends CI_Model {
@@ -32,13 +31,13 @@ class user_Mod extends CI_Model {
                     $query="SELECT  * FROM role_user
                     WHERE role_id BETWEEN 4 AND 6  $like  ORDER by role_name $dir  LIMIT $start,$length";
                     return  $this->db->query($query)->result();
-    }
+        }
 
-    public function get_all_jabatan_count(){
-        $query="SELECT  * FROM role_user
-        WHERE role_id BETWEEN 4 AND 6 ";
-        return  $this->db->query($query)->result();
-    }
+        public function get_all_jabatan_count(){
+            $query="SELECT  * FROM role_user
+            WHERE role_id BETWEEN 4 AND 6 ";
+            return  $this->db->query($query)->result();
+        }
 
         public function cek_username($data){
             $this->db->where('user_name', $data);
@@ -58,10 +57,9 @@ class user_Mod extends CI_Model {
         }
 
         public function get_wadir($id){
-                    $this->db->where('id',$id);
-                    $this->db->where('role_id',5);
-                    $this->db->where('status',1);
-            return $wadir=$this->db->get('peguna')->row();
+                    $this->db->where('id_unitkerja',$id);
+                    $this->db->where('parent_unit',14);
+            return $wadir=$this->db->get('unit_kerja')->row();
         }
 
         public function get_direktur(){
@@ -77,17 +75,14 @@ class user_Mod extends CI_Model {
     }
 
         public function get_cek_jabatan_user($jabatan){
-            $this->db->where('jabatan',$jabatan);
-            $this->db->where('role_id',5);
-            $this->db->where('status',1);
-            return $this->db->get('peguna')->row();   
+            $query="SELECT * FROM `jabatan`,`unit_kerja` WHERE `jabatan`.`nama_jabatan`=`unit_kerja`.`id_unitkerja` and `jabatan`.`nama_jabatan`=$jabatan and `jabatan`.`status`=1";
+            return $this->db->query($query)->row();
         }
 
         public function get_userpswd($id){
             return $this->db->get_where('user',['id'=>$id])->row();
         }
 
-    
         public function get_user_BYID($id){
                 return $this->db->get_where('role_user',['role_id'=>$id])->row_array();
         }
@@ -119,15 +114,16 @@ class user_Mod extends CI_Model {
 
         public function get_allpenguna($length="",$start="",$dir="",$search="",$id){
         if($search){
-            $like= " AND fullname like '$search%' AND  email like '$search%'";
+            // $like= " AND fullname like '$search%' AND  email like '$search%'";
+            $like= " AND fullname like '$search%'";
         }else{
             $like='';
         }
-                $query="SELECT user.id,fullname,user_name,email, peguna.id_penguna,jabatan,id_unitkerja, role_user.role_id  FROM user,peguna,role_user
+                $query="SELECT user.id,fullname,user_name,email, peguna.id_penguna, role_user.role_id  FROM user,peguna,role_user
                 WHERE user.id=peguna.id AND peguna.role_id=role_user.role_id
                 AND peguna.role_id=$id  AND status=1 $like  ORDER by fullname $dir  LIMIT $start,$length";
-                return  $this->db->query($query)->result();
-        }
+                return $this->db->query($query)->result();
+            }
 
         public function get_allpengunan_count($id){
             // return $this->db->count_all_results('admin');
@@ -218,7 +214,19 @@ class user_Mod extends CI_Model {
         public function Add_Penguna($data){
             $this->db->insert('peguna',$data);
             if($this->db->affected_rows()> 0){
-                return true;
+                return true;    
+            }else{
+                return false;
+            }
+        }
+
+        public function Add_Pengunafor_jabatan($data,$role_id){
+            $this->db->insert('peguna',$data);
+            if($this->db->affected_rows()> 0){
+                $this->db->select_max('id_penguna');
+                $this->db->where('role_id',$role_id);
+                $query = $this->db->get('peguna')->row(); 
+                return $query->id_penguna;    
             }else{
                 return false;
             }
@@ -227,6 +235,51 @@ class user_Mod extends CI_Model {
         public function get_unitkerjabyID($id){
             $unit_kerja=$this->db->get_where('unit_kerja',['id_unitkerja'=>$id])->row();
             return $unit_kerja->unitkerja;
+        }
+
+        public function get_jabatanWadir($id){
+            $query="SELECT `jabatan`.`id_jabatan`,`nama_jabatan`, `unit_kerja`.`unitkerja` FROM `jabatan`,`unit_kerja` WHERE `jabatan`.`nama_jabatan`=`unit_kerja`.`id_unitkerja` AND `jabatan`.`id_peguna`=$id AND jabatan.`status`=1";
+            return $data=$this->db->query($query)->row();    
+        }
+
+        public function get_unitkerjaPegwai($id){
+            $query="SELECT `jabatan`.`id_jabatan`,`nama_jabatan`,`id_peguna`, `unit_kerja`.`unitkerja` FROM `jabatan`,`unit_kerja` WHERE `jabatan`.`id_unitkerja`=`unit_kerja`.`id_unitkerja` AND `jabatan`.`id_peguna`=$id AND jabatan.`status`=1";
+            return $data=$this->db->query($query)->result();    
+        }
+        public function get_jabatanWadrinonaktiv($id){
+            $query="SELECT `jabatan`.`id_jabatan`,`nama_jabatan`, `unit_kerja`.`unitkerja` FROM `jabatan`,`unit_kerja` WHERE `jabatan`.`nama_jabatan`=`unit_kerja`.`id_unitkerja` AND `jabatan`.`id_peguna`=$id AND jabatan.`status`=0";
+            return $data=$this->db->query($query)->row();    
+        }
+        
+        public function get_jabatanOP($id){
+            $query="SELECT * FROM jabatan WHERE id_peguna=$id";
+            $data=$this->db->query($query)->row();    
+            return $data->id_jabatan;
+        }
+
+        public function get_jabatanOPNonAktiv($id){
+            $query="SELECT * FROM jabatan WHERE id_peguna=$id and status=0";
+            $data=$this->db->query($query)->row();    
+            return $data->id_jabatan;
+        }
+
+        public function ubahstatusJabatan($id,$data){
+            $this->db->where('id_jabatan', $id);
+            $this->db->update('jabatan', $data);
+            if($this->db->affected_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
+        } 
+
+        public function add_jabatan($data){
+            $this->db->insert('jabatan',$data);
+            if($this->db->affected_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
         }
 }
 
