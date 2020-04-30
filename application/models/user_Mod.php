@@ -9,12 +9,12 @@ class user_Mod extends CI_Model {
         }
         
         public function get_all_user($length="",$start="",$order="",$dir="",$search=""){
-                $this->db->order_by($order,$dir);
-                $this->db->order_by('fullname','asc'); 
-                $this->db->like('fullname',$search);
-                $this->db->or_like('email',$search);
-                $this->db->limit($length,$start);  
-                return $this->db->get('user')->result();
+            $this->db->order_by($order,$dir);
+            $this->db->order_by('fullname','asc'); 
+            $this->db->like('fullname',$search);
+            $this->db->or_like('email',$search);
+            $this->db->limit($length,$start);  
+            return $this->db->get('user')->result();
         }
 
         public function get_all_user_count(){

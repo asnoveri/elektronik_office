@@ -15,12 +15,10 @@ class Menu_Managemen extends CI_Controller {
     //menu managemen
 
     public function index(){
-        $judul="Menu Managemen";
+        $judul="Kelola Menu";
         $halaman='menu_maneg/index';
         $data['all_menu']=$this->menu_Mod->get_all_menu();
         $this->template->TemplateGen($judul,$halaman,$data);  
-        
-
     }
 
     public function nonaktiv_mnu($id){
@@ -133,7 +131,7 @@ class Menu_Managemen extends CI_Controller {
 
 
     public function list_sub_menu(){
-        $judul="Sub Menu Managemen";
+        $judul="Kelola Sub Menu";
         $halaman='menu_maneg/list_sub_menu';
         $data['all_sub_menu']=$this->menu_Mod->get_all_sub_menu();
         $data['Parent_menu']=$this->menu_Mod->get_all_menu_is_active();
@@ -396,16 +394,15 @@ class Menu_Managemen extends CI_Controller {
     }
 
     public function acces_user(){
-        $judul="Role Access User ";
+        $judul="Role Akses User ";
         $halaman='menu_maneg/acces_user';
         $data['user_all']=$this->user_Mod->get_all_role();
-        
         $this->template->TemplateGen($judul,$halaman,$data);  
         
     }
 
     public function cek_akses_menu($id){
-       $judul="Role Access Menu ";
+       $judul="Role Akses Menu ";
        $halaman='menu_maneg/cek_akses_menu';
        $data['role']=$this->user_Mod->get_user_BYID($id);
        $data['all_cek_menu']=$this->menu_Mod->get_all_menu_is_active();

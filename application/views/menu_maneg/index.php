@@ -20,8 +20,8 @@
       <div class="alert alert-info">
         <strong><i class="fas fa-info-circle"></i>Info!</strong><br> 
                               1.  Seteleh menambahkan menu baru buatlah controller sesuai nama controller yang ada di list Menu <br>
-                              2.  dan Tambahkan juga Sub Menu dari Menu yang telah dibuat disini <a href="<?= base_url()?>Menu_Managemen/list_sub_menu"><span class="badge badge-light">Sub_menu</span></a><br>
-                              3.  dan atur hak akses dari menu disini <a href="<?= base_url()?>Menu_Managemen/acces_user"><span class="badge badge-success">Role Access</span></a> 
+                              2.  dan Tambahkan juga Sub Menu dari Menu yang telah dibuat disini <a href="<?= base_url()?>Menu_Managemen/list_sub_menu"><span class="badge badge-light">Sub menu</span></a><br>
+                              3.  dan atur hak akses dari menu disini <a href="<?= base_url()?>Menu_Managemen/acces_user"><span class="badge badge-success">Role Akses</span></a> 
       </div>
       <h5 class="m-0 font-weight-bold text-secondary">List Menu</h5>
     </div>

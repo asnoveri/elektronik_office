@@ -51,7 +51,7 @@ class Managemen_Admin extends CI_Controller {
                 echo json_encode($respon);die();
         }
         
-        $judul="Managemen Admin";
+        $judul="Kelola Admin";
         $halaman='user_maneg/addadmin';
         $data="";
         $this->template->TemplateGen($judul,$halaman,$data);  
@@ -164,7 +164,7 @@ class Managemen_Admin extends CI_Controller {
             echo json_encode($respon);die();
         }
         
-        $judul="Managemen Admin";
+        $judul="Kelola Admin";
         $halaman='user_maneg/list_amn_kep';
         $this->template->TemplateGen($judul,$halaman);
     }
@@ -208,8 +208,7 @@ class Managemen_Admin extends CI_Controller {
                 }elseif($cekpenguna=$this->user_mod->get_penguna_BYID($id,$status=0,$role_id)){
                     $id_penguna=$cekpenguna->id_penguna;
                         $data=[
-                            'status'=>1,
-                            'id_unitkerja'=>2
+                            'status'=>1
                             ];  
                         if($this->user_Mod->ubahstatus($id_penguna,$data)){
                             $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
@@ -222,8 +221,7 @@ class Managemen_Admin extends CI_Controller {
                             $data=[
                                 'id'=>$id,
                                 'role_id'=>7,
-                                'status'=>1,
-                                'id_unitkerja'=>2
+                                'status'=>1
                             ];
                         if($this->user_Mod->Add_Penguna($data)){
                         $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">

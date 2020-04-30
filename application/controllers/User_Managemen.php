@@ -88,7 +88,7 @@ class User_Managemen extends CI_Controller {
             echo json_encode($respon);
             die();
         }
-        $judul="User Managemen";
+        $judul="Kelola User";
         $halaman='user_maneg/index';
         $this->template->TemplateGen($judul,$halaman);  
     }
@@ -152,21 +152,30 @@ class User_Managemen extends CI_Controller {
 
     public function delUser($iduser){
         $cek_user=$this->user_Mod->get_user($iduser);
-        $data=$this->user_Mod->del_User($iduser);
-        if($data){
+        if($iduser==12 || $iduser==57){
             $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-               Gagal Menghapus User '.$cek_user.' 
+               Gagal Menghapus User '.$cek_user.' Karena User Memeliki Role Super Admin
             </div>');  
             redirect("User_Managemen");
         }else{
-            $this->user_Mod->del_User1($iduser);
-            $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-              Berhasil Menghapus User '.$cek_user.'
-            </div>');  
-            redirect("User_Managemen");
-        }    
+            $data=$this->user_Mod->del_User($iduser);
+            if($data){
+                $this->session->set_flashdata('pesanaddop','<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                   Gagal Menghapus User '.$cek_user.' 
+                </div>');  
+                redirect("User_Managemen");
+            }else{
+                $this->user_Mod->del_User1($iduser);
+                $this->session->set_flashdata('pesanaddop','<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  Berhasil Menghapus User '.$cek_user.'
+                </div>');  
+                redirect("User_Managemen");
+            }  
+        }
+         
         
     }
 
@@ -209,7 +218,7 @@ class User_Managemen extends CI_Controller {
         }
 
         public function edit_user($id){
-            $judul="User Managemen";
+            $judul="Kelola User";
             $halaman='user_maneg/edit_usr';
             $data['user']=$this->user_Mod->get_userEdit($id);
             $this->template->TemplateGen($judul,$halaman,$data);        
@@ -361,7 +370,7 @@ class User_Managemen extends CI_Controller {
         $respon['data']=$json;
         echo json_encode($respon);die();
         }
-            $judul="User Managemen";
+            $judul="Kelola User";
             $halaman='user_maneg/list_op';
             $this->template->TemplateGen($judul,$halaman);  
     }
@@ -535,7 +544,7 @@ class User_Managemen extends CI_Controller {
             $respon['data']=$json;
             echo json_encode($respon);die();
         }
-        $judul="User Managemen";
+        $judul="Kelola User";
         $halaman='user_maneg/listdirut';
         $this->template->TemplateGen($judul,$halaman);  
     }
@@ -666,7 +675,7 @@ class User_Managemen extends CI_Controller {
             echo json_encode($respon);die();
         }
 
-        $judul="User Managemen";
+        $judul="Kelola User";
         $halaman='user_maneg/list_wadir';
         $this->template->TemplateGen($judul,$halaman);  
     }
@@ -804,7 +813,7 @@ class User_Managemen extends CI_Controller {
             echo json_encode($respon);die();
         }
 
-        $judul="User Managemen";
+        $judul="Kelola User";
         $halaman='user_maneg/list_adum';
         $this->template->TemplateGen($judul,$halaman);
     }
@@ -932,7 +941,7 @@ class User_Managemen extends CI_Controller {
             echo json_encode($respon);die();
         }
         
-        $judul="User Managemen";
+        $judul="Kelola User";
         $halaman='user_maneg/List_pegawai';
         $this->template->TemplateGen($judul,$halaman);
     }
@@ -1211,7 +1220,7 @@ class User_Managemen extends CI_Controller {
             die();
         }
 
-        $judul="User Managemen";
+        $judul="Kelola User";
         $halaman='user_maneg/list_penjabat';
         $this->template->TemplateGen($judul,$halaman);      
     }

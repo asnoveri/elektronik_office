@@ -4,19 +4,19 @@
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><?= $judul?></h1>
-        <a href="<?= base_url()?>Menu_Managemen/acces_user" class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-left"></i></span><span class="text">Role Access User</span></a></a>
+        <a href="<?= base_url()?>Menu_Managemen/acces_user" class="btn btn-success btn-icon-split"><span class="icon text-white"> <i class="fas fa-arrow-left"></i></span><span class="text">Role Akses User</span></a></a>
         </div>
 
         <!-- Content Row -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">      
             <?= $this->session->flashdata('pesan2');?> 
-                  <h5 class="m-0 font-weight-bold text-secondary">List Role User Acces Menu</h5>
+                  <h5 class="m-0 font-weight-bold text-secondary">List Role User Akses Menu</h5>
             </div>
             <div class="card-body">
                 <div class="row">  
                     <div class="col-sm-6">
-                        <h5>Role Access: <?= $role['role_name'] ?></h5>
+                        <h5>Role Akses: <?= $role['role_name'] ?></h5>
                         <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -27,7 +27,7 @@
                                 </thead>
                             <tbody>
                             <?php
-                            $no=0;
+                            $no=0+1;
                                 foreach ($all_cek_menu as $allcm) {?>
                                         <tr>
                                             <?php
