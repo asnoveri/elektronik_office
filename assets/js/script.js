@@ -755,7 +755,7 @@ $(function () {
 				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
-				// delay: 250,
+				delay: 250,
 				data: function (params) {
 					return {
 						searchTerm: params.term
@@ -768,6 +768,76 @@ $(function () {
 				},
 				cache: true
 			}
+		});
+	});
+});
+
+//tambah pegawai
+$(function () {
+	$("#tbhpegawai").on('click', function () {
+		$('#modal_pegawai').modal('show');
+		$('#sel1').select2({
+			ajax: {
+				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				method: 'post',
+				dataType: 'json',
+				delay: 250,
+				data: function (params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+			}
+		});
+		$("#sel3").select2({
+			// maximumSelectionLength: 2,
+			// placeholder: "Pilih Unit Kerja",
+			// allowClear: true,
+			ajax: {
+				url: 'http://localhost/disposisi/User_Managemen/get_allUnit_kerja',
+				method: 'post',
+				dataType: 'json',
+				delay: 250,
+				data: function (params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+			}
+		});
+		$("#sel3").on('change', function () {
+			$("#sel4").select2({
+				ajax: {
+					url: 'http://localhost/disposisi/User_Managemen/get_alljabatan',
+					method: 'post',
+					dataType: 'json',
+					delay: 250,
+					data: function (params) {
+						return {
+							unitker: $("#sel3").val(),
+							searchTerm: params.term,
+						};
+					},
+					processResults: function (response) {
+						return {
+							results: response
+						};
+					},
+					cache: true
+				}
+			});
 		});
 	});
 });

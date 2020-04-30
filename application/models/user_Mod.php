@@ -237,15 +237,26 @@ class user_Mod extends CI_Model {
             return $unit_kerja->unitkerja;
         }
 
+         public function get_unitkerjaPegawaiBYukp($id_unitkerja,$status='',$jabatan){
+            return $this->db->get_where('jabatan',['id_unitkerja'=>$id_unitkerja,'status'=> $status,'nama_jabatan'=>$jabatan])->row();
+        }
+
+        public function get_unitkerjaPegawai($id_peguna,$id_unitkerja,$status='',$jabatan){
+            return $this->db->get_where('jabatan',['id_peguna' => $id_peguna,
+            'id_unitkerja'=>$id_unitkerja,'status'=> $status,'nama_jabatan'=>$jabatan])->row();
+        }
+
+        public function get_unitkerjaPegawainonAktiv($id_peguna,$id_unitkerja,$status='',$jabatan){
+            return $this->db->get_where('jabatan',['id_peguna' => $id_peguna,
+            'id_unitkerja'=>$id_unitkerja,'status'=> $status,'nama_jabatan'=>$jabatan])->row();
+        }
+
         public function get_jabatanWadir($id){
             $query="SELECT `jabatan`.`id_jabatan`,`nama_jabatan`, `unit_kerja`.`unitkerja` FROM `jabatan`,`unit_kerja` WHERE `jabatan`.`nama_jabatan`=`unit_kerja`.`id_unitkerja` AND `jabatan`.`id_peguna`=$id AND jabatan.`status`=1";
             return $data=$this->db->query($query)->row();    
         }
 
-        public function get_unitkerjaPegwai($id){
-            $query="SELECT `jabatan`.`id_jabatan`,`nama_jabatan`,`id_peguna`, `unit_kerja`.`unitkerja` FROM `jabatan`,`unit_kerja` WHERE `jabatan`.`id_unitkerja`=`unit_kerja`.`id_unitkerja` AND `jabatan`.`id_peguna`=$id AND jabatan.`status`=1";
-            return $data=$this->db->query($query)->result();    
-        }
+
         public function get_jabatanWadrinonaktiv($id){
             $query="SELECT `jabatan`.`id_jabatan`,`nama_jabatan`, `unit_kerja`.`unitkerja` FROM `jabatan`,`unit_kerja` WHERE `jabatan`.`nama_jabatan`=`unit_kerja`.`id_unitkerja` AND `jabatan`.`id_peguna`=$id AND jabatan.`status`=0";
             return $data=$this->db->query($query)->row();    
@@ -272,6 +283,29 @@ class user_Mod extends CI_Model {
                 return false;
             }
         } 
+        
+
+        public function ubahstatusJabatanByidpenguna($id,$data){
+            $this->db->where('id_peguna', $id);
+            $this->db->update('jabatan', $data);
+            if($this->db->affected_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function ubahstatuJBtnByidpengdanIdjabatan($id,$unit_kerja,$jabatan,$data){
+            $this->db->where('id_peguna', $id);
+            $this->db->where('id_unitkerja', $unit_kerja);
+            $this->db->where('nama_jabatan', $jabatan);
+            $this->db->update('jabatan', $data);
+            if($this->db->affected_rows() > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
 
         public function add_jabatan($data){
             $this->db->insert('jabatan',$data);
@@ -281,6 +315,36 @@ class user_Mod extends CI_Model {
                 return false;
             }
         }
+
+        public function get_allUnit_kerja($search){
+            if($search){
+                $this->db->like('unitkerja',$search);
+                $this->db->where('parent_unit',0);
+                $this->db->where('id_unitkerja !=',1);
+                $this->db->where('id_unitkerja !=',14);
+                return $this->db->get('unit_kerja')->result();
+            }else{
+                $this->db->where('parent_unit',0);
+                $this->db->where('id_unitkerja !=',1);
+                $this->db->where('id_unitkerja !=',14);
+                return $this->db->get('unit_kerja')->result();
+            }
+        }
+
+        public function get_alljabatan($search,$unitker){
+            if($search){
+                $this->db->like('unitkerja',$search);
+                $this->db->where('parent_unit',$unitker);
+                $this->db->where('id_unitkerja !=',46);
+                return $this->db->get('unit_kerja')->result();
+            }else{
+                $this->db->where('parent_unit',$unitker);
+                $this->db->where('id_unitkerja !=',46);
+                return $this->db->get('unit_kerja')->result();
+            }
+        }
+
+
 }
 
 ?>

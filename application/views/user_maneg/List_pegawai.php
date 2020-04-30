@@ -44,7 +44,7 @@
         </div>    
     </div>
 
-    <div class="modal" id="modal_adum">
+    <div class="modal" id="modal_pegawai">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -52,12 +52,23 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= base_url()?>User_Managemen/add_adum" method="POST">
+                    <form action="<?= base_url()?>User_Managemen/add_pegawai" method="POST">
                         <div class="form-group">
-                            <label>Pilih Pegawai</label>
-                            <!-- <input type="text" class="form-control" id="pegawai" name="id"> -->
+                            <label>Pilih User</label>
                             <select class="form-control" id="sel1" name="pegawai"> 
-                                <option value=''>-- Pilih Pegawai --</option>   
+                                <option value=''>-- Pilih User --</option>   
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Pilih Unit Kerja</label>
+                            <select class="form-control" id="sel3" name="unitkerja" > 
+                                <option value=''>-- Pilih Unit Kerja --</option>   
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Pilih Jabatan</label>
+                            <select class="form-control" id="sel4" name="jabatan"> 
+                                <option value=''>-- Pilih Jabatan --</option>   
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary" id="tbl_prosessk">Tambah</button>

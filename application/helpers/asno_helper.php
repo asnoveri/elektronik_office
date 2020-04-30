@@ -143,7 +143,7 @@
                   foreach($jbt as $row){
                     $jabatan[]=$row->unitkerja;
                   }
-                  return implode(",<br>",$jabatan);
+                  return implode(",<br><br>",$jabatan);
                 }else{
                   return $jbt[0]->unitkerja;
                 }
@@ -157,7 +157,7 @@
                   foreach($jbt as $row){
                     $jabatan[]=$row->unitkerja;
                   }
-                  return implode(",<br>",$jabatan);
+                  return implode(",<br><br>",$jabatan);
                 }else{
                   return $jbt[0]->unitkerja;
                 }

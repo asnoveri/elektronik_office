@@ -30,7 +30,7 @@
                       if($data_user['role_id']==1 || $data_user['role_id']==2 || $data_user['role_id']==4 || $data_user['role_id']==6 ||$data_user['role_id']==7){
                         echo $data_user['role_name'];
                       }elseif($data_user['role_id']==3 || $data_user['role_id']==5){
-                        echo "Pegawai Poltekkes Riau";
+                        echo "Pegawai ";
                         // echo $data_user['jabatan'];
                         // echo jabatanget($data_user['id_penguna']);
                       }
@@ -54,7 +54,7 @@
                 <?php } elseif($data_user['role_id'] == 3 ){?>
                 <a class="dropdown-item" href="<?= base_url()?>User/profil_user">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile <?= $data_user['fullname'] ?>
+                  Profile Pegawai "(<?= $data_user['fullname'] ?>)"
                 </a>
               <?php } elseif($data_user['role_id'] == 4 ){?>
                 <a class="dropdown-item" href="<?= base_url()?>Direktur/profil_dr">
