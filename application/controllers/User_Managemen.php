@@ -6,6 +6,7 @@ class User_Managemen extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model('user_mod');
+        date_default_timezone_set('Asia/Jakarta');        
         is_login();
       
     }

@@ -29,10 +29,10 @@
                     <?php
                       if($data_user['role_id']==1 || $data_user['role_id']==2 || $data_user['role_id']==4 || $data_user['role_id']==6 ||$data_user['role_id']==7){
                         echo $data_user['role_name'];
-                      }elseif($data_user['role_id']==3 || $data_user['role_id']==5){
+                      }elseif($data_user['role_id']==3){
                         echo "Pegawai ";
-                        // echo $data_user['jabatan'];
-                        // echo jabatanget($data_user['id_penguna']);
+                      }elseif( $data_user['role_id']==5){
+                        echo jabatanget($data_user['id_penguna']);
                       }
                     ?>
                   </sup>

@@ -103,20 +103,35 @@
                     }else{
                     redirect('Blank_page');
                     }
+                }elseif($controller=='adum'||$controller=='Adum'){
+                  $ctr=6;
+                    if($ctr==$role_id){
+                    }else{
+                    redirect('Blank_page');
+                    }    
+                }elseif($controller=='wadir'||$controller=='Wadir'){
+                  $ctr=5;
+                    if($ctr==$role_id){
+                    }else{
+                    redirect('Blank_page');
+                    } 
+                }elseif($controller=='admin_kepeg'||$controller=='Admin_kepeg'){
+                  $ctr=7;
+                    if($ctr==$role_id){
+                    }else{
+                    redirect('Blank_page');
+                    } 
                 }else{
                   $get_ctrl=$ci->db->get_where('menu',['ctrl_menu'=>$controller])->row_array();
                   $user_acces=$ci->db->get_where('user_acess_menu',[
                     'role_id' => $role_id,
                     'id_menu' => $get_ctrl['id_menu']
                   ]);
-
                   if($user_acces->num_rows() < 1){
                     redirect('Blank_page');
                   }
                 }
-
               }
-                
             }
 
             //function cheked hak akses menu user

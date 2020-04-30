@@ -8,9 +8,8 @@ class Direktur extends CI_Controller {
 
         $this->load->model('user_Mod');
         $this->load->model('menu_Mod');
-
-       is_login();
-    
+        date_default_timezone_set('Asia/Jakarta');        
+        is_login();
     }
 
     public function index(){

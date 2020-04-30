@@ -24,9 +24,10 @@ class Auth extends CI_Controller {
             }elseif($this->session->userdata('role_id') == 6){
                 redirect("Adum");
             }elseif($this->session->userdata('role_id')== 7){
-                redirect("admin_kepeg");
+                redirect("Admin_kepeg");
             }
         }
+
         $data['judul']='Elektronik Office -Login';
         $this->load->view('auth_templates/header',$data);
         $this->load->view('auth/index',$data1);
@@ -38,7 +39,7 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('user_name','User_name','required|trim|min_length[3]|alpha_dash', 
         ['alpha_dash'=>'User Name Tidak Mengizinkan Spasi Pada Karakter Yang di Masukkan']);
         $this->form_validation->set_rules('pass','Pass','required|trim');
-		
+
         if($this->form_validation->run() == false){
             $this->index();
         }else{
@@ -49,7 +50,6 @@ class Auth extends CI_Controller {
             if($datalogin){
                 if($datalogin['is_active'] == 1){
                     $penguna=$this->login_Mod->get_penguna($datalogin['id']);
-                    
                     if(count($penguna) >1 ){
                         if(password_verify($pass,$datalogin['pass'])){
                             $data=[
@@ -89,7 +89,7 @@ class Auth extends CI_Controller {
                                 }elseif($role->role_id == 6){
                                     $redirect='Adum';
                                 }elseif($role->role_id == 7){
-                                    $redirect='admin_kepeg';
+                                    $redirect='Admin_kepeg';
                                 }
                                 $data=[
                                     // 'tanggal'=>date("Y-m-d G:i:s"),
@@ -135,19 +135,17 @@ class Auth extends CI_Controller {
     }
 
     public function autlog($data){
-        //pesan adalah nama item 
-        if($data ==1){
-            $pesan='Silahkan Hubungi Admin Sistem Untuk Menset Ulang Password Anda!!';
-        }elseif($data ==2){
-            $pesan='Silahkan Hubungi Admin Sistem Untuk Mendaftarkan Account Anda!!';
-        }
-        $this->session->set_flashdata('pesan','<div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-       '.$pesan.'
-      </div>');
-      redirect('Auth');
-
-
+            //pesan adalah nama item 
+            if($data ==1){
+                $pesan='Silahkan Hubungi Admin Sistem Untuk Menset Ulang Password Anda!!';
+            }elseif($data ==2){
+                $pesan='Silahkan Hubungi Admin Sistem Untuk Mendaftarkan Account Anda!!';
+            }
+            $this->session->set_flashdata('pesan','<div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            '.$pesan.'
+            </div>');
+            redirect('Auth');
     }
 
 
@@ -170,7 +168,6 @@ class Auth extends CI_Controller {
         <button type="button" class="close" data-dismiss="alert">&times;</button>
             Anda Baru Saja Logout dari Aplikasi Dispsoisi!!!
         </div>');
-
       redirect('Auth');
     }
 
@@ -210,7 +207,7 @@ class Auth extends CI_Controller {
                 $email=$this->session->userdata('email');
                 $role_id=$param;
                 $id=$this->session->userdata('id');
-                $redirect="admin_kepeg";
+                $redirect="Admin_kepeg";
             }
             $datasession=[
                 'email'     => $email,

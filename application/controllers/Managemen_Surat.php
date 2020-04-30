@@ -9,8 +9,9 @@ class Managemen_surat extends CI_Controller {
         $this->load->model('user_Mod');
         $this->load->model('menu_Mod');
         $this->load->model('Surat_Mod');
+        date_default_timezone_set('Asia/Jakarta');       
 
-       is_login();
+        is_login();
     
     }
 
