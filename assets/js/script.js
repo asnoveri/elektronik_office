@@ -518,7 +518,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/User_Managemen/list_pegawai/data_pegawai',
+			url: 'http://localhost/Project/elektronik_office/User_Managemen/list_pegawai/data_pegawai',
 			type: 'post'
 		},
 	});
@@ -695,7 +695,7 @@ $(function () {
 $(function () {
 	$("#tbhdirut").on('click', function () {
 		$("#modal_dirut").modal('show');
-		$(".modal-body form").attr('action', 'http://localhost/disposisi/User_Managemen/addDirektur');
+		$(".modal-body form").attr('action', 'http://localhost/Project/elektronik_office/User_Managemen/addDirektur');
 		$(".modal-body form").attr('method', 'post');
 		$("#sel1").select2({
 			ajax: {
@@ -800,7 +800,7 @@ $(function () {
 			// placeholder: "Pilih Unit Kerja",
 			// allowClear: true,
 			ajax: {
-				url: 'http://localhost/disposisi/User_Managemen/get_allUnit_kerja',
+				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_allUnit_kerja',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -820,7 +820,7 @@ $(function () {
 		$("#sel3").on('change', function () {
 			$("#sel4").select2({
 				ajax: {
-					url: 'http://localhost/disposisi/User_Managemen/get_alljabatan',
+					url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alljabatan',
 					method: 'post',
 					dataType: 'json',
 					delay: 250,
