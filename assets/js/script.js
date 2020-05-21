@@ -185,7 +185,7 @@ $(function () {
 		const id_menu = $(this).data('menu');
 
 		$.ajax({
-			url: 'http://localhost/disposisi/Menu_Managemen/ubah_access',
+			url: 'http://localhost/Project/elektronik_office/Menu_Managemen/ubah_access',
 			type: 'post',
 			data: {
 				role_id: role_id,
@@ -193,7 +193,7 @@ $(function () {
 			},
 			success: function () {
 				//unutk meridirect dengan Ajax
-				document.location.href = "http://localhost/disposisi/Menu_Managemen/cek_akses_menu/" + role_id;
+				document.location.href = "http://localhost/Project/elektronik_office/Menu_Managemen/cek_akses_menu/" + role_id;
 
 			}
 		});
@@ -212,14 +212,14 @@ $(function () {
 		const idgambar = $("#idgambar").val();
 
 		$.ajax({
-			url: 'http://localhost/disposisi/User_Managemen/do_edit_uploadimage',
+			url: 'http://localhost/Project/elektronik_office/User_Managemen/do_edit_uploadimage',
 			data: form_data,
 			contentType: false,
 			processData: false,
 			type: 'post',
 			success: function (data) {
 				//unutk meridirect dengan Ajax
-				document.location.href = "http://localhost/disposisi/User_Managemen/edit_user/" + idgambar;
+				document.location.href = "http://localhost/Project/elektronik_office/User_Managemen/edit_user/" + idgambar;
 				// console.log(data);
 			}
 		});
@@ -398,7 +398,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/User_Managemen/penjabat/listpjbt',
+			url: 'http://localhost/Project/elektronik_office/User_Managemen/penjabat/listpjbt',
 			type: 'POST'
 		},
 	});
@@ -413,7 +413,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/User_Managemen/Adum/listadum',
+			url: 'http://localhost/Project/elektronik_office/User_Managemen/Adum/listadum',
 			type: 'POST'
 		},
 	});
@@ -428,7 +428,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/User_Managemen/index/listuser',
+			url: 'http://localhost/Project/elektronik_office/User_Managemen/index/listuser',
 			type: 'POST'
 		},
 	});
@@ -443,7 +443,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/User_Managemen/listwadir/listwadir',
+			url: 'http://localhost/Project/elektronik_office/User_Managemen/listwadir/listwadir',
 			type: 'POST'
 		},
 	});
@@ -458,7 +458,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/User_Managemen/list_op/listoprator',
+			url: 'http://localhost/Project/elektronik_office/User_Managemen/list_op/listoprator',
 			type: 'POST'
 		},
 	});
@@ -473,7 +473,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/Managemen_Admin/index/get_admin',
+			url: 'http://localhost/Project/elektronik_office/Managemen_Admin/index/get_admin',
 			type: 'post'
 		}
 	});
@@ -488,7 +488,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/User_Managemen/listdirektur/listdirek',
+			url: 'http://localhost/Project/elektronik_office/User_Managemen/listdirektur/listdirek',
 			type: 'post'
 		},
 	});
@@ -503,7 +503,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/disposisi/Managemen_Admin/admn_kep/listadmnkepeg',
+			url: 'http://localhost/Project/elektronik_office/Managemen_Admin/admn_kep/listadmnkepeg',
 			type: 'post'
 		},
 	});
@@ -529,7 +529,7 @@ $(document).on('click', '.sel2', function () {
 	const status = 0;
 	const id = $(this).data('id');
 	$.ajax({
-		url: 'http://localhost/disposisi/User_Managemen/ubah_isactiveUser',
+		url: 'http://localhost/Project/elektronik_office/User_Managemen/ubah_isactiveUser',
 		type: 'post',
 		data: {
 			id: id,
@@ -537,7 +537,7 @@ $(document).on('click', '.sel2', function () {
 		},
 		success: function (data) {
 			//unutk meridirect dengan Ajax
-			document.location.href = "http://localhost/disposisi/User_Managemen";
+			document.location.href = "http://localhost/Project/elektronik_office/User_Managemen";
 			// console.log(data);
 		}
 	});
@@ -548,7 +548,7 @@ $(document).on('click', '.sel1', function () {
 	const status = 1;
 	const id = $(this).data('id');;
 	$.ajax({
-		url: 'http://localhost/disposisi/User_Managemen/ubah_isactiveUser',
+		url: 'http://localhost/Project/elektronik_office/User_Managemen/ubah_isactiveUser',
 		type: 'post',
 		data: {
 			id: id,
@@ -556,7 +556,7 @@ $(document).on('click', '.sel1', function () {
 		},
 		success: function (data) {
 			//unutk meridirect dengan Ajax
-			document.location.href = "http://localhost/disposisi/User_Managemen";
+			document.location.href = "http://localhost/Project/elektronik_office/User_Managemen";
 			// console.log(data);
 		}
 	});
@@ -572,7 +572,7 @@ $(document).on('click', '#aad_user', function () {
 	$(".modal-dialog").removeClass(" modal-sm");
 	$('#tbhuser').modal('show');
 	$('#id').hide();
-	$(".modal-body form").attr('action', 'http://localhost/disposisi/User_Managemen/add_user');
+	$(".modal-body form").attr('action', 'http://localhost/Project/elektronik_office/User_Managemen/add_user');
 	$('#tbl_proses').html('Tambah');
 });
 
@@ -586,7 +586,7 @@ $(document).on('click', '.edtpswd', function () {
 	$(".modal-dialog").addClass("modal-dialog modal-sm");
 	$('#tbhuser').modal('show');
 	$('#id').val(id);
-	$(".modal-body form").attr('action', 'http://localhost/disposisi/User_Managemen/ubahaPswd');
+	$(".modal-body form").attr('action', 'http://localhost/Project/elektronik_office/User_Managemen/ubahaPswd');
 	$('#tbl_proses').html('Edit');
 });
 
@@ -596,7 +596,7 @@ $(function () {
 		$("#adminModal").modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -623,7 +623,7 @@ $(function () {
 		$("#modal_admn_kep").modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -651,7 +651,7 @@ $(function () {
 		$("#modal_wadir").modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -671,7 +671,7 @@ $(function () {
 
 		$('#sel2').select2({
 			ajax: {
-				url: 'http://localhost/disposisi/User_Managemen/get_allwadir_combobox',
+				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_allwadir_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -699,7 +699,7 @@ $(function () {
 		$(".modal-body form").attr('method', 'post');
 		$("#sel1").select2({
 			ajax: {
-				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -725,7 +725,7 @@ $(function () {
 		$('#modal_skre').modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				// delay: 250,
@@ -752,7 +752,7 @@ $(function () {
 		$('#modal_adum').modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -778,7 +778,7 @@ $(function () {
 		$('#modal_pegawai').modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/disposisi/User_Managemen/get_alluser_combobox',
+				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
