@@ -13,7 +13,7 @@ class Adum extends CI_Controller {
 
     public function index(){
         $judul='Dashboard';
-        $halaman='Adum/index';
+        $halaman='adum/index';
         $data="";
         $this->template->TemplateGen($judul,$halaman,$data);     
     }
@@ -25,6 +25,3 @@ class Adum extends CI_Controller {
         $this->template->TemplateGen($judul,$halaman,$data);        
     }
 }
-
-
-?>

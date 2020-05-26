@@ -14,7 +14,7 @@ class Direktur extends CI_Controller {
 
     public function index(){
         $judul='Dashboard';
-        $halaman='Direktur/index';
+        $halaman='direktur/index';
         $data="";
         $this->template->TemplateGen($judul,$halaman,$data);     
         
@@ -31,6 +31,3 @@ class Direktur extends CI_Controller {
 
    
 }
-
-
-?>

@@ -13,7 +13,7 @@ class Wadir extends CI_Controller {
 
     public function index(){
         $judul='Dashboard';
-        $halaman='Wadir/index';
+        $halaman='wadir/index';
         $data="";
         $this->template->TemplateGen($judul,$halaman,$data);     
     }
@@ -25,6 +25,3 @@ class Wadir extends CI_Controller {
         $this->template->TemplateGen($judul,$halaman,$data);        
     }
 }
-
-
-?>

@@ -12,7 +12,7 @@ class Operator extends CI_Controller {
 
     public function index(){
         $judul='Dashboard';
-        $halaman='Operator/index';
+        $halaman='operator/index';
         $data="";
         $this->template->TemplateGen($judul,$halaman,$data);   
       
@@ -28,5 +28,3 @@ class Operator extends CI_Controller {
 
    
 }
-
-?>
