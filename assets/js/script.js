@@ -1,5 +1,7 @@
 // untuk memulai jquery
 $(function () {
+	const url = $("#page-top").data('url');
+
 	// tambah menu
 	$("#aad_menu").on('click', function () {
 		$("#label_nm").html("Tambah Menu");
@@ -9,23 +11,24 @@ $(function () {
 		$("#id_menu").val("");
 		$("#tbl_proses").html("SIMPAN MENU");
 		$('#pom').html("");
+
 	});
 
 	// edit menu
 	$("a[id='edit_mn']").on('click', function () {
 		$("#label_nm").html('Edit Menu');
 		$("#tbl_proses").html("EDIT Menu");
-
 		//untuk mengubah form action ddan methode modal 
-		$(".modal-body form").attr('action', 'http://localhost/disposisi/Menu_Managemen/edit_menu');
+		$(".modal-body form").attr('action', url + '/Menu_Managemen/edit_menu');
 
 		//unutuk menampung id yang dikirimanan dari ahref data
 		const id_menu = $(this).data('id_men');
 		// console.log(id_menu);
 
+
 		$.ajax({
 			//untuk memangil contorller Menu_mange dan methode get_menu_byid
-			url: 'http://localhost/disposisi/Menu_Managemen/get_menu_byid',
+			url: url + 'Menu_Managemen/get_menu_byid',
 			//data yang dikirmkan
 			data: {
 				id_menu: id_menu
@@ -62,11 +65,11 @@ $(function () {
 	$("a[id='edit_sb_mn']").on('click', function () {
 		$("#lbl_sb_mn").html("Edit Sub Menu");
 		$("#btn_sb_mn").html("Edit Sub Menu");
-		$(".modal-body form").attr('action', 'http://localhost/disposisi/Menu_Managemen/edit_submenu');
+		$(".modal-body form").attr('action', url + '/Menu_Managemen/edit_submenu');
 		const id_submenu = $(this).data('id_submn');
 		console.log(id_submenu);
 		$.ajax({
-			url: 'http://localhost/disposisi/Menu_Managemen/get_submenu_byid',
+			url: url + '/Menu_Managemen/get_submenu_byid',
 			data: {
 				id_submenu: id_submenu
 			},
@@ -89,7 +92,7 @@ $(function () {
 		// const ctrl_menu menampung data value berdasarkan parent menu yang dipilih
 		const ctrl_menu = $("#id_menu").val();
 		$.ajax({
-			url: 'http://localhost/disposisi/Menu_Managemen/get_menu_byid',
+			url: url + '/Menu_Managemen/get_menu_byid',
 			data: {
 				id_menu: ctrl_menu
 			},
@@ -126,7 +129,7 @@ $(function () {
 		const posisi_menu = $("#posisi_menu").val();
 		const id_menu = $("#id_menu").val();
 		$.ajax({
-			url: 'http://localhost/disposisi/Menu_Managemen/cek_posisi_menu',
+			url: url + '/Menu_Managemen/cek_posisi_menu',
 			data: {
 				posisi_menu: posisi_menu,
 				id_menu: id_menu
@@ -155,7 +158,7 @@ $(function () {
 		const posisi_sub = $("#posisi_sub").val();
 		const ctrl_menu = $("#id_menu").val();
 		$.ajax({
-			url: 'http://localhost/disposisi/Menu_Managemen/cek_posisi_sub_menu',
+			url: url + '/Menu_Managemen/cek_posisi_sub_menu',
 			data: {
 				posisi_sub: posisi_sub,
 				id_menu: ctrl_menu
@@ -185,7 +188,7 @@ $(function () {
 		const id_menu = $(this).data('menu');
 
 		$.ajax({
-			url: 'http://localhost/Project/elektronik_office/Menu_Managemen/ubah_access',
+			url: url + '/Menu_Managemen/ubah_access',
 			type: 'post',
 			data: {
 				role_id: role_id,
@@ -193,7 +196,7 @@ $(function () {
 			},
 			success: function () {
 				//unutk meridirect dengan Ajax
-				document.location.href = "http://localhost/Project/elektronik_office/Menu_Managemen/cek_akses_menu/" + role_id;
+				document.location.href = url + "/Menu_Managemen/cek_akses_menu/" + role_id;
 
 			}
 		});
@@ -212,14 +215,14 @@ $(function () {
 		const idgambar = $("#idgambar").val();
 
 		$.ajax({
-			url: 'http://localhost/Project/elektronik_office/User_Managemen/do_edit_uploadimage',
+			url: url + '/User_Managemen/do_edit_uploadimage',
 			data: form_data,
 			contentType: false,
 			processData: false,
 			type: 'post',
 			success: function (data) {
 				//unutk meridirect dengan Ajax
-				document.location.href = "http://localhost/Project/elektronik_office/User_Managemen/edit_user/" + idgambar;
+				document.location.href = url + "/User_Managemen/edit_user/" + idgambar;
 				// console.log(data);
 			}
 		});
@@ -234,7 +237,7 @@ $(function () {
 			$(".slt").show().attr('name', 'di_teruskan_ke');
 		} else {
 			console.log("not");
-			document.location.href = "http://localhost/disposisi/Managemen_Surat";
+			document.location.href = url + "/Managemen_Surat";
 		}
 	});
 
@@ -249,7 +252,7 @@ $(function () {
 				page: '4'
 			}
 		};
-		PDFObject.embed("http://localhost/disposisi/assets/upload_file_surat/" + pdfvw, ".pdfview", options);
+		PDFObject.embed(url + "/assets/upload_file_surat/" + pdfvw, ".pdfview", options);
 	})
 
 
@@ -257,7 +260,7 @@ $(function () {
 	$(".ubah_feedback").on('click', function () {
 		const id_terus = $(this).data('id_terus_srt_msk');
 		$.ajax({
-			url: 'http://localhost/disposisi/User/ubh_feedback_srtmsk_user',
+			url: url + '/User/ubh_feedback_srtmsk_user',
 			type: 'post',
 			data: {
 				id_terus: id_terus
@@ -273,7 +276,7 @@ $(function () {
 	$(".ubah_feedback1").on('click', function () {
 		const id_terus = $(this).data('id_terus_srt_msk');
 		$.ajax({
-			url: 'http://localhost/disposisi/User/ubh_feedback_srtmsk_user',
+			url: url + '/User/ubh_feedback_srtmsk_user',
 			type: 'post',
 			data: {
 				id_terus: id_terus
@@ -292,7 +295,7 @@ $(function () {
 		const id_surat_keluar = $(this).data('id_surat_keluar');
 
 		$.ajax({
-			url: 'http://localhost/disposisi/User/ubh_feedback_srtklr_user',
+			url: url + '/User/ubh_feedback_srtklr_user',
 			type: 'post',
 			data: {
 				id_terus_srt_keluar: id_terus_srt_keluar,
@@ -311,7 +314,7 @@ $(function () {
 		const id_terus_srt_keluar = $(this).data('id_terus_srt_klr');
 		const id_surat_keluar = $(this).data('id_surat_keluar');
 		$.ajax({
-			url: 'http://localhost/disposisi/Managemen_Surat/ubh_feedback_srtklr_useradmop',
+			url: url + '/Managemen_Surat/ubh_feedback_srtklr_useradmop',
 			type: 'post',
 			data: {
 				id_terus_srt_keluar: id_terus_srt_keluar,
@@ -391,6 +394,7 @@ $(function () {
 
 // list Penjabat
 $(function () {
+	const url = $("#page-top").data('url');
 	$('#tabl_jbtn').DataTable({
 		"pageLength": 10,
 		"serverSide": true,
@@ -398,7 +402,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/Project/elektronik_office/User_Managemen/penjabat/listpjbt',
+			url: url + '/User_Managemen/penjabat/listpjbt',
 			type: 'POST'
 		},
 	});
@@ -406,6 +410,7 @@ $(function () {
 
 // list adum data tabel
 $(function () {
+	const url = $("#page-top").data('url');
 	$('#tabl_adum').DataTable({
 		"pageLength": 10,
 		"serverSide": true,
@@ -413,7 +418,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/Project/elektronik_office/User_Managemen/Adum/listadum',
+			url: url + '/User_Managemen/Adum/listadum',
 			type: 'POST'
 		},
 	});
@@ -421,6 +426,7 @@ $(function () {
 
 // list user data tabel
 $(function () {
+	const url = $("#page-top").data('url');
 	$('#example').DataTable({
 		"pageLength": 10,
 		"serverSide": true,
@@ -428,7 +434,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/Project/elektronik_office/User_Managemen/index/listuser',
+			url: url + '/User_Managemen/index/listuser',
 			type: 'POST'
 		},
 	});
@@ -436,6 +442,7 @@ $(function () {
 
 //list wadir
 $(function () {
+	const url = $("#page-top").data('url');
 	$('#tabl_wadir').DataTable({
 		"pageLength": 10,
 		"serverSide": true,
@@ -443,7 +450,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/Project/elektronik_office/User_Managemen/listwadir/listwadir',
+			url: url + '/User_Managemen/listwadir/listwadir',
 			type: 'POST'
 		},
 	});
@@ -451,6 +458,7 @@ $(function () {
 
 //list sekretaris tabel
 $(function () {
+	const url = $("#page-top").data('url');
 	$('#tabl_sekre').DataTable({
 		"pageLength": 10,
 		"serverSide": true,
@@ -458,7 +466,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/Project/elektronik_office/User_Managemen/list_op/listoprator',
+			url: url + '/User_Managemen/list_op/listoprator',
 			type: 'POST'
 		},
 	});
@@ -466,6 +474,7 @@ $(function () {
 
 // list admin tabel
 $(function () {
+	const url = $("#page-top").data('url');
 	$('#listAdmin').DataTable({
 		"pageLength": 10,
 		"serverSide": true,
@@ -473,7 +482,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/Project/elektronik_office/Managemen_Admin/index/get_admin',
+			url: url + '/Managemen_Admin/index/get_admin',
 			type: 'post'
 		}
 	});
@@ -481,6 +490,7 @@ $(function () {
 
 // list direktur
 $(function () {
+	const url = $("#page-top").data('url');
 	$("#tabl_dirut").DataTable({
 		"pageLength": 10,
 		"serverSide": true,
@@ -488,7 +498,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/Project/elektronik_office/User_Managemen/listdirektur/listdirek',
+			url: url + '/User_Managemen/listdirektur/listdirek',
 			type: 'post'
 		},
 	});
@@ -496,6 +506,7 @@ $(function () {
 
 // list Admin Kepegawaiaan
 $(function () {
+	const url = $("#page-top").data('url');
 	$("#tabl_admn_kep").DataTable({
 		"pageLength": 10,
 		"serverSide": true,
@@ -503,7 +514,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/Project/elektronik_office/Managemen_Admin/admn_kep/listadmnkepeg',
+			url: url + '/Managemen_Admin/admn_kep/listadmnkepeg',
 			type: 'post'
 		},
 	});
@@ -511,6 +522,7 @@ $(function () {
 
 //list pegawai
 $(function () {
+	const url = $("#page-top").data('url');
 	$("#tabl_pegawai").DataTable({
 		"pageLength": 10,
 		"serverSide": true,
@@ -518,7 +530,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: 'http://localhost/Project/elektronik_office/User_Managemen/list_pegawai/data_pegawai',
+			url: url + '/User_Managemen/list_pegawai/data_pegawai',
 			type: 'post'
 		},
 	});
@@ -526,10 +538,11 @@ $(function () {
 
 // change status user NON aktiv
 $(document).on('click', '.sel2', function () {
+	const url = $("#page-top").data('url');
 	const status = 0;
 	const id = $(this).data('id');
 	$.ajax({
-		url: 'http://localhost/Project/elektronik_office/User_Managemen/ubah_isactiveUser',
+		url: url + '/User_Managemen/ubah_isactiveUser',
 		type: 'post',
 		data: {
 			id: id,
@@ -537,7 +550,7 @@ $(document).on('click', '.sel2', function () {
 		},
 		success: function (data) {
 			//unutk meridirect dengan Ajax
-			document.location.href = "http://localhost/Project/elektronik_office/User_Managemen";
+			document.location.href = url + "/User_Managemen";
 			// console.log(data);
 		}
 	});
@@ -545,10 +558,11 @@ $(document).on('click', '.sel2', function () {
 
 // change status user aktiv
 $(document).on('click', '.sel1', function () {
+	const url = $("#page-top").data('url');
 	const status = 1;
 	const id = $(this).data('id');;
 	$.ajax({
-		url: 'http://localhost/Project/elektronik_office/User_Managemen/ubah_isactiveUser',
+		url: url + '/User_Managemen/ubah_isactiveUser',
 		type: 'post',
 		data: {
 			id: id,
@@ -556,7 +570,7 @@ $(document).on('click', '.sel1', function () {
 		},
 		success: function (data) {
 			//unutk meridirect dengan Ajax
-			document.location.href = "http://localhost/Project/elektronik_office/User_Managemen";
+			document.location.href = url + "/User_Managemen";
 			// console.log(data);
 		}
 	});
@@ -564,6 +578,7 @@ $(document).on('click', '.sel1', function () {
 
 //add_user
 $(document).on('click', '#aad_user', function () {
+	const url = $("#page-top").data('url');
 	// $('#tbhuser').modal('show');
 	$("#label_Tambah").html("Tambah User");
 	$("#fullname").show();
@@ -572,12 +587,13 @@ $(document).on('click', '#aad_user', function () {
 	$(".modal-dialog").removeClass(" modal-sm");
 	$('#tbhuser').modal('show');
 	$('#id').hide();
-	$(".modal-body form").attr('action', 'http://localhost/Project/elektronik_office/User_Managemen/add_user');
+	$(".modal-body form").attr('action', url + '/User_Managemen/add_user');
 	$('#tbl_proses').html('Tambah');
 });
 
 // edit pass user
 $(document).on('click', '.edtpswd', function () {
+	const url = $("#page-top").data('url');
 	const id = $(this).data('id');
 	$("#label_Tambah").html("Edit Kata Sandi");
 	$("#fullname").hide();
@@ -586,17 +602,18 @@ $(document).on('click', '.edtpswd', function () {
 	$(".modal-dialog").addClass("modal-dialog modal-sm");
 	$('#tbhuser').modal('show');
 	$('#id').val(id);
-	$(".modal-body form").attr('action', 'http://localhost/Project/elektronik_office/User_Managemen/ubahaPswd');
+	$(".modal-body form").attr('action', url + '/User_Managemen/ubahaPswd');
 	$('#tbl_proses').html('Edit');
 });
 
 // tambah admin
 $(function () {
+	const url = $("#page-top").data('url');
 	$("#aad_admn").on('click', function () {
 		$("#adminModal").modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
+				url: url + '/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -619,11 +636,12 @@ $(function () {
 
 //tambah admin kepegawaiaan
 $(function () {
+	const url = $("#page-top").data('url');
 	$("#tbhadmkep").on('click', function () {
 		$("#modal_admn_kep").modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
+				url: url + '/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -647,11 +665,12 @@ $(function () {
 
 // tambah Wadir
 $(function () {
+	const url = $("#page-top").data('url');
 	$("#tbhwadir").on('click', function () {
 		$("#modal_wadir").modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
+				url: url + '/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -671,7 +690,7 @@ $(function () {
 
 		$('#sel2').select2({
 			ajax: {
-				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_allwadir_combobox',
+				url: url + '/User_Managemen/get_allwadir_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -693,13 +712,14 @@ $(function () {
 
 // tambah direktur
 $(function () {
+	const url = $("#page-top").data('url');
 	$("#tbhdirut").on('click', function () {
 		$("#modal_dirut").modal('show');
-		$(".modal-body form").attr('action', 'http://localhost/Project/elektronik_office/User_Managemen/addDirektur');
+		$(".modal-body form").attr('action', url + '/User_Managemen/addDirektur');
 		$(".modal-body form").attr('method', 'post');
 		$("#sel1").select2({
 			ajax: {
-				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
+				url: url + '/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -721,11 +741,12 @@ $(function () {
 
 //tambah sekretaris
 $(function () {
+	const url = $("#page-top").data('url');
 	$("#tbhsekre").on('click', function () {
 		$('#modal_skre').modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
+				url: url + '/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				// delay: 250,
@@ -748,11 +769,12 @@ $(function () {
 
 //tambah adum
 $(function () {
+	const url = $("#page-top").data('url');
 	$("#tbhadum").on('click', function () {
 		$('#modal_adum').modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
+				url: url + '/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -774,11 +796,12 @@ $(function () {
 
 //tambah pegawai
 $(function () {
+	const url = $("#page-top").data('url');
 	$("#tbhpegawai").on('click', function () {
 		$('#modal_pegawai').modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alluser_combobox',
+				url: url + '/User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -800,7 +823,7 @@ $(function () {
 			// placeholder: "Pilih Unit Kerja",
 			// allowClear: true,
 			ajax: {
-				url: 'http://localhost/Project/elektronik_office/User_Managemen/get_allUnit_kerja',
+				url: url + '/User_Managemen/get_allUnit_kerja',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -820,7 +843,7 @@ $(function () {
 		$("#sel3").on('change', function () {
 			$("#sel4").select2({
 				ajax: {
-					url: 'http://localhost/Project/elektronik_office/User_Managemen/get_alljabatan',
+					url: url + '/User_Managemen/get_alljabatan',
 					method: 'post',
 					dataType: 'json',
 					delay: 250,
