@@ -19,37 +19,37 @@
                         if ($pgn->role_id == 1 && $pgn->status == 1) {
                           $role = "Admin";
                           echo  '<div class="col-lg-6 mt-2">
-                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-success btn-user btn-block">' . $role . '</a>
+                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-primary btn-user btn-block">' . $role . '</a>
                               </div>';
                         } elseif ($pgn->role_id == 2 && $pgn->status == 1) {
                           $role = "Sekretaris";
                           echo  '<div class="col-lg-6 mt-2">
-                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-success btn-user btn-block">' . $role . '</a>
+                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-primary btn-user btn-block">' . $role . '</a>
                               </div>';
                         } elseif ($pgn->role_id == 3 && $pgn->status == 1) {
                           $role = "Pegawai ";
                           echo  '<div class="col-lg-6 mt-2">
-                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-success btn-user btn-block">' . $role . '</a>
+                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-primary btn-user btn-block">' . $role . '</a>
                               </div>';
                         } elseif ($pgn->role_id == 4 && $pgn->status == 1) {
                           $role = "Direktur";
                           echo  '<div class="col-lg-6 mt-2">
-                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-success btn-user btn-block">' . $role . '</a>
+                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-primary btn-user btn-block">' . $role . '</a>
                               </div>';
                         } elseif ($pgn->role_id == 5 && $pgn->status == 1) {
                           $role = jabatanget($pgn->id_penguna);
                           echo  '<div class="col-lg-6 mt-2">
-                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-success btn-user btn-block">' . $role . '</a>
+                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-primary btn-user btn-block">' . $role . '</a>
                               </div>';
                         } elseif ($pgn->role_id == 6 && $pgn->status == 1) {
                           $role = "Adum";
                           echo  '<div class="col-lg-6 mt-2">
-                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-success btn-user btn-block">' . $role . '</a>
+                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-primary btn-user btn-block">' . $role . '</a>
                               </div>';
                         } elseif ($pgn->role_id == 7 && $pgn->status == 1) {
                           $role = "Admin Kepegawaian";
                           echo  '<div class="col-lg-6 mt-2">
-                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-success btn-user btn-block">' . $role . '</a>
+                                <a href="' . base_url() . 'auth/pilih_Role/' . $pgn->role_id . '" class="btn btn-primary btn-user btn-block">' . $role . '</a>
                               </div>';
                         }
                       }
@@ -85,7 +85,7 @@
                           <label class="custom-control-label" for="customCheck">Remember Me</label>
                         </div>
                       </div>
-                      <button type="submit" class="btn btn-success btn-user btn-block">
+                      <button type="submit" class="btn btn-primary btn-user btn-block">
                         Login
                       </button>
                     </form>

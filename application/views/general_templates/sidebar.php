@@ -2,48 +2,48 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon">
-          <img class="img-profile rounded-circle" width="50" height="45" src="<?= base_url()?>assets/images/pkr.png">
+          <img class="img-profile rounded-circle" width="50" height="45" src="<?= base_url() ?>assets/images/pkr.png">
         </div>
         <div class="sidebar-brand-text mx-3">Elektronik Office
         </div>
       </a>
       <hr class="sidebar-divider">
       <!-- untuk menampilkan dashboard sesuai role id -->
-        <?php
-            if($this->session->userdata('role_id') == 1){?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url()?>Admin">
-                <span>Dashboard</span></a>
-            </li>
-        <?php } elseif($this->session->userdata('role_id') == 2) {?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url()?>Operator">
-                <span>Dashboard</span></a>
-            </li>
-       <?php } else{?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url()?>User">
-                <span>Dashboard</span></a>
-            </li> 
-       <?php } ?>
+      <?php
+      if ($this->session->userdata('role_id') == 1) { ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url() ?>Admin">
+            <span>Dashboard</span></a>
+        </li>
+      <?php } elseif ($this->session->userdata('role_id') == 2) { ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url() ?>Operator">
+            <span>Dashboard</span></a>
+        </li>
+      <?php } else { ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url() ?>User">
+            <span>Dashboard</span></a>
+        </li>
+      <?php } ?>
       <hr class="sidebar-divider">
-        <!-- menampilkan menu dinamis dari asno_helper -->
-     
-        <?= Menu_dinamis()?>
-       
-      <li class="nav-item">  
+      <!-- menampilkan menu dinamis dari asno_helper -->
+
+      <?= Menu_dinamis() ?>
+
+      <li class="nav-item">
         <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
         </a>
       </li>
 
-     
+
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -54,6 +54,3 @@
 
     </ul>
     <!-- End of Sidebar -->
-
-
-    
