@@ -864,3 +864,39 @@ $(function () {
 		});
 	});
 });
+
+// get jadwal absensi
+jadwal_absensi();
+
+function jadwal_absensi() {
+	const url = $("#page-top").data('url');
+	$.ajax({
+		url: url + "/Operator/index/jadaw_absensi",
+		method: 'POST',
+		dataType: 'json',
+		success: function (data) {
+			const masuk = data.jam_masuk.slice(0, 5);
+			const pulang = data.jam_keluar.slice(0, 5);
+			$('#md').html("Absensi Masuk : " + masuk + ",   Absensi Pulang " + pulang);
+			$('#md').css('font-size', '12px');
+			$('#md').append(function () {
+				$('#md').addClass("text-primary");
+			});
+			$('#tgl').css('font-size', '12px');
+		},
+	});
+};
+
+// jam 
+setTimeout(jam_digital(), 1000);
+
+function jam_digital() {
+	const d = new Date();
+	setTimeout("jam_digital()", 1000);
+	const h = d.getHours();
+	const m = d.getMinutes();
+	const s = d.getSeconds();
+	const jam = h + ':' + m + ':' + s;
+	$('#jam').html(jam);
+	$('#jam').css('font-size', '12px');
+}

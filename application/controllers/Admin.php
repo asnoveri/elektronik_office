@@ -24,7 +24,7 @@ class Admin extends CI_Controller
 
     public function profil_admin()
     {
-        $judul = 'Profil Admin';
+        $judul = 'Profil ';
         $halaman = 'admin/profil';
         $data = "";
         $this->template->TemplateGen($judul, $halaman, $data);
