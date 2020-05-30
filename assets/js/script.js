@@ -865,27 +865,6 @@ $(function () {
 	});
 });
 
-// get jadwal absensi
-jadwal_absensi();
-
-function jadwal_absensi() {
-	const url = $("#page-top").data('url');
-	$.ajax({
-		url: url + "/Operator/index/jadaw_absensi",
-		method: 'POST',
-		dataType: 'json',
-		success: function (data) {
-			const masuk = data.jam_masuk.slice(0, 5);
-			const pulang = data.jam_keluar.slice(0, 5);
-			$('#md').html("Absensi Masuk : " + masuk + ",   Absensi Pulang " + pulang);
-			$('#md').css('font-size', '12px');
-			$('#md').append(function () {
-				$('#md').addClass("text-primary");
-			});
-			$('#tgl').css('font-size', '12px');
-		},
-	});
-};
 
 // jam 
 setTimeout(jam_digital(), 1000);
@@ -899,4 +878,45 @@ function jam_digital() {
 	const jam = h + ':' + m + ':' + s;
 	$('#jam').html(jam);
 	$('#jam').css('font-size', '12px');
+	$('#tgl').css('font-size', '12px');
 }
+
+
+
+$(function () {
+	// input absensi pulang
+	// modal absensi masuk
+	$("#absen-masuk").on("click", function () {
+		$("#modal_absn").modal({
+			backdrop: "static",
+			keyboard: true,
+		});
+	});
+
+	$("#btn-kirim").click(function () {
+		const url = $("#page-top").data('url');
+		const ket_keberadaan = $("#sel-keberadaan").val();
+		const id_jdwlabnsi = $("#id_jadwal").val();
+		const d = new Date();
+		const h = d.getHours();
+		const m = d.getMinutes();
+		const s = d.getSeconds();
+		const jam = h + ':' + m + ':' + s;
+		$.ajax({
+			url: url + '/Operator/index/add_absensi',
+			data: {
+				ket_keberadaan: ket_keberadaan,
+				id_jdwlabnsi: id_jdwlabnsi,
+				absensi_masuk: jam,
+			},
+			type: 'POST',
+			dataType: 'JSON',
+			success: function (data, status) {
+				console.log(data, status);
+				if (status == 'success') {
+					document.location.href = url + "/Operator";
+				}
+			},
+		});
+	});
+})

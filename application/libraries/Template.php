@@ -30,6 +30,7 @@ class template
         // }
         $data['judul'] = $judul;
         $data['data_user'] = $this->CI->user_Mod->get_data_user($this->CI->session->userdata('role_id'), $this->CI->session->userdata('id'));
+        $data['tgl'] = date("Y-m-d");
         $this->CI->load->view('general_templates/header', $data);
         $this->CI->load->view('general_templates/sidebar');
         $this->CI->load->view('general_templates/topbar', $data);

@@ -8,14 +8,22 @@
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
           <!-- <h2>Disposisi Poltekkes Riau</h2> -->
           <!-- Sidebar Toggle (Topbar) -->
+
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
 
+
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-            <!-- Nav Item - Alerts -->
+            <!-- Nav Time date -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <p class="font-weight-light font-italic text-secondary" id="tgl"><?= longdate_indo($tgl); ?> <span class="badge badge-secondary" id="jam"></span></p>
+              </a>
+            </li>
 
+            <!-- Nav Item - Alerts -->
 
             <!-- Nav Item - Messages -->
 
