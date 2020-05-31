@@ -16,19 +16,32 @@ class Absensi_Mod extends CI_Model
     public function cek_absensiMasuk($id_jdwlabnsi, $id, $tgl)
     {
         $this->db->where('id_jdwlabnsi', $id_jdwlabnsi);
+        $this->db->where('tanggal', $tgl);
         $this->db->where('id', $id);
         return $this->db->get('absensi')->row();
-
-        // if ($this->db->get('absensi')->num_rows() > 0) {
-        //     return true;
-        // } else {
-        //     return false;
-        // }
     }
 
     public function add_absensi($data)
     {
         $this->db->insert('absensi', $data);
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function cek_absensikeluar($id, $tgl)
+    {
+        $this->db->where('tanggal', $tgl);
+        $this->db->where('id', $id);
+        return $this->db->get('absensi')->row();
+    }
+
+    public function update_absensi($id, $data)
+    {
+        $this->db->where('id_absensi', $id);
+        $this->db->update('absensi', $data);
         if ($this->db->affected_rows() > 0) {
             return true;
         } else {

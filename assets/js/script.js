@@ -19,7 +19,7 @@ $(function () {
 		$("#label_nm").html('Edit Menu');
 		$("#tbl_proses").html("EDIT Menu");
 		//untuk mengubah form action ddan methode modal 
-		$(".modal-body form").attr('action', url + '/Menu_Managemen/edit_menu');
+		$(".modal-body form").attr('action', url + 'Menu_Managemen/edit_menu');
 
 		//unutuk menampung id yang dikirimanan dari ahref data
 		const id_menu = $(this).data('id_men');
@@ -65,11 +65,11 @@ $(function () {
 	$("a[id='edit_sb_mn']").on('click', function () {
 		$("#lbl_sb_mn").html("Edit Sub Menu");
 		$("#btn_sb_mn").html("Edit Sub Menu");
-		$(".modal-body form").attr('action', url + '/Menu_Managemen/edit_submenu');
+		$(".modal-body form").attr('action', url + 'Menu_Managemen/edit_submenu');
 		const id_submenu = $(this).data('id_submn');
 		console.log(id_submenu);
 		$.ajax({
-			url: url + '/Menu_Managemen/get_submenu_byid',
+			url: url + 'Menu_Managemen/get_submenu_byid',
 			data: {
 				id_submenu: id_submenu
 			},
@@ -92,7 +92,7 @@ $(function () {
 		// const ctrl_menu menampung data value berdasarkan parent menu yang dipilih
 		const ctrl_menu = $("#id_menu").val();
 		$.ajax({
-			url: url + '/Menu_Managemen/get_menu_byid',
+			url: url + 'Menu_Managemen/get_menu_byid',
 			data: {
 				id_menu: ctrl_menu
 			},
@@ -129,7 +129,7 @@ $(function () {
 		const posisi_menu = $("#posisi_menu").val();
 		const id_menu = $("#id_menu").val();
 		$.ajax({
-			url: url + '/Menu_Managemen/cek_posisi_menu',
+			url: url + 'Menu_Managemen/cek_posisi_menu',
 			data: {
 				posisi_menu: posisi_menu,
 				id_menu: id_menu
@@ -158,7 +158,7 @@ $(function () {
 		const posisi_sub = $("#posisi_sub").val();
 		const ctrl_menu = $("#id_menu").val();
 		$.ajax({
-			url: url + '/Menu_Managemen/cek_posisi_sub_menu',
+			url: url + 'Menu_Managemen/cek_posisi_sub_menu',
 			data: {
 				posisi_sub: posisi_sub,
 				id_menu: ctrl_menu
@@ -188,7 +188,7 @@ $(function () {
 		const id_menu = $(this).data('menu');
 
 		$.ajax({
-			url: url + '/Menu_Managemen/ubah_access',
+			url: url + 'Menu_Managemen/ubah_access',
 			type: 'post',
 			data: {
 				role_id: role_id,
@@ -196,7 +196,7 @@ $(function () {
 			},
 			success: function () {
 				//unutk meridirect dengan Ajax
-				document.location.href = url + "/Menu_Managemen/cek_akses_menu/" + role_id;
+				document.location.href = url + "Menu_Managemen/cek_akses_menu/" + role_id;
 
 			}
 		});
@@ -215,14 +215,14 @@ $(function () {
 		const idgambar = $("#idgambar").val();
 
 		$.ajax({
-			url: url + '/User_Managemen/do_edit_uploadimage',
+			url: url + 'User_Managemen/do_edit_uploadimage',
 			data: form_data,
 			contentType: false,
 			processData: false,
 			type: 'post',
 			success: function (data) {
 				//unutk meridirect dengan Ajax
-				document.location.href = url + "/User_Managemen/edit_user/" + idgambar;
+				document.location.href = url + "User_Managemen/edit_user/" + idgambar;
 				// console.log(data);
 			}
 		});
@@ -237,7 +237,7 @@ $(function () {
 			$(".slt").show().attr('name', 'di_teruskan_ke');
 		} else {
 			console.log("not");
-			document.location.href = url + "/Managemen_Surat";
+			document.location.href = url + "Managemen_Surat";
 		}
 	});
 
@@ -252,7 +252,7 @@ $(function () {
 				page: '4'
 			}
 		};
-		PDFObject.embed(url + "/assets/upload_file_surat/" + pdfvw, ".pdfview", options);
+		PDFObject.embed(url + "assets/upload_file_surat/" + pdfvw, ".pdfview", options);
 	})
 
 
@@ -260,7 +260,7 @@ $(function () {
 	$(".ubah_feedback").on('click', function () {
 		const id_terus = $(this).data('id_terus_srt_msk');
 		$.ajax({
-			url: url + '/User/ubh_feedback_srtmsk_user',
+			url: url + 'User/ubh_feedback_srtmsk_user',
 			type: 'post',
 			data: {
 				id_terus: id_terus
@@ -276,7 +276,7 @@ $(function () {
 	$(".ubah_feedback1").on('click', function () {
 		const id_terus = $(this).data('id_terus_srt_msk');
 		$.ajax({
-			url: url + '/User/ubh_feedback_srtmsk_user',
+			url: url + 'User/ubh_feedback_srtmsk_user',
 			type: 'post',
 			data: {
 				id_terus: id_terus
@@ -295,7 +295,7 @@ $(function () {
 		const id_surat_keluar = $(this).data('id_surat_keluar');
 
 		$.ajax({
-			url: url + '/User/ubh_feedback_srtklr_user',
+			url: url + 'User/ubh_feedback_srtklr_user',
 			type: 'post',
 			data: {
 				id_terus_srt_keluar: id_terus_srt_keluar,
@@ -314,7 +314,7 @@ $(function () {
 		const id_terus_srt_keluar = $(this).data('id_terus_srt_klr');
 		const id_surat_keluar = $(this).data('id_surat_keluar');
 		$.ajax({
-			url: url + '/Managemen_Surat/ubh_feedback_srtklr_useradmop',
+			url: url + 'Managemen_Surat/ubh_feedback_srtklr_useradmop',
 			type: 'post',
 			data: {
 				id_terus_srt_keluar: id_terus_srt_keluar,
@@ -402,7 +402,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: url + '/User_Managemen/penjabat/listpjbt',
+			url: url + 'User_Managemen/penjabat/listpjbt',
 			type: 'POST'
 		},
 	});
@@ -418,7 +418,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: url + '/User_Managemen/Adum/listadum',
+			url: url + 'User_Managemen/Adum/listadum',
 			type: 'POST'
 		},
 	});
@@ -434,7 +434,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: url + '/User_Managemen/index/listuser',
+			url: url + 'User_Managemen/index/listuser',
 			type: 'POST'
 		},
 	});
@@ -450,7 +450,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: url + '/User_Managemen/listwadir/listwadir',
+			url: url + 'User_Managemen/listwadir/listwadir',
 			type: 'POST'
 		},
 	});
@@ -466,7 +466,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: url + '/User_Managemen/list_op/listoprator',
+			url: url + 'User_Managemen/list_op/listoprator',
 			type: 'POST'
 		},
 	});
@@ -482,7 +482,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: url + '/Managemen_Admin/index/get_admin',
+			url: url + 'Managemen_Admin/index/get_admin',
 			type: 'post'
 		}
 	});
@@ -498,7 +498,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: url + '/User_Managemen/listdirektur/listdirek',
+			url: url + 'User_Managemen/listdirektur/listdirek',
 			type: 'post'
 		},
 	});
@@ -514,7 +514,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: url + '/Managemen_Admin/admn_kep/listadmnkepeg',
+			url: url + 'Managemen_Admin/admn_kep/listadmnkepeg',
 			type: 'post'
 		},
 	});
@@ -530,7 +530,7 @@ $(function () {
 			[0, "asc"]
 		],
 		"ajax": {
-			url: url + '/User_Managemen/list_pegawai/data_pegawai',
+			url: url + 'User_Managemen/list_pegawai/data_pegawai',
 			type: 'post'
 		},
 	});
@@ -542,7 +542,7 @@ $(document).on('click', '.sel2', function () {
 	const status = 0;
 	const id = $(this).data('id');
 	$.ajax({
-		url: url + '/User_Managemen/ubah_isactiveUser',
+		url: url + 'User_Managemen/ubah_isactiveUser',
 		type: 'post',
 		data: {
 			id: id,
@@ -562,7 +562,7 @@ $(document).on('click', '.sel1', function () {
 	const status = 1;
 	const id = $(this).data('id');;
 	$.ajax({
-		url: url + '/User_Managemen/ubah_isactiveUser',
+		url: url + 'User_Managemen/ubah_isactiveUser',
 		type: 'post',
 		data: {
 			id: id,
@@ -587,7 +587,7 @@ $(document).on('click', '#aad_user', function () {
 	$(".modal-dialog").removeClass(" modal-sm");
 	$('#tbhuser').modal('show');
 	$('#id').hide();
-	$(".modal-body form").attr('action', url + '/User_Managemen/add_user');
+	$(".modal-body form").attr('action', url + 'User_Managemen/add_user');
 	$('#tbl_proses').html('Tambah');
 });
 
@@ -602,7 +602,7 @@ $(document).on('click', '.edtpswd', function () {
 	$(".modal-dialog").addClass("modal-dialog modal-sm");
 	$('#tbhuser').modal('show');
 	$('#id').val(id);
-	$(".modal-body form").attr('action', url + '/User_Managemen/ubahaPswd');
+	$(".modal-body form").attr('action', url + 'User_Managemen/ubahaPswd');
 	$('#tbl_proses').html('Edit');
 });
 
@@ -613,7 +613,7 @@ $(function () {
 		$("#adminModal").modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: url + '/User_Managemen/get_alluser_combobox',
+				url: url + 'User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -641,7 +641,7 @@ $(function () {
 		$("#modal_admn_kep").modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: url + '/User_Managemen/get_alluser_combobox',
+				url: url + 'User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -670,7 +670,7 @@ $(function () {
 		$("#modal_wadir").modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: url + '/User_Managemen/get_alluser_combobox',
+				url: url + 'User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -690,7 +690,7 @@ $(function () {
 
 		$('#sel2').select2({
 			ajax: {
-				url: url + '/User_Managemen/get_allwadir_combobox',
+				url: url + 'User_Managemen/get_allwadir_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -715,11 +715,11 @@ $(function () {
 	const url = $("#page-top").data('url');
 	$("#tbhdirut").on('click', function () {
 		$("#modal_dirut").modal('show');
-		$(".modal-body form").attr('action', url + '/User_Managemen/addDirektur');
+		$(".modal-body form").attr('action', url + 'User_Managemen/addDirektur');
 		$(".modal-body form").attr('method', 'post');
 		$("#sel1").select2({
 			ajax: {
-				url: url + '/User_Managemen/get_alluser_combobox',
+				url: url + 'User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -746,7 +746,7 @@ $(function () {
 		$('#modal_skre').modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: url + '/User_Managemen/get_alluser_combobox',
+				url: url + 'User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				// delay: 250,
@@ -774,7 +774,7 @@ $(function () {
 		$('#modal_adum').modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: url + '/User_Managemen/get_alluser_combobox',
+				url: url + 'User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -801,7 +801,7 @@ $(function () {
 		$('#modal_pegawai').modal('show');
 		$('#sel1').select2({
 			ajax: {
-				url: url + '/User_Managemen/get_alluser_combobox',
+				url: url + 'User_Managemen/get_alluser_combobox',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -823,7 +823,7 @@ $(function () {
 			// placeholder: "Pilih Unit Kerja",
 			// allowClear: true,
 			ajax: {
-				url: url + '/User_Managemen/get_allUnit_kerja',
+				url: url + 'User_Managemen/get_allUnit_kerja',
 				method: 'post',
 				dataType: 'json',
 				delay: 250,
@@ -843,7 +843,7 @@ $(function () {
 		$("#sel3").on('change', function () {
 			$("#sel4").select2({
 				ajax: {
-					url: url + '/User_Managemen/get_alljabatan',
+					url: url + 'User_Managemen/get_alljabatan',
 					method: 'post',
 					dataType: 'json',
 					delay: 250,
@@ -884,15 +884,17 @@ function jam_digital() {
 
 
 $(function () {
-	// input absensi pulang
+
 	// modal absensi masuk
-	$("#absen-masuk").on("click", function () {
+	$("#absen-masuk").on("click", function (e) {
+		e.preventDefault();
 		$("#modal_absn").modal({
 			backdrop: "static",
 			keyboard: true,
 		});
 	});
 
+	// input absensi masuk
 	$("#btn-kirim").click(function () {
 		const url = $("#page-top").data('url');
 		const ket_keberadaan = $("#sel-keberadaan").val();
@@ -903,7 +905,7 @@ $(function () {
 		const s = d.getSeconds();
 		const jam = h + ':' + m + ':' + s;
 		$.ajax({
-			url: url + '/Operator/index/add_absensi',
+			url: url + 'Operator/index/add_absensi',
 			data: {
 				ket_keberadaan: ket_keberadaan,
 				id_jdwlabnsi: id_jdwlabnsi,
@@ -912,11 +914,50 @@ $(function () {
 			type: 'POST',
 			dataType: 'JSON',
 			success: function (data, status) {
-				console.log(data, status);
 				if (status == 'success') {
-					document.location.href = url + "/Operator";
+					$("#pesan-eror").addClass("alert alert-primary alert-dismissible");
+					$("#pesan-eror").html(data);
+					$("#pesan-eror").fadeIn(function () {
+						$("#pesan-eror").fadeOut(8000);
+					});
+
 				}
 			},
 		});
+	});
+
+	// input absensi pulang
+	$("#absen-pulang").click(function (e) {
+		e.preventDefault();
+		const url = $("#page-top").data('url');
+		const jk = $(".jk").data('id');
+		const d = new Date();
+		const h = d.getHours();
+		const m = d.getMinutes();
+		const s = d.getSeconds();
+		const jam = h + ':' + m + ':' + s;
+		if (jam >= jk) {
+			$.ajax({
+				url: url + 'Operator/index/add_absn_plng',
+				data: {
+					absen_keluar: jam,
+				},
+				type: 'post',
+				dataType: 'JSON',
+				success: function (data) {
+					$("#pesan-eror").addClass("alert alert-info alert-dismissible");
+					$("#pesan-eror").html(data);
+					$("#pesan-eror").fadeIn(function () {
+						$("#pesan-eror").fadeOut(8000);
+					});
+				}
+			});
+		} else {
+			$("#pesan-eror").addClass("alert alert-info alert-dismissible");
+			$("#pesan-eror").html("Belum Bisa Mengambil Absen Pulang");
+			$("#pesan-eror").fadeIn(function () {
+				$("#pesan-eror").fadeOut(8000);
+			});
+		}
 	});
 })

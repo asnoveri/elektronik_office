@@ -22,11 +22,7 @@ class Operator extends CI_Controller
             $ket_keberadaan = $this->input->post('ket_keberadaan', true);
             $cek_absen = $this->absensi_Mod->cek_absensiMasuk($id_jdwlabnsi, $id, $tgl);
             if ($cek_absen) {
-                $this->session->set_flashdata('pesanaddop', '<div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    Anda Sudah Mengambil Absen Masuk
-                </div>');
-                echo json_encode($cek_absen);
+                $pesan = "Anda Sudah Mengambil Absen Masuk";
             } else {
                 $data = [
                     'id' => $id,
@@ -37,12 +33,30 @@ class Operator extends CI_Controller
                 ];
                 $data = $this->absensi_Mod->add_absensi($data);
                 if ($data == true) {
-                    echo json_encode(true);
+                    $pesan = "Absen Masuk Anda Sudah Terkirim";
                 }
             }
+            echo json_encode($pesan);
+            die();
+        } elseif ($param == 'add_absn_plng') {
+            $id = $this->session->userdata('id');
+            $tgl = date("Y-m-d");
+            $absen_keluar = $this->input->post('absen_keluar', true);
+            $cek_absenKel = $this->absensi_Mod->cek_absensikeluar($id, $tgl);
+            if ($cek_absenKel->absensi_keluar == "00:00:00") {
+                $id_absensi = $cek_absenKel->id_absensi;
+                $data = [
+                    'absensi_keluar' => $absen_keluar
+                ];
+                if ($this->absensi_Mod->update_absensi($id_absensi, $data)) {
+                    $pesan = "Absen Pulang Anda Sudah Terkirim ";
+                }
+            } else {
+                $pesan = "Anda Sudah Mengambil Absen Pulang";
+            }
+            echo json_encode($pesan);
             die();
         } else {
-
             $judul = 'Dashboard';
             $halaman = 'operator/index';
             $data['jadwal_absen'] = $this->absensi_Mod->get_jadwal_absensi();

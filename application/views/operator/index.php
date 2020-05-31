@@ -14,7 +14,10 @@
          <div class="card shadow mb-4">
            <div class="card-header py-3">
              <h6 class="m-0 font-weight-bold text-secondary">Absensi</h6>
-             <?= $this->session->flashdata('pesanaddop'); ?>
+             <!-- <?= $this->session->flashdata('pesanaddop'); ?> -->
+             <div id="pesan-eror" style="display: none;">
+               <button type="button" class="close" data-dismiss="alert">&times;</button>
+             </div>
            </div>
            <div class="card-body">
              <div class="text-center">
@@ -45,7 +48,7 @@
                  <p><span class="badge badge-secondary"><?= $jadwal_absen->jam_masuk; ?></span></p>
                </div>
                <div class="col-sm-6 text-center mt-2">
-                 <p><span class="badge badge-secondary"><?= $jadwal_absen->jam_keluar; ?></span></p>
+                 <p><span class="badge badge-secondary jk" data-id="<?= $jadwal_absen->jam_keluar; ?>"><?= $jadwal_absen->jam_keluar; ?></span></p>
                </div>
              </div>
            </div>
