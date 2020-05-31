@@ -234,4 +234,3 @@ class Managemen_Admin extends CI_Controller {
             }
     }
 }
-?>

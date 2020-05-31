@@ -25,9 +25,29 @@
           <a class="nav-link" href="<?= base_url() ?>Operator">
             <span>Dashboard</span></a>
         </li>
-      <?php } else { ?>
+      <?php } elseif ($this->session->userdata('role_id') == 3) { ?>
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url() ?>User">
+            <span>Dashboard</span></a>
+        </li>
+      <?php } elseif ($this->session->userdata('role_id') == 4) { ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url() ?>Direktur">
+            <span>Dashboard</span></a>
+        </li>
+      <?php } elseif ($this->session->userdata('role_id') == 5) { ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url() ?>Wadir">
+            <span>Dashboard</span></a>
+        </li>
+      <?php } elseif ($this->session->userdata('role_id') == 6) { ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url() ?>Adum">
+            <span>Dashboard</span></a>
+        </li>
+      <?php } elseif ($this->session->userdata('role_id') == 7) { ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url() ?>Admin_kepeg">
             <span>Dashboard</span></a>
         </li>
       <?php } ?>

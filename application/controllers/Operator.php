@@ -8,6 +8,7 @@ class Operator extends CI_Controller
     {
         parent::__construct();
         $this->load->model("absensi_Mod");
+        $this->load->model("login_Mod");
         date_default_timezone_set('Asia/Jakarta');
         is_login();
     }
@@ -31,10 +32,19 @@ class Operator extends CI_Controller
                     'ket_keberadaan' => $ket_keberadaan,
                     'id_jdwlabnsi' => $id_jdwlabnsi
                 ];
-                $data = $this->absensi_Mod->add_absensi($data);
-                if ($data == true) {
+                if ($this->absensi_Mod->add_absensi($data)) {
                     $pesan = "Absen Masuk Anda Sudah Terkirim";
                 }
+                $log = [
+                    'tanggal' => time(),
+                    'aksi' => "Absensi",
+                    'Keterangan' => "Ambil Absen Masuk",
+                    'ip' => $this->input->ip_address(),
+                    'tipe_login' => $this->session->userdata('role_id'),
+                    'id_user' => $this->session->userdata('id'),
+                    'status' => 1
+                ];
+                $this->login_Mod->addlog($log);
             }
             echo json_encode($pesan);
             die();
@@ -51,6 +61,16 @@ class Operator extends CI_Controller
                 if ($this->absensi_Mod->update_absensi($id_absensi, $data)) {
                     $pesan = "Absen Pulang Anda Sudah Terkirim ";
                 }
+                $log = [
+                    'tanggal' => time(),
+                    'aksi' => "Absensi",
+                    'Keterangan' => "Ambil Absen Pulang",
+                    'ip' => $this->input->ip_address(),
+                    'tipe_login' => $this->session->userdata('role_id'),
+                    'id_user' => $this->session->userdata('id'),
+                    'status' => 1
+                ];
+                $this->login_Mod->addlog($log);
             } else {
                 $pesan = "Anda Sudah Mengambil Absen Pulang";
             }

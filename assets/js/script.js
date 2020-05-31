@@ -866,7 +866,7 @@ $(function () {
 });
 
 
-// jam 
+// jam digit
 setTimeout(jam_digital(), 1000);
 
 function jam_digital() {
@@ -881,7 +881,26 @@ function jam_digital() {
 	$('#tgl').css('font-size', '12px');
 }
 
+//tampil info keberadaan dashboar admin kepegawaiaan
 
+tampil_ikeb();
+
+function tampil_ikeb() {
+	const url = $("#page-top").data('url');
+	setTimeout("tampil_ikeb()", 2000);
+	$.ajax({
+		url: url + "Admin_kepeg/index/get_keb",
+		method: 'post',
+		dataType: 'json',
+		success: function (data, status) {
+			$("#wfh").html(data.wfh);
+			$("#pkt").html(data.pkt);
+			$("#izn").html(data.izn);
+			$("#jml_peg").html(data.jml_peg);
+			console.log(data);
+		},
+	});
+}
 
 $(function () {
 
@@ -918,7 +937,7 @@ $(function () {
 					$("#pesan-eror").addClass("alert alert-primary alert-dismissible");
 					$("#pesan-eror").html(data);
 					$("#pesan-eror").fadeIn(function () {
-						$("#pesan-eror").fadeOut(8000);
+						$("#pesan-eror").fadeOut(5000);
 					});
 
 				}
@@ -948,7 +967,7 @@ $(function () {
 					$("#pesan-eror").addClass("alert alert-info alert-dismissible");
 					$("#pesan-eror").html(data);
 					$("#pesan-eror").fadeIn(function () {
-						$("#pesan-eror").fadeOut(8000);
+						$("#pesan-eror").fadeOut(5000);
 					});
 				}
 			});
@@ -956,8 +975,25 @@ $(function () {
 			$("#pesan-eror").addClass("alert alert-info alert-dismissible");
 			$("#pesan-eror").html("Belum Bisa Mengambil Absen Pulang");
 			$("#pesan-eror").fadeIn(function () {
-				$("#pesan-eror").fadeOut(8000);
+				$("#pesan-eror").fadeOut(5000);
 			});
 		}
 	});
+
 })
+
+// list tabel absensi
+$(function () {
+	const url = $("#page-top").data('url');
+	$("#data_absensi").DataTable({
+		"pageLength": 10,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		"ajax": {
+			url: url + 'Admin_kepeg/index/list_absensi',
+			type: 'post'
+		},
+	});
+});
