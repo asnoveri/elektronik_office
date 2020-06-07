@@ -38,7 +38,7 @@
               <th>Nama Controllers</th>
               <th>Status</th>
               <th>Posisi Menu</th>
-              <th width="34.9%">Action</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>

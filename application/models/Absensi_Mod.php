@@ -77,20 +77,80 @@ class Absensi_Mod extends CI_Model
     {
         $tgl = date("Y-m-d");
         $this->db->order_by($order, $dir);
-        $this->db->order_by('fullname', 'asc');
-        $this->db->like('fullname', $search);
-        $this->db->or_like('tanggal', $search);
-        $this->db->or_like('ket_keberadaan', $search);
+        $this->db->like('ket_keberadaan', $search);
         $this->db->limit($length, $start);
+        $this->db->select("*");
+        $this->db->from('absensi');
+        $this->db->join('user', 'user.id = absensi.id');
         $this->db->where('tanggal', $tgl);
-        return $this->db->from('absensi')
-            ->join('user', 'user.id=absensi.id')
-            ->get()
-            ->result();
+        return $query = $this->db->get()->result();
     }
 
     public function get_all_absensi_count()
     {
+        $tgl = date("Y-m-d");
+        $this->db->where('tanggal', $tgl);
         return $this->db->count_all_results('absensi');
+    }
+
+    public function get_all_jdwl_absen()
+    {
+        return  $this->db->get('jadwal_absensi')->result();
+    }
+
+    public function get_absensiTody()
+    {
+        $tgl = date("Y-m-d");
+        $this->db->select("*");
+        $this->db->from('absensi');
+        $this->db->where('tanggal', $tgl);
+        $this->db->join('user', 'user.id = absensi.id');
+        return $query = $this->db->get()->result();
+    }
+
+    public function get_absensicetakPertgl($tgl)
+    {
+        $this->db->select("*");
+        $this->db->from('absensi');
+        $this->db->where('tanggal', $tgl);
+        $this->db->join('user', 'user.id = absensi.id');
+        return $query = $this->db->get()->result();
+    }
+
+
+    public function get_all_absensi_everyday($length = "", $start = "", $order = "", $dir = "", $search = "", $where = "")
+    {
+        $array = array('fullname' => $search, 'ket_keberadaan' => $search, 'tanggal' => $search);
+        if ($where != '') {
+
+            $this->db->select("*");
+            $this->db->from('absensi');
+            $this->db->join('user', 'user.id = absensi.id');
+            $this->db->where('tanggal', $where);
+            $this->db->order_by($order, $dir);
+            $this->db->limit($length, $start);
+            $this->db->like('ket_keberadaan', $search);
+            $query = $this->db->get()->result();
+        } else {
+            $this->db->order_by($order, $dir);
+            $this->db->or_like($array);
+            $this->db->limit($length, $start);
+            $this->db->select("*");
+            $this->db->from('absensi');
+            $this->db->join('user', 'user.id = absensi.id');
+            $query = $this->db->get()->result();
+        }
+        return $query;
+    }
+
+    public function get_all_absensi_everyday_count($where = "")
+    {
+        if ($where != '') {
+            $this->db->where('tanggal', $where);
+            $query = $this->db->count_all_results('absensi');
+        } else {
+            $query = $this->db->count_all_results('absensi');
+        }
+        return $query;
     }
 }

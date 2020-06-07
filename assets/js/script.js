@@ -535,7 +535,6 @@ $(function () {
 		},
 	});
 });
-
 // change status user NON aktiv
 $(document).on('click', '.sel2', function () {
 	const url = $("#page-top").data('url');
@@ -866,44 +865,10 @@ $(function () {
 });
 
 
-// jam digit
-setTimeout(jam_digital(), 1000);
 
-function jam_digital() {
-	const d = new Date();
-	setTimeout("jam_digital()", 1000);
-	const h = d.getHours();
-	const m = d.getMinutes();
-	const s = d.getSeconds();
-	const jam = h + ':' + m + ':' + s;
-	$('#jam').html(jam);
-	$('#jam').css('font-size', '12px');
-	$('#tgl').css('font-size', '12px');
-}
 
-//tampil info keberadaan dashboar admin kepegawaiaan
-
-tampil_ikeb();
-
-function tampil_ikeb() {
-	const url = $("#page-top").data('url');
-	setTimeout("tampil_ikeb()", 2000);
-	$.ajax({
-		url: url + "Admin_kepeg/index/get_keb",
-		method: 'post',
-		dataType: 'json',
-		success: function (data, status) {
-			$("#wfh").html(data.wfh);
-			$("#pkt").html(data.pkt);
-			$("#izn").html(data.izn);
-			$("#jml_peg").html(data.jml_peg);
-			console.log(data);
-		},
-	});
-}
 
 $(function () {
-
 	// modal absensi masuk
 	$("#absen-masuk").on("click", function (e) {
 		e.preventDefault();
@@ -939,7 +904,6 @@ $(function () {
 					$("#pesan-eror").fadeIn(function () {
 						$("#pesan-eror").fadeOut(5000);
 					});
-
 				}
 			},
 		});
@@ -982,7 +946,67 @@ $(function () {
 
 })
 
-// list tabel absensi
+setTimeout(jam_digital(), 1000);
+// jam digit
+function jam_digital() {
+	const d = new Date();
+	setTimeout("jam_digital()", 1000);
+	const h = d.getHours();
+	const m = d.getMinutes();
+	const s = d.getSeconds();
+	const jam = h + ':' + m + ':' + s;
+	$('#jam').html(jam);
+	$('#jam').css('font-size', '12px');
+	$('#tgl').css('font-size', '12px');
+}
+
+//tampil info keberadaan dashboar admin kepegawaiaan
+tampil_ikeb();
+
+function tampil_ikeb() {
+	const url = $("#page-top").data('url');
+	// setInterval("tampil_ikeb()", 10000);
+	$.ajax({
+		url: url + "Admin_kepeg/index/get_keb",
+		method: 'post',
+		dataType: 'json',
+		success: function (data, status) {
+			$("#wfh").html(data.wfh);
+			$("#pkt").html(data.pkt);
+			$("#izn").html(data.izn);
+			$("#jml_peg").html(data.jml_peg);
+			console.log(data);
+		},
+	});
+}
+
+
+
+$(function () {
+	const url = $("#page-top").data('url');
+
+	$('.waktu_absen').datetimepicker({
+		i18n: {
+			de: {
+				months: [
+					'Januari', 'Februari', 'Maret', 'April',
+					'Mai', 'Juni', 'Juli', 'Augustus',
+					'September', 'Oktober', 'November', 'Desember',
+				],
+				dayOfWeek: [
+					"So.", "Mo", "Di", "Mi",
+					"Do", "Fr", "Sa.",
+				]
+			}
+		},
+		timepicker: false,
+		format: 'Y-m-d'
+	});
+});
+
+
+
+// list tabel absensi perhari
 $(function () {
 	const url = $("#page-top").data('url');
 	$("#data_absensi").DataTable({
@@ -995,5 +1019,71 @@ $(function () {
 			url: url + 'Admin_kepeg/index/list_absensi',
 			type: 'post'
 		},
+	});
+});
+
+// list absensi by filter tanggal
+$(document).ready(function () {
+	const url = $("#page-top").data('url');
+	const table = $("#tbl_absensi_all").DataTable({
+		"pageLength": 10,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		'serverMethod': 'post',
+		'searching': true,
+		"ajax": {
+			url: url + 'Absensi/index/getlist_all_absensi',
+			// type: 'post'
+			'data': function (data) {
+				// Read values
+				var from_date = $('#search_fromdate').val();
+				// var to_date = $('#search_todate').val();
+
+				// Append to data
+				data.searchByFromdate = from_date;
+				// data.searchByTodate = to_date;
+			}
+		},
+	});
+
+	$('.waktu_absen').change(function () {
+		table.draw();
+	});
+
+});
+
+
+// cetak persensi perhari dan perbulan.
+$(function () {
+	const url = $("#page-top").data('url');
+	$('#tgl_absen_cetak').datetimepicker({
+		i18n: {
+			de: {
+				months: [
+					'Januari', 'Februari', 'Maret', 'April',
+					'Mai', 'Juni', 'Juli', 'Augustus',
+					'September', 'Oktober', 'November', 'Desember',
+				],
+				dayOfWeek: [
+					"So.", "Mo", "Di", "Mi",
+					"Do", "Fr", "Sa.",
+				]
+			}
+		},
+		timepicker: false,
+		format: 'Y-m-d'
+	});
+
+	$("#btn-ctk-perhari").on('click', function (e) {
+		e.preventDefault();
+		$("#cetak_absensi").modal("show");
+		$(".modal-body form").attr('action', url + 'Absensi/cetak_persensiHarian');
+	});
+
+	$("#cetak").on('click', function () {
+		$("#cetak_absensi").modal("hide");
+		// $('#tgl_absen_cetak').val("");
 	});
 });

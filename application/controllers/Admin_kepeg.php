@@ -1,5 +1,13 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require('./application/third_party/phpoffice/vendor/autoload.php');
+
+use Spipu\Html2Pdf\Html2Pdf;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+// use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class Admin_kepeg extends CI_Controller
 {
@@ -96,6 +104,7 @@ class Admin_kepeg extends CI_Controller
             $judul = 'Dashboard';
             $halaman = 'Admin_kepeg/index';
             $data['tgl'] = date("Y-m-d");
+            $data['jadwal_absensi'] = $this->absensi_Mod->get_all_jdwl_absen();
             $this->template->TemplateGen($judul, $halaman, $data);
         }
     }
@@ -106,5 +115,191 @@ class Admin_kepeg extends CI_Controller
         $halaman = 'Admin_kepeg/profil_adminkepg';
         $data = "";
         $this->template->TemplateGen($judul, $halaman, $data);
+    }
+
+    public function exsport_absen_excel()
+    {
+        //styling arrays
+        //table head style
+        $tableHead = [
+            'font' => [
+                'color' => [
+                    'rgb' => 'FFFFFF'
+                ],
+                'bold' => true,
+                'size' => 11
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => [
+                    'rgb' => '538ED5'
+                ]
+            ],
+        ];
+        //even row
+        $evenRow = [
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => [
+                    'rgb' => '00BDFF'
+                ]
+            ]
+        ];
+        //odd row
+        $oddRow = [
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => [
+                    'rgb' => '00EAFF'
+                ]
+            ]
+        ];
+
+        //styling arrays end
+        $tgl =  date('Y-m-d');
+        $date = longdate_indo($tgl);
+        $spreadsheet = new Spreadsheet;
+
+        $sheet = $spreadsheet->getActiveSheet();
+
+        //set default font
+        $spreadsheet->getDefaultStyle()
+            ->getFont()
+            ->setName('Arial')
+            ->setSize(10);
+
+        //heading
+        $spreadsheet->getActiveSheet()
+            ->setCellValue('A1', "Rekap Absensi Harian Pegawai ($date)");
+
+        //merge heading
+        $spreadsheet->getActiveSheet()->mergeCells("A1:E1");
+
+        // set font style
+        $spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setSize(20);
+
+        // set cell alignment
+        $spreadsheet->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        //setting column width
+        $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(20);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(30);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(30);
+
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(20);
+        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(10);
+
+        // total hadir awal
+        if (date("l") == "Friday") {
+            $id_jadwal = 2;
+        } else {
+            $id_jadwal = 1;
+        }
+        $data = $this->absensi_Mod->get_absensiTody();
+        $pkt = $this->absensi_Mod->get_keb_pkt($tgl, $id_jadwal);
+        $wfh = $this->absensi_Mod->get_keb_wfh($tgl, $id_jadwal);
+        $izn = $this->absensi_Mod->get_keb_izn($tgl, $id_jadwal);
+        $jml_peg = $this->user_Mod->get_jml_peg();
+        $pkt = count($pkt);
+        $wfh = count($wfh);
+        $izn = count($izn);
+        $tot_hdr = count($data);
+        $jml_peg = count($jml_peg);
+        $tot = $tot_hdr - $izn;
+        // total hadir akhir
+
+        //header text
+        $spreadsheet->getActiveSheet()
+            ->setCellValue('A2', "NO")
+            ->setCellValue('B2', "Nama")
+            ->setCellValue('C2', "Absen Masuk")
+            ->setCellValue('D2', "Absen Pulang")
+            ->setCellValue('E2', "Keterangan Keberadaan")
+
+            ->setCellValue('H2', "WFH")
+            ->setCellValue('H3', "Piket Kantor")
+            ->setCellValue('H4', "Izin (Cuti/Sakit)")
+            // ->setCellValue('H5', "Total Hadir")
+            // ->setCellValue('H6', "Jumlah Pegawai")
+            ->setCellValue('I2', $wfh)
+            ->setCellValue('I3', $pkt)
+            ->setCellValue('I4', $izn);
+        // ->setCellValue('I5', $tot)
+        // ->setCellValue('I6', $jml_peg);
+
+        //set font style and background color
+        $spreadsheet->getActiveSheet()->getStyle('A2:E2')->applyFromArray($tableHead);
+        $spreadsheet->getActiveSheet()->getStyle('H2:H4')->applyFromArray($oddRow);
+        $spreadsheet->getActiveSheet()->getStyle('I2:I4')->applyFromArray($evenRow);
+
+
+
+        $row = 3;
+        $no = 1;
+        foreach ($data as $pegawai) {
+            $spreadsheet->getActiveSheet()
+                ->setCellValue('A' . $row, $no)
+                ->setCellValue('B' . $row, $pegawai->fullname)
+                ->setCellValue('C' . $row, $pegawai->absensi_masuk)
+                ->setCellValue('D' . $row, $pegawai->absensi_keluar)
+                ->setCellValue('E' . $row, $pegawai->ket_keberadaan);
+
+            //set row style
+            if ($row % 2 == 0) {
+                //even row
+                $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':E' . $row)->applyFromArray($evenRow);
+            } else {
+                //odd row
+                $spreadsheet->getActiveSheet()->getStyle('A' . $row . ':E' . $row)->applyFromArray($oddRow);
+            }
+            //increment row
+            $row++;
+            $no++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="absensi_pegawai.' . $date . '.xlsx"');
+        // header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+    }
+
+
+    public function cetak_absensi()
+    {
+        ob_start();
+        $tgl =  date('Y-m-d');
+        $data['tgl'] = longdate_indo($tgl);
+        $date = $data['tgl'];
+
+        $data['absensi_harian'] = $this->absensi_Mod->get_absensiTody();
+        if (date("l") == "Friday") {
+            $id_jadwal = 2;
+        } else {
+            $id_jadwal = 1;
+        }
+
+        $pkt = $this->absensi_Mod->get_keb_pkt($tgl, $id_jadwal);
+        $wfh = $this->absensi_Mod->get_keb_wfh($tgl, $id_jadwal);
+        $izn = $this->absensi_Mod->get_keb_izn($tgl, $id_jadwal);
+
+        $data['pkt_tot'] = count($pkt);
+        $data['wfh_tot'] = count($wfh);
+        $data['izn_tot'] = count($izn);
+
+        $this->load->view('Template_laporan/laporan_absensi_harian_pdf', $data);
+
+        $html = ob_get_contents();
+        ob_end_clean();
+
+        $html2pdf = new HTML2PDF('P', 'A4', 'fr', false, 'ISO-8859-15', array(20, 10, 20, 5));
+        $html2pdf->setDefaultFont('Arial');
+
+        $html2pdf->writeHTML($html);
+        $html2pdf->output("absensi_harian_pegawai'_$date.'.pdf");
     }
 }
