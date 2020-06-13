@@ -153,4 +153,28 @@ class Absensi_Mod extends CI_Model
         }
         return $query;
     }
+
+    // public function get_absensi_cetakBulan($tanggal, $tanggal1)
+    // {
+    //     $query = "SELECT * FROM absensi WHERE tanggal between '$tanggal' AND '$tanggal1'";
+    //     return  $this->db->query($query)->result();
+    // }
+
+    public function get_count_wfhperid($id, $tanggal, $tanggal1)
+    {
+        $query = "SELECT * FROM absensi WHERE id=$id AND ket_keberadaan='wfh' AND tanggal between '$tanggal' AND '$tanggal1'";
+        return  $this->db->query($query)->result();
+    }
+
+    public function get_count_pktperid($id, $tanggal, $tanggal1)
+    {
+        $query = "SELECT * FROM absensi WHERE id=$id AND ket_keberadaan='piket kantor' AND tanggal between '$tanggal' AND '$tanggal1'";
+        return  $this->db->query($query)->result();
+    }
+
+    public function get_count_iznperid($id, $tanggal, $tanggal1)
+    {
+        $query = "SELECT * FROM absensi WHERE id=$id AND ket_keberadaan='izin (sakit/cuti)' AND tanggal between '$tanggal' AND '$tanggal1'";
+        return  $this->db->query($query)->result();
+    }
 }

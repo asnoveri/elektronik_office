@@ -396,4 +396,9 @@ class user_Mod extends CI_Model
         $this->db->where('is_active', 1);
         return $this->db->get('user')->result();
     }
+
+    public function get_semua_user()
+    {
+        return $this->db->get('user')->result();
+    }
 }

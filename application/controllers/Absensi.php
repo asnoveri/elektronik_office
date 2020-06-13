@@ -125,4 +125,48 @@ class Absensi extends CI_Controller
         $html2pdf->writeHTML($html);
         $html2pdf->output("absensi_harian_pegawai'_$date.'.pdf");
     }
+
+    public function cetak_persensiBulanan()
+    {
+        ob_start();
+        $tanggal = $this->input->post('tanggal');
+        $tanggal1 = $this->input->post('tanggal1');
+        $data['priode1'] = $tanggal;
+        $data['priode2'] = $tanggal1;
+        $data['range'] = date_range($tanggal, $tanggal1);
+        $data['range'] = count($data['range']);
+        // echo "First 15 days of 2012:";
+        // foreach ($range as $date) {
+        //     echo $date . "\n";
+        //     echo "<br>";
+        // }
+
+        $user = $this->user_Mod->get_semua_user();
+
+        for ($i = 0; $i < count($user); $i++) {
+            $absn = $this->absensi_Mod->get_count_wfhperid($user[$i]->id, $tanggal, $tanggal1);
+            $pkt = $this->absensi_Mod->get_count_pktperid($user[$i]->id, $tanggal, $tanggal1);
+            $izn = $this->absensi_Mod->get_count_iznperid($user[$i]->id, $tanggal, $tanggal1);
+            $data['user'][] = $user[$i]->fullname;
+            $data['tot_wfh'][] = count($absn);
+            $data['tot_pkt'][] = count($pkt);
+            $data['tot_izn'][] = count($izn);
+        }
+        $data['user'] = $data['user'];
+        $data['tot_wfh'] = $data['tot_wfh'];
+        $data['tot_pkt'] = $data['tot_pkt'];
+        $data['tot_izn'] = $data['tot_izn'];
+        // die();
+
+        $this->load->view('Template_laporan/laporan_absensi_bualanan_pdf', $data);
+
+        $html = ob_get_contents();
+        ob_end_clean();
+
+        $html2pdf = new HTML2PDF('P', 'A4', 'fr', false, 'ISO-8859-15', array(20, 10, 20, 5));
+        $html2pdf->setDefaultFont('Arial');
+
+        $html2pdf->writeHTML($html);
+        $html2pdf->output("absensi_bulanan_pegawai_priode'_$tanggal'_'$tanggal1.'.pdf");
+    }
 }

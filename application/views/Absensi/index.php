@@ -30,7 +30,10 @@
                     <button type="button" class="btn btn-sm btn-dark" id="btn-ctk-perhari">
                         <i class="fas fa-print fa-sm text-white-50"></i> Cetak Absensi Harian
                     </button>
-                    <button type="button" class="btn btn-sm btn-secondary">
+                    <button type="button" class="btn btn-sm btn-secondary" id="btn-ctk-perbulan">
+                        <i class="fas fa-print fa-sm text-white-50"></i> Cetak Rekap Bulanan
+                    </button>
+                    <button type="button" class="btn btn-sm btn-light" id="btn-ctk-perbulan1">
                         <i class="fas fa-print fa-sm text-white-50"></i> Cetak Absensi Bulanan
                     </button>
                 </div>
@@ -71,9 +74,11 @@
             </div>
             <div class="modal-body">
                 <form action="" method="post" target="_blank">
-                    <div class="form-group">
+                    <div class="form-group" id="form-input-grp">
                         <input type="text" readonly class="form-control" name="tanggal" id="tgl_absen_cetak" placeholder="Pilih Tanggal">
                         <p id="pesan_eror"></p>
+                        <input type="text" readonly class="form-control" name="tanggal1" id="tgl_absen_cetak1" placeholder="Pilih Tanggal Akhir">
+                        <p id="pesan_eror1"></p>
                     </div>
                     <button type="submit" class="btn btn-primary" id="cetak">Cetak</button>
                 </form>

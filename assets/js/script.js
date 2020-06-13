@@ -1076,14 +1076,44 @@ $(function () {
 		format: 'Y-m-d'
 	});
 
+	$('#tgl_absen_cetak1').datetimepicker({
+		i18n: {
+			de: {
+				months: [
+					'Januari', 'Februari', 'Maret', 'April',
+					'Mai', 'Juni', 'Juli', 'Augustus',
+					'September', 'Oktober', 'November', 'Desember',
+				],
+				dayOfWeek: [
+					"So.", "Mo", "Di", "Mi",
+					"Do", "Fr", "Sa.",
+				]
+			}
+		},
+		timepicker: false,
+		format: 'Y-m-d'
+	});
+
+	// cetak perhari
 	$("#btn-ctk-perhari").on('click', function (e) {
 		e.preventDefault();
 		$("#cetak_absensi").modal("show");
+		$("#label_modal_absensi").html("Cetak Persensi Harian");
 		$(".modal-body form").attr('action', url + 'Absensi/cetak_persensiHarian');
+		$("#tgl_absen_cetak1").hide();
 	});
 
 	$("#cetak").on('click', function () {
 		$("#cetak_absensi").modal("hide");
 		// $('#tgl_absen_cetak').val("");
+	});
+
+	//cetak perbulan
+	$("#btn-ctk-perbulan").on('click', function (e) {
+		e.preventDefault();
+		$("#cetak_absensi").modal("show");
+		$("#label_modal_absensi").html("Cetak Persensi Bulanan");
+		$("#tgl_absen_cetak1").show();
+		$(".modal-body form").attr('action', url + 'Absensi/cetak_persensiBulanan');
 	});
 });
