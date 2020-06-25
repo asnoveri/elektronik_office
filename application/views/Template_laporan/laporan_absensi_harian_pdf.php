@@ -46,13 +46,14 @@
             <th rowspan="2"> Nama</th>
             <th rowspan="2">Absensi Masuk</th>
             <th rowspan="2">Absensi Pulang</th>
-            <th colspan="3" style="text-align: center;">Keterangan Keberadaan</th>
+            <th colspan="4" style="text-align: center;">Keterangan Keberadaan</th>
 
         </tr>
         <tr>
             <td>WFH</td>
             <td>Piket Kantor</td>
             <td>Izin (Cuti / Sakit)</td>
+            <td>DL</td>
         </tr>
         <?php
         $no = 1;
@@ -78,10 +79,17 @@
                 } else {
                     $izn = 0;
                 }
+
+                if ($ah->ket_keberadaan == 'dl') {
+                    $dl = 1;
+                } else {
+                    $dl = 0;
+                }
                 ?>
                 <td><?= $wfh ?></td>
                 <td><?= $pkt ?></td>
                 <td><?= $izn ?></td>
+                <td><?= $dl ?></td>
             </tr>
         <?php $no++;
         }
@@ -91,6 +99,7 @@
             <td><?= $wfh_tot ?></td>
             <td><?= $pkt_tot ?></td>
             <td><?= $izn_tot ?></td>
+            <td><?= $dl_tot ?></td>
         </tr>
     </table>
 

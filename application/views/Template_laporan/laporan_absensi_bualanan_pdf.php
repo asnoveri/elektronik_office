@@ -32,6 +32,7 @@
             <th>WFH</th>
             <th>Piket Kantor</th>
             <th>Izin (Cuti / Sakit)</th>
+            <th>DL</th>
             <th>Tanpa Berita</th>
             <th>Total Kehadiran</th>
         </tr>
@@ -44,8 +45,9 @@
                 <td><?= $tot_wfh[$i] . " Hari" ?></td>
                 <td><?= $tot_pkt[$i] . " Hari" ?></td>
                 <td><?= $tot_izn[$i] . " Hari" ?></td>
-                <td><?= $range - ($tot_wfh[$i] + $tot_pkt[$i] + $tot_izn[$i]) . " Hari" ?></td>
-                <td><?= $tot_wfh[$i] + $tot_pkt[$i] . " Hari" ?></td>
+                <td><?= $tot_dl[$i] . " Hari" ?></td>
+                <td><?= $range - ($tot_wfh[$i] + $tot_pkt[$i] + $tot_izn[$i] + $tot_dl[$i]) . " Hari" ?></td>
+                <td><?= $tot_wfh[$i] + $tot_pkt[$i] + $tot_dl[$i]. " Hari" ?></td>
             </tr>
         <?php }
         ?>

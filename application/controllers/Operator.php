@@ -84,7 +84,71 @@ class Operator extends CI_Controller
         }
     }
 
+     public function getAbsensiUser_id(){
+            $length = intval($this->input->post('length'));
+            $draw = intval($this->input->post('draw'));
+            $start = intval($this->input->post('start'));
+            $order = $this->input->post('order');
+            $search = $this->input->post('search');
+            $search = $search['value'];
+            $searchByFromdate = $this->input->post('searchByFromdate');
+            $col = 0;
+            $dir = "";
+            $where = "";
 
+            if ($searchByFromdate != '') {
+                $where = $searchByFromdate;
+            }
+
+            if (!empty($order)) {
+                foreach ($order as $or) {
+                    $col = $or['column'];
+                    $dir = $or['dir'];
+                }
+            }
+
+            if ($dir != 'asc' && $dir != 'desc') {
+                $dir = 'desc';
+            }
+
+            $valid_columns = [
+                1 => 'tanggal',
+                2 => 'absensi_masuk',
+                3 => 'absensi_keluar',
+                4 => 'ket_keberadaan'
+            ];
+
+            if (!isset($valid_columns[$col])) {
+                $order = null;
+            } else {
+                $order = $valid_columns[$col];
+            }
+
+            $id_user=$this->session->userdata('id');
+            $dta = $this->absensi_Mod->get_all_absensi_userid($length, $start, $order, $dir, $search, $where,$id_user);
+            $json = [];
+            $no = $start + 1;
+            foreach ($dta as $data) {
+                $bad_date = $data->tanggal;
+                $tgl = nice_date($bad_date, 'd-m-Y');
+                $json[] = [
+                    $no++,
+                    $tgl,
+                    $data->absensi_masuk,
+                    $data->absensi_keluar,
+                    $data->ket_keberadaan,
+                ];
+            }
+            $tot = $this->absensi_Mod->get_all_absensi_userid_count($where,$id_user);
+            $respon = [
+                'draw' => $draw,
+                'recordsTotal' => $tot,
+                'recordsFiltered' => $tot,
+                'data' => $json
+            ];
+            echo json_encode($respon);
+            die();
+    }
 
 
     public function profil_op()

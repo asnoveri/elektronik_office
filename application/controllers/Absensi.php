@@ -83,6 +83,7 @@ class Absensi extends CI_Controller
             ];
             echo json_encode($respon);
             die();
+            
         } else {
             $judul = 'Absensi';
             $halaman = 'Absensi/index';
@@ -90,6 +91,9 @@ class Absensi extends CI_Controller
             $this->template->TemplateGen($judul, $halaman, $data);
         }
     }
+
+
+   
 
     public function cetak_persensiHarian()
     {
@@ -109,10 +113,12 @@ class Absensi extends CI_Controller
         $pkt = $this->absensi_Mod->get_keb_pkt($tgl, $id_jadwal);
         $wfh = $this->absensi_Mod->get_keb_wfh($tgl, $id_jadwal);
         $izn = $this->absensi_Mod->get_keb_izn($tgl, $id_jadwal);
+        $dl = $this->absensi_Mod->get_keb_dl($tgl, $id_jadwal);
 
         $data['pkt_tot'] = count($pkt);
         $data['wfh_tot'] = count($wfh);
         $data['izn_tot'] = count($izn);
+        $data['dl_tot']  = count($dl);
 
         $this->load->view('Template_laporan/laporan_absensi_harian_pdf', $data);
 
@@ -147,15 +153,18 @@ class Absensi extends CI_Controller
             $absn = $this->absensi_Mod->get_count_wfhperid($user[$i]->id, $tanggal, $tanggal1);
             $pkt = $this->absensi_Mod->get_count_pktperid($user[$i]->id, $tanggal, $tanggal1);
             $izn = $this->absensi_Mod->get_count_iznperid($user[$i]->id, $tanggal, $tanggal1);
+            $dl = $this->absensi_Mod->get_count_dlperid($user[$i]->id, $tanggal, $tanggal1);
             $data['user'][] = $user[$i]->fullname;
             $data['tot_wfh'][] = count($absn);
             $data['tot_pkt'][] = count($pkt);
             $data['tot_izn'][] = count($izn);
+             $data['tot_dl'][] = count($dl);
         }
         $data['user'] = $data['user'];
         $data['tot_wfh'] = $data['tot_wfh'];
         $data['tot_pkt'] = $data['tot_pkt'];
         $data['tot_izn'] = $data['tot_izn'];
+        $data['tot_dl'] = $data['tot_dl'];
         // die();
 
         $this->load->view('Template_laporan/laporan_absensi_bualanan_pdf', $data);

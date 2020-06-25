@@ -975,6 +975,7 @@ function tampil_ikeb() {
 			$("#pkt").html(data.pkt);
 			$("#izn").html(data.izn);
 			$("#jml_peg").html(data.jml_peg);
+			$("#dl").html(data.dl);
 			console.log(data);
 		},
 	});
@@ -1008,6 +1009,7 @@ $(function () {
 
 // list tabel absensi perhari
 $(function () {
+
 	const url = $("#page-top").data('url');
 	$("#data_absensi").DataTable({
 		"pageLength": 10,
@@ -1053,6 +1055,9 @@ $(document).ready(function () {
 	});
 
 });
+
+
+
 
 
 // cetak persensi perhari dan perbulan.
@@ -1116,4 +1121,36 @@ $(function () {
 		$("#tgl_absen_cetak1").show();
 		$(".modal-body form").attr('action', url + 'Absensi/cetak_persensiBulanan');
 	});
+
+	// list absensi_untuk user
+	const table = $("#tbl_absensi_forUser").DataTable({
+		"pageLength": 5,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		'serverMethod': 'post',
+		'searching': true,
+		"ajax": {
+			url: url + 'Operator/getAbsensiUser_id',
+			// type: 'post'
+			'data': function (data) {
+				// Read values
+				var from_date = $('#search_fromdate1').val();
+				// var to_date = $('#search_todate').val();
+
+				// Append to data
+				data.searchByFromdate = from_date;
+				// data.searchByTodate = to_date;
+			}
+		},
+	});
+
+	$('.waktu_absen').change(function () {
+		table.draw();
+	});
 });
+
+
+
+

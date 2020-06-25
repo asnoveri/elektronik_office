@@ -34,10 +34,12 @@ class Admin_kepeg extends CI_Controller
             $pkt = $this->absensi_Mod->get_keb_pkt($tgl, $id_jadwal);
             $wfh = $this->absensi_Mod->get_keb_wfh($tgl, $id_jadwal);
             $izn = $this->absensi_Mod->get_keb_izn($tgl, $id_jadwal);
+            $dl = $this->absensi_Mod->get_keb_dl($tgl, $id_jadwal);
             $jml_peg = $this->user_Mod->get_jml_peg();
             $tot['pkt'] = count($pkt);
             $tot['wfh'] = count($wfh);
             $tot['izn'] = count($izn);
+            $tot['dl'] = count($dl);
             $tot['jml_peg'] = count($jml_peg);
             echo json_encode($tot);
             die();
@@ -202,9 +204,13 @@ class Admin_kepeg extends CI_Controller
         $wfh = $this->absensi_Mod->get_keb_wfh($tgl, $id_jadwal);
         $izn = $this->absensi_Mod->get_keb_izn($tgl, $id_jadwal);
         $jml_peg = $this->user_Mod->get_jml_peg();
+        $dl = $this->absensi_Mod->get_keb_dl($tgl, $id_jadwal);
+
+
         $pkt = count($pkt);
         $wfh = count($wfh);
         $izn = count($izn);
+        $dl= count($dl);
         $tot_hdr = count($data);
         $jml_peg = count($jml_peg);
         $tot = $tot_hdr - $izn;
@@ -221,18 +227,18 @@ class Admin_kepeg extends CI_Controller
             ->setCellValue('H2', "WFH")
             ->setCellValue('H3', "Piket Kantor")
             ->setCellValue('H4', "Izin (Cuti/Sakit)")
-            // ->setCellValue('H5', "Total Hadir")
+            ->setCellValue('H5', "Perjalanan Dinas")
             // ->setCellValue('H6', "Jumlah Pegawai")
             ->setCellValue('I2', $wfh)
             ->setCellValue('I3', $pkt)
-            ->setCellValue('I4', $izn);
-        // ->setCellValue('I5', $tot)
+            ->setCellValue('I4', $izn)
+            ->setCellValue('I5', $dl);
         // ->setCellValue('I6', $jml_peg);
 
         //set font style and background color
         $spreadsheet->getActiveSheet()->getStyle('A2:E2')->applyFromArray($tableHead);
-        $spreadsheet->getActiveSheet()->getStyle('H2:H4')->applyFromArray($oddRow);
-        $spreadsheet->getActiveSheet()->getStyle('I2:I4')->applyFromArray($evenRow);
+        $spreadsheet->getActiveSheet()->getStyle('H2:H5')->applyFromArray($oddRow);
+        $spreadsheet->getActiveSheet()->getStyle('I2:I5')->applyFromArray($evenRow);
 
 
 
@@ -286,10 +292,13 @@ class Admin_kepeg extends CI_Controller
         $pkt = $this->absensi_Mod->get_keb_pkt($tgl, $id_jadwal);
         $wfh = $this->absensi_Mod->get_keb_wfh($tgl, $id_jadwal);
         $izn = $this->absensi_Mod->get_keb_izn($tgl, $id_jadwal);
+        $dl = $this->absensi_Mod->get_keb_dl($tgl, $id_jadwal);
+
 
         $data['pkt_tot'] = count($pkt);
         $data['wfh_tot'] = count($wfh);
         $data['izn_tot'] = count($izn);
+        $data['dl_tot']  = count($dl);
 
         $this->load->view('Template_laporan/laporan_absensi_harian_pdf', $data);
 

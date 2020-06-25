@@ -54,6 +54,40 @@
            </div>
          </div>
        </div>
+        <div class="col-lg-6 mb-4">
+
+         <!-- Illustrations -->
+         <div class="card shadow mb-4">
+           <div class="card-header py-3">
+             <h6 class="m-0 font-weight-bold text-secondary">List Absensi Anda</h6>
+           </div>
+           <div class="card-body">  
+            <div class="row">
+                <div class="col-sm-3 mb-1">
+                    <input type='text' readonly id='search_fromdate1' class="waktu_absen form-control" placeholder="Pilih Tanggal">
+                </div>
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tbl_absensi_forUser" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tanggal</th>
+                                    <th>Absensi Masuk</th>
+                                    <th>Absensi Pulang</th>
+                                    <th>Keterangan Keberadaan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+              
+           </div>
+         </div>
+       </div>
      </div>
 
 
@@ -74,6 +108,7 @@
                    <option value="piket kantor">Piket Kantor</option>
                    <option value="wfh">WFH</option>
                    <option value="izin (sakit/cuti)">Izin (Sakit / Cuti)</option>
+                   <option value="dl">Perjalanan Dinas</option>
                  </select>
                </div>
                <input id="id_jadwal" hidden value="<?= $jadwal_absen->id_jdwlabnsi ?>">
