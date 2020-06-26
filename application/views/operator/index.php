@@ -48,7 +48,7 @@
                  <p><span class="badge badge-secondary"><?= $jadwal_absen->jam_masuk; ?></span></p>
                </div>
                <div class="col-sm-6 text-center mt-2">
-                 <p><span class="badge badge-secondary jk" data-id="<?= $jadwal_absen->jam_keluar; ?>"><?= $jadwal_absen->jam_keluar; ?></span></p>
+                 <p><span class="badge badge-secondary jk" data-id="<?= $jadwal_absen->jam_keluar; ?>" data-role="<?= $this->session->userdata('role_id'); ?>"><?= $jadwal_absen->jam_keluar; ?></span></p>
                </div>
              </div>
            </div>
@@ -112,6 +112,7 @@
                  </select>
                </div>
                <input id="id_jadwal" hidden value="<?= $jadwal_absen->id_jdwlabnsi ?>">
+                <input id="role_id" hidden value="<?= $this->session->userdata('role_id'); ?>">
                <button type="button" class="btn btn-primary" id="btn-kirim" data-dismiss="modal">Kirim</button>
                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
              </form>

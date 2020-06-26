@@ -9,6 +9,7 @@ class Operator extends CI_Controller
         parent::__construct();
         $this->load->model("absensi_Mod");
         $this->load->model("login_Mod");
+        $this->load->model('user_Mod');
         date_default_timezone_set('Asia/Jakarta');
         is_login();
     }
