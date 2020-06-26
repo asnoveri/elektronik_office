@@ -41,7 +41,7 @@
         for ($i = 0; $i < count($user); $i++) { ?>
             <tr>
                 <td><?= $no = $i + 1 ?></td>
-                <td><?= $user[$i] ?></td>
+                <td><?= $user[$i] ."<br>" ?><?="($nip[$i])"?></td>
                 <td><?= $tot_wfh[$i] . " Hari" ?></td>
                 <td><?= $tot_pkt[$i] . " Hari" ?></td>
                 <td><?= $tot_izn[$i] . " Hari" ?></td>

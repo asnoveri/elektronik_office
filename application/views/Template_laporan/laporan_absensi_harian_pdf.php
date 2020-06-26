@@ -60,7 +60,7 @@
         foreach ($absensi_harian as $ah) { ?>
             <tr>
                 <td><?= $no ?></td>
-                <td><?= $ah->fullname ?></td>
+                <td><?= $ah->fullname ."<br>"?><?="($ah->nip)"?></td>
                 <td><?= $ah->absensi_masuk ?></td>
                 <td><?= $ah->absensi_keluar ?></td>
                 <?php

@@ -155,12 +155,14 @@ class Absensi extends CI_Controller
             $izn = $this->absensi_Mod->get_count_iznperid($user[$i]->id, $tanggal, $tanggal1);
             $dl = $this->absensi_Mod->get_count_dlperid($user[$i]->id, $tanggal, $tanggal1);
             $data['user'][] = $user[$i]->fullname;
+            $data['nip'][]  = $user[$i]->nip;
             $data['tot_wfh'][] = count($absn);
             $data['tot_pkt'][] = count($pkt);
             $data['tot_izn'][] = count($izn);
              $data['tot_dl'][] = count($dl);
         }
         $data['user'] = $data['user'];
+        $data['nip'] = $data['nip']; 
         $data['tot_wfh'] = $data['tot_wfh'];
         $data['tot_pkt'] = $data['tot_pkt'];
         $data['tot_izn'] = $data['tot_izn'];

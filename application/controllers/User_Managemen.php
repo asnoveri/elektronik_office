@@ -35,9 +35,10 @@ class User_Managemen extends CI_Controller {
     
                 $valid_columns=[
                     1=>'fullname',
-                    2=>'user_name',
-                    3=>'email',
-                    4=>'is_active'
+                    2=>'nip',
+                    3=>'user_name',
+                    4=>'email',
+                    5=>'is_active'
                 ];
     
                 if(!isset($valid_columns[$col])){
@@ -68,6 +69,7 @@ class User_Managemen extends CI_Controller {
                 $json[]=[
                     $no++,
                     $data->fullname,
+                    $data->nip,
                     $data->user_name,  
                     $data->email,
                     $status,
@@ -111,14 +113,19 @@ class User_Managemen extends CI_Controller {
         $this->form_validation->set_rules('pass1','Pass1','required|trim|min_length[6]|matches[pass]',
             ['required'=>'Ulang Kata Sandi Tidak Boleh Kosong',
             'min_length'=> 'Kata Sandi Harus Lebih dari 6 Karakter',
-            'matches'=> 'Kata Sandi yang Di Inputkan Tidak sama']);    
+            'matches'=> 'Kata Sandi yang Di Inputkan Tidak sama']);  
+        $this->form_validation->set_rules('nip','Nip','required|trim|numeric',
+             ['required'=>'Nip Tidak Boleh Kosong',
+            'numeric'=> 'Nip Harus Dalam Bentuk Angka']);  
+            
         if ($this->form_validation->run() == FALSE){
             $this->index();
         }else{
             $data=[
                 'id'        =>'' ,
                 'fullname'  =>$this->input->post('fullname',true),
-                'user_name'  =>$this->input->post('user_name',true),
+                'nip'       =>$this->input->post('nip',true),
+                'user_name' =>$this->input->post('user_name',true),
                 'email'     =>$this->input->post('email',true),
                 'is_active' => 1,
                 'image'     => "default.png",
@@ -235,11 +242,16 @@ class User_Managemen extends CI_Controller {
             'alpha_dash'=>'User Name Tidak Mengizinkan Spasi Pada Karakter Yang di Masukkan']); 
             $this->form_validation->set_rules('email','Email','trim|valid_email',[
                 'valid_email'=> 'Email yang dimasukan Salah' ]);
+            $this->form_validation->set_rules('nip','Nip','required|trim|numeric',
+             ['required'=>'Nip Tidak Boleh Kosong',
+            'numeric'=> 'Nip Harus Dalam Bentuk Angka']);  
+                
             if ($this->form_validation->run() == FALSE){
                 $this->edit_user($id);
             }else{
                 $data=[
                     'fullname'  =>$this->input->post('fullname',true),
+                    'nip'       =>$this->input->post('nip',true),
                     'user_name' =>$this->input->post('user_name',true),
                     'email'     =>$this->input->post('email',true)
                 ];

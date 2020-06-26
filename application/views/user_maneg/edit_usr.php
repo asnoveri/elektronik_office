@@ -27,6 +27,10 @@
                                 <input type="text" class="form-control"  name="fullname" value="<?= $user->fullname?>">
                             </div>
                             <div class="form-group">
+                                <label>NIP</label>
+                                <input type="text" class="form-control"  name="nip" value="<?= $user->nip?>">
+                            </div>
+                            <div class="form-group">
                                 <label>User Name</label>
                                 <input type="text"  class="form-control"  name="user_name" value="<?= $user->user_name?>">
                             </div>

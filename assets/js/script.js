@@ -583,6 +583,7 @@ $(document).on('click', '#aad_user', function () {
 	$("#fullname").show();
 	$("#user_name").show();
 	$("#email").show();
+	$("#nip").show();
 	$(".modal-dialog").removeClass(" modal-sm");
 	$('#tbhuser').modal('show');
 	$('#id').hide();
@@ -598,6 +599,7 @@ $(document).on('click', '.edtpswd', function () {
 	$("#fullname").hide();
 	$("#user_name").hide();
 	$("#email").hide();
+	$("#nip").hide();
 	$(".modal-dialog").addClass("modal-dialog modal-sm");
 	$('#tbhuser').modal('show');
 	$('#id').val(id);
