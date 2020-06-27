@@ -34,6 +34,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Nama Lengkap</th>
+                                        <th>NIP</th>
                                         <th>User Name</th>
                                         <th>Email</th>
                                         <th>Status</th>
@@ -63,6 +64,10 @@
                         <div class="form-group" id="fullname">
                             <label>Nama lengkap</label>
                             <input type="text" class="form-control" name="fullname">
+                        </div>
+                        <div class="form-group" id="nip">
+                            <label>NIP</label>
+                            <input type="text" class="form-control" name="nip">
                         </div>
                         <div class="form-group" id="user_name">
                             <label>User Name</label>

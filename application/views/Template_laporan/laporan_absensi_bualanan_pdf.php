@@ -32,6 +32,7 @@
             <th>WFH</th>
             <th>Piket Kantor</th>
             <th>Izin (Cuti / Sakit)</th>
+            <th>DL</th>
             <th>Tanpa Berita</th>
             <th>Total Kehadiran</th>
         </tr>
@@ -40,12 +41,18 @@
         for ($i = 0; $i < count($user); $i++) { ?>
             <tr>
                 <td><?= $no = $i + 1 ?></td>
-                <td><?= $user[$i] ?></td>
+                <td><?= $user[$i] ."<br>" ?><?="($nip[$i])"?></td>
                 <td><?= $tot_wfh[$i] . " Hari" ?></td>
                 <td><?= $tot_pkt[$i] . " Hari" ?></td>
                 <td><?= $tot_izn[$i] . " Hari" ?></td>
+<<<<<<< HEAD
                 <td><?= $range - ($tot_wfh[$i] + $tot_pkt[$i] + $tot_izn[$i]) - $tot_sabtu - $tot_minggu  . " Hari" ?></td>
                 <td><?= $tot_wfh[$i] + $tot_pkt[$i] . " Hari" ?></td>
+=======
+                <td><?= $tot_dl[$i] . " Hari" ?></td>
+                <td><?= $range - ($tot_wfh[$i] + $tot_pkt[$i] + $tot_izn[$i] + $tot_dl[$i]) . " Hari" ?></td>
+                <td><?= $tot_wfh[$i] + $tot_pkt[$i] + $tot_dl[$i]. " Hari" ?></td>
+>>>>>>> bbf2f91c46ae9b38e5c1c75c8c76342b7d2fbc97
             </tr>
         <?php }
         ?>

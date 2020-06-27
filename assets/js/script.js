@@ -583,6 +583,7 @@ $(document).on('click', '#aad_user', function () {
 	$("#fullname").show();
 	$("#user_name").show();
 	$("#email").show();
+	$("#nip").show();
 	$(".modal-dialog").removeClass(" modal-sm");
 	$('#tbhuser').modal('show');
 	$('#id').hide();
@@ -598,6 +599,7 @@ $(document).on('click', '.edtpswd', function () {
 	$("#fullname").hide();
 	$("#user_name").hide();
 	$("#email").hide();
+	$("#nip").hide();
 	$(".modal-dialog").addClass("modal-dialog modal-sm");
 	$('#tbhuser').modal('show');
 	$('#id').val(id);
@@ -878,9 +880,23 @@ $(function () {
 		});
 	});
 
-	// input absensi masuk
+	// input absensi masuk 
 	$("#btn-kirim").click(function () {
 		const url = $("#page-top").data('url');
+		const role_id = $("#role_id").val();
+
+		if (role_id == 2) {
+			var link = 'Operator/index/add_absensi';
+		} else if (role_id == 4) {
+			var link = 'Direktur/index/add_absensi';
+		} else if (role_id == 5) {
+			var link = 'Wadir/index/add_absensi';
+		} else if (role_id == 6) {
+			var link = 'Adum/index/add_absensi';
+		} else if (role_id == 3) {
+			var link = 'User/index/add_absensi';
+		}
+
 		const ket_keberadaan = $("#sel-keberadaan").val();
 		const id_jdwlabnsi = $("#id_jadwal").val();
 		const d = new Date();
@@ -889,7 +905,7 @@ $(function () {
 		const s = d.getSeconds();
 		const jam = h + ':' + m + ':' + s;
 		$.ajax({
-			url: url + 'Operator/index/add_absensi',
+			url: url + link,
 			data: {
 				ket_keberadaan: ket_keberadaan,
 				id_jdwlabnsi: id_jdwlabnsi,
@@ -909,11 +925,26 @@ $(function () {
 		});
 	});
 
-	// input absensi pulang
+	// input absensi pulang 
 	$("#absen-pulang").click(function (e) {
 		e.preventDefault();
 		const url = $("#page-top").data('url');
 		const jk = $(".jk").data('id');
+		const role_id = $(".jk").data('role');
+
+		if (role_id == 2) {
+			var link = 'Operator/index/add_absn_plng';
+		} else if (role_id == 4) {
+			var link = 'Direktur/index/add_absn_plng';
+		} else if (role_id == 5) {
+			var link = 'Wadir/index/add_absn_plng';
+		} else if (role_id == 6) {
+			var link = 'Adum/index/add_absn_plng';
+		} else if (role_id == 3) {
+			var link = 'User/index/add_absn_plng';
+		}
+
+
 		const d = new Date();
 		const h = d.getHours();
 		const m = d.getMinutes();
@@ -921,7 +952,7 @@ $(function () {
 		const jam = h + ':' + m + ':' + s;
 		if (jam >= jk) {
 			$.ajax({
-				url: url + 'Operator/index/add_absn_plng',
+				url: url + link,
 				data: {
 					absen_keluar: jam,
 				},
@@ -944,7 +975,9 @@ $(function () {
 		}
 	});
 
+
 })
+
 
 setTimeout(jam_digital(), 1000);
 // jam digit
@@ -975,6 +1008,7 @@ function tampil_ikeb() {
 			$("#pkt").html(data.pkt);
 			$("#izn").html(data.izn);
 			$("#jml_peg").html(data.jml_peg);
+			$("#dl").html(data.dl);
 			console.log(data);
 		},
 	});
@@ -1008,6 +1042,7 @@ $(function () {
 
 // list tabel absensi perhari
 $(function () {
+
 	const url = $("#page-top").data('url');
 	$("#data_absensi").DataTable({
 		"pageLength": 10,
@@ -1053,6 +1088,135 @@ $(document).ready(function () {
 	});
 
 });
+
+// tabel absensi user adum
+$(function () {
+	const url = $("#page-top").data('url');
+	const table = $("#tbl_absensi_forUser_adum").DataTable({
+		"pageLength": 5,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		'serverMethod': 'post',
+		'searching': true,
+		"ajax": {
+			url: url + 'Adum/getAbsensiUser_id',
+			// type: 'post'
+			'data': function (data) {
+				// Read values
+				var from_date = $('#search_fromdate1').val();
+				// var to_date = $('#search_todate').val();
+
+				// Append to data
+				data.searchByFromdate = from_date;
+				// data.searchByTodate = to_date;
+			}
+		},
+	});
+
+	$('.waktu_absen').change(function () {
+		table.draw();
+	});
+});
+
+
+
+// tabel absensi user wadir
+$(function () {
+	const url = $("#page-top").data('url');
+	const table = $("#tbl_absensi_forUser_wadir").DataTable({
+		"pageLength": 5,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		'serverMethod': 'post',
+		'searching': true,
+		"ajax": {
+			url: url + 'Wadir/getAbsensiUser_id',
+			// type: 'post'
+			'data': function (data) {
+				// Read values
+				var from_date = $('#search_fromdate1').val();
+				// var to_date = $('#search_todate').val();
+
+				// Append to data
+				data.searchByFromdate = from_date;
+				// data.searchByTodate = to_date;
+			}
+		},
+	});
+
+	$('.waktu_absen').change(function () {
+		table.draw();
+	});
+});
+
+
+// tabel absensi user pegawai
+$(function () {
+	const url = $("#page-top").data('url');
+	const table = $("#tbl_absensi_forUser_peg").DataTable({
+		"pageLength": 5,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		'serverMethod': 'post',
+		'searching': true,
+		"ajax": {
+			url: url + 'User/getAbsensiUser_id',
+			// type: 'post'
+			'data': function (data) {
+				// Read values
+				var from_date = $('#search_fromdate1').val();
+				// var to_date = $('#search_todate').val();
+
+				// Append to data
+				data.searchByFromdate = from_date;
+				// data.searchByTodate = to_date;
+			}
+		},
+	});
+
+	$('.waktu_absen').change(function () {
+		table.draw();
+	});
+});
+
+
+// tabel absensi user direktur
+$(function () {
+	const url = $("#page-top").data('url');
+	const table = $("#tbl_absensi_forUser_dirut").DataTable({
+		"pageLength": 5,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		'serverMethod': 'post',
+		'searching': true,
+		"ajax": {
+			url: url + 'Direktur/getAbsensiUser_id',
+			// type: 'post'
+			'data': function (data) {
+				// Read values
+				var from_date = $('#search_fromdate1').val();
+				// var to_date = $('#search_todate').val();
+
+				// Append to data
+				data.searchByFromdate = from_date;
+				// data.searchByTodate = to_date;
+			}
+		},
+	});
+
+	$('.waktu_absen').change(function () {
+		table.draw();
+	});
+});
+
 
 
 // cetak persensi perhari dan perbulan.
@@ -1116,4 +1280,37 @@ $(function () {
 		$("#tgl_absen_cetak1").show();
 		$(".modal-body form").attr('action', url + 'Absensi/cetak_persensiBulanan');
 	});
+
+	// list absensi_untuk user_op_sekretaris
+	const table = $("#tbl_absensi_forUser").DataTable({
+		"pageLength": 5,
+		"serverSide": true,
+		"order": [
+			[0, "asc"]
+		],
+		'serverMethod': 'post',
+		'searching': true,
+		"ajax": {
+			url: url + 'Operator/getAbsensiUser_id',
+			// type: 'post'
+			'data': function (data) {
+				// Read values
+				var from_date = $('#search_fromdate1').val();
+				// var to_date = $('#search_todate').val();
+
+				// Append to data
+				data.searchByFromdate = from_date;
+				// data.searchByTodate = to_date;
+			}
+		},
+	});
+
+	$('.waktu_absen').change(function () {
+		table.draw();
+	});
 });
+
+
+
+
+

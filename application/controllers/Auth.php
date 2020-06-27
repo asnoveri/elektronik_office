@@ -14,7 +14,11 @@ class Auth extends CI_Controller
     public function index($data1 = "")
     {
 
+<<<<<<< HEAD
         $this->load->library('calendar');
+=======
+        
+>>>>>>> bbf2f91c46ae9b38e5c1c75c8c76342b7d2fbc97
         if (!empty($this->session->userdata('role_id'))) {
             if ($this->session->userdata('role_id') == 1) {
                 redirect("admin");
