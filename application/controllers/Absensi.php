@@ -128,18 +128,39 @@ class Absensi extends CI_Controller
 
     public function cetak_persensiBulanan()
     {
+        // $tahun = "2020";
+        // // date('Y'); //Mengambil tahun saat ini
+        // $bulan = "01";
+        // // date('m'); //Mengambil bulan saat ini
+        // $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+
+        // for ($i = 1; $i < $tanggal + 1; $i++) {
+        //     echo $i . " - " . hari_indo("$i-$bulan-$tahun") . "<br>";
+        // }
+
+        // die();
         ob_start();
         $tanggal = $this->input->post('tanggal');
         $tanggal1 = $this->input->post('tanggal1');
         $data['priode1'] = $tanggal;
         $data['priode2'] = $tanggal1;
-        $data['range'] = date_range($tanggal, $tanggal1);
-        $data['range'] = count($data['range']);
-        // echo "First 15 days of 2012:";
-        // foreach ($range as $date) {
-        //     echo $date . "\n";
-        //     echo "<br>";
-        // }
+        $datarange = date_range($tanggal, $tanggal1);
+        $data['range'] = count($datarange);
+
+        $sabtu = 0;
+        $minggu = 0;
+
+        foreach ($datarange as $dt) {
+            if (nice_date($dt, "l") == 'Saturday') {
+                echo nice_date($dt, "l") . "<br>";
+                $sabtu++;
+            }
+            if (nice_date($dt, "l") == 'Sunday') {
+                echo nice_date($dt, "l") . "<br>";
+                $minggu++;
+            }
+        }
+
 
         $user = $this->user_Mod->get_semua_user();
 
@@ -151,6 +172,8 @@ class Absensi extends CI_Controller
             $data['tot_wfh'][] = count($absn);
             $data['tot_pkt'][] = count($pkt);
             $data['tot_izn'][] = count($izn);
+            $data['tot_sabtu'] = $sabtu;
+            $data['tot_minggu'] = $minggu;
         }
         $data['user'] = $data['user'];
         $data['tot_wfh'] = $data['tot_wfh'];

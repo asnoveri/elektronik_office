@@ -15,8 +15,6 @@ class Auth extends CI_Controller
     {
 
         $this->load->library('calendar');
-        print_r($this->calendar->adjust_date(13, 2014));
-        die();
         if (!empty($this->session->userdata('role_id'))) {
             if ($this->session->userdata('role_id') == 1) {
                 redirect("admin");

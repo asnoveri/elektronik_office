@@ -44,7 +44,7 @@
                 <td><?= $tot_wfh[$i] . " Hari" ?></td>
                 <td><?= $tot_pkt[$i] . " Hari" ?></td>
                 <td><?= $tot_izn[$i] . " Hari" ?></td>
-                <td><?= $range - ($tot_wfh[$i] + $tot_pkt[$i] + $tot_izn[$i]) . " Hari" ?></td>
+                <td><?= $range - ($tot_wfh[$i] + $tot_pkt[$i] + $tot_izn[$i]) - $tot_sabtu - $tot_minggu  . " Hari" ?></td>
                 <td><?= $tot_wfh[$i] + $tot_pkt[$i] . " Hari" ?></td>
             </tr>
         <?php }
