@@ -132,7 +132,7 @@ class Absensi extends CI_Controller
         $html2pdf->output("absensi_harian_pegawai'_$date.'.pdf");
     }
 
-    public function cetak_persensiBulanan()
+    public function cetak_rekapPerpriode()
     {
         // $tahun = "2020";
         // // date('Y'); //Mengambil tahun saat ini
@@ -180,12 +180,10 @@ class Absensi extends CI_Controller
             $data['tot_wfh'][] = count($absn);
             $data['tot_pkt'][] = count($pkt);
             $data['tot_izn'][] = count($izn);
-<<<<<<< HEAD
+            $data['tot_dl'][] = count($dl);
+
             $data['tot_sabtu'] = $sabtu;
             $data['tot_minggu'] = $minggu;
-=======
-             $data['tot_dl'][] = count($dl);
->>>>>>> bbf2f91c46ae9b38e5c1c75c8c76342b7d2fbc97
         }
         $data['user'] = $data['user'];
         $data['nip'] = $data['nip']; 

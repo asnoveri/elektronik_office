@@ -45,14 +45,10 @@
                 <td><?= $tot_wfh[$i] . " Hari" ?></td>
                 <td><?= $tot_pkt[$i] . " Hari" ?></td>
                 <td><?= $tot_izn[$i] . " Hari" ?></td>
-<<<<<<< HEAD
-                <td><?= $range - ($tot_wfh[$i] + $tot_pkt[$i] + $tot_izn[$i]) - $tot_sabtu - $tot_minggu  . " Hari" ?></td>
-                <td><?= $tot_wfh[$i] + $tot_pkt[$i] . " Hari" ?></td>
-=======
+
                 <td><?= $tot_dl[$i] . " Hari" ?></td>
-                <td><?= $range - ($tot_wfh[$i] + $tot_pkt[$i] + $tot_izn[$i] + $tot_dl[$i]) . " Hari" ?></td>
+                <td><?= $range - ($tot_wfh[$i] + $tot_pkt[$i] + $tot_izn[$i] + $tot_dl[$i]) - $tot_sabtu - $tot_minggu . " Hari" ?></td>
                 <td><?= $tot_wfh[$i] + $tot_pkt[$i] + $tot_dl[$i]. " Hari" ?></td>
->>>>>>> bbf2f91c46ae9b38e5c1c75c8c76342b7d2fbc97
             </tr>
         <?php }
         ?>

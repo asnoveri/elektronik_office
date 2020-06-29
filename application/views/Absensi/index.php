@@ -31,7 +31,7 @@
                         <i class="fas fa-print fa-sm text-white-50"></i> Cetak Absensi Harian
                     </button>
                     <button type="button" class="btn btn-sm btn-secondary" id="btn-ctk-perbulan">
-                        <i class="fas fa-print fa-sm text-white-50"></i> Cetak Rekap Bulanan
+                        <i class="fas fa-print fa-sm text-white-50"></i> Cetak Rekap Perpriode
                     </button>
                     <button type="button" class="btn btn-sm btn-light" id="btn-ctk-perbulan1">
                         <i class="fas fa-print fa-sm text-white-50"></i> Cetak Absensi Bulanan
