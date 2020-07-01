@@ -8,6 +8,7 @@
     table {
         border-collapse: collapse;
         width: 100%;
+        font-size: 10px;
     }
 
     td,
@@ -47,14 +48,8 @@
                 <td><?= $tot_izn[$i] . " Hari" ?></td>
 
                 <td><?= $tot_dl[$i] . " Hari" ?></td>
-<<<<<<< HEAD
-                <td><?= $range - ($tot_wfh[$i] + $tot_pkt[$i] + $tot_izn[$i] + $tot_dl[$i]) - $tot_sabtu - $tot_minggu  . " Hari" ?></td>
-                <td><?= $tot_wfh[$i] + $tot_pkt[$i] + $tot_dl[$i] . " Hari" ?></td>
-
-=======
                 <td><?= $range - ($tot_wfh[$i] + $tot_pkt[$i] + $tot_izn[$i] + $tot_dl[$i]) - $tot_sabtu - $tot_minggu . " Hari" ?></td>
-                <td><?= $tot_wfh[$i] + $tot_pkt[$i] + $tot_dl[$i]. " Hari" ?></td>
->>>>>>> 612c818a3682c330aa134c8749866881a8a92f2e
+                <td><?= $tot_wfh[$i] + $tot_pkt[$i] + $tot_dl[$i] . " Hari" ?></td>
             </tr>
         <?php }
         ?>

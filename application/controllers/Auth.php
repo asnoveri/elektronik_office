@@ -13,11 +13,6 @@ class Auth extends CI_Controller
 
     public function index($data1 = "")
     {
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 612c818a3682c330aa134c8749866881a8a92f2e
         if (!empty($this->session->userdata('role_id'))) {
             if ($this->session->userdata('role_id') == 1) {
                 redirect("admin");

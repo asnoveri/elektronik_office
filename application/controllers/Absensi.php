@@ -179,16 +179,9 @@ class Absensi extends CI_Controller
             $data['tot_wfh'][] = count($absn);
             $data['tot_pkt'][] = count($pkt);
             $data['tot_izn'][] = count($izn);
-<<<<<<< HEAD
             $data['tot_sabtu'] = $sabtu;
             $data['tot_minggu'] = $minggu;
             $data['tot_dl'][] = count($dl);
-=======
-            $data['tot_dl'][] = count($dl);
-
-            $data['tot_sabtu'] = $sabtu;
-            $data['tot_minggu'] = $minggu;
->>>>>>> 612c818a3682c330aa134c8749866881a8a92f2e
         }
         $data['user'] = $data['user'];
         $data['nip'] = $data['nip'];
