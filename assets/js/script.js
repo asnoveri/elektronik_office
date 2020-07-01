@@ -1278,7 +1278,7 @@ $(function () {
 		$("#cetak_absensi").modal("show");
 		$("#label_modal_absensi").html("Cetak Persensi Bulanan");
 		$("#tgl_absen_cetak1").show();
-		$(".modal-body form").attr('action', url + 'Absensi/cetak_persensiBulanan');
+		$(".modal-body form").attr('action', url + 'Absensi/cetak_rekapPerpriode');
 	});
 
 	// list absensi_untuk user_op_sekretaris
