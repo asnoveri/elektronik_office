@@ -83,7 +83,6 @@ class Absensi extends CI_Controller
             ];
             echo json_encode($respon);
             die();
-            
         } else {
             $judul = 'Absensi';
             $halaman = 'Absensi/index';
@@ -93,7 +92,7 @@ class Absensi extends CI_Controller
     }
 
 
-   
+
 
     public function cetak_persensiHarian()
     {
@@ -180,15 +179,12 @@ class Absensi extends CI_Controller
             $data['tot_wfh'][] = count($absn);
             $data['tot_pkt'][] = count($pkt);
             $data['tot_izn'][] = count($izn);
-<<<<<<< HEAD
             $data['tot_sabtu'] = $sabtu;
             $data['tot_minggu'] = $minggu;
-=======
-             $data['tot_dl'][] = count($dl);
->>>>>>> bbf2f91c46ae9b38e5c1c75c8c76342b7d2fbc97
+            $data['tot_dl'][] = count($dl);
         }
         $data['user'] = $data['user'];
-        $data['nip'] = $data['nip']; 
+        $data['nip'] = $data['nip'];
         $data['tot_wfh'] = $data['tot_wfh'];
         $data['tot_pkt'] = $data['tot_pkt'];
         $data['tot_izn'] = $data['tot_izn'];
