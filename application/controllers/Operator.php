@@ -54,26 +54,34 @@ class Operator extends CI_Controller
             $tgl = date("Y-m-d");
             $absen_keluar = $this->input->post('absen_keluar', true);
             $cek_absenKel = $this->absensi_Mod->cek_absensikeluar($id, $tgl);
-            if ($cek_absenKel->absensi_keluar == "00:00:00") {
-                $id_absensi = $cek_absenKel->id_absensi;
-                $data = [
-                    'absensi_keluar' => $absen_keluar
-                ];
-                if ($this->absensi_Mod->update_absensi($id_absensi, $data)) {
-                    $pesan = "Absen Pulang Anda Sudah Terkirim ";
+            $jadwl_absen = $this->absensi_Mod->get_jadwal_absensi();
+
+            $jamkel1 = new DateTime($jadwl_absen->jam_keluar);
+            $jamkel2 = new DateTime($absen_keluar);
+            if ($jamkel2 >= $jamkel1) {
+                if ($cek_absenKel->absensi_keluar == "00:00:00") {
+                    $id_absensi = $cek_absenKel->id_absensi;
+                    $data = [
+                        'absensi_keluar' => $absen_keluar
+                    ];
+                    if ($this->absensi_Mod->update_absensi($id_absensi, $data)) {
+                        $pesan = "Absen Pulang Anda Sudah Terkirim ";
+                    }
+                    $log = [
+                        'tanggal' => time(),
+                        'aksi' => "Absensi",
+                        'Keterangan' => "Ambil Absen Pulang",
+                        'ip' => $this->input->ip_address(),
+                        'tipe_login' => $this->session->userdata('role_id'),
+                        'id_user' => $this->session->userdata('id'),
+                        'status' => 1
+                    ];
+                    $this->login_Mod->addlog($log);
+                } else {
+                    $pesan = "Anda Sudah Mengambil Absen Pulang";
                 }
-                $log = [
-                    'tanggal' => time(),
-                    'aksi' => "Absensi",
-                    'Keterangan' => "Ambil Absen Pulang",
-                    'ip' => $this->input->ip_address(),
-                    'tipe_login' => $this->session->userdata('role_id'),
-                    'id_user' => $this->session->userdata('id'),
-                    'status' => 1
-                ];
-                $this->login_Mod->addlog($log);
             } else {
-                $pesan = "Anda Sudah Mengambil Absen Pulang";
+                $pesan = "Belum Bisa Mengambil Absen Pulang";
             }
             echo json_encode($pesan);
             die();
@@ -85,70 +93,71 @@ class Operator extends CI_Controller
         }
     }
 
-     public function getAbsensiUser_id(){
-            $length = intval($this->input->post('length'));
-            $draw = intval($this->input->post('draw'));
-            $start = intval($this->input->post('start'));
-            $order = $this->input->post('order');
-            $search = $this->input->post('search');
-            $search = $search['value'];
-            $searchByFromdate = $this->input->post('searchByFromdate');
-            $col = 0;
-            $dir = "";
-            $where = "";
+    public function getAbsensiUser_id()
+    {
+        $length = intval($this->input->post('length'));
+        $draw = intval($this->input->post('draw'));
+        $start = intval($this->input->post('start'));
+        $order = $this->input->post('order');
+        $search = $this->input->post('search');
+        $search = $search['value'];
+        $searchByFromdate = $this->input->post('searchByFromdate');
+        $col = 0;
+        $dir = "";
+        $where = "";
 
-            if ($searchByFromdate != '') {
-                $where = $searchByFromdate;
+        if ($searchByFromdate != '') {
+            $where = $searchByFromdate;
+        }
+
+        if (!empty($order)) {
+            foreach ($order as $or) {
+                $col = $or['column'];
+                $dir = $or['dir'];
             }
+        }
 
-            if (!empty($order)) {
-                foreach ($order as $or) {
-                    $col = $or['column'];
-                    $dir = $or['dir'];
-                }
-            }
+        if ($dir != 'asc' && $dir != 'desc') {
+            $dir = 'desc';
+        }
 
-            if ($dir != 'asc' && $dir != 'desc') {
-                $dir = 'desc';
-            }
+        $valid_columns = [
+            1 => 'tanggal',
+            2 => 'absensi_masuk',
+            3 => 'absensi_keluar',
+            4 => 'ket_keberadaan'
+        ];
 
-            $valid_columns = [
-                1 => 'tanggal',
-                2 => 'absensi_masuk',
-                3 => 'absensi_keluar',
-                4 => 'ket_keberadaan'
+        if (!isset($valid_columns[$col])) {
+            $order = null;
+        } else {
+            $order = $valid_columns[$col];
+        }
+
+        $id_user = $this->session->userdata('id');
+        $dta = $this->absensi_Mod->get_all_absensi_userid($length, $start, $order, $dir, $search, $where, $id_user);
+        $json = [];
+        $no = $start + 1;
+        foreach ($dta as $data) {
+            $bad_date = $data->tanggal;
+            $tgl = nice_date($bad_date, 'd-m-Y');
+            $json[] = [
+                $no++,
+                $tgl,
+                $data->absensi_masuk,
+                $data->absensi_keluar,
+                $data->ket_keberadaan,
             ];
-
-            if (!isset($valid_columns[$col])) {
-                $order = null;
-            } else {
-                $order = $valid_columns[$col];
-            }
-
-            $id_user=$this->session->userdata('id');
-            $dta = $this->absensi_Mod->get_all_absensi_userid($length, $start, $order, $dir, $search, $where,$id_user);
-            $json = [];
-            $no = $start + 1;
-            foreach ($dta as $data) {
-                $bad_date = $data->tanggal;
-                $tgl = nice_date($bad_date, 'd-m-Y');
-                $json[] = [
-                    $no++,
-                    $tgl,
-                    $data->absensi_masuk,
-                    $data->absensi_keluar,
-                    $data->ket_keberadaan,
-                ];
-            }
-            $tot = $this->absensi_Mod->get_all_absensi_userid_count($where,$id_user);
-            $respon = [
-                'draw' => $draw,
-                'recordsTotal' => $tot,
-                'recordsFiltered' => $tot,
-                'data' => $json
-            ];
-            echo json_encode($respon);
-            die();
+        }
+        $tot = $this->absensi_Mod->get_all_absensi_userid_count($where, $id_user);
+        $respon = [
+            'draw' => $draw,
+            'recordsTotal' => $tot,
+            'recordsFiltered' => $tot,
+            'data' => $json
+        ];
+        echo json_encode($respon);
+        die();
     }
 
 

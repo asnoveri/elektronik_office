@@ -8,15 +8,15 @@ class Direktur extends CI_Controller
     {
         parent::__construct();
 
-         $this->load->model("login_Mod");
+        $this->load->model("login_Mod");
         $this->load->model("absensi_Mod");
         date_default_timezone_set('Asia/Jakarta');
         is_login();
     }
 
-    public function index($param="")
+    public function index($param = "")
     {
-         if ($param == 'add_absensi') {
+        if ($param == 'add_absensi') {
             $id_jdwlabnsi = $this->input->post('id_jdwlabnsi', true);
             $id = $this->session->userdata('id');
             $tgl = date("Y-m-d");
@@ -83,7 +83,6 @@ class Direktur extends CI_Controller
             $data['jadwal_absen'] = $this->absensi_Mod->get_jadwal_absensi();
             $this->template->TemplateGen($judul, $halaman, $data);
         }
-        
     }
 
     public function profil_dr()
@@ -95,69 +94,70 @@ class Direktur extends CI_Controller
     }
 
 
-    public function getAbsensiUser_id(){
-            $length = intval($this->input->post('length'));
-            $draw = intval($this->input->post('draw'));
-            $start = intval($this->input->post('start'));
-            $order = $this->input->post('order');
-            $search = $this->input->post('search');
-            $search = $search['value'];
-            $searchByFromdate = $this->input->post('searchByFromdate');
-            $col = 0;
-            $dir = "";
-            $where = "";
+    public function getAbsensiUser_id()
+    {
+        $length = intval($this->input->post('length'));
+        $draw = intval($this->input->post('draw'));
+        $start = intval($this->input->post('start'));
+        $order = $this->input->post('order');
+        $search = $this->input->post('search');
+        $search = $search['value'];
+        $searchByFromdate = $this->input->post('searchByFromdate');
+        $col = 0;
+        $dir = "";
+        $where = "";
 
-            if ($searchByFromdate != '') {
-                $where = $searchByFromdate;
+        if ($searchByFromdate != '') {
+            $where = $searchByFromdate;
+        }
+
+        if (!empty($order)) {
+            foreach ($order as $or) {
+                $col = $or['column'];
+                $dir = $or['dir'];
             }
+        }
 
-            if (!empty($order)) {
-                foreach ($order as $or) {
-                    $col = $or['column'];
-                    $dir = $or['dir'];
-                }
-            }
+        if ($dir != 'asc' && $dir != 'desc') {
+            $dir = 'desc';
+        }
 
-            if ($dir != 'asc' && $dir != 'desc') {
-                $dir = 'desc';
-            }
+        $valid_columns = [
+            1 => 'tanggal',
+            2 => 'absensi_masuk',
+            3 => 'absensi_keluar',
+            4 => 'ket_keberadaan'
+        ];
 
-            $valid_columns = [
-                1 => 'tanggal',
-                2 => 'absensi_masuk',
-                3 => 'absensi_keluar',
-                4 => 'ket_keberadaan'
+        if (!isset($valid_columns[$col])) {
+            $order = null;
+        } else {
+            $order = $valid_columns[$col];
+        }
+
+        $id_user = $this->session->userdata('id');
+        $dta = $this->absensi_Mod->get_all_absensi_userid($length, $start, $order, $dir, $search, $where, $id_user);
+        $json = [];
+        $no = $start + 1;
+        foreach ($dta as $data) {
+            $bad_date = $data->tanggal;
+            $tgl = nice_date($bad_date, 'd-m-Y');
+            $json[] = [
+                $no++,
+                $tgl,
+                $data->absensi_masuk,
+                $data->absensi_keluar,
+                $data->ket_keberadaan,
             ];
-
-            if (!isset($valid_columns[$col])) {
-                $order = null;
-            } else {
-                $order = $valid_columns[$col];
-            }
-
-            $id_user=$this->session->userdata('id');
-            $dta = $this->absensi_Mod->get_all_absensi_userid($length, $start, $order, $dir, $search, $where,$id_user);
-            $json = [];
-            $no = $start + 1;
-            foreach ($dta as $data) {
-                $bad_date = $data->tanggal;
-                $tgl = nice_date($bad_date, 'd-m-Y');
-                $json[] = [
-                    $no++,
-                    $tgl,
-                    $data->absensi_masuk,
-                    $data->absensi_keluar,
-                    $data->ket_keberadaan,
-                ];
-            }
-            $tot = $this->absensi_Mod->get_all_absensi_userid_count($where,$id_user);
-            $respon = [
-                'draw' => $draw,
-                'recordsTotal' => $tot,
-                'recordsFiltered' => $tot,
-                'data' => $json
-            ];
-            echo json_encode($respon);
-            die();
+        }
+        $tot = $this->absensi_Mod->get_all_absensi_userid_count($where, $id_user);
+        $respon = [
+            'draw' => $draw,
+            'recordsTotal' => $tot,
+            'recordsFiltered' => $tot,
+            'data' => $json
+        ];
+        echo json_encode($respon);
+        die();
     }
 }

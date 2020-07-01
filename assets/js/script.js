@@ -950,29 +950,30 @@ $(function () {
 		const m = d.getMinutes();
 		const s = d.getSeconds();
 		const jam = h + ':' + m + ':' + s;
-		if (jam >= jk) {
-			$.ajax({
-				url: url + link,
-				data: {
-					absen_keluar: jam,
-				},
-				type: 'post',
-				dataType: 'JSON',
-				success: function (data) {
-					$("#pesan-eror").addClass("alert alert-info alert-dismissible");
-					$("#pesan-eror").html(data);
-					$("#pesan-eror").fadeIn(function () {
-						$("#pesan-eror").fadeOut(5000);
-					});
-				}
-			});
-		} else {
-			$("#pesan-eror").addClass("alert alert-info alert-dismissible");
-			$("#pesan-eror").html("Belum Bisa Mengambil Absen Pulang");
-			$("#pesan-eror").fadeIn(function () {
-				$("#pesan-eror").fadeOut(5000);
-			});
-		}
+
+		// if (jam >= jk) {
+		$.ajax({
+			url: url + link,
+			data: {
+				absen_keluar: jam,
+			},
+			type: 'post',
+			dataType: 'JSON',
+			success: function (data) {
+				$("#pesan-eror").addClass("alert alert-info alert-dismissible");
+				$("#pesan-eror").html(data);
+				$("#pesan-eror").fadeIn(function () {
+					$("#pesan-eror").fadeOut(5000);
+				});
+			}
+		});
+		// } else {
+		// 	$("#pesan-eror").addClass("alert alert-info alert-dismissible");
+		// 	$("#pesan-eror").html("Belum Bisa Mengambil Absen Pulang");
+		// 	$("#pesan-eror").fadeIn(function () {
+		// 		$("#pesan-eror").fadeOut(5000);
+		// 	});
+		// }
 	});
 
 
@@ -1309,8 +1310,3 @@ $(function () {
 		table.draw();
 	});
 });
-
-
-
-
-
