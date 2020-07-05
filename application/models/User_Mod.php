@@ -368,11 +368,13 @@ class user_Mod extends CI_Model
             $this->db->where('parent_unit', 0);
             $this->db->where('id_unitkerja !=', 1);
             $this->db->where('id_unitkerja !=', 14);
+            $this->db->where('id_unitkerja !=', 50);
             return $this->db->get('unit_kerja')->result();
         } else {
             $this->db->where('parent_unit', 0);
             $this->db->where('id_unitkerja !=', 1);
             $this->db->where('id_unitkerja !=', 14);
+            $this->db->where('id_unitkerja !=', 50);
             return $this->db->get('unit_kerja')->result();
         }
     }
@@ -400,5 +402,22 @@ class user_Mod extends CI_Model
     public function get_semua_user()
     {
         return $this->db->get('user')->result();
+    }
+
+    public function get_penguna_user($id)
+    {
+        return $this->db->get_where('peguna', ['id' => $id, 'status' => 1])->result();
+    }
+
+    public function get_jabatan_user($id_penguna)
+    {
+        $query = $this->db->get_where('jabatan', ['id_peguna' => $id_penguna, 'status' => 1])->result();
+        return $query;
+    }
+
+    public function get_unitkerja_user($id_unitkerja)
+    {
+        $query = $this->db->get_where('unit_kerja', ['id_unitkerja' => $id_unitkerja])->result();
+        return $query;
     }
 }

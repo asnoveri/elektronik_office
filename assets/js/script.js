@@ -1309,4 +1309,41 @@ $(function () {
 	$('.waktu_absen').change(function () {
 		table.draw();
 	});
+
+	$(":input[id='customFile1']").on('change', function () {
+		const url = $("#page-top").data('url');
+		const form_data = new FormData($('#form_upload_foto')[0]);
+		const role_id = $("#role_id").val();
+
+		if (role_id == 2) {
+			var link = 'Operator/do_edit_uploadimage';
+			var link1 = 'Operator/profil_op';
+		} else if (role_id == 4) {
+			var link = 'Direktur/do_edit_uploadimage';
+			var link1 = 'Direktur/profil_dr';
+		} else if (role_id == 5) {
+			var link = 'Wadir/do_edit_uploadimage';
+			var link1 = 'Wadir/profil_wadir';
+		} else if (role_id == 6) {
+			var link = 'Adum/do_edit_uploadimage';
+			var link1 = 'Adum/profil_adum';
+		} else if (role_id == 3) {
+			var link = 'User/do_edit_uploadimage';
+			var link1 = 'User/profil_user';
+		}
+
+		$.ajax({
+			url: url + link,
+			data: form_data,
+			contentType: false,
+			processData: false,
+			type: 'post',
+			success: function (data) {
+				//unutk meridirect dengan Ajax
+				document.location.href = url + link1;
+				// console.log(data);
+			}
+		});
+	});
+
 });

@@ -164,8 +164,56 @@ class Operator extends CI_Controller
     public function profil_op()
     {
         $judul = 'Profil ';
-        $halaman = 'Operator/profil_operator';
-        $data = "";
+        $halaman = 'operator/profil_operator';
+        $data['user'] = $this->user_Mod->get_userEdit($this->session->userdata('id'));
+        $peguna = $this->user_Mod->get_penguna_user($this->session->userdata('id'));
+        foreach ($peguna as $pgn) {
+            // echo $pgn->id_penguna . "<br>";
+            $jabatan = $this->user_Mod->get_jabatan_user($pgn->id_penguna);
+            for ($i = 0; $i < count($jabatan); $i++) {
+                // echo $jabatan[$i]->id_unitkerja . "<br>";
+                $jabatankerja[] = $this->user_Mod->get_unitkerja_user($jabatan[$i]->nama_jabatan);
+            }
+        }
+        $data['jabatankerja'] = $jabatankerja;
         $this->template->TemplateGen($judul, $halaman, $data);
+    }
+
+    public function do_edit_uploadimage()
+    {
+        $id = $this->input->post('id', true);
+        $data = $this->user_Mod->get_userEdit($id);
+
+        //mencek jika ada gambar yang akan di upload
+        $upload_image = $_FILES["gambar"]["name"];
+        if ($upload_image) {
+            $config['upload_path']          = "./assets/images/";
+            $config['allowed_types']        = 'gif|jpg|png';
+            $config['max_size']             = 2048;
+            $config['remove_spaces']        = true;
+
+            //memangil libraires upload dan masukan configurasinya
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload('gambar')) {
+                $error = $this->upload->display_errors();
+                $this->session->set_flashdata('erorogbr', '<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                    . $error .
+                    '</div>');
+            } else {
+                $old_images = $data->image;
+                //mencek images lama yang tersimpan di drektory sistem tidak sama dengan  default.jpg
+                if ($old_images != 'default.png') {
+                    //   jika tidak sama hapus image selain default.jpg
+                    unlink(FCPATH . '/assets/images/' . $old_images);
+                }
+                $new_images = [
+                    // $this->upload->data('file_name')->untuk mengmbil nama dari file yang di upload
+                    'image' => $this->upload->data('file_name')
+                ];
+                $this->user_Mod->Update_images($new_images, $id);
+            }
+        }
     }
 }
