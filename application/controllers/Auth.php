@@ -74,16 +74,16 @@ class Auth extends CI_Controller
                             redirect('Auth');
                         }
                     } elseif (count($penguna) == 1) {
-                        $role = $this->login_Mod->get_role($datalogin['id']);
-                        // if($role->status==1){
-                        $data = [
-                            'email'     => $datalogin['email'],
-                            'role_id'   => $role->role_id,
-                            'id'        => $datalogin['id']
-                            // 'id_jabatan'=> $datalogin['id_jabatan']
-                        ];
-                        $this->session->set_userdata($data);
                         if (password_verify($pass, $datalogin['pass'])) {
+                            $role = $this->login_Mod->get_role($datalogin['id']);
+                            // if($role->status==1){
+                            $data = [
+                                'email'     => $datalogin['email'],
+                                'role_id'   => $role->role_id,
+                                'id'        => $datalogin['id']
+                                // 'id_jabatan'=> $datalogin['id_jabatan']
+                            ];
+                            $this->session->set_userdata($data);
                             if ($role->role_id == 1) {
                                 $redirect = 'Admin';
                             } elseif ($role->role_id == 2) {
