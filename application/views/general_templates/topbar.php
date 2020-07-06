@@ -59,6 +59,11 @@
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                   </a>
+
+                  <a class="dropdown-item" href="<?= base_url() ?>Operator/editpasswd">
+                    <i class="fa fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Edit KataSandi
+                  </a>
                 <?php } elseif ($data_user['role_id'] == 3) { ?>
                   <a class="dropdown-item" href="<?= base_url() ?>User/profil_user">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>

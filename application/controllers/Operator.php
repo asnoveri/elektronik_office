@@ -191,7 +191,7 @@ class Operator extends CI_Controller
             $config['allowed_types']        = 'gif|jpg|png';
             $config['max_size']             = 2048;
             $config['remove_spaces']        = true;
-           
+
             //memangil libraires upload dan masukan configurasinya
             $this->load->library('upload', $config);
 
@@ -203,20 +203,73 @@ class Operator extends CI_Controller
                     '</div>');
             } else {
                 $old_images = $data->image;
-                
+
                 //mencek images lama yang tersimpan di drektory sistem tidak sama dengan  default.jpg
                 if ($old_images != 'default.png') {
                     //   jika tidak sama hapus image selain default.jpg
                     unlink(FCPATH . '/assets/images/' . $old_images);
-                    
                 }
                 $new_images = [
                     // $this->upload->data('file_name')->untuk mengmbil nama dari file yang di upload
                     'image' => $this->upload->data('file_name'),
-                    ];
+                ];
 
                 // print_r($new_images);
                 $this->user_Mod->Update_images($new_images, $id);
+            }
+        }
+    }
+
+
+    public function editpasswd()
+    {
+        $judul = 'Edit KataSandi';
+        $halaman = 'operator/editktasandi';
+        $data = "";
+        $this->template->TemplateGen($judul, $halaman, $data);
+    }
+
+    public function do_edit_pass()
+    {
+        $id = $this->session->userdata('id');
+        $this->form_validation->set_rules(
+            'pass',
+            'Pass',
+            'required|trim|min_length[6]|matches[pass1]',
+            [
+                'required' => 'Kata Sandi Tidak Boleh Kosong',
+                'min_length' => 'Kata Sandi Harus Lebih dari 6 Karakter',
+                'matches' => 'Kata Sandi yang Di Inputkan Tidak sama'
+            ]
+        );
+        $this->form_validation->set_rules(
+            'pass1',
+            'Pass1',
+            'required|trim|min_length[6]|matches[pass]',
+            [
+                'required' => 'Ulang Kata Sandi Tidak Boleh Kosong',
+                'min_length' => 'Kata Sandi Harus Lebih dari 6 Karakter',
+                'matches' => 'Kata Sandi yang Di Inputkan Tidak sama'
+            ]
+        );
+        if ($this->form_validation->run() == FALSE) {
+            $this->editpasswd();
+        } else {
+            $data = [
+                'pass'      => password_hash($this->input->post('pass1', true), PASSWORD_DEFAULT),
+            ];
+            if ($this->user_Mod->edit_userBYid($data, $id)) {
+                $this->session->set_flashdata('pesanaddop', '<div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Berhasil edit Kata sandi User  
+                        </div>');
+                redirect("Operator/editpasswd");
+            } else {
+                $this->session->set_flashdata('pesanaddop', '<div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            Gagal edit Kata Sandi User  
+                        </div>');
+                redirect("Operator/editpasswd");
             }
         }
     }
