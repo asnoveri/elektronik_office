@@ -191,7 +191,7 @@ class Operator extends CI_Controller
             $config['allowed_types']        = 'gif|jpg|png';
             $config['max_size']             = 2048;
             $config['remove_spaces']        = true;
-
+           
             //memangil libraires upload dan masukan configurasinya
             $this->load->library('upload', $config);
 
@@ -203,15 +203,19 @@ class Operator extends CI_Controller
                     '</div>');
             } else {
                 $old_images = $data->image;
+                
                 //mencek images lama yang tersimpan di drektory sistem tidak sama dengan  default.jpg
                 if ($old_images != 'default.png') {
                     //   jika tidak sama hapus image selain default.jpg
                     unlink(FCPATH . '/assets/images/' . $old_images);
+                    
                 }
                 $new_images = [
                     // $this->upload->data('file_name')->untuk mengmbil nama dari file yang di upload
-                    'image' => $this->upload->data('file_name')
-                ];
+                    'image' => $this->upload->data('file_name'),
+                    ];
+
+                // print_r($new_images);
                 $this->user_Mod->Update_images($new_images, $id);
             }
         }

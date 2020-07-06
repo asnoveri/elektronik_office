@@ -19,9 +19,35 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-6">
+                <div class="form-group text-capitalize">
+                  <label class="font-weight-bold">Nama Lengkap</label>
+                  <input type="text" class="form-control" readonly value="<?= $user->fullname ?>">
+                </div>
+                <div class="form-group ">
+                  <label class="text-capitalize font-weight-bold">NIP</label>
+                  <input type="text" class="form-control" readonly value="<?= $user->nip ?>">
+                </div>
+                <div class="form-group ">
+                  <label class="text-capitalize font-weight-bold">User Name</label>
+                  <input type="text" class="form-control" readonly value="<?= $user->user_name ?>">
+                </div>
+                <div class="form-group ">
+                  <label class="text-capitalize font-weight-bold">Email</label>
+                  <input type="text" class="form-control" name="email" readonly value="<?= $user->email ?>">
+                </div>
+                  <div class="form-group ">
+                  <label class="text-capitalize font-weight-bold">Jabatan</label>
+                  <p class="form-control" readonly><?php
+                      foreach ($jabatankerja as $jabker) { ?>
+                        <span class="badge badge-primary"><?= $jabker[0]->unitkerja ?></span>
+                      <?php }?>
+                  </p>
+                </div>
+            </div>
+            <div class="col-sm-6">
               <?= $this->session->flashdata('erorogbr') ?>
-              <div class="card">
+              <div class="card" style="width:250px;">
                 <img class="card-img-top img-thumbnail" src="<?= base_url() ?>assets/images/<?= $user->image ?>" alt="Card image">
                 <div class="card-body">
                   <label class="card-text">Ubah Foto Profil</label>
@@ -36,50 +62,9 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-2">
-              <p class="card-text text-capitalize">nama lengkap</p>
-              <p class="card-text text-capitalize">NIP</p>
-              <p class="card-text text-capitalize">user name</p>
-              <p class="card-text text-capitalize">email</p>
-              <p class="card-text text-capitalize">jabatan</p>
-
-            </div>
-            <div class="col-sm-6">
-              <p class="card-text text-capitalize">: <?= $user->fullname ?></p>
-              <p class="card-text text-capitalize">: <?= $user->nip ?></p>
-              <p class="card-text ">: <?= $user->user_name ?></p>
-              <p class="card-text ">: <?= $user->email ?></p>
-              <p class="card-text ">:
-                <?php
-                foreach ($jabatankerja as $jabker) { ?>
-                  <span class="badge badge-primary"><?= $jabker[0]->unitkerja ?></span>
-                <?php }
-                ?>
-              </p>
-
-              <!-- <form action="<?= base_url() ?>User_Managemen/do_edit_user" method="POST" enctype='multipart/form-data' id="form_upload_foto">
-                <div class="form-group">
-                  <label>Nama Lengkap</label>
-                  <input type="text" class="form-control" name="fullname" value="<?= $user->fullname ?>">
-                </div>
-                <div class="form-group">
-                  <label>NIP</label>
-                  <input type="text" class="form-control" name="nip" value="<?= $user->nip ?>">
-                </div>
-                <div class="form-group">
-                  <label>User Name</label>
-                  <input type="text" class="form-control" name="user_name" value="<?= $user->user_name ?>">
-                </div>
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="text" class="form-control" name="email" value="<?= $user->email ?>">
-                </div>
-                <input type="hidden" id="idgambar" value="<?= $user->id ?>" name="id" id="id">
-                <button type="submit" class="btn btn-primary">Edit User</button>
-                <button type="reset" class="btn btn-danger">Batal</button>
-              </form> -->
-            </div>
           </div>
         </div>
       </div>
     </div>
+    </div>
+    
