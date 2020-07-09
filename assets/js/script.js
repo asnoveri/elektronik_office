@@ -887,14 +887,19 @@ $(function () {
 
 		if (role_id == 2) {
 			var link = 'Operator/index/add_absensi';
+			var link1 = 'Operator';
 		} else if (role_id == 4) {
 			var link = 'Direktur/index/add_absensi';
+			var link1 = 'Direktur';
 		} else if (role_id == 5) {
 			var link = 'Wadir/index/add_absensi';
+			var link1 = 'Wadir';
 		} else if (role_id == 6) {
 			var link = 'Adum/index/add_absensi';
+			var link1 = 'Adum';
 		} else if (role_id == 3) {
 			var link = 'User/index/add_absensi';
+			var link1 = 'User';
 		}
 
 		const ket_keberadaan = $("#sel-keberadaan").val();
@@ -915,11 +920,12 @@ $(function () {
 			dataType: 'JSON',
 			success: function (data, status) {
 				if (status == 'success') {
-					$("#pesan-eror").addClass("alert alert-primary alert-dismissible");
-					$("#pesan-eror").html(data);
-					$("#pesan-eror").fadeIn(function () {
-						$("#pesan-eror").fadeOut(5000);
-					});
+					// $("#pesan-eror").addClass("alert alert-primary alert-dismissible");
+					// $("#pesan-eror").html(data);
+					// $("#pesan-eror").fadeIn(function () {
+					// 	$("#pesan-eror").fadeOut(5000);
+					// });
+					document.location.href = url + link1;
 				}
 			},
 		});
@@ -934,14 +940,19 @@ $(function () {
 
 		if (role_id == 2) {
 			var link = 'Operator/index/add_absn_plng';
+			var link1 = 'Operator';
 		} else if (role_id == 4) {
 			var link = 'Direktur/index/add_absn_plng';
+			var link1 = 'Direktur';
 		} else if (role_id == 5) {
 			var link = 'Wadir/index/add_absn_plng';
+			var link1 = 'Wadir';
 		} else if (role_id == 6) {
 			var link = 'Adum/index/add_absn_plng';
+			var link1 = 'Adum';
 		} else if (role_id == 3) {
 			var link = 'User/index/add_absn_plng';
+			var link1 = 'User';
 		}
 
 
@@ -960,11 +971,12 @@ $(function () {
 			type: 'post',
 			dataType: 'JSON',
 			success: function (data) {
-				$("#pesan-eror").addClass("alert alert-info alert-dismissible");
-				$("#pesan-eror").html(data);
-				$("#pesan-eror").fadeIn(function () {
-					$("#pesan-eror").fadeOut(5000);
-				});
+				// $("#pesan-eror").addClass("alert alert-info alert-dismissible");
+				// $("#pesan-eror").html(data);
+				// $("#pesan-eror").fadeIn(function () {
+				// 	$("#pesan-eror").fadeOut(5000);
+				// });
+				document.location.href = url + link1;
 			}
 		});
 		// } else {

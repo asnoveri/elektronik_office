@@ -24,7 +24,11 @@ class Operator extends CI_Controller
             $ket_keberadaan = $this->input->post('ket_keberadaan', true);
             $cek_absen = $this->absensi_Mod->cek_absensiMasuk($id_jdwlabnsi, $id, $tgl);
             if ($cek_absen) {
-                $pesan = "Anda Sudah Mengambil Absen Masuk";
+                $pesan = "Anda Sudah Melakukan Pengambilan Absen Masuk";
+                $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                    . $pesan .
+                    '</div>');
             } else {
                 $data = [
                     'id' => $id,
@@ -33,8 +37,12 @@ class Operator extends CI_Controller
                     'ket_keberadaan' => $ket_keberadaan,
                     'id_jdwlabnsi' => $id_jdwlabnsi
                 ];
-                if ($this->absensi_Mod->add_absensi($data)) {
-                    $pesan = "Absen Masuk Anda Sudah Terkirim";
+                if ($this->absensi_Mod->add_absensi($data)==true) {
+                    $pesan = "Berhasil Melakukan Pengambilan Absen Masuk";
+                    $this->session->set_flashdata('erorabsen', '<div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                    . $pesan .
+                    '</div>');
                 }
                 $log = [
                     'tanggal' => time(),
@@ -64,8 +72,12 @@ class Operator extends CI_Controller
                     $data = [
                         'absensi_keluar' => $absen_keluar
                     ];
-                    if ($this->absensi_Mod->update_absensi($id_absensi, $data)) {
-                        $pesan = "Absen Pulang Anda Sudah Terkirim ";
+                    if ($this->absensi_Mod->update_absensi($id_absensi, $data)==true) {
+                        $pesan = "Berhasil Melakukan Pengambilan Absen Pulang ";
+                         $this->session->set_flashdata('erorabsen', '<div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                    . $pesan .
+                    '</div>');
                     }
                     $log = [
                         'tanggal' => time(),
@@ -78,10 +90,18 @@ class Operator extends CI_Controller
                     ];
                     $this->login_Mod->addlog($log);
                 } else {
-                    $pesan = "Anda Sudah Mengambil Absen Pulang";
+                    $pesan = "Anda Sudah Melakukan Pengambilan Absen Pulang";
+                     $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                    . $pesan .
+                    '</div>');
                 }
             } else {
-                $pesan = "Belum Bisa Mengambil Absen Pulang";
+                $pesan = "Belum Bisa Pengambilan Absen Pulang";
+                 $this->session->set_flashdata('erorabsen', '<div class="alert alert-primary alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                    . $pesan .
+                    '</div>');
             }
             echo json_encode($pesan);
             die();

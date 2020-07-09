@@ -14,17 +14,21 @@
          <div class="card shadow mb-4">
            <div class="card-header py-3">
              <h6 class="m-0 font-weight-bold text-secondary">Absensi</h6>
-             <!-- <?= $this->session->flashdata('pesanaddop'); ?> -->
-             <div id="pesan-eror" style="display: none;">
+             <?= $this->session->flashdata('erorabsen'); ?>
+             <!-- <div id="pesan-eror" style="display: none;">
                <button type="button" class="close" data-dismiss="alert">&times;</button>
-             </div>
+             </div> -->
            </div>
            <div class="card-body">
              <div class="text-center">
                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="<?= base_url() ?>assets/images/undraw_posting_photo.svg" alt="">
              </div>
-             <p>Sudah isi absenkah anda Hari ini....</p>
-             <p id="md" class="shadow-lg text-center"></p>
+             <div class="alert alert-secondary" role="alert">
+              <p>Sudah isi absenkah anda Hari ini....??</p>
+             <marquee><p class="text-danger font-italic" style="font-size:12px;"> * NOTE : Setelah melakukan Pengambilan Absensi, Silahkan di Cek Masuk / Tidaknya Absensi Anda Pada Tabel list Absensi</p>
+             </marquee> 
+            </div>
+             <!-- <p id="md" class="shadow-lg text-center"></p> -->
              <div class="row">
                <div class="col-sm-6 text-center">
                  <a href="#" class="btn btn-primary btn-icon-split btn-sm" id="absen-masuk">
