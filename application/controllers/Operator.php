@@ -37,12 +37,12 @@ class Operator extends CI_Controller
                     'ket_keberadaan' => $ket_keberadaan,
                     'id_jdwlabnsi' => $id_jdwlabnsi
                 ];
-                if ($this->absensi_Mod->add_absensi($data)==true) {
+                if ($this->absensi_Mod->add_absensi($data) == true) {
                     $pesan = "Berhasil Melakukan Pengambilan Absen Masuk";
                     $this->session->set_flashdata('erorabsen', '<div class="alert alert-info alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>'
-                    . $pesan .
-                    '</div>');
+                        . $pesan .
+                        '</div>');
                 }
                 $log = [
                     'tanggal' => time(),
@@ -72,33 +72,33 @@ class Operator extends CI_Controller
                     $data = [
                         'absensi_keluar' => $absen_keluar
                     ];
-                    if ($this->absensi_Mod->update_absensi($id_absensi, $data)==true) {
+                    if ($this->absensi_Mod->update_absensi($id_absensi, $data) == true) {
                         $pesan = "Berhasil Melakukan Pengambilan Absen Pulang ";
-                         $this->session->set_flashdata('erorabsen', '<div class="alert alert-info alert-dismissible">
+                        $this->session->set_flashdata('erorabsen', '<div class="alert alert-info alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>'
-                    . $pesan .
-                    '</div>');
+                            . $pesan .
+                            '</div>');
+                        $log = [
+                            'tanggal' => time(),
+                            'aksi' => "Absensi",
+                            'Keterangan' => "Ambil Absen Pulang",
+                            'ip' => $this->input->ip_address(),
+                            'tipe_login' => $this->session->userdata('role_id'),
+                            'id_user' => $this->session->userdata('id'),
+                            'status' => 1
+                        ];
+                        $this->login_Mod->addlog($log);
                     }
-                    $log = [
-                        'tanggal' => time(),
-                        'aksi' => "Absensi",
-                        'Keterangan' => "Ambil Absen Pulang",
-                        'ip' => $this->input->ip_address(),
-                        'tipe_login' => $this->session->userdata('role_id'),
-                        'id_user' => $this->session->userdata('id'),
-                        'status' => 1
-                    ];
-                    $this->login_Mod->addlog($log);
                 } else {
                     $pesan = "Anda Sudah Melakukan Pengambilan Absen Pulang";
-                     $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
+                    $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>'
-                    . $pesan .
-                    '</div>');
+                        . $pesan .
+                        '</div>');
                 }
             } else {
                 $pesan = "Belum Bisa Pengambilan Absen Pulang";
-                 $this->session->set_flashdata('erorabsen', '<div class="alert alert-primary alert-dismissible">
+                $this->session->set_flashdata('erorabsen', '<div class="alert alert-primary alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>'
                     . $pesan .
                     '</div>');

@@ -909,26 +909,53 @@ $(function () {
 		const m = d.getMinutes();
 		const s = d.getSeconds();
 		const jam = h + ':' + m + ':' + s;
-		$.ajax({
-			url: url + link,
-			data: {
-				ket_keberadaan: ket_keberadaan,
-				id_jdwlabnsi: id_jdwlabnsi,
-				absensi_masuk: jam,
-			},
-			type: 'POST',
-			dataType: 'JSON',
-			success: function (data, status) {
-				if (status == 'success') {
-					// $("#pesan-eror").addClass("alert alert-primary alert-dismissible");
-					// $("#pesan-eror").html(data);
-					// $("#pesan-eror").fadeIn(function () {
-					// 	$("#pesan-eror").fadeOut(5000);
-					// });
-					document.location.href = url + link1;
-				}
-			},
-		});
+
+		if (ket_keberadaan == 'piket kantor') {
+			console.log(ket_keberadaan);
+			if ("geolocation" in navigator) { //check geolocation available 
+				//try to get user current location using getCurrentPosition() method
+				navigator.geolocation.getCurrentPosition(function (position) {
+					let latitudeUser = position.coords.latitude;
+					let longitudeUser = position.coords.longitude;
+					let locationUser = latitudeUser + "," + longitudeUser;
+					let locationServer = "0.526028, 101.434889";
+					// console.log(locationUser);
+					// console.log(locationServer);
+					if (locationUser == locationServer) {
+						console.log("sama");
+					} else {
+						$("#pesan-eror").addClass("alert alert-primary alert-dismissible");
+						$("#pesan-eror").html("Tidak Dapat Mengambil Absensi Masuk Piket Kantor, Karena Anda Tidak Berada Di Lokasi Kantor");
+						$("#pesan-eror").fadeIn();
+					}
+
+				});
+			} else {
+				console.log("Browser doesn't support geolocation!");
+			}
+		} else {
+			// console.log("selain piket kantor");
+			$.ajax({
+				url: url + link,
+				data: {
+					ket_keberadaan: ket_keberadaan,
+					id_jdwlabnsi: id_jdwlabnsi,
+					absensi_masuk: jam,
+				},
+				type: 'POST',
+				dataType: 'JSON',
+				success: function (data, status) {
+					if (status == 'success') {
+						// $("#pesan-eror").addClass("alert alert-primary alert-dismissible");
+						// $("#pesan-eror").html(data);
+						// $("#pesan-eror").fadeIn(function () {
+						// 	$("#pesan-eror").fadeOut(5000);
+						// });
+						document.location.href = url + link1;
+					}
+				},
+			});
+		}
 	});
 
 	// input absensi pulang 
