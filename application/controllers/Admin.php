@@ -17,20 +17,30 @@ class Admin extends CI_Controller
 
     public function index()
     {
+     
+        // $value=date("Ymd");
+        
+      	// $array = json_decode(file_get_contents("https://raw.githubusercontent.com/guangrei/Json-Indonesia-holidays/master/calendar.json"),true);
+
+        // if(isset($array[$value])){
+        //     echo"tanggal merah ".$array[$value]["deskripsi"];
+        // }else if (date("D",strtotime($value))==="Sun") {
+        //     echo"tanggal merah hari minggu";
+        // }else if (date("D",strtotime($value))==="Sat") {
+        //     echo"tanggal merah hari Sabtu";
+        // }else{
+        //     echo"bukan tanggal merah";
+        // }
+        // die();
+
+
+        
         $judul = 'Dashboard';
         $halaman = 'admin/index';
         $data = "";
         $this->template->TemplateGen($judul, $halaman, $data);
 
-        //  $data = $this->Log_Model->get_log_activity();
-        // foreach ($data as $dt) {
-        //     $tanggal=$dt->tanggal;
-        //     $datestring = '%d-%m-%Y - %h:%i %a';
-        //     echo  $dt->id_user . " : ". mdate($datestring, $tanggal);  
-        //     echo "<br>";
-        // }
-        // die();
-    }
+     }
 
     public function profil_admin()
     {
