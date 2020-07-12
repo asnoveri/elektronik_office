@@ -1434,6 +1434,7 @@ $(function () {
 								if (status == 'success') {
 									// document.location.href = url + "Admin/profil_admin";
 									console.log(data);
+									alert(data);
 								}
 							},
 						});
@@ -1458,6 +1459,7 @@ $(function () {
 						if (status == 'success') {
 							// document.location.href = url + "Admin/profil_admin";
 							console.log(data);
+							alert(data);
 						}
 					},
 				});
