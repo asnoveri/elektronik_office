@@ -8,7 +8,13 @@
 
      <!-- Content Row -->
      <div class="row">
-
+       <?= $this->session->flashdata('erorabsen'); ?>
+       <a href="#" class="btn btn-primary btn-icon-split btn-sm" id="cek_lokasi">
+         <span class="icon text-white-50">
+           <i class="fas fa-info-circle"></i>
+         </span>
+         <span class="text">Cek Lokasi</span>
+       </a>
      </div>
 
    </div>

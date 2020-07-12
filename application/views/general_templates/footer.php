@@ -69,7 +69,6 @@
 
  <!-- select2 js -->
  <script src="<?= base_url() ?>assets/js/select2.min.js"></script>
-
  </body>
 
  </html>
