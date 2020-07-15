@@ -321,8 +321,7 @@ class Operator extends CI_Controller
         $distance = $distance * 60 * 1.1515;
         $distance = $distance * 1.609344;
         $jarak_akhri = round($distance, 2);
-        echo json_encode($jarak_akhri);
-        die();
+       
         if ($jarak_akhri <= 0.3) {
             $this->index("add_absensi", $this->input->post());
         } else {

@@ -10,6 +10,7 @@ class Admin extends CI_Controller
 
         $this->load->model('user_Mod');
         $this->load->model('menu_Mod');
+         $this->load->model('Log_Model');
         date_default_timezone_set('Asia/Jakarta');
         is_login();
     }
@@ -20,6 +21,15 @@ class Admin extends CI_Controller
         $halaman = 'admin/index';
         $data = "";
         $this->template->TemplateGen($judul, $halaman, $data);
+
+        //  $data = $this->Log_Model->get_log_activity();
+        // foreach ($data as $dt) {
+        //     $tanggal=$dt->tanggal;
+        //     $datestring = '%d-%m-%Y - %h:%i %a';
+        //     echo  $dt->id_user . " : ". mdate($datestring, $tanggal);  
+        //     echo "<br>";
+        // }
+        // die();
     }
 
     public function profil_admin()
@@ -64,6 +74,65 @@ class Admin extends CI_Controller
         //         '</div>');
         //     echo json_encode($pesan);
         // }
+        die();
+    }
+
+    public function listlog(){
+        $length = intval($this->input->post('length'));
+        $draw = intval($this->input->post('draw'));
+        $start = intval($this->input->post('start'));
+        $order = $this->input->post('order');
+        $search = $this->input->post('search');
+        $search = $search['value'];
+        $col = 0;
+        $dir = "";
+      
+      
+
+        if (!empty($order)) {
+            foreach ($order as $or) {
+                $col = $or['column'];
+                $dir = $or['dir'];
+            }
+        }
+
+        if ($dir != 'asc' && $dir != 'desc') {
+            $dir = 'desc';
+        }
+
+        $valid_columns = [
+            1 => 'tanggal',
+            2 => 'id_user',
+            3 => 'keterangan'
+        ];
+
+        if (!isset($valid_columns[$col])) {
+            $order = null;
+        } else {
+            $order = $valid_columns[$col];
+        }
+
+        $id_user = $this->session->userdata('id');
+        $dta = $this->Log_Model->get_log_activity($length, $start, $order, $dir, $search);
+        $json = [];
+        $no = $start + 1;
+        foreach ($dta as $data) {
+            $datestring = '%d-%m-%Y / %H:%i:%s ';
+            $json[] = [
+                $no++,
+                mdate($datestring, $data->tanggal), 
+                $data->fullname,
+                $data->keterangan
+            ];
+        }
+        $tot = $this->Log_Model->get_log_activity_count();
+        $respon = [
+            'draw' => $draw,
+            'recordsTotal' => $tot,
+            'recordsFiltered' => $tot,
+            'data' => $json
+        ];
+        echo json_encode($respon);
         die();
     }
 }
