@@ -108,8 +108,7 @@ class Operator extends CI_Controller
             }
             echo json_encode($pesan);
             die();
-        }
-        else {
+        } else {
             $judul = 'Dashboard';
             $halaman = 'operator/index';
             $data['jadwal_absen'] = $this->absensi_Mod->get_jadwal_absensi();
@@ -213,7 +212,7 @@ class Operator extends CI_Controller
         if ($upload_image) {
             $config['upload_path']          = "./assets/images/";
             $config['allowed_types']        = 'gif|jpg|png';
-            $config['max_size']             = 2048;
+            $config['max_size']             = 1024;
             $config['remove_spaces']        = true;
 
             //memangil libraires upload dan masukan configurasinya
@@ -321,8 +320,7 @@ class Operator extends CI_Controller
         $distance = $distance * 60 * 1.1515;
         $distance = $distance * 1.609344;
         $jarak_akhri = round($distance, 2);
-        echo json_encode($jarak_akhri);
-        die();
+
         if ($jarak_akhri <= 0.3) {
             $this->index("add_absensi", $this->input->post());
         } else {

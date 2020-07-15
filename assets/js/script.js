@@ -917,7 +917,7 @@ $(function () {
 
 
 		if (ket_keberadaan == 'piket kantor') {
-			console.log(ket_keberadaan);
+			// console.log(ket_keberadaan);
 			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 
 				if ("geolocation" in navigator) { //check geolocation available 
@@ -973,9 +973,8 @@ $(function () {
 					},
 				});
 			}
-
 		} else {
-			console.log(ket_keberadaan);
+			// console.log(ket_keberadaan);
 			$.ajax({
 				url: url + link,
 				data: {
@@ -1409,63 +1408,63 @@ $(function () {
 		});
 	});
 
-	$(function () {
-		$("#cek_lokasi").on("click", function () {
-			const url = $("#page-top").data('url');
-			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+	// $(function () {
+	// 	$("#cek_lokasi").on("click", function () {
+	// 		const url = $("#page-top").data('url');
+	// 		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 
-				if ("geolocation" in navigator) { //check geolocation available 
-					//try to get user current location using getCurrentPosition() method
-					navigator.geolocation.getCurrentPosition(function (position) {
-						var latitudeUser = position.coords.latitude;
-						var longitudeUser = position.coords.longitude;
-						console.log(latitudeUser);
-						console.log(longitudeUser);
+	// 			if ("geolocation" in navigator) { //check geolocation available 
+	// 				//try to get user current location using getCurrentPosition() method
+	// 				navigator.geolocation.getCurrentPosition(function (position) {
+	// 					var latitudeUser = position.coords.latitude;
+	// 					var longitudeUser = position.coords.longitude;
+	// 					console.log(latitudeUser);
+	// 					console.log(longitudeUser);
 
-						$.ajax({
-							url: url + "Admin/cek",
-							data: {
-								latitudeUser: latitudeUser,
-								longitudeUser: longitudeUser
-							},
-							type: 'POST',
-							dataType: 'JSON',
-							success: function (data, status) {
-								if (status == 'success') {
-									// document.location.href = url + "Admin/profil_admin";
-									console.log(data);
-									alert(data);
-								}
-							},
-						});
-					});
-				} else {
-					console.log("Browser doesn't support geolocation!");
-				}
-			} else {
-				var latitudeUserDEk = 0.527241;
-				var longitudeUserDek = 101.434586;
-				console.log(latitudeUserDEk);
-				console.log(longitudeUserDek);
-				$.ajax({
-					url: url + "Admin/cek",
-					data: {
-						latitudeUser: latitudeUserDEk,
-						longitudeUser: longitudeUserDek
-					},
-					type: 'POST',
-					dataType: 'JSON',
-					success: function (data, status) {
-						if (status == 'success') {
-							// document.location.href = url + "Admin/profil_admin";
-							console.log(data);
-							alert(data);
-						}
-					},
-				});
-			}
+	// 					$.ajax({
+	// 						url: url + "Admin/cek",
+	// 						data: {
+	// 							latitudeUser: latitudeUser,
+	// 							longitudeUser: longitudeUser
+	// 						},
+	// 						type: 'POST',
+	// 						dataType: 'JSON',
+	// 						success: function (data, status) {
+	// 							if (status == 'success') {
+	// 								document.location.href = url + "Admin/profil_admin";
+	// 								console.log(data);
+	// 								alert(data);
+	// 							}
+	// 						},
+	// 					});
+	// 				});
+	// 			} else {
+	// 				console.log("Browser doesn't support geolocation!");
+	// 			}
+	// 		} else {
+	// 			var latitudeUserDEk = 0.527241;
+	// 			var longitudeUserDek = 101.434586;
+	// 			console.log(latitudeUserDEk);
+	// 			console.log(longitudeUserDek);
+	// 			$.ajax({
+	// 				url: url + "Admin/cek",
+	// 				data: {
+	// 					latitudeUser: latitudeUserDEk,
+	// 					longitudeUser: longitudeUserDek
+	// 				},
+	// 				type: 'POST',
+	// 				dataType: 'JSON',
+	// 				success: function (data, status) {
+	// 					if (status == 'success') {
+	// 						document.location.href = url + "Admin/profil_admin";
+	// 						console.log(data);
+	// 						alert(data);
+	// 					}
+	// 				},
+	// 			});
+	// 		}
 
-		});
-	});
+	// 	});
+	// });
 
 });
