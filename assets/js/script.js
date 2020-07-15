@@ -1033,9 +1033,21 @@ $(function () {
 			type: 'post',
 			dataType: 'JSON',
 			success: function (data) {
+				// $("#pesan-eror").addClass("alert alert-info alert-dismissible");
+				// $("#pesan-eror").html(data);
+				// $("#pesan-eror").fadeIn(function () {
+				// 	$("#pesan-eror").fadeOut(5000);
+				// });
 				document.location.href = url + link1;
 			}
 		});
+		// } else {
+		// 	$("#pesan-eror").addClass("alert alert-info alert-dismissible");
+		// 	$("#pesan-eror").html("Belum Bisa Mengambil Absen Pulang");
+		// 	$("#pesan-eror").fadeIn(function () {
+		// 		$("#pesan-eror").fadeOut(5000);
+		// 	});
+		// }
 	});
 
 
@@ -1281,6 +1293,23 @@ $(function () {
 });
 
 
+// tabel log user
+$(function () {
+	const url = $("#page-top").data('url');
+	$("#log_aktivitasUser").DataTable({
+		"pageLength": 5,
+		"serverSide": true,
+		"order": [
+			[1, "desc"]
+		],
+		"ajax": {
+			url: url + 'Admin/listlog',
+			type: 'post'
+		},
+	});
+});
+
+
 
 // cetak persensi perhari dan perbulan.
 $(function () {
@@ -1408,6 +1437,7 @@ $(function () {
 		});
 	});
 
+
 	// $(function () {
 	// 	$("#cek_lokasi").on("click", function () {
 	// 		const url = $("#page-top").data('url');
@@ -1466,5 +1496,6 @@ $(function () {
 
 	// 	});
 	// });
+
 
 });
