@@ -47,6 +47,7 @@
                    </span>
                    <span class="text">Absen Pulang</span>
                  </a>
+                 <input type="hidden" class="usrket" value="<?= @$cek_absenKel->ket_keberadaan ?>"></input>
                </div>
 
                <div class="col-sm-6 text-center mt-2">
@@ -123,7 +124,6 @@
                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
              </form>
            </div>
-
          </div>
        </div>
      </div>

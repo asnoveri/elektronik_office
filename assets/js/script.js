@@ -950,8 +950,8 @@ $(function () {
 					console.log("Browser doesn't support geolocation!");
 				}
 			} else {
-				var latitudeUserDek = 0.527241;
-				var longitudeUserDek = 101.434586;
+				var latitudeUserDek = 0.526768;
+				var longitudeUserDek = 101.434658;
 				// console.log(latitudeUserDek);
 				// console.log(longitudeUserDek);
 				$.ajax({
@@ -999,24 +999,7 @@ $(function () {
 		const url = $("#page-top").data('url');
 		const jk = $(".jk").data('id');
 		const role_id = $(".jk").data('role');
-
-		if (role_id == 2) {
-			var link = 'Operator/index/add_absn_plng';
-			var link1 = 'Operator';
-		} else if (role_id == 4) {
-			var link = 'Direktur/index/add_absn_plng';
-			var link1 = 'Direktur';
-		} else if (role_id == 5) {
-			var link = 'Wadir/index/add_absn_plng';
-			var link1 = 'Wadir';
-		} else if (role_id == 6) {
-			var link = 'Adum/index/add_absn_plng';
-			var link1 = 'Adum';
-		} else if (role_id == 3) {
-			var link = 'User/index/add_absn_plng';
-			var link1 = 'User';
-		}
-
+		const usrket = $(".usrket").val();
 
 		const d = new Date();
 		const h = d.getHours();
@@ -1024,30 +1007,94 @@ $(function () {
 		const s = d.getSeconds();
 		const jam = h + ':' + m + ':' + s;
 
-		// if (jam >= jk) {
-		$.ajax({
-			url: url + link,
-			data: {
-				absen_keluar: jam,
-			},
-			type: 'post',
-			dataType: 'JSON',
-			success: function (data) {
-				// $("#pesan-eror").addClass("alert alert-info alert-dismissible");
-				// $("#pesan-eror").html(data);
-				// $("#pesan-eror").fadeIn(function () {
-				// 	$("#pesan-eror").fadeOut(5000);
-				// });
-				document.location.href = url + link1;
+		if (role_id == 2) {
+			var link = 'Operator/index/add_absn_plng';
+			var link1 = 'Operator';
+			var link2 = 'Operator/getJarakUSerPulang';
+		} else if (role_id == 4) {
+			var link = 'Direktur/index/add_absn_plng';
+			var link1 = 'Direktur';
+			var link2 = 'Direktur/getJarakUSerPulang';
+		} else if (role_id == 5) {
+			var link = 'Wadir/index/add_absn_plng';
+			var link1 = 'Wadir';
+			var link2 = 'Wadir/getJarakUSerPulang';
+		} else if (role_id == 6) {
+			var link = 'Adum/index/add_absn_plng';
+			var link1 = 'Adum';
+			var link2 = 'Adum/getJarakUSerPulang';
+		} else if (role_id == 3) {
+			var link = 'User/index/add_absn_plng';
+			var link1 = 'User';
+			var link2 = 'User/getJarakUSerPulang';
+		}
+
+		if (usrket == 'piket kantor') {
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				if ("geolocation" in navigator) { //check geolocation available 
+					//try to get user current location using getCurrentPosition() method
+					navigator.geolocation.getCurrentPosition(function (position) {
+						var latitudeUser = position.coords.latitude;
+						var longitudeUser = position.coords.longitude;
+						// console.log(latitudeUser);
+						// console.log(longitudeUser);
+						$.ajax({
+							url: url + link2,
+							data: {
+								latitudeUser: latitudeUser,
+								longitudeUser: longitudeUser,
+								absen_keluar: jam
+							},
+							type: 'POST',
+							dataType: 'JSON',
+							success: function (data, status) {
+								if (status == 'success') {
+									document.location.href = url + link1;
+									// console.log(data);
+								}
+							},
+						});
+					});
+				} else {
+					console.log("Browser doesn't support geolocation!");
+				}
+			} else {
+				var latitudeUserDek = 0.526768;
+				var longitudeUserDek = 101.434658;
+				// console.log(latitudeUserDek);
+				// console.log(longitudeUserDek);
+				$.ajax({
+					url: url + link2,
+					data: {
+						latitudeUser: latitudeUserDek,
+						longitudeUser: longitudeUserDek,
+						absen_keluar: jam
+					},
+					type: 'POST',
+					dataType: 'JSON',
+					success: function (data, status) {
+						if (status == 'success') {
+							document.location.href = url + link1;
+							// console.log(data);
+						}
+					},
+				});
 			}
-		});
-		// } else {
-		// 	$("#pesan-eror").addClass("alert alert-info alert-dismissible");
-		// 	$("#pesan-eror").html("Belum Bisa Mengambil Absen Pulang");
-		// 	$("#pesan-eror").fadeIn(function () {
-		// 		$("#pesan-eror").fadeOut(5000);
-		// 	});
-		// }
+		} else {
+			$.ajax({
+				url: url + link,
+				data: {
+					absen_keluar: jam,
+				},
+				type: 'post',
+				dataType: 'JSON',
+				success: function (data) {
+					document.location.href = url + link1;
+				}
+			});
+		}
+
+
 	});
 
 
