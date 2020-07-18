@@ -30,4 +30,4 @@
 
 </head>
 
-<body id="page-top" data-url="<?= base_url() ?>">
+<body id="page-top" data-jamserver="<?= date("H:i:s") ?>" data-url="<?= base_url() ?>">

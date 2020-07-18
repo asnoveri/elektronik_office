@@ -17,23 +17,24 @@ class Admin extends CI_Controller
 
     public function index()
     {
-        $string = "2020-08-17";
-        $value = preg_replace("/[^0-9]/", "", $string);
+        // // $string = date('Y-m-d');
+        // $string = "2020-01-25";
+        // $value = preg_replace("/[^0-9]/", "", $string);
 
-        $array =  json_decode(file_get_contents("https://raw.githubusercontent.com/guangrei/Json-Indonesia-holidays/master/calendar.json"), true);
+        // $array =  json_decode(file_get_contents("https://raw.githubusercontent.com/guangrei/Json-Indonesia-holidays/master/calendar.json"), true);
 
 
-        //check tanggal merah berdasarkan libur nasional
-        if (isset($array[$value])) {
-            echo "tanggal merah " . $array[$value]["deskripsi"] . "<br>" . $value;
-        } elseif (date("D", strtotime($value)) === "Sun") {
-            echo "tanggal merah hari minggu" . "<br>" . $value;
-        } elseif (date("D", strtotime($value)) === "Sat") {
-            echo "tanggal merah hari Sabtu" . "<br>" . $value;
-        } else {
-            echo "bukan tanggal merah" . "<br>" . $value;
-        }
-        die();
+        // //check tanggal merah berdasarkan libur nasional
+        // if (isset($array[$value])) {
+        //     echo "tanggal merah " . $array[$value]["deskripsi"] . "<br>" . $value;
+        // } elseif (date("D", strtotime($value)) === "Sun") {
+        //     echo "tanggal merah hari minggu" . "<br>" . $value;
+        // } elseif (date("D", strtotime($value)) === "Sat") {
+        //     echo "tanggal merah hari Sabtu" . "<br>" . $value;
+        // } else {
+        //     echo "bukan tanggal merah" . "<br>" . $value;
+        // }
+        // die();
         $judul = 'Dashboard';
         $halaman = 'admin/index';
         $data = "";

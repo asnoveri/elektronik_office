@@ -11,6 +11,10 @@
     table {
         border-collapse: collapse;
         width: 100%;
+        margin: auto;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", "Segoe Ui";
+        font-size: 10px;
+
     }
 
     td,

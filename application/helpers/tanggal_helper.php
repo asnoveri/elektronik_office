@@ -245,3 +245,29 @@ if (!function_exists('hari_indo')) {
         return $nama_hari;
     }
 }
+
+function get_indo_libur($tgl)
+{
+    // $string = date('Y-m-d');
+    // $string = "2020-01-25";
+    $value = preg_replace("/[^0-9]/", "", $tgl);
+
+    $array =  json_decode(file_get_contents("https://raw.githubusercontent.com/guangrei/Json-Indonesia-holidays/master/calendar.json"), true);
+
+
+    //check tanggal merah berdasarkan libur nasional
+    if (isset($array[$value])) {
+        // echo "tanggal merah " . $array[$value]["deskripsi"] . "<br>" . $value;
+        $data = $array[$value]["deskripsi"];
+    } elseif (date("D", strtotime($value)) === "Sun") {
+        // echo "tanggal merah hari minggu" . "<br>" . $value;
+        $data = "tanggal Merah Hari Minggu";
+    } elseif (date("D", strtotime($value)) === "Sat") {
+        // echo "tanggal merah hari Sabtu" . "<br>" . $value;
+        $data = "tanggal merah hari Sabtu";
+    } else {
+        // echo "bukan tanggal merah" . "<br>" . $value;
+        $data = "bukan tanggal merah";
+    }
+    return $data;
+}

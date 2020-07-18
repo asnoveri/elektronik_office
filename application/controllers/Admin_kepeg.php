@@ -201,6 +201,7 @@ class Admin_kepeg extends CI_Controller
         }
         $data = $this->absensi_Mod->get_absensiTody();
         $pkt = $this->absensi_Mod->get_keb_pkt($tgl, $id_jadwal);
+        $pktrengat = $this->absensi_Mod->get_keb_pkt_rengat($tgl, $id_jadwal);
         $wfh = $this->absensi_Mod->get_keb_wfh($tgl, $id_jadwal);
         $izn = $this->absensi_Mod->get_keb_izn($tgl, $id_jadwal);
         $jml_peg = $this->user_Mod->get_jml_peg();
@@ -208,9 +209,10 @@ class Admin_kepeg extends CI_Controller
 
 
         $pkt = count($pkt);
+        $pktrengat = count($pktrengat);
         $wfh = count($wfh);
         $izn = count($izn);
-        $dl= count($dl);
+        $dl = count($dl);
         $tot_hdr = count($data);
         $jml_peg = count($jml_peg);
         $tot = $tot_hdr - $izn;
@@ -226,19 +228,21 @@ class Admin_kepeg extends CI_Controller
 
             ->setCellValue('H2', "WFH")
             ->setCellValue('H3', "Piket Kantor")
-            ->setCellValue('H4', "Izin (Cuti/Sakit)")
-            ->setCellValue('H5', "Perjalanan Dinas")
+            ->setCellValue('H4', "Piket Kantor Rengat")
+            ->setCellValue('H5', "Izin (Cuti/Sakit)")
+            ->setCellValue('H6', "Perjalanan Dinas")
             // ->setCellValue('H6', "Jumlah Pegawai")
             ->setCellValue('I2', $wfh)
             ->setCellValue('I3', $pkt)
-            ->setCellValue('I4', $izn)
-            ->setCellValue('I5', $dl);
+            ->setCellValue('I4', $pktrengat)
+            ->setCellValue('I5', $izn)
+            ->setCellValue('I6', $dl);
         // ->setCellValue('I6', $jml_peg);
 
         //set font style and background color
         $spreadsheet->getActiveSheet()->getStyle('A2:E2')->applyFromArray($tableHead);
-        $spreadsheet->getActiveSheet()->getStyle('H2:H5')->applyFromArray($oddRow);
-        $spreadsheet->getActiveSheet()->getStyle('I2:I5')->applyFromArray($evenRow);
+        $spreadsheet->getActiveSheet()->getStyle('H2:H6')->applyFromArray($oddRow);
+        $spreadsheet->getActiveSheet()->getStyle('I2:I6')->applyFromArray($evenRow);
 
 
 
@@ -290,12 +294,13 @@ class Admin_kepeg extends CI_Controller
         }
 
         $pkt = $this->absensi_Mod->get_keb_pkt($tgl, $id_jadwal);
+        $pktrengat = $this->absensi_Mod->get_keb_pkt_rengat($tgl, $id_jadwal);
         $wfh = $this->absensi_Mod->get_keb_wfh($tgl, $id_jadwal);
         $izn = $this->absensi_Mod->get_keb_izn($tgl, $id_jadwal);
         $dl = $this->absensi_Mod->get_keb_dl($tgl, $id_jadwal);
 
-
         $data['pkt_tot'] = count($pkt);
+        $data['pkt_tot_rengt'] = count($pktrengat);
         $data['wfh_tot'] = count($wfh);
         $data['izn_tot'] = count($izn);
         $data['dl_tot']  = count($dl);

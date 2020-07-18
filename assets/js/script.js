@@ -1204,6 +1204,7 @@ $(function () {
 				url: url + link,
 				data: {
 					absen_keluar: jam,
+					ket_keberadaan: usrket
 				},
 				type: 'post',
 				dataType: 'JSON',
@@ -1212,8 +1213,6 @@ $(function () {
 				}
 			});
 		}
-
-
 	});
 
 
@@ -1528,6 +1527,15 @@ $(function () {
 	$("#cetak").on('click', function () {
 		$("#cetak_absensi").modal("hide");
 		// $('#tgl_absen_cetak').val("");
+	});
+
+	// cetak lembur
+	$("#btn-ctk-lembur").on('click', function (e) {
+		e.preventDefault();
+		$("#cetak_absensi").modal("show");
+		$("#label_modal_absensi").html("Cetak Persensi Lembur");
+		$(".modal-body form").attr('action', url + 'Absensi/cetak_persensiLembur');
+		$("#tgl_absen_cetak1").hide();
 	});
 
 	//cetak perbulan

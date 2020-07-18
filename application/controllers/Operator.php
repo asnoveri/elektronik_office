@@ -1,6 +1,6 @@
 <?php
 
-use SebastianBergmann\Environment\Console;
+// use SebastianBergmann\Environment\Console;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -64,12 +64,14 @@ class Operator extends CI_Controller
             $id = $this->session->userdata('id');
             $tgl = date("Y-m-d");
             $absen_keluar = $this->input->post('absen_keluar', true);
+            $ket_keberadaan = $this->input->post('ket_keberadaan', true);
             $cek_absenKel = $this->absensi_Mod->cek_absensikeluar($id, $tgl);
             $jadwl_absen = $this->absensi_Mod->get_jadwal_absensi();
 
             $jamkel1 = new DateTime($jadwl_absen->jam_keluar);
             $jamkel2 = new DateTime($absen_keluar);
-            if ($jamkel2 >= $jamkel1) {
+
+            if ($ket_keberadaan == "lembur") {
                 if ($cek_absenKel->absensi_keluar == "00:00:00") {
                     $id_absensi = $cek_absenKel->id_absensi;
                     $data = [
@@ -99,15 +101,49 @@ class Operator extends CI_Controller
                         . $pesan .
                         '</div>');
                 }
+                echo json_encode($pesan);
+                die();
             } else {
-                $pesan = "Belum Bisa Pengambilan Absen Pulang";
-                $this->session->set_flashdata('erorabsen', '<div class="alert alert-primary alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>'
-                    . $pesan .
-                    '</div>');
+                if ($jamkel2 >= $jamkel1) {
+                    if ($cek_absenKel->absensi_keluar == "00:00:00") {
+                        $id_absensi = $cek_absenKel->id_absensi;
+                        $data = [
+                            'absensi_keluar' => $absen_keluar
+                        ];
+                        if ($this->absensi_Mod->update_absensi($id_absensi, $data) == true) {
+                            $pesan = "Berhasil Melakukan Pengambilan Absen Pulang ";
+                            $this->session->set_flashdata('erorabsen', '<div class="alert alert-info alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                                . $pesan .
+                                '</div>');
+                            $log = [
+                                'tanggal' => time(),
+                                'aksi' => "Absensi",
+                                'Keterangan' => "Ambil Absen Pulang",
+                                'ip' => $this->input->ip_address(),
+                                'tipe_login' => $this->session->userdata('role_id'),
+                                'id_user' => $this->session->userdata('id'),
+                                'status' => 1
+                            ];
+                            $this->login_Mod->addlog($log);
+                        }
+                    } else {
+                        $pesan = "Anda Sudah Melakukan Pengambilan Absen Pulang";
+                        $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                            . $pesan .
+                            '</div>');
+                    }
+                } else {
+                    $pesan = "Belum Bisa Pengambilan Absen Pulang";
+                    $this->session->set_flashdata('erorabsen', '<div class="alert alert-primary alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                        . $pesan .
+                        '</div>');
+                }
+                echo json_encode($pesan);
+                die();
             }
-            echo json_encode($pesan);
-            die();
         } else {
             $id = $this->session->userdata('id');
             $tgl = date("Y-m-d");
