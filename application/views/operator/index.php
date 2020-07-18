@@ -113,6 +113,7 @@
                  <label>Keterangan / Keberadaan hari ini</label>
                  <select name="ket_keberadaan" class="custom-select" id="sel-keberadaan">
                    <option value="piket kantor">Piket Kantor</option>
+                   <option value="piket kantor rengat">Piket Kantor Rengat</option>
                    <option value="wfh">WFH</option>
                    <option value="izin (sakit/cuti)">Izin (Sakit / Cuti)</option>
                    <option value="dl">Perjalanan Dinas</option>

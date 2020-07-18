@@ -306,15 +306,9 @@ class Operator extends CI_Controller
 
     public function getJarakUSer()
     {
-        // $id_jdwlabnsi = $this->input->post('id_jdwlabnsi', true);
-        // $absen_masuk = $this->input->post('absensi_masuk', true);
-        // $ket_keberadaan = $this->input->post('ket_keberadaan', true);
-
         $latitude1       = $this->input->post('latitudeUser', true);
         $longitude1      = $this->input->post('longitudeUser', true);
 
-        // $latitude1          = 0.527241;
-        // $longitude1         = 101.434586;
         $latitude2          = 0.525254;
         $longitude2         = 101.434762;
 
@@ -356,6 +350,65 @@ class Operator extends CI_Controller
         $jarak_akhri = round($distance, 2);
 
         if ($jarak_akhri <= 0.2) {
+            $this->index("add_absn_plng", $this->input->post());
+        } else {
+            $pesan = "Tidak Dapat Melakukan Pengambilan Absen Pulang, Karena Anda Tidak Berada Di wilayah Kantor";
+            $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                . $pesan . $jarak_akhri .
+                '</div>');
+            echo json_encode($pesan);
+        }
+        die();
+    }
+
+    public function getJarakUserRengat()
+    {
+        $latitude1       = $this->input->post('latitudeUser', true);
+        $longitude1      = $this->input->post('longitudeUser', true);
+
+        $latitude2          = -0.393169;
+        $longitude2         = 102.446646;
+
+        $theta = $longitude1 - $longitude2;
+        $distance = (sin(deg2rad($latitude1)) * sin(deg2rad($latitude2)))  + (cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * cos(deg2rad($theta)));
+        $distance = acos($distance);
+        $distance = rad2deg($distance);
+        $distance = $distance * 60 * 1.1515;
+        $distance = $distance * 1.609344;
+        $jarak_akhri = round($distance, 2);
+
+        if ($jarak_akhri <= 0.03) {
+            $this->index("add_absensi", $this->input->post());
+        } else {
+            $pesan = "Tidak Dapat Melakukan Pengambilan Absen Masuk, Karena Anda Tidak Berada Di wilayah Kantor";
+            $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                . $pesan . $jarak_akhri .
+                '</div>');
+            echo json_encode($pesan);
+        }
+        die();
+    }
+
+
+    public function getJarakUSerPulangRengat()
+    {
+        $latitude1       = $this->input->post('latitudeUser', true);
+        $longitude1      = $this->input->post('longitudeUser', true);
+
+        $latitude2          = -0.393169;
+        $longitude2         = 102.446646;
+
+        $theta = $longitude1 - $longitude2;
+        $distance = (sin(deg2rad($latitude1)) * sin(deg2rad($latitude2)))  + (cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * cos(deg2rad($theta)));
+        $distance = acos($distance);
+        $distance = rad2deg($distance);
+        $distance = $distance * 60 * 1.1515;
+        $distance = $distance * 1.609344;
+        $jarak_akhri = round($distance, 2);
+
+        if ($jarak_akhri <= 0.03) {
             $this->index("add_absn_plng", $this->input->post());
         } else {
             $pesan = "Tidak Dapat Melakukan Pengambilan Absen Pulang, Karena Anda Tidak Berada Di wilayah Kantor";
