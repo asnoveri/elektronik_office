@@ -1147,8 +1147,7 @@ $(function () {
 					},
 				});
 			}
-		}
-		if (usrket == 'piket kantor rengat') {
+		} else if (usrket == 'piket kantor rengat') {
 			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 				if ("geolocation" in navigator) { //check geolocation available 
 					//try to get user current location using getCurrentPosition() method

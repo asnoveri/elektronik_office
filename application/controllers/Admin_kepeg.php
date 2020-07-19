@@ -300,7 +300,7 @@ class Admin_kepeg extends CI_Controller
         $dl = $this->absensi_Mod->get_keb_dl($tgl, $id_jadwal);
 
         $data['pkt_tot'] = count($pkt);
-        $data['pkt_tot_rengt'] = count($pktrengat);
+        $data['pkt_tot_rgt'] = count($pktrengat);
         $data['wfh_tot'] = count($wfh);
         $data['izn_tot'] = count($izn);
         $data['dl_tot']  = count($dl);
