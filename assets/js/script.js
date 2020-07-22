@@ -1493,8 +1493,10 @@ $(function () {
 			}
 		},
 		timepicker: false,
-		format: 'Y-m-d'
+		format: 'Y-m-d',
+
 	});
+
 
 	$('#tgl_absen_cetak1').datetimepicker({
 		i18n: {
@@ -1514,6 +1516,7 @@ $(function () {
 		format: 'Y-m-d'
 	});
 
+
 	// cetak perhari
 	$("#btn-ctk-perhari").on('click', function (e) {
 		e.preventDefault();
@@ -1521,6 +1524,7 @@ $(function () {
 		$("#label_modal_absensi").html("Cetak Persensi Harian");
 		$(".modal-body form").attr('action', url + 'Absensi/cetak_persensiHarian');
 		$("#tgl_absen_cetak1").hide();
+		$("#slcgrp").hide();
 	});
 
 	$("#cetak").on('click', function () {
@@ -1535,16 +1539,51 @@ $(function () {
 		$("#label_modal_absensi").html("Cetak Persensi Lembur");
 		$(".modal-body form").attr('action', url + 'Absensi/cetak_persensiLembur');
 		$("#tgl_absen_cetak1").hide();
+		$("#slcgrp").hide();
 	});
 
 	//cetak perbulan
 	$("#btn-ctk-perbulan").on('click', function (e) {
 		e.preventDefault();
 		$("#cetak_absensi").modal("show");
-		$("#label_modal_absensi").html("Cetak Persensi Bulanan");
+		$("#label_modal_absensi").html("Cetak Rekap Perpriode");
 		$("#tgl_absen_cetak1").show();
 		$(".modal-body form").attr('action', url + 'Absensi/cetak_rekapPerpriode');
+		$("#slcgrp").hide();
 	});
+
+
+	//cetak perbulan1
+	$("#btn-ctk-perbulan1").on('click', function (e) {
+		e.preventDefault();
+		$("#cetak_absensi").modal("show");
+		$("#label_modal_absensi").html("Cetak Persensi Bulanan");
+		$("#tgl_absen_cetak1").show();
+		$("#slcgrp").show();
+		$(".modal-body form").attr('action', url + 'Absensi/cetakAbsensiBulanan');
+		$('#selusercetak').select2({
+			ajax: {
+				url: url + 'User_Managemen/get_alluser_combobox',
+				method: 'post',
+				dataType: 'json',
+				// delay: 250,
+				data: function (params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+
+			}
+		});
+	});
+
+
 
 	// list absensi_untuk user_op_sekretaris
 	const table = $("#tbl_absensi_forUser").DataTable({
