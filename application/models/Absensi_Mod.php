@@ -4,8 +4,11 @@ class Absensi_Mod extends CI_Model
 {
     public function get_jadwal_absensi()
     {
+        $tgl = get_indo_libur(date('Y-m-d'));
         if (date("l") == "Friday") {
             $id_jadwal = 2;
+        } else  if ($tgl == "tanggal merah hari Sabtu" || $tgl == "tanggal Merah Hari Minggu") {
+            $id_jadwal = 3;
         } else {
             $id_jadwal = 1;
         }
@@ -57,6 +60,14 @@ class Absensi_Mod extends CI_Model
         return $this->db->get('absensi')->result();
     }
 
+    public function get_keb_pkt_rengat($tgl, $id_jadwal)
+    {
+        $this->db->where('id_jdwlabnsi', $id_jadwal);
+        $this->db->where('tanggal', $tgl);
+        $this->db->where('ket_keberadaan', 'piket kantor rengat');
+        return $this->db->get('absensi')->result();
+    }
+
     public function get_keb_wfh($tgl, $id_jadwal)
     {
         $this->db->where('id_jdwlabnsi', $id_jadwal);
@@ -78,6 +89,14 @@ class Absensi_Mod extends CI_Model
         $this->db->where('id_jdwlabnsi', $id_jadwal);
         $this->db->where('tanggal', $tgl);
         $this->db->where('ket_keberadaan', 'dl');
+        return $this->db->get('absensi')->result();
+    }
+
+    public function get_lembur($tgl, $id_jadwal)
+    {
+        $this->db->where('id_jdwlabnsi', $id_jadwal);
+        $this->db->where('tanggal', $tgl);
+        $this->db->where('ket_keberadaan', 'lembur');
         return $this->db->get('absensi')->result();
     }
 
@@ -112,6 +131,7 @@ class Absensi_Mod extends CI_Model
         $this->db->select("*");
         $this->db->from('absensi');
         $this->db->where('tanggal', $tgl);
+        $this->db->where('ket_keberadaan !=', 'lembur');
         $this->db->join('user', 'user.id = absensi.id');
         return $query = $this->db->get()->result();
     }
@@ -121,6 +141,17 @@ class Absensi_Mod extends CI_Model
         $this->db->select("*");
         $this->db->from('absensi');
         $this->db->where('tanggal', $tgl);
+        $this->db->where('ket_keberadaan !=', 'lembur');
+        $this->db->join('user', 'user.id = absensi.id');
+        return $query = $this->db->get()->result();
+    }
+
+    public function get_absensicetaklembur($tgl)
+    {
+        $this->db->select("*");
+        $this->db->from('absensi');
+        $this->db->where('tanggal', $tgl);
+        $this->db->where('ket_keberadaan ', 'lembur');
         $this->db->join('user', 'user.id = absensi.id');
         return $query = $this->db->get()->result();
     }
@@ -180,6 +211,12 @@ class Absensi_Mod extends CI_Model
         return  $this->db->query($query)->result();
     }
 
+    public function get_count_pktrengatperid($id, $tanggal, $tanggal1)
+    {
+        $query = "SELECT * FROM absensi WHERE id=$id AND ket_keberadaan='piket kantor rengat' AND tanggal between '$tanggal' AND '$tanggal1'";
+        return  $this->db->query($query)->result();
+    }
+
     public function get_count_iznperid($id, $tanggal, $tanggal1)
     {
         $query = "SELECT * FROM absensi WHERE id=$id AND ket_keberadaan='izin (sakit/cuti)' AND tanggal between '$tanggal' AND '$tanggal1'";
@@ -194,7 +231,7 @@ class Absensi_Mod extends CI_Model
 
 
 
-    public function get_all_absensi_userid($length = "", $start = "", $order = "", $dir = "", $search = "", $where = "", $id_user="")
+    public function get_all_absensi_userid($length = "", $start = "", $order = "", $dir = "", $search = "", $where = "", $id_user = "")
     {
         $array = array('ket_keberadaan' => $search, 'tanggal' => $search);
         if ($where != '') {
@@ -206,14 +243,14 @@ class Absensi_Mod extends CI_Model
             $this->db->like('ket_keberadaan', $search);
             $this->db->limit($length, $start);
             $this->db->where('tanggal', $where);
-            $this->db->where('absensi.id', $id_user);    
+            $this->db->where('absensi.id', $id_user);
             $query = $this->db->get()->result();
         } else {
             $this->db->select("*");
             $this->db->from('absensi');
             $this->db->join('user', 'user.id = absensi.id');
             $this->db->order_by($order, $dir);
-             $this->db->like('ket_keberadaan', $search);
+            $this->db->like('ket_keberadaan', $search);
             $this->db->limit($length, $start);
             $this->db->where('absensi.id', $id_user);
             $query = $this->db->get()->result();
@@ -221,7 +258,7 @@ class Absensi_Mod extends CI_Model
         return $query;
     }
 
-    public function get_all_absensi_userid_count($where = "", $id_user="")
+    public function get_all_absensi_userid_count($where = "", $id_user = "")
     {
         if ($where != '') {
             $this->db->where('tanggal', $where);

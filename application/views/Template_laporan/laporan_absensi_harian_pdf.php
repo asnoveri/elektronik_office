@@ -11,6 +11,10 @@
     table {
         border-collapse: collapse;
         width: 100%;
+        margin: auto;
+        font-family: "Lucida Sans Unicode", "Lucida Grande", "Segoe Ui";
+        font-size: 8px;
+
     }
 
     td,
@@ -46,12 +50,13 @@
             <th rowspan="2"> Nama</th>
             <th rowspan="2">Absensi Masuk</th>
             <th rowspan="2">Absensi Pulang</th>
-            <th colspan="4" style="text-align: center;">Keterangan Keberadaan</th>
+            <th colspan="5" style="text-align: center;">Keterangan Keberadaan</th>
 
         </tr>
         <tr>
             <td>WFH</td>
             <td>Piket Kantor</td>
+            <td>Piket Kantor Rengat</td>
             <td>Izin (Cuti / Sakit)</td>
             <td>DL</td>
         </tr>
@@ -60,7 +65,7 @@
         foreach ($absensi_harian as $ah) { ?>
             <tr>
                 <td><?= $no ?></td>
-                <td><?= $ah->fullname ."<br>"?><?="($ah->nip)"?></td>
+                <td><?= $ah->fullname . "<br>" ?><?= "($ah->nip)" ?></td>
                 <td><?= $ah->absensi_masuk ?></td>
                 <td><?= $ah->absensi_keluar ?></td>
                 <?php
@@ -73,6 +78,11 @@
                     $pkt = 1;
                 } else {
                     $pkt = 0;
+                }
+                if ($ah->ket_keberadaan == 'piket kantor rengat') {
+                    $pktrgt = 1;
+                } else {
+                    $pktrgt = 0;
                 }
                 if ($ah->ket_keberadaan == 'izin (sakit/cuti)') {
                     $izn = 1;
@@ -88,6 +98,7 @@
                 ?>
                 <td><?= $wfh ?></td>
                 <td><?= $pkt ?></td>
+                <td><?= $pktrgt ?></td>
                 <td><?= $izn ?></td>
                 <td><?= $dl ?></td>
             </tr>
@@ -98,6 +109,7 @@
             <td colspan="4">Total</td>
             <td><?= $wfh_tot ?></td>
             <td><?= $pkt_tot ?></td>
+            <td><?= $pkt_tot_rgt ?></td>
             <td><?= $izn_tot ?></td>
             <td><?= $dl_tot ?></td>
         </tr>

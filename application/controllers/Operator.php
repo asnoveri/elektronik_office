@@ -1,6 +1,6 @@
 <?php
 
-use SebastianBergmann\Environment\Console;
+// use SebastianBergmann\Environment\Console;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -64,12 +64,14 @@ class Operator extends CI_Controller
             $id = $this->session->userdata('id');
             $tgl = date("Y-m-d");
             $absen_keluar = $this->input->post('absen_keluar', true);
+            $ket_keberadaan = $this->input->post('ket_keberadaan', true);
             $cek_absenKel = $this->absensi_Mod->cek_absensikeluar($id, $tgl);
             $jadwl_absen = $this->absensi_Mod->get_jadwal_absensi();
 
             $jamkel1 = new DateTime($jadwl_absen->jam_keluar);
             $jamkel2 = new DateTime($absen_keluar);
-            if ($jamkel2 >= $jamkel1) {
+
+            if ($ket_keberadaan == "lembur") {
                 if ($cek_absenKel->absensi_keluar == "00:00:00") {
                     $id_absensi = $cek_absenKel->id_absensi;
                     $data = [
@@ -99,20 +101,58 @@ class Operator extends CI_Controller
                         . $pesan .
                         '</div>');
                 }
+                echo json_encode($pesan);
+                die();
             } else {
-                $pesan = "Belum Bisa Pengambilan Absen Pulang";
-                $this->session->set_flashdata('erorabsen', '<div class="alert alert-primary alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>'
-                    . $pesan .
-                    '</div>');
+                if ($jamkel2 >= $jamkel1) {
+                    if ($cek_absenKel->absensi_keluar == "00:00:00") {
+                        $id_absensi = $cek_absenKel->id_absensi;
+                        $data = [
+                            'absensi_keluar' => $absen_keluar
+                        ];
+                        if ($this->absensi_Mod->update_absensi($id_absensi, $data) == true) {
+                            $pesan = "Berhasil Melakukan Pengambilan Absen Pulang ";
+                            $this->session->set_flashdata('erorabsen', '<div class="alert alert-info alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                                . $pesan .
+                                '</div>');
+                            $log = [
+                                'tanggal' => time(),
+                                'aksi' => "Absensi",
+                                'Keterangan' => "Ambil Absen Pulang",
+                                'ip' => $this->input->ip_address(),
+                                'tipe_login' => $this->session->userdata('role_id'),
+                                'id_user' => $this->session->userdata('id'),
+                                'status' => 1
+                            ];
+                            $this->login_Mod->addlog($log);
+                        }
+                    } else {
+                        $pesan = "Anda Sudah Melakukan Pengambilan Absen Pulang";
+                        $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                            . $pesan .
+                            '</div>');
+                    }
+                } else {
+                    $pesan = "Belum Bisa Pengambilan Absen Pulang";
+                    $this->session->set_flashdata('erorabsen', '<div class="alert alert-primary alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                        . $pesan .
+                        '</div>');
+                }
+                echo json_encode($pesan);
+                die();
             }
-            echo json_encode($pesan);
-            die();
-        }
-        else {
+        } else {
+            $id = $this->session->userdata('id');
+            $tgl = date("Y-m-d");
             $judul = 'Dashboard';
             $halaman = 'operator/index';
             $data['jadwal_absen'] = $this->absensi_Mod->get_jadwal_absensi();
+            $data['cek_absenKel'] = $this->absensi_Mod->cek_absensikeluar($id, $tgl);
+            // print_r($data['cek_absenKel']);
+            // die();
             $this->template->TemplateGen($judul, $halaman, $data);
         }
     }
@@ -213,7 +253,7 @@ class Operator extends CI_Controller
         if ($upload_image) {
             $config['upload_path']          = "./assets/images/";
             $config['allowed_types']        = 'gif|jpg|png';
-            $config['max_size']             = 2048;
+            $config['max_size']             = 1024;
             $config['remove_spaces']        = true;
 
             //memangil libraires upload dan masukan configurasinya
@@ -302,15 +342,9 @@ class Operator extends CI_Controller
 
     public function getJarakUSer()
     {
-        // $id_jdwlabnsi = $this->input->post('id_jdwlabnsi', true);
-        // $absen_masuk = $this->input->post('absensi_masuk', true);
-        // $ket_keberadaan = $this->input->post('ket_keberadaan', true);
-
         $latitude1       = $this->input->post('latitudeUser', true);
         $longitude1      = $this->input->post('longitudeUser', true);
 
-        // $latitude1          = 0.527241;
-        // $longitude1         = 101.434586;
         $latitude2          = 0.525254;
         $longitude2         = 101.434762;
 
@@ -321,14 +355,102 @@ class Operator extends CI_Controller
         $distance = $distance * 60 * 1.1515;
         $distance = $distance * 1.609344;
         $jarak_akhri = round($distance, 2);
-       
-        if ($jarak_akhri <= 0.3) {
+
+        if ($jarak_akhri <= 0.2) {
             $this->index("add_absensi", $this->input->post());
         } else {
             $pesan = "Tidak Dapat Melakukan Pengambilan Absen Masuk, Karena Anda Tidak Berada Di wilayah Kantor";
             $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>'
-                . $pesan .
+                . $pesan . $jarak_akhri .
+                '</div>');
+            echo json_encode($pesan);
+        }
+        die();
+    }
+
+    public function getJarakUSerPulang()
+    {
+        $latitude1       = $this->input->post('latitudeUser', true);
+        $longitude1      = $this->input->post('longitudeUser', true);
+
+        $latitude2          = 0.525254;
+        $longitude2         = 101.434762;
+
+        $theta = $longitude1 - $longitude2;
+        $distance = (sin(deg2rad($latitude1)) * sin(deg2rad($latitude2)))  + (cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * cos(deg2rad($theta)));
+        $distance = acos($distance);
+        $distance = rad2deg($distance);
+        $distance = $distance * 60 * 1.1515;
+        $distance = $distance * 1.609344;
+        $jarak_akhri = round($distance, 2);
+
+        if ($jarak_akhri <= 0.2) {
+            $this->index("add_absn_plng", $this->input->post());
+        } else {
+            $pesan = "Tidak Dapat Melakukan Pengambilan Absen Pulang, Karena Anda Tidak Berada Di wilayah Kantor";
+            $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                . $pesan . $jarak_akhri .
+                '</div>');
+            echo json_encode($pesan);
+        }
+        die();
+    }
+
+    public function getJarakUserRengat()
+    {
+        $latitude1       = $this->input->post('latitudeUser', true);
+        $longitude1      = $this->input->post('longitudeUser', true);
+
+        $latitude2          = -0.393169;
+        $longitude2         = 102.446646;
+
+        $theta = $longitude1 - $longitude2;
+        $distance = (sin(deg2rad($latitude1)) * sin(deg2rad($latitude2)))  + (cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * cos(deg2rad($theta)));
+        $distance = acos($distance);
+        $distance = rad2deg($distance);
+        $distance = $distance * 60 * 1.1515;
+        $distance = $distance * 1.609344;
+        $jarak_akhri = round($distance, 2);
+
+        if ($jarak_akhri <= 0.03) {
+            $this->index("add_absensi", $this->input->post());
+        } else {
+            $pesan = "Tidak Dapat Melakukan Pengambilan Absen Masuk, Karena Anda Tidak Berada Di wilayah Kantor";
+            $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                . $pesan . $jarak_akhri .
+                '</div>');
+            echo json_encode($pesan);
+        }
+        die();
+    }
+
+
+    public function getJarakUSerPulangRengat()
+    {
+        $latitude1       = $this->input->post('latitudeUser', true);
+        $longitude1      = $this->input->post('longitudeUser', true);
+
+        $latitude2          = -0.393169;
+        $longitude2         = 102.446646;
+
+        $theta = $longitude1 - $longitude2;
+        $distance = (sin(deg2rad($latitude1)) * sin(deg2rad($latitude2)))  + (cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * cos(deg2rad($theta)));
+        $distance = acos($distance);
+        $distance = rad2deg($distance);
+        $distance = $distance * 60 * 1.1515;
+        $distance = $distance * 1.609344;
+        $jarak_akhri = round($distance, 2);
+
+        if ($jarak_akhri <= 0.03) {
+            $this->index("add_absn_plng", $this->input->post());
+        } else {
+            $pesan = "Tidak Dapat Melakukan Pengambilan Absen Pulang, Karena Anda Tidak Berada Di wilayah Kantor";
+            $this->session->set_flashdata('erorabsen', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>'
+                . $pesan . $jarak_akhri .
                 '</div>');
             echo json_encode($pesan);
         }

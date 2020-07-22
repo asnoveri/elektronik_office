@@ -884,24 +884,6 @@ $(function () {
 	$("#btn-kirim").click(function () {
 		const url = $("#page-top").data('url');
 		const role_id = $("#role_id").val();
-
-		if (role_id == 2) {
-			var link = 'Operator/index/add_absensi';
-			var link1 = 'Operator';
-		} else if (role_id == 4) {
-			var link = 'Direktur/index/add_absensi';
-			var link1 = 'Direktur';
-		} else if (role_id == 5) {
-			var link = 'Wadir/index/add_absensi';
-			var link1 = 'Wadir';
-		} else if (role_id == 6) {
-			var link = 'Adum/index/add_absensi';
-			var link1 = 'Adum';
-		} else if (role_id == 3) {
-			var link = 'User/index/add_absensi';
-			var link1 = 'User';
-		}
-
 		const ket_keberadaan = $("#sel-keberadaan").val();
 		const id_jdwlabnsi = $("#id_jadwal").val();
 		const d = new Date();
@@ -910,31 +892,151 @@ $(function () {
 		const s = d.getSeconds();
 		const jam = h + ':' + m + ':' + s;
 
-		if (ket_keberadaan == 'piket kantor') {
-			console.log(ket_keberadaan);
-			if ("geolocation" in navigator) { //check geolocation available 
-				//try to get user current location using getCurrentPosition() method
-				navigator.geolocation.getCurrentPosition(function (position) {
-					let latitudeUser = position.coords.latitude;
-					let longitudeUser = position.coords.longitude;
-					let locationUser = latitudeUser + "," + longitudeUser;
-					let locationServer = "0.526028, 101.434889";
-					// console.log(locationUser);
-					// console.log(locationServer);
-					if (locationUser == locationServer) {
-						console.log("sama");
-					} else {
-						$("#pesan-eror").addClass("alert alert-primary alert-dismissible");
-						$("#pesan-eror").html("Tidak Dapat Mengambil Absensi Masuk Piket Kantor, Karena Anda Tidak Berada Di Lokasi Kantor");
-						$("#pesan-eror").fadeIn();
-					}
+		if (role_id == 2) {
+			var link = 'Operator/index/add_absensi';
+			var link1 = 'Operator';
+			var link2 = 'Operator/getJarakUSer';
+			var link3 = 'Operator/getJarakUserRengat';
+		} else if (role_id == 4) {
+			var link = 'Direktur/index/add_absensi';
+			var link1 = 'Direktur';
+			var link2 = 'Direktur/getJarakUSer';
+			var link3 = 'Direktur/getJarakUserRengat';
+		} else if (role_id == 5) {
+			var link = 'Wadir/index/add_absensi';
+			var link1 = 'Wadir';
+			var link2 = 'Wadir/getJarakUSer';
+			var link3 = 'Wadir/getJarakUserRengat';
+		} else if (role_id == 6) {
+			var link = 'Adum/index/add_absensi';
+			var link1 = 'Adum';
+			var link2 = 'Adum/getJarakUSer';
+			var link3 = 'Adum/getJarakUserRengat';
+		} else if (role_id == 3) {
+			var link = 'User/index/add_absensi';
+			var link1 = 'User';
+			var link2 = 'User/getJarakUSer';
+			var link3 = 'User/getJarakUserRengat';
+		}
 
-				});
+
+
+		if (ket_keberadaan == 'piket kantor') {
+			// console.log(ket_keberadaan);
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+
+				if ("geolocation" in navigator) { //check geolocation available 
+					//try to get user current location using getCurrentPosition() method
+					navigator.geolocation.getCurrentPosition(function (position) {
+						var latitudeUser = position.coords.latitude;
+						var longitudeUser = position.coords.longitude;
+						// console.log(latitudeUser);
+						// console.log(longitudeUser);
+						$.ajax({
+							url: url + link2,
+							data: {
+								ket_keberadaan: ket_keberadaan,
+								id_jdwlabnsi: id_jdwlabnsi,
+								absensi_masuk: jam,
+								latitudeUser: latitudeUser,
+								longitudeUser: longitudeUser
+							},
+							type: 'POST',
+							dataType: 'JSON',
+							success: function (data, status) {
+								if (status == 'success') {
+									document.location.href = url + link1;
+									// console.log(data);
+								}
+							},
+						});
+					});
+				} else {
+					console.log("Browser doesn't support geolocation!");
+				}
 			} else {
-				console.log("Browser doesn't support geolocation!");
+				var latitudeUserDek = 0.526768;
+				var longitudeUserDek = 101.434658;
+				// console.log(latitudeUserDek);
+				// console.log(longitudeUserDek);
+				$.ajax({
+					url: url + link2,
+					data: {
+						ket_keberadaan: ket_keberadaan,
+						id_jdwlabnsi: id_jdwlabnsi,
+						absensi_masuk: jam,
+						latitudeUser: latitudeUserDek,
+						longitudeUser: longitudeUserDek
+					},
+					type: 'POST',
+					dataType: 'JSON',
+					success: function (data, status) {
+						if (status == 'success') {
+							document.location.href = url + link1;
+							// console.log(data);
+						}
+					},
+				});
+			}
+		} else if (ket_keberadaan == 'piket kantor rengat') {
+			// console.log(ket_keberadaan);
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+
+				if ("geolocation" in navigator) { //check geolocation available 
+					//try to get user current location using getCurrentPosition() method
+					navigator.geolocation.getCurrentPosition(function (position) {
+						var latitudeUser = position.coords.latitude;
+						var longitudeUser = position.coords.longitude;
+						// console.log(latitudeUser);
+						// console.log(longitudeUser);
+						$.ajax({
+							url: url + link3,
+							data: {
+								ket_keberadaan: ket_keberadaan,
+								id_jdwlabnsi: id_jdwlabnsi,
+								absensi_masuk: jam,
+								latitudeUser: latitudeUser,
+								longitudeUser: longitudeUser
+							},
+							type: 'POST',
+							dataType: 'JSON',
+							success: function (data, status) {
+								if (status == 'success') {
+									document.location.href = url + link1;
+									// console.log(data);
+								}
+							},
+						});
+					});
+				} else {
+					console.log("Browser doesn't support geolocation!");
+				}
+			} else {
+				var latitudeUserDek = -0.393361;
+				var longitudeUserDek = 102.446778;
+				// console.log(latitudeUserDek);
+				// console.log(longitudeUserDek);
+				$.ajax({
+					url: url + link3,
+					data: {
+						ket_keberadaan: ket_keberadaan,
+						id_jdwlabnsi: id_jdwlabnsi,
+						absensi_masuk: jam,
+						latitudeUser: latitudeUserDek,
+						longitudeUser: longitudeUserDek
+					},
+					type: 'POST',
+					dataType: 'JSON',
+					success: function (data, status) {
+						if (status == 'success') {
+							document.location.href = url + link1;
+							// console.log(data);
+						}
+					},
+				});
 			}
 		} else {
-			// console.log("selain piket kantor");
+			// console.log(ket_keberadaan);
 			$.ajax({
 				url: url + link,
 				data: {
@@ -946,11 +1048,6 @@ $(function () {
 				dataType: 'JSON',
 				success: function (data, status) {
 					if (status == 'success') {
-						// $("#pesan-eror").addClass("alert alert-primary alert-dismissible");
-						// $("#pesan-eror").html(data);
-						// $("#pesan-eror").fadeIn(function () {
-						// 	$("#pesan-eror").fadeOut(5000);
-						// });
 						document.location.href = url + link1;
 					}
 				},
@@ -964,24 +1061,7 @@ $(function () {
 		const url = $("#page-top").data('url');
 		const jk = $(".jk").data('id');
 		const role_id = $(".jk").data('role');
-
-		if (role_id == 2) {
-			var link = 'Operator/index/add_absn_plng';
-			var link1 = 'Operator';
-		} else if (role_id == 4) {
-			var link = 'Direktur/index/add_absn_plng';
-			var link1 = 'Direktur';
-		} else if (role_id == 5) {
-			var link = 'Wadir/index/add_absn_plng';
-			var link1 = 'Wadir';
-		} else if (role_id == 6) {
-			var link = 'Adum/index/add_absn_plng';
-			var link1 = 'Adum';
-		} else if (role_id == 3) {
-			var link = 'User/index/add_absn_plng';
-			var link1 = 'User';
-		}
-
+		const usrket = $(".usrket").val();
 
 		const d = new Date();
 		const h = d.getHours();
@@ -989,30 +1069,149 @@ $(function () {
 		const s = d.getSeconds();
 		const jam = h + ':' + m + ':' + s;
 
-		// if (jam >= jk) {
-		$.ajax({
-			url: url + link,
-			data: {
-				absen_keluar: jam,
-			},
-			type: 'post',
-			dataType: 'JSON',
-			success: function (data) {
-				// $("#pesan-eror").addClass("alert alert-info alert-dismissible");
-				// $("#pesan-eror").html(data);
-				// $("#pesan-eror").fadeIn(function () {
-				// 	$("#pesan-eror").fadeOut(5000);
-				// });
-				document.location.href = url + link1;
+		if (role_id == 2) {
+			var link = 'Operator/index/add_absn_plng';
+			var link1 = 'Operator';
+			var link2 = 'Operator/getJarakUSerPulang';
+			var link3 = 'Operator/getJarakUSerPulangRengat';
+		} else if (role_id == 4) {
+			var link = 'Direktur/index/add_absn_plng';
+			var link1 = 'Direktur';
+			var link2 = 'Direktur/getJarakUSerPulang';
+			var link3 = 'Direktur/getJarakUSerPulangRengat';
+		} else if (role_id == 5) {
+			var link = 'Wadir/index/add_absn_plng';
+			var link1 = 'Wadir';
+			var link2 = 'Wadir/getJarakUSerPulang';
+			var link3 = 'Wadir/getJarakUSerPulangRengat';
+		} else if (role_id == 6) {
+			var link = 'Adum/index/add_absn_plng';
+			var link1 = 'Adum';
+			var link2 = 'Adum/getJarakUSerPulang';
+			var link3 = 'Adum/getJarakUSerPulangRengat';
+		} else if (role_id == 3) {
+			var link = 'User/index/add_absn_plng';
+			var link1 = 'User';
+			var link2 = 'User/getJarakUSerPulang';
+			var link3 = 'User/getJarakUSerPulangRengat';
+		}
+
+		if (usrket == 'piket kantor') {
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				if ("geolocation" in navigator) { //check geolocation available 
+					//try to get user current location using getCurrentPosition() method
+					navigator.geolocation.getCurrentPosition(function (position) {
+						var latitudeUser = position.coords.latitude;
+						var longitudeUser = position.coords.longitude;
+						// console.log(latitudeUser);
+						// console.log(longitudeUser);
+						$.ajax({
+							url: url + link2,
+							data: {
+								latitudeUser: latitudeUser,
+								longitudeUser: longitudeUser,
+								absen_keluar: jam
+							},
+							type: 'POST',
+							dataType: 'JSON',
+							success: function (data, status) {
+								if (status == 'success') {
+									document.location.href = url + link1;
+									// console.log(data);
+								}
+							},
+						});
+					});
+				} else {
+					console.log("Browser doesn't support geolocation!");
+				}
+			} else {
+				var latitudeUserDek = 0.526768;
+				var longitudeUserDek = 101.434658;
+				// console.log(latitudeUserDek);
+				// console.log(longitudeUserDek);
+				$.ajax({
+					url: url + link2,
+					data: {
+						latitudeUser: latitudeUserDek,
+						longitudeUser: longitudeUserDek,
+						absen_keluar: jam
+					},
+					type: 'POST',
+					dataType: 'JSON',
+					success: function (data, status) {
+						if (status == 'success') {
+							document.location.href = url + link1;
+							// console.log(data);
+						}
+					},
+				});
 			}
-		});
-		// } else {
-		// 	$("#pesan-eror").addClass("alert alert-info alert-dismissible");
-		// 	$("#pesan-eror").html("Belum Bisa Mengambil Absen Pulang");
-		// 	$("#pesan-eror").fadeIn(function () {
-		// 		$("#pesan-eror").fadeOut(5000);
-		// 	});
-		// }
+		} else if (usrket == 'piket kantor rengat') {
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				if ("geolocation" in navigator) { //check geolocation available 
+					//try to get user current location using getCurrentPosition() method
+					navigator.geolocation.getCurrentPosition(function (position) {
+						var latitudeUser = position.coords.latitude;
+						var longitudeUser = position.coords.longitude;
+						// console.log(latitudeUser);
+						// console.log(longitudeUser);
+						$.ajax({
+							url: url + link3,
+							data: {
+								latitudeUser: latitudeUser,
+								longitudeUser: longitudeUser,
+								absen_keluar: jam
+							},
+							type: 'POST',
+							dataType: 'JSON',
+							success: function (data, status) {
+								if (status == 'success') {
+									document.location.href = url + link1;
+									// console.log(data);
+								}
+							},
+						});
+					});
+				} else {
+					console.log("Browser doesn't support geolocation!");
+				}
+			} else {
+				var latitudeUserDek = -0.393361;
+				var longitudeUserDek = 102.446778;
+				// console.log(latitudeUserDek);
+				// console.log(longitudeUserDek);
+				$.ajax({
+					url: url + link3,
+					data: {
+						latitudeUser: latitudeUserDek,
+						longitudeUser: longitudeUserDek,
+						absen_keluar: jam
+					},
+					type: 'POST',
+					dataType: 'JSON',
+					success: function (data, status) {
+						if (status == 'success') {
+							document.location.href = url + link1;
+							// console.log(data);
+						}
+					},
+				});
+			}
+		} else {
+			$.ajax({
+				url: url + link,
+				data: {
+					absen_keluar: jam,
+					ket_keberadaan: usrket
+				},
+				type: 'post',
+				dataType: 'JSON',
+				success: function (data) {
+					document.location.href = url + link1;
+				}
+			});
+		}
 	});
 
 
@@ -1329,6 +1528,15 @@ $(function () {
 		// $('#tgl_absen_cetak').val("");
 	});
 
+	// cetak lembur
+	$("#btn-ctk-lembur").on('click', function (e) {
+		e.preventDefault();
+		$("#cetak_absensi").modal("show");
+		$("#label_modal_absensi").html("Cetak Persensi Lembur");
+		$(".modal-body form").attr('action', url + 'Absensi/cetak_persensiLembur');
+		$("#tgl_absen_cetak1").hide();
+	});
+
 	//cetak perbulan
 	$("#btn-ctk-perbulan").on('click', function (e) {
 		e.preventDefault();
@@ -1401,5 +1609,6 @@ $(function () {
 			}
 		});
 	});
+
 
 });

@@ -26,14 +26,17 @@
                     Tambah User
                 </button> -->
             <div class="row">
-                <div class="col-sm-10">
-                    <button type="button" class="btn btn-sm btn-dark" id="btn-ctk-perhari">
+                <div class="col-sm-12 mb-2">
+                    <button type="button" class="btn btn-sm btn-primary" id="btn-ctk-perhari">
                         <i class="fas fa-print fa-sm text-white-50"></i> Cetak Absensi Harian
                     </button>
-                    <button type="button" class="btn btn-sm btn-secondary" id="btn-ctk-perbulan">
+                    <button type="button" class="btn btn-sm btn-info" id="btn-ctk-lembur">
+                        <i class="fas fa-print fa-sm text-white-50"></i> Cetak Absensi Lembur
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success" id="btn-ctk-perbulan">
                         <i class="fas fa-print fa-sm text-white-50"></i> Cetak Rekap Perpriode
                     </button>
-                    <button type="button" class="btn btn-sm btn-light" id="btn-ctk-perbulan1">
+                    <button type="button" class="btn btn-sm btn-dangers" id="btn-ctk-perbulan1">
                         <i class="fas fa-print fa-sm text-white-50"></i> Cetak Absensi Bulanan
                     </button>
                 </div>

@@ -97,7 +97,7 @@ class Absensi extends CI_Controller
     public function cetak_persensiHarian()
     {
         ob_start();
-        $tgl = $this->input->post('tanggal', true);;
+        $tgl = $this->input->post('tanggal', true);
         $data['tgl'] = longdate_indo($tgl);
         $date = $data['tgl'];
 
@@ -110,11 +110,13 @@ class Absensi extends CI_Controller
         }
 
         $pkt = $this->absensi_Mod->get_keb_pkt($tgl, $id_jadwal);
+        $pktrengat = $this->absensi_Mod->get_keb_pkt_rengat($tgl, $id_jadwal);
         $wfh = $this->absensi_Mod->get_keb_wfh($tgl, $id_jadwal);
         $izn = $this->absensi_Mod->get_keb_izn($tgl, $id_jadwal);
         $dl = $this->absensi_Mod->get_keb_dl($tgl, $id_jadwal);
 
         $data['pkt_tot'] = count($pkt);
+        $data['pkt_tot_rgt'] = count($pktrengat);
         $data['wfh_tot'] = count($wfh);
         $data['izn_tot'] = count($izn);
         $data['dl_tot']  = count($dl);
@@ -172,12 +174,14 @@ class Absensi extends CI_Controller
         for ($i = 0; $i < count($user); $i++) {
             $absn = $this->absensi_Mod->get_count_wfhperid($user[$i]->id, $tanggal, $tanggal1);
             $pkt = $this->absensi_Mod->get_count_pktperid($user[$i]->id, $tanggal, $tanggal1);
+            $pktrengat = $this->absensi_Mod->get_count_pktrengatperid($user[$i]->id, $tanggal, $tanggal1);
             $izn = $this->absensi_Mod->get_count_iznperid($user[$i]->id, $tanggal, $tanggal1);
             $dl = $this->absensi_Mod->get_count_dlperid($user[$i]->id, $tanggal, $tanggal1);
             $data['user'][] = $user[$i]->fullname;
             $data['nip'][]  = $user[$i]->nip;
             $data['tot_wfh'][] = count($absn);
             $data['tot_pkt'][] = count($pkt);
+            $data['tot_pkt_rengat'][] = count($pktrengat);
             $data['tot_izn'][] = count($izn);
             $data['tot_sabtu'] = $sabtu;
             $data['tot_minggu'] = $minggu;
@@ -187,6 +191,7 @@ class Absensi extends CI_Controller
         $data['nip'] = $data['nip'];
         $data['tot_wfh'] = $data['tot_wfh'];
         $data['tot_pkt'] = $data['tot_pkt'];
+        $data['tot_pkt_rengat'] = $data['tot_pkt_rengat'];
         $data['tot_izn'] = $data['tot_izn'];
         $data['tot_dl'] = $data['tot_dl'];
         // die();
@@ -201,5 +206,32 @@ class Absensi extends CI_Controller
 
         $html2pdf->writeHTML($html);
         $html2pdf->output("absensi_bulanan_pegawai_priode'_$tanggal'_'$tanggal1.'.pdf");
+    }
+
+
+    public function cetak_persensiLembur()
+    {
+        ob_start();
+        $tgl = $this->input->post('tanggal', true);
+        $data['tgl'] = longdate_indo($tgl);
+        $date = $data['tgl'];
+
+        $data['lembur_absensi'] = $this->absensi_Mod->get_absensicetaklembur($tgl);
+
+        $lembur = $this->absensi_Mod->get_lembur($tgl, 3);
+
+        $data['lembur_tot'] = count($lembur);
+
+
+        $this->load->view('Template_laporan/laporan_absensi_lembur_pdf', $data);
+
+        $html = ob_get_contents();
+        ob_end_clean();
+
+        $html2pdf = new HTML2PDF('P', 'A4', 'fr', false, 'ISO-8859-15', array(19, 10, 20, 5));
+        $html2pdf->setDefaultFont('Arial');
+
+        $html2pdf->writeHTML($html);
+        $html2pdf->output("absensi_lembur_pegawai'_$date.'.pdf");
     }
 }

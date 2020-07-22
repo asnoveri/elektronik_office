@@ -47,6 +47,7 @@
                    </span>
                    <span class="text">Absen Pulang</span>
                  </a>
+                 <input type="hidden" class="usrket" value="<?= @$cek_absenKel->ket_keberadaan ?>"></input>
                </div>
 
                <div class="col-sm-6 text-center mt-2">
@@ -110,12 +111,21 @@
              <form>
                <div class="form-group">
                  <label>Keterangan / Keberadaan hari ini</label>
-                 <select name="ket_keberadaan" class="custom-select" id="sel-keberadaan">
-                   <option value="piket kantor">Piket Kantor</option>
-                   <option value="wfh">WFH</option>
-                   <option value="izin (sakit/cuti)">Izin (Sakit / Cuti)</option>
-                   <option value="dl">Perjalanan Dinas</option>
-                 </select>
+                 <?php
+                  $tgl = get_indo_libur(date('Y-m-d'));
+                  if ($tgl == "tanggal merah hari Sabtu" || $tgl == "tanggal Merah Hari Minggu") { ?>
+                   <select name="ket_keberadaan" class="custom-select" id="sel-keberadaan">
+                     <option value="lembur">Lembur</option>
+                   </select>
+                 <?php } else { ?>
+                   <select name="ket_keberadaan" class="custom-select" id="sel-keberadaan">
+                     <option value="piket kantor">Piket Kantor</option>
+                     <option value="piket kantor rengat">Piket Kantor Rengat</option>
+                     <option value="wfh">WFH</option>
+                     <option value="izin (sakit/cuti)">Izin (Sakit / Cuti)</option>
+                     <option value="dl">Perjalanan Dinas</option>
+                   </select>
+                 <?php } ?>
                </div>
                <input id="id_jadwal" hidden value="<?= $jadwal_absen->id_jdwlabnsi ?>">
                <input id="role_id" hidden value="<?= $this->session->userdata('role_id'); ?>">
@@ -123,7 +133,6 @@
                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
              </form>
            </div>
-
          </div>
        </div>
      </div>
