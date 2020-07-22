@@ -160,10 +160,13 @@ class Auth extends CI_Controller
 
     public function logout()
     {
+        if(empty($this->session->userdata('id'))){
+            redirect('Auth');
+        }
         $data = [
             'tanggal' => time(),
             'aksi' => "Logout",
-            'Keterangan' => "Logou Sistem",
+            'Keterangan' => "Logout Sistem",
             'ip' => $this->input->ip_address(),
             'tipe_login' => $this->session->userdata('role_id'),
             'id_user' => $this->session->userdata('id'),
