@@ -151,8 +151,6 @@ class Operator extends CI_Controller
             $halaman = 'operator/index';
             $data['jadwal_absen'] = $this->absensi_Mod->get_jadwal_absensi();
             $data['cek_absenKel'] = $this->absensi_Mod->cek_absensikeluar($id, $tgl);
-            // print_r($data['cek_absenKel']);
-            // die();
             $this->template->TemplateGen($judul, $halaman, $data);
         }
     }

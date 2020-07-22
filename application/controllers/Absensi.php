@@ -156,18 +156,36 @@ class Absensi extends CI_Controller
 
         $sabtu = 0;
         $minggu = 0;
+        $tglmerah = 0;
+        $bknmerah = 0;
 
         foreach ($datarange as $dt) {
-            if (nice_date($dt, "l") == 'Saturday') {
-                echo nice_date($dt, "l") . "<br>";
-                $sabtu++;
-            }
-            if (nice_date($dt, "l") == 'Sunday') {
-                echo nice_date($dt, "l") . "<br>";
-                $minggu++;
-            }
-        }
+            $tgl = get_indo_libur($dt);
 
+            if ($tgl == "tanggal merah hari Sabtu") {
+                $sabtu++;
+            } elseif ($tgl == "tanggal Merah Hari Minggu") {
+                $minggu++;
+            } elseif ($tgl == "bukan tanggal merah") {
+                $bknmerah++;
+            } else {
+                $tglmerah++;
+            }
+
+            // if (nice_date($dt, "l") == 'Saturday') {
+            //     echo nice_date($dt, "l") . "<br>";
+            //     $sabtu++;
+            // }
+            // if (nice_date($dt, "l") == 'Sunday') {
+            //     echo nice_date($dt, "l") . "<br>";
+            //     $minggu++;
+            // }
+        }
+        // echo "hari sabtu" . $sabtu . "<br>";
+        // echo "hari minggu" . $minggu . "<br>";
+        // echo "bukan tanggal merah" . $bknmerah . "<br>";
+        // echo "tanggal merah" . $tglmerah . "<br>";
+        // die();
 
         $user = $this->user_Mod->get_semua_user();
 
@@ -185,6 +203,7 @@ class Absensi extends CI_Controller
             $data['tot_izn'][] = count($izn);
             $data['tot_sabtu'] = $sabtu;
             $data['tot_minggu'] = $minggu;
+            $data['tot_tglmerah'] = $tglmerah;
             $data['tot_dl'][] = count($dl);
         }
         $data['user'] = $data['user'];

@@ -113,19 +113,31 @@
                  <label>Keterangan / Keberadaan hari ini</label>
                  <?php
                   $tgl = get_indo_libur(date('Y-m-d'));
-                  if ($tgl == "tanggal merah hari Sabtu" || $tgl == "tanggal Merah Hari Minggu") { ?>
+                  if ($tgl == "bukan tanggal merah") { ?>
+                   <?php
+                    if (date("l") == "Friday") { ?>
+                     <select name="ket_keberadaan" class="custom-select" id="sel-keberadaan">
+                       <option value="piket kantor">Piket Kantor</option>
+                       <option value="piket kantor rengat">Piket Kantor Rengat</option>
+                       <option value="wfh">WFH</option>
+                       <option value="izin (sakit/cuti)">Izin (Sakit / Cuti)</option>
+                       <option value="dl">Perjalanan Dinas</option>
+                     </select>
+                   <?php } else { ?>
+                     <select name="ket_keberadaan" class="custom-select" id="sel-keberadaan">
+                       <option value="piket kantor">Piket Kantor</option>
+                       <option value="piket kantor rengat">Piket Kantor Rengat</option>
+                       <option value="wfh">WFH</option>
+                       <option value="izin (sakit/cuti)">Izin (Sakit / Cuti)</option>
+                       <option value="dl">Perjalanan Dinas</option>
+                     </select>
+                   <?php } ?>
+                 <?php } else { ?>
                    <select name="ket_keberadaan" class="custom-select" id="sel-keberadaan">
                      <option value="lembur">Lembur</option>
                    </select>
-                 <?php } else { ?>
-                   <select name="ket_keberadaan" class="custom-select" id="sel-keberadaan">
-                     <option value="piket kantor">Piket Kantor</option>
-                     <option value="piket kantor rengat">Piket Kantor Rengat</option>
-                     <option value="wfh">WFH</option>
-                     <option value="izin (sakit/cuti)">Izin (Sakit / Cuti)</option>
-                     <option value="dl">Perjalanan Dinas</option>
-                   </select>
-                 <?php } ?>
+                 <?php }
+                  ?>
                </div>
                <input id="id_jadwal" hidden value="<?= $jadwal_absen->id_jdwlabnsi ?>">
                <input id="role_id" hidden value="<?= $this->session->userdata('role_id'); ?>">

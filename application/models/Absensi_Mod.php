@@ -5,12 +5,14 @@ class Absensi_Mod extends CI_Model
     public function get_jadwal_absensi()
     {
         $tgl = get_indo_libur(date('Y-m-d'));
-        if (date("l") == "Friday") {
-            $id_jadwal = 2;
-        } else  if ($tgl == "tanggal merah hari Sabtu" || $tgl == "tanggal Merah Hari Minggu") {
-            $id_jadwal = 3;
+        if ($tgl == "bukan tanggal merah") {
+            if (date("l") == "Friday") {
+                $id_jadwal = 2;
+            } else {
+                $id_jadwal = 1;
+            }
         } else {
-            $id_jadwal = 1;
+            $id_jadwal = 3;
         }
         $data =  $this->db->get_where('jadwal_absensi', ['id_jdwlabnsi' => $id_jadwal])->row();
         return $data;
