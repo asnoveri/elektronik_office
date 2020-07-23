@@ -143,12 +143,16 @@ class user_Mod extends CI_Model
         return $this->db->query($query)->result();
     }
 
-    public function get_allpengunan_count($id)
+    public function get_allpengunan_count($id,$search)
     {
-        // return $this->db->count_all_results('admin');
+        if ($search) {
+            $like = " AND fullname like '$search%'";
+        } else {
+            $like = '';
+        }
         $query = "SELECT user.id,fullname,user_name,email, peguna.id_penguna, role_user.role_id  FROM user,peguna,role_user
                 WHERE user.id=peguna.id AND peguna.role_id=role_user.role_id
-                AND peguna.role_id=$id AND status=1";
+                AND peguna.role_id=$id AND status=1 $like";
         return  $this->db->query($query)->result();
     }
 

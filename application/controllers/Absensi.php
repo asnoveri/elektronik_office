@@ -181,11 +181,7 @@ class Absensi extends CI_Controller
             //     $minggu++;
             // }
         }
-        // echo "hari sabtu" . $sabtu . "<br>";
-        // echo "hari minggu" . $minggu . "<br>";
-        // echo "bukan tanggal merah" . $bknmerah . "<br>";
-        // echo "tanggal merah" . $tglmerah . "<br>";
-        // die();
+        
 
         $user = $this->user_Mod->get_semua_user();
 

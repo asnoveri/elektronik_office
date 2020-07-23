@@ -211,7 +211,7 @@ class Operator extends CI_Controller
                 $data->ket_keberadaan,
             ];
         }
-        $tot = $this->absensi_Mod->get_all_absensi_userid_count($where, $id_user);
+        $tot = $this->absensi_Mod->get_all_absensi_userid_count($where, $id_user,$search);
         $respon = [
             'draw' => $draw,
             'recordsTotal' => $tot,

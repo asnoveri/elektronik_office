@@ -43,7 +43,7 @@ class Managemen_Admin extends CI_Controller {
                     </div>'
                 ];
             }
-                $tot1=$this->user_mod->get_allpengunan_count($id);
+                $tot1=$this->user_mod->get_allpengunan_count($id,$search);
                 $tot=count($tot1);
                 $respon['recordsTotal']=$tot;
                 $respon['recordsFiltered']=$tot;
