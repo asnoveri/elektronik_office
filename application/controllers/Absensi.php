@@ -181,7 +181,7 @@ class Absensi extends CI_Controller
             //     $minggu++;
             // }
         }
-        
+
 
         $user = $this->user_Mod->get_semua_user();
 
@@ -248,5 +248,26 @@ class Absensi extends CI_Controller
 
         $html2pdf->writeHTML($html);
         $html2pdf->output("absensi_lembur_pegawai'_$date.'.pdf");
+    }
+
+    public function cetakAbsensiBulanan()
+    {
+        $tanggal = $this->input->post('tanggal');
+        $tanggal1 = $this->input->post('tanggal1');
+        $id = $this->input->post('pegawai');
+        $data['priode1'] = $tanggal;
+        $data['priode2'] = $tanggal1;
+        $datarange = date_range($tanggal, $tanggal1);
+        $data = $this->absensi_Mod->get_cetak_bulanan($id, $tanggal, $tanggal1);
+
+        for ($i = 0; $i < count($datarange); $i++) {
+            if (@$data[$i] != "") {
+                echo  $datarange[$i] .  " _ " . $data[$i]->ket_keberadaan . "<br>";
+            } else {
+                echo  $datarange[$i] . "  tanpa Keterangan  " . "<br>";
+            }
+        }
+
+        die();
     }
 }

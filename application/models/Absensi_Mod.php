@@ -260,21 +260,32 @@ class Absensi_Mod extends CI_Model
         return $query;
     }
 
-    public function get_all_absensi_userid_count($where = "", $id_user = "",$search="")
+    public function get_all_absensi_userid_count($where = "", $id_user = "", $search = "")
     {
         if ($where != '') {
             $this->db->where('tanggal', $where);
             $this->db->where('id', $id_user);
             $query = $this->db->count_all_results('absensi');
-        }elseif ($search !='') {
+        } elseif ($search != '') {
             $this->db->like('ket_keberadaan', $search);
             $this->db->where('id', $id_user);
             $query = $this->db->count_all_results('absensi');
-        } 
-        else {
+        } else {
             $this->db->where('id', $id_user);
             $query = $this->db->count_all_results('absensi');
         }
         return $query;
+    }
+
+    public function get_cetak_bulanan($id, $tanggal, $tanggal1)
+    {
+        $query = "SELECT * FROM absensi WHERE id=$id AND  tanggal between '$tanggal' AND '$tanggal1' ORDER BY tanggal ASC";
+        return  $this->db->query($query)->result();
+    }
+
+    public function get_cetak_mont($id, $dt)
+    {
+        $query = "SELECT * FROM absensi WHERE id=$id AND  tanggal=$dt";
+        return  $this->db->query($query)->row();
     }
 }
