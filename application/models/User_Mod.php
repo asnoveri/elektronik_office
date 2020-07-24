@@ -64,6 +64,10 @@ class user_Mod extends CI_Model
         }
     }
 
+    public function get_userbyID($id){
+        return $this->db->get_where('user', ['id' => $id])->row();
+    }
+
     public function get_wadir($id)
     {
         $this->db->where('id_unitkerja', $id);

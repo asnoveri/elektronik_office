@@ -220,7 +220,7 @@ class Absensi extends CI_Controller
         $html2pdf->setDefaultFont('Arial');
 
         $html2pdf->writeHTML($html);
-        $html2pdf->output("absensi_bulanan_pegawai_priode'_$tanggal'_'$tanggal1.'.pdf");
+        $html2pdf->output("Rekap_absensi_bulanan_pegawai_priode'_$tanggal'_'$tanggal1.'.pdf");
     }
 
 
@@ -252,22 +252,37 @@ class Absensi extends CI_Controller
 
     public function cetakAbsensiBulanan()
     {
+        ob_start();
         $tanggal = $this->input->post('tanggal');
         $tanggal1 = $this->input->post('tanggal1');
         $id = $this->input->post('pegawai');
+        $pegawai= $this->user_Mod->get_userbyID($id);
+        $data['pegawai']=$pegawai;
         $data['priode1'] = $tanggal;
         $data['priode2'] = $tanggal1;
-        $datarange = date_range($tanggal, $tanggal1);
-        $data = $this->absensi_Mod->get_cetak_bulanan($id, $tanggal, $tanggal1);
+        $data['range'] = date_range($tanggal, $tanggal1);
+        $data['absensi'] = $this->absensi_Mod->get_cetak_bulanan($id, $tanggal, $tanggal1);
 
-        for ($i = 0; $i < count($datarange); $i++) {
-            if (@$data[$i] != "") {
-                echo  $datarange[$i] .  " _ " . $data[$i]->ket_keberadaan . "<br>";
-            } else {
-                echo  $datarange[$i] . "  tanpa Keterangan  " . "<br>";
-            }
-        }
 
-        die();
+        $this->load->view('Template_laporan/cetak_absensi_month_pdf', $data);
+
+        $html = ob_get_contents();
+        ob_end_clean();
+
+        $html2pdf = new HTML2PDF('P', 'F4', 'fr', false, 'ISO-8859-15', array(19, 10, 20, 5));
+        $html2pdf->setDefaultFont('Arial');
+
+        $html2pdf->writeHTML($html);
+        $html2pdf->output("Laporan_Absensi'_$pegawai->fullname'_$tanggal'_'$tanggal1'.pdf");
+   
+        // for ($i = 0; $i < count($datarange); $i++) {
+        //     if (@$data[$i] != "") {
+        //         echo  $datarange[$i] .  " _ " . $data[$i]->ket_keberadaan . "<br>";
+        //     } else {
+        //         echo  $datarange[$i] . "  tanpa Keterangan  " . "<br>";
+        //     }
+        // }
+
+        // die();
     }
 }
