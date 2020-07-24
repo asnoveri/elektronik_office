@@ -64,7 +64,8 @@ class user_Mod extends CI_Model
         }
     }
 
-    public function get_userbyID($id){
+    public function get_userbyID($id)
+    {
         return $this->db->get_where('user', ['id' => $id])->row();
     }
 
@@ -80,6 +81,13 @@ class user_Mod extends CI_Model
         $this->db->where('role_id', 4);
         $this->db->where('status', 1);
         return $direktur = $this->db->get('peguna')->result();
+    }
+
+    public function get_direktur_one()
+    {
+        $this->db->where('role_id', 4);
+        $this->db->where('status', 1);
+        return $direktur = $this->db->get('peguna')->row();
     }
 
     public function get_adum()
@@ -147,7 +155,7 @@ class user_Mod extends CI_Model
         return $this->db->query($query)->result();
     }
 
-    public function get_allpengunan_count($id,$search)
+    public function get_allpengunan_count($id, $search)
     {
         if ($search) {
             $like = " AND fullname like '$search%'";

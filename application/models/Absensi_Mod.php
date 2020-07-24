@@ -18,6 +18,12 @@ class Absensi_Mod extends CI_Model
         return $data;
     }
 
+    public function get_jadwal_absensi_forCetak($id_jdwlabnsi)
+    {
+        $data =  $this->db->get_where('jadwal_absensi', ['id_jdwlabnsi' => $id_jdwlabnsi])->row();
+        return $data;
+    }
+
     public function cek_absensiMasuk($id_jdwlabnsi, $id, $tgl)
     {
         $this->db->where('id_jdwlabnsi', $id_jdwlabnsi);
@@ -281,6 +287,13 @@ class Absensi_Mod extends CI_Model
     {
         $query = "SELECT * FROM absensi WHERE id=$id AND  tanggal between '$tanggal' AND '$tanggal1' ORDER BY tanggal ASC";
         return  $this->db->query($query)->result();
+    }
+
+    public function get_cetak_bulanan1($id, $tanggal)
+    {
+        $this->db->where('id', $id);
+        $this->db->where('tanggal', $tanggal);
+        return $this->db->get('absensi')->row();
     }
 
     public function get_cetak_mont($id, $dt)

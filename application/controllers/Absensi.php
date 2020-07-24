@@ -256,12 +256,24 @@ class Absensi extends CI_Controller
         $tanggal = $this->input->post('tanggal');
         $tanggal1 = $this->input->post('tanggal1');
         $id = $this->input->post('pegawai');
-        $pegawai= $this->user_Mod->get_userbyID($id);
-        $data['pegawai']=$pegawai;
+        $pegawai = $this->user_Mod->get_userbyID($id);
+        $direktur = $this->user_Mod->get_direktur_one();
+        $dirut = $this->user_Mod->get_userbyID($direktur->id);
+        $data['direktur'] = $dirut;
+        $data['pegawai'] = $pegawai;
         $data['priode1'] = $tanggal;
         $data['priode2'] = $tanggal1;
         $data['range'] = date_range($tanggal, $tanggal1);
-        $data['absensi'] = $this->absensi_Mod->get_cetak_bulanan($id, $tanggal, $tanggal1);
+        // $data['absensi'] = $this->absensi_Mod->get_cetak_bulanan($id, $tanggal, $tanggal1);
+
+        foreach ($data['range'] as $dt) {
+            $as = $this->absensi_Mod->get_cetak_bulanan1($id, $dt);
+            $jadwal = $this->absensi_Mod->get_jadwal_absensi_forCetak(@$as->id_jdwlabnsi);
+            $data['jdwl_jam_masuk'][] = $jadwal->jam_masuk;
+            $data['ket_keberadaan'][] = @$as->ket_keberadaan;
+            $data['absensi_masuk'][] = @$as->absensi_masuk;
+            $data['absensi_keluar'][] = @$as->absensi_keluar;
+        }
 
 
         $this->load->view('Template_laporan/cetak_absensi_month_pdf', $data);
@@ -274,15 +286,5 @@ class Absensi extends CI_Controller
 
         $html2pdf->writeHTML($html);
         $html2pdf->output("Laporan_Absensi'_$pegawai->fullname'_$tanggal'_'$tanggal1'.pdf");
-   
-        // for ($i = 0; $i < count($datarange); $i++) {
-        //     if (@$data[$i] != "") {
-        //         echo  $datarange[$i] .  " _ " . $data[$i]->ket_keberadaan . "<br>";
-        //     } else {
-        //         echo  $datarange[$i] . "  tanpa Keterangan  " . "<br>";
-        //     }
-        // }
-
-        // die();
     }
 }
