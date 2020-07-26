@@ -79,13 +79,17 @@
                 <td>
                     <?php
                     if ($ket_keberadaan[$i] != 'lembur' && $ket_keberadaan[$i] != '' && $ket_keberadaan[$i] != 'dl' && $ket_keberadaan[$i] != 'izin (sakit/cuti)' && $ket_keberadaan[$i] != 'wfh') {
-                        $diff    = strtotime($absensi_masuk[$i]) - strtotime($jdwl_jam_masuk[$i]);
-                        $jam    = floor($diff / (60 * 60));
-                        $menit    = $diff - $jam * (60 * 60);
-                        if ($jam) {
-                            echo  $jam .  ' jam, ' . floor($menit / 60) . ' menit';
-                        } elseif ($menit != '' && $jam == '') {
-                            echo   floor($menit / 60) . ' menit';
+                        if ($absensi_masuk[$i] >= $jdwl_jam_masuk[$i]) {
+                            $diff    = strtotime($absensi_masuk[$i]) - strtotime($jdwl_jam_masuk[$i]);
+                            $jam    = floor($diff / (60 * 60));
+                            $menit    = $diff - $jam * (60 * 60);
+                            if ($jam) {
+                                echo  $jam .  ' jam, ' . floor($menit / 60) . ' menit';
+                            } elseif ($menit != '' && $jam == '') {
+                                echo   floor($menit / 60) . ' menit';
+                            }
+                        } else {
+                            echo "-";
                         }
                     } else {
                         echo "-";
@@ -110,10 +114,39 @@
                 </td>
                 <td style="text-transform: capitalize;">
                     <?php
-                    if ($ket_keberadaan[$i]) {
-                        echo $ket_keberadaan[$i];
+                    // if ($ket_keberadaan[$i]) {
+                    //     echo $ket_keberadaan[$i];
+                    // } else {
+                    //     echo "Tanpa Keterangan";
+                    // }
+
+                    $tgl = get_indo_libur($range[$i]);
+
+                    if ($tgl == "tanggal merah hari Sabtu") {
+                        if ($ket_keberadaan[$i]) {
+                            echo $ket_keberadaan[$i] . ", Hari Sabtu";
+                        } else {
+                            echo "-";
+                        }
+                    } elseif ($tgl == "tanggal Merah Hari Minggu") {
+                        if ($ket_keberadaan[$i]) {
+                            echo $ket_keberadaan[$i] . ", Hari Minggu";
+                        } else {
+                            echo "-";
+                        }
+                    } elseif ($tgl == "bukan tanggal merah") {
+                        if ($ket_keberadaan[$i]) {
+                            echo $ket_keberadaan[$i];
+                        } else {
+                            echo "Tanpa Keterangan";
+                        }
                     } else {
-                        echo "Tanpa Keterangan";
+                        if ($ket_keberadaan[$i]) {
+                            echo $ket_keberadaan[$i]  . "," .  $tgl;
+                        } else {
+                            echo "-";
+                        }
+                        // echo $tgl;
                     }
                     ?>
                 </td>
