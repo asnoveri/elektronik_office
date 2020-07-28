@@ -50,7 +50,7 @@ class Absensi extends CI_Controller
                 2 => 'tanggal',
                 3 => 'absensi_masuk',
                 4 => 'absensi_keluar',
-                5 => 'ket_keberadaan'
+                5 => 'ket_keberadaan',
             ];
 
             if (!isset($valid_columns[$col])) {
@@ -63,6 +63,58 @@ class Absensi extends CI_Controller
             $json = [];
             $no = $start + 1;
             foreach ($dta as $data) {
+                if ($data->ket_keberadaan == 'piket kantor') {
+                    $combo = '<div class="form-group "> 
+                                <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
+                                <option selected value="piket kantor">' . $data->ket_keberadaan . '</option>
+                                <option value="piket kantor rengat">Piket Kantor Rengat</option>
+                                <option value="wfh">WFH</option>
+                                <option value="izin (sakit/cuti)">Izin (sakit/cuti)</option>
+                                <option value="dl">Perjalanan Dinas</option>
+                                </select>
+                            </div>';
+                } else if ($data->ket_keberadaan == 'piket kantor rengat') {
+                    $combo = '<div class="form-group "> 
+                                <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
+                                <option selected value="piket kantor rengat">' . $data->ket_keberadaan . '</option>
+                                <option value="piket kantor">Piket Kantor </option>
+                                <option value="wfh">WFH</option>
+                                <option value="izin (sakit/cuti)">Izin (sakit/cuti)</option>
+                                <option value="dl">Perjalanan Dinas</option>
+                                </select>
+                            </div>';
+                } else if ($data->ket_keberadaan == 'wfh') {
+                    $combo = '<div class="form-group "> 
+                                <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
+                                <option selected  value="wfh">' . $data->ket_keberadaan . '</option>
+                                <option value="piket kantor">Piket Kantor </option>
+                                <option value="piket kantor rengat">Piket Kantor Rengat</option>
+                                <option value="izin (sakit/cuti)">Izin (sakit/cuti)</option>
+                                <option value="dl">Perjalanan Dinas</option>
+                                </select>
+                            </div>';
+                } else if ($data->ket_keberadaan == 'dl') {
+                    $combo = '<div class="form-group "> 
+                                <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
+                                <option selected  value="dl">' . $data->ket_keberadaan . '</option>
+                                <option value="piket kantor">Piket Kantor </option>
+                                <option value="piket kantor rengat">Piket Kantor Rengat</option>
+                                <option value="wfh">WFH</option>
+                                <option value="izin (sakit/cuti)">Izin (sakit/cuti)</option>
+                                </select>
+                            </div>';
+                } else if ($data->ket_keberadaan == 'izin (sakit/cuti)') {
+                    $combo = '<div class="form-group "> 
+                                <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
+                                <option selected  value="izin (sakit/cuti)">' . $data->ket_keberadaan . '</option>
+                                <option value="piket kantor">Piket Kantor </option>
+                                <option value="piket kantor rengat">Piket Kantor Rengat</option>
+                                <option value="wfh">WFH</option>
+                                </select>
+                            </div>';
+                }
+
+
                 $bad_date = $data->tanggal;
                 $tgl = nice_date($bad_date, 'd-m-Y');
                 $json[] = [
@@ -71,7 +123,7 @@ class Absensi extends CI_Controller
                     $tgl,
                     $data->absensi_masuk,
                     $data->absensi_keluar,
-                    $data->ket_keberadaan,
+                    @$combo,
                 ];
             }
             $tot = $this->absensi_Mod->get_all_absensi_everyday_count($where);
@@ -91,7 +143,29 @@ class Absensi extends CI_Controller
         }
     }
 
+    public function ubah_keteranganKeb()
+    {
+        $absensi_id = $this->input->post('absensi_id', true);
+        $ket_keberadaan = $this->input->post('ket', true);
+        $data = [
+            'ket_keberadaan' => $ket_keberadaan,
+        ];
 
+        $updateAbsen = $this->absensi_Mod->updateKetAbsen($absensi_id, $data);
+        if ($updateAbsen == true) {
+            $pesan = $this->session->set_flashdata('pesanaddop', '<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Berhasil Merubah Keterangan Absensi Pegawai  
+                </div>');
+        } else {
+            $pesan = $this->session->set_flashdata('pesanaddop', '<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Gagal Merubah Keterangan Absensi Pegawai 
+                </div>');
+        }
+        // echo json_encode($this->input->post());
+        die();
+    }
 
 
     public function cetak_persensiHarian()

@@ -301,4 +301,15 @@ class Absensi_Mod extends CI_Model
         $query = "SELECT * FROM absensi WHERE id=$id AND  tanggal=$dt";
         return  $this->db->query($query)->row();
     }
+
+    public function updateKetAbsen($absensi_id, $data)
+    {
+        $this->db->where('id_absensi', $absensi_id);
+        $this->db->update('absensi', $data);
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -1648,6 +1648,28 @@ $(function () {
 			}
 		});
 	});
+});
 
 
+$(document).on('change', '#edt_ketKeb', function () {
+	const url = $("#page-top").data('url');
+	const ket = $("#edt_ketKeb").val();
+	const absensi_id = $(this).data('absensi_id');
+	// console.log(ket);
+	// console.log(absensi_id);
+
+	$.ajax({
+		url: url + 'Absensi/ubah_keteranganKeb',
+		type: 'post',
+		data: {
+			ket: ket,
+			absensi_id: absensi_id
+		},
+		success: function (data, status) {
+			if (status == 'success') {
+				document.location.href = url + "Absensi";
+				// console.log(data);
+			}
+		}
+	});
 });

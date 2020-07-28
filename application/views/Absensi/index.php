@@ -9,22 +9,9 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <?= $this->session->flashdata('pesanaddop'); ?>
-            <?php if (validation_errors()) { ?>
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <?= validation_errors(); ?>
-                </div>
-            <?php  } ?>
-            <!-- <div class="alert alert-info">
-                    <strong><i class="fas fa-info-circle"></i> Info :</strong>
-                    Jika User dihapus Role/Jabatan yang dimiliki User juga Akan Ikut terhapus !!!
-                </div> -->
             <h5 class="m-0 font-weight-bold text-secondary">Laporan Absensi</h5>
         </div>
         <div class="card-body">
-            <!-- <button type="button" class="btn btn-primary mb-3" id="aad_user" data-toggle="modal" data-target="#tbhuser">
-                    Tambah User
-                </button> -->
             <div class="row">
                 <div class="col-sm-12 mb-2">
                     <button type="button" class="btn btn-sm btn-primary mt-3" id="btn-ctk-perhari">
