@@ -71,8 +71,10 @@ class Absensi extends CI_Controller
                                 <option value="wfh">WFH</option>
                                 <option value="izin (sakit/cuti)">Izin (sakit/cuti)</option>
                                 <option value="dl">Perjalanan Dinas</option>
+                                <option value="lembur">Lembur</option>
                                 </select>
                             </div>';
+                    $combo2='';
                 } else if ($data->ket_keberadaan == 'piket kantor rengat') {
                     $combo = '<div class="form-group "> 
                                 <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
@@ -81,8 +83,10 @@ class Absensi extends CI_Controller
                                 <option value="wfh">WFH</option>
                                 <option value="izin (sakit/cuti)">Izin (sakit/cuti)</option>
                                 <option value="dl">Perjalanan Dinas</option>
+                                <option value="lembur">Lembur</option>
                                 </select>
                             </div>';
+                    $combo2='';
                 } else if ($data->ket_keberadaan == 'wfh') {
                     $combo = '<div class="form-group "> 
                                 <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
@@ -91,18 +95,22 @@ class Absensi extends CI_Controller
                                 <option value="piket kantor rengat">Piket Kantor Rengat</option>
                                 <option value="izin (sakit/cuti)">Izin (sakit/cuti)</option>
                                 <option value="dl">Perjalanan Dinas</option>
+                                <option value="lembur">Lembur</option>
                                 </select>
                             </div>';
+                    $combo2='';
                 } else if ($data->ket_keberadaan == 'dl') {
                     $combo = '<div class="form-group "> 
                                 <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
-                                <option selected  value="dl">' . $data->ket_keberadaan . '</option>
+                                <option selected  value="dl"> Perjalanan Dinas </option>
                                 <option value="piket kantor">Piket Kantor </option>
                                 <option value="piket kantor rengat">Piket Kantor Rengat</option>
                                 <option value="wfh">WFH</option>
                                 <option value="izin (sakit/cuti)">Izin (sakit/cuti)</option>
+                                <option value="lembur">Lembur</option>
                                 </select>
                             </div>';
+                    $combo2='';
                 } else if ($data->ket_keberadaan == 'izin (sakit/cuti)') {
                     $combo = '<div class="form-group "> 
                                 <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
@@ -110,20 +118,63 @@ class Absensi extends CI_Controller
                                 <option value="piket kantor">Piket Kantor </option>
                                 <option value="piket kantor rengat">Piket Kantor Rengat</option>
                                 <option value="wfh">WFH</option>
+                                <option value="dl">Perjalanan Dinas</option>
+                                <option value="lembur">Lembur</option>
                                 </select>
                             </div>';
+
+                    $combo2= '<div class="form-group "> 
+                                <select name="ket2" class="custom-select custom-select-sm" id="edt_ketKeb2" data-absensi_id2=' . $data->id_absensi . '>
+                                <option selected  value=' . $data->ket . '>' . $data->ket . '</option>
+                                <option value="izin">Izin</option>
+                                <option value="cuti">Cuti</option>
+                                <option value="sakit">Sakit</option>
+                                <option value="izin kusus">Izin Kusus</option>
+                                </select>
+                            </div>';
+        
+                } else if ($data->ket_keberadaan == 'lembur') {
+                    $combo = '<div class="form-group "> 
+                                <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
+                                <option selected  value="lembur">' . $data->ket_keberadaan . '</option>
+                                <option value="piket kantor">Piket Kantor </option>
+                                <option value="piket kantor rengat">Piket Kantor Rengat</option>
+                                <option value="wfh">WFH</option>
+                                <option value="izin (sakit/cuti)">Izin (sakit/cuti)</option>
+                                <option value="dl">Perjalanan Dinas</option>
+                                </select>
+                            </div>';
+                    $combo2='';
                 }
 
 
+                
+
+
                 $bad_date = $data->tanggal;
-                $tgl = nice_date($bad_date, 'd-m-Y');
+                // $tgl = nice_date($bad_date, 'd-m-Y');
+                
+                $tgl= get_indo_libur($bad_date);
+                $longdate_indo= longdate_indo($bad_date);
+                $tanggal = " ";
+                if($tgl=="tanggal Merah Hari Minggu"){
+                    $tanggal ='<p class="text-danger">'.$longdate_indo.'</p>';
+                }else if($tgl=="tanggal merah hari Sabtu"){
+                    $tanggal ='<p class="text-danger">'.$longdate_indo.'</p>';
+                }else if($tgl=="bukan tanggal merah"){
+                    $tanggal ='<p class="text-dark">'.$longdate_indo.'</p>';
+                }else{
+                    $tanggal ='<p class="text-danger">'.$longdate_indo.'</br>'.$tgl.'</p>';
+                }
+                
                 $json[] = [
                     $no++,
                     $data->fullname,
-                    $tgl,
+                    $tanggal,
                     $data->absensi_masuk,
                     $data->absensi_keluar,
                     @$combo,
+                    @$combo2,
                 ];
             }
             $tot = $this->absensi_Mod->get_all_absensi_everyday_count($where);
@@ -138,8 +189,8 @@ class Absensi extends CI_Controller
         } else {
             $judul = 'Absensi';
             $halaman = 'Absensi/index';
-            $data['tgl'] = date("Y-m-d");
-            $this->template->TemplateGen($judul, $halaman, $data);
+            // $data['tgl'] = date("Y-m-d");
+            $this->template->TemplateGen($judul, $halaman);
         }
     }
 
@@ -155,15 +206,38 @@ class Absensi extends CI_Controller
         if ($updateAbsen == true) {
             $pesan = $this->session->set_flashdata('pesanaddop', '<div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    Berhasil Merubah Keterangan Absensi Pegawai  
+                    Berhasil Merubah Keterangan Keberadaan Absensi Pegawai  
                 </div>');
         } else {
-            $pesan = $this->session->set_flashdata('pesanaddop', '<div class="alert alert-success alert-dismissible">
+            $pesan = $this->session->set_flashdata('pesanaddop', '<div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    Gagal Merubah Keterangan Absensi Pegawai 
+                    Gagal Merubah Keterangan Keberadaan Absensi Pegawai 
                 </div>');
         }
-        // echo json_encode($this->input->post());
+        echo json_encode($this->input->post());
+        die();
+    }
+
+    public function ubah_keteranganKeb2(){
+        $absensi_id = $this->input->post('absensi_id2', true);
+        $ket_keberadaan = $this->input->post('ket2', true);
+        $data = [
+            'ket' => $ket_keberadaan,
+        ];
+
+        $updateAbsen = $this->absensi_Mod->updateKetAbsen($absensi_id, $data);
+        if ($updateAbsen == true) {
+            $pesan = $this->session->set_flashdata('pesanaddop', '<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Berhasil Merubah Keterangan  Absensi Pegawai  
+                </div>');
+        } else {
+            $pesan = $this->session->set_flashdata('pesanaddop', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Gagal Merubah Keterangan  Absensi Pegawai 
+                </div>');
+        }
+        echo json_encode($this->input->post());
         die();
     }
 
@@ -344,7 +418,17 @@ class Absensi extends CI_Controller
             $as = $this->absensi_Mod->get_cetak_bulanan1($id, $dt);
             $jadwal = $this->absensi_Mod->get_jadwal_absensi_forCetak(@$as->id_jdwlabnsi);
             $data['jdwl_jam_masuk'][] = $jadwal->jam_masuk;
-            $data['ket_keberadaan'][] = @$as->ket_keberadaan;
+            if($as->ket_keberadaan=='izin (sakit/cuti)'){
+                if($as->ket !=""){
+                    $data['ket_keberadaan'][] = @$as->ket;
+                }else{
+                    $data['ket_keberadaan'][] = @$as->ket_keberadaan;    
+                }
+            }else{
+                $data['ket_keberadaan'][] = @$as->ket_keberadaan;
+            }
+
+            // $data['ket_keberadaan'][] = @$as->ket_keberadaan;
             $data['absensi_masuk'][] = @$as->absensi_masuk;
             $data['absensi_keluar'][] = @$as->absensi_keluar;
         }

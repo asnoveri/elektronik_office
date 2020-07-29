@@ -73,7 +73,7 @@
 
 
             <tr>
-                <td><?= date_indo($range[$i]); ?></td>
+                <td><?= hari_indo($range[$i]) .',  '.date_indo($range[$i])  ; ?></td>
                 <td><?= $absensi_masuk[$i] ?></td>
                 <td><?= $absensi_keluar[$i] ?></td>
                 <td>
@@ -114,39 +114,32 @@
                 </td>
                 <td style="text-transform: capitalize;">
                     <?php
-                    // if ($ket_keberadaan[$i]) {
-                    //     echo $ket_keberadaan[$i];
-                    // } else {
-                    //     echo "Tanpa Keterangan";
-                    // }
-
                     $tgl = get_indo_libur($range[$i]);
 
                     if ($tgl == "tanggal merah hari Sabtu") {
                         if ($ket_keberadaan[$i]) {
                             echo $ket_keberadaan[$i] . ", Hari Sabtu";
                         } else {
-                            echo "-";
+                            echo "";
                         }
                     } elseif ($tgl == "tanggal Merah Hari Minggu") {
                         if ($ket_keberadaan[$i]) {
                             echo $ket_keberadaan[$i] . ", Hari Minggu";
                         } else {
-                            echo "-";
+                            echo "";
                         }
                     } elseif ($tgl == "bukan tanggal merah") {
                         if ($ket_keberadaan[$i]) {
                             echo $ket_keberadaan[$i];
                         } else {
-                            echo "Tanpa Keterangan";
+                            echo "Alpha";
                         }
                     } else {
                         if ($ket_keberadaan[$i]) {
                             echo $ket_keberadaan[$i]  . "," .  $tgl;
                         } else {
-                            echo "-";
+                            echo "";
                         }
-                        // echo $tgl;
                     }
                     ?>
                 </td>

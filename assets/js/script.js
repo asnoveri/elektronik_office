@@ -1653,7 +1653,7 @@ $(function () {
 
 $(document).on('change', '#edt_ketKeb', function () {
 	const url = $("#page-top").data('url');
-	const ket = $("#edt_ketKeb").val();
+	const ket = $(this).val();
 	const absensi_id = $(this).data('absensi_id');
 	// console.log(ket);
 	// console.log(absensi_id);
@@ -1664,6 +1664,30 @@ $(document).on('change', '#edt_ketKeb', function () {
 		data: {
 			ket: ket,
 			absensi_id: absensi_id
+		},
+		success: function (data, status) {
+			if (status == 'success') {
+				document.location.href = url + "Absensi";
+				// console.log(data);
+			}
+		}
+	});
+});
+
+
+$(document).on('change', '#edt_ketKeb2', function () {
+	const url = $("#page-top").data('url');
+	const ket2 = $(this).val();
+	const absensi_id2 = $(this).data('absensi_id2');
+	// console.log(ket2);
+	// console.log(absensi_id2);
+
+	$.ajax({
+		url: url + 'Absensi/ubah_keteranganKeb2',
+		type: 'post',
+		data: {
+			ket2: ket2,
+			absensi_id2: absensi_id2
 		},
 		success: function (data, status) {
 			if (status == 'success') {

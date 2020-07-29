@@ -41,6 +41,7 @@
                                     <th>Absensi Masuk</th>
                                     <th>Absensi Pulang</th>
                                     <th>Keterangan Keberadaan</th>
+                                    <th>Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
