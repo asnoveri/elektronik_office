@@ -151,26 +151,25 @@ class Absensi extends CI_Controller
                 
 
 
-                $bad_date = $data->tanggal;
                 // $tgl = nice_date($bad_date, 'd-m-Y');
-                
-                $tgl= get_indo_libur($bad_date);
+                // $tgl= get_indo_libur($bad_date);
+                // $tanggal = " ";
+                // if($tgl=="tanggal Merah Hari Minggu"){
+                    //     $tanggal ='<p class="text-danger">'.$longdate_indo.'</p>';
+                    // }else if($tgl=="tanggal merah hari Sabtu"){
+                        //     $tanggal ='<p class="text-danger">'.$longdate_indo.'</p>';
+                        // }else if($tgl=="bukan tanggal merah"){
+                            //     $tanggal ='<p class="text-dark">'.$longdate_indo.'</p>';
+                            // }else{
+                                //     $tanggal ='<p class="text-danger">'.$longdate_indo.'</br>'.$tgl.'</p>';
+                                // }
+                $bad_date = $data->tanggal;
                 $longdate_indo= longdate_indo($bad_date);
-                $tanggal = " ";
-                if($tgl=="tanggal Merah Hari Minggu"){
-                    $tanggal ='<p class="text-danger">'.$longdate_indo.'</p>';
-                }else if($tgl=="tanggal merah hari Sabtu"){
-                    $tanggal ='<p class="text-danger">'.$longdate_indo.'</p>';
-                }else if($tgl=="bukan tanggal merah"){
-                    $tanggal ='<p class="text-dark">'.$longdate_indo.'</p>';
-                }else{
-                    $tanggal ='<p class="text-danger">'.$longdate_indo.'</br>'.$tgl.'</p>';
-                }
                 
                 $json[] = [
                     $no++,
                     $data->fullname,
-                    $tanggal,
+                    $longdate_indo,
                     $data->absensi_masuk,
                     $data->absensi_keluar,
                     @$combo,

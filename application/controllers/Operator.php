@@ -1,8 +1,9 @@
 <?php
 
-// use SebastianBergmann\Environment\Console;
-
 defined('BASEPATH') or exit('No direct script access allowed');
+require('./application/third_party/phpoffice/vendor/autoload.php');
+
+use Spipu\Html2Pdf\Html2Pdf;
 
 class Operator extends CI_Controller
 {
@@ -453,5 +454,53 @@ class Operator extends CI_Controller
             echo json_encode($pesan);
         }
         die();
+    }
+
+
+    public function cet_AbsenBulan(){
+     ob_start();
+        $tanggal = $this->input->post('tanggal');
+        $tanggal1 = $this->input->post('tanggal1');
+        $id = $this->input->post('pegawai');
+        $pegawai = $this->user_Mod->get_userbyID($id);
+        $direktur = $this->user_Mod->get_direktur_one();
+        $dirut = $this->user_Mod->get_userbyID($direktur->id);
+        $data['direktur'] = $dirut;
+        $data['pegawai'] = $pegawai;
+        $data['priode1'] = $tanggal;
+        $data['priode2'] = $tanggal1;
+        $data['range'] = date_range($tanggal, $tanggal1);
+        // $data['absensi'] = $this->absensi_Mod->get_cetak_bulanan($id, $tanggal, $tanggal1);
+
+        foreach ($data['range'] as $dt) {
+            $as = $this->absensi_Mod->get_cetak_bulanan1($id, $dt);
+            $jadwal = $this->absensi_Mod->get_jadwal_absensi_forCetak(@$as->id_jdwlabnsi);
+            $data['jdwl_jam_masuk'][] = $jadwal->jam_masuk;
+            if($as->ket_keberadaan=='izin (sakit/cuti)'){
+                if($as->ket !=""){
+                    $data['ket_keberadaan'][] = @$as->ket;
+                }else{
+                    $data['ket_keberadaan'][] = @$as->ket_keberadaan;    
+                }
+            }else{
+                $data['ket_keberadaan'][] = @$as->ket_keberadaan;
+            }
+
+            // $data['ket_keberadaan'][] = @$as->ket_keberadaan;
+            $data['absensi_masuk'][] = @$as->absensi_masuk;
+            $data['absensi_keluar'][] = @$as->absensi_keluar;
+        }
+
+
+        $this->load->view('Template_laporan/cetak_absensi_month_pdf', $data);
+
+        $html = ob_get_contents();
+        ob_end_clean();
+
+        $html2pdf = new HTML2PDF('P', 'F4', 'fr', false, 'ISO-8859-15', array(19, 10, 20, 5));
+        $html2pdf->setDefaultFont('Arial');
+
+        $html2pdf->writeHTML($html);
+        $html2pdf->output("Laporan_Absensi'_$pegawai->fullname'_$tanggal'_'$tanggal1'.pdf");
     }
 }
