@@ -312,4 +312,28 @@ class Absensi_Mod extends CI_Model
             return false;
         }
     }
+
+    public function get_jadwal_absensi2($tanggal)
+    {
+        $date = date_create($tanggal);
+        $tgl = get_indo_libur($tanggal);
+        if ($tgl == "bukan tanggal merah") {
+            if (date_format($date, "l") == "Friday") {
+                $id_jadwal = 2;
+            } else {
+                $id_jadwal = 1;
+            }
+        } else {
+            $id_jadwal = 3;
+        }
+        $data =  $this->db->get_where('jadwal_absensi', ['id_jdwlabnsi' => $id_jadwal])->row();
+        return $data;
+    }
+
+    public function cekAbsenManual($pegawai, $tanggal)
+    {
+        $this->db->where('id', $pegawai);
+        $this->db->where('tanggal', $tanggal);
+        return $this->db->get('absensi')->row();
+    }
 }

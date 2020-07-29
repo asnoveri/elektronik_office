@@ -12,6 +12,7 @@ class Absensi extends CI_Controller
         $this->load->model('user_Mod');
         $this->load->model('menu_Mod');
         $this->load->model('absensi_Mod');
+        $this->load->model('login_Mod');
         date_default_timezone_set('Asia/Jakarta');
         is_login();
     }
@@ -74,7 +75,7 @@ class Absensi extends CI_Controller
                                 <option value="lembur">Lembur</option>
                                 </select>
                             </div>';
-                    $combo2='';
+                    $combo2 = '';
                 } else if ($data->ket_keberadaan == 'piket kantor rengat') {
                     $combo = '<div class="form-group "> 
                                 <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
@@ -86,7 +87,7 @@ class Absensi extends CI_Controller
                                 <option value="lembur">Lembur</option>
                                 </select>
                             </div>';
-                    $combo2='';
+                    $combo2 = '';
                 } else if ($data->ket_keberadaan == 'wfh') {
                     $combo = '<div class="form-group "> 
                                 <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
@@ -98,7 +99,7 @@ class Absensi extends CI_Controller
                                 <option value="lembur">Lembur</option>
                                 </select>
                             </div>';
-                    $combo2='';
+                    $combo2 = '';
                 } else if ($data->ket_keberadaan == 'dl') {
                     $combo = '<div class="form-group "> 
                                 <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
@@ -110,7 +111,7 @@ class Absensi extends CI_Controller
                                 <option value="lembur">Lembur</option>
                                 </select>
                             </div>';
-                    $combo2='';
+                    $combo2 = '';
                 } else if ($data->ket_keberadaan == 'izin (sakit/cuti)') {
                     $combo = '<div class="form-group "> 
                                 <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
@@ -123,7 +124,7 @@ class Absensi extends CI_Controller
                                 </select>
                             </div>';
 
-                    $combo2= '<div class="form-group "> 
+                    $combo2 = '<div class="form-group "> 
                                 <select name="ket2" class="custom-select custom-select-sm" id="edt_ketKeb2" data-absensi_id2=' . $data->id_absensi . '>
                                 <option selected  value=' . $data->ket . '>' . $data->ket . '</option>
                                 <option value="izin">Izin</option>
@@ -132,7 +133,6 @@ class Absensi extends CI_Controller
                                 <option value="izin kusus">Izin Kusus</option>
                                 </select>
                             </div>';
-        
                 } else if ($data->ket_keberadaan == 'lembur') {
                     $combo = '<div class="form-group "> 
                                 <select name="ket" class="custom-select custom-select-sm" id="edt_ketKeb" data-absensi_id=' . $data->id_absensi . '>
@@ -144,28 +144,12 @@ class Absensi extends CI_Controller
                                 <option value="dl">Perjalanan Dinas</option>
                                 </select>
                             </div>';
-                    $combo2='';
+                    $combo2 = '';
                 }
 
-
-                
-
-
-                // $tgl = nice_date($bad_date, 'd-m-Y');
-                // $tgl= get_indo_libur($bad_date);
-                // $tanggal = " ";
-                // if($tgl=="tanggal Merah Hari Minggu"){
-                    //     $tanggal ='<p class="text-danger">'.$longdate_indo.'</p>';
-                    // }else if($tgl=="tanggal merah hari Sabtu"){
-                        //     $tanggal ='<p class="text-danger">'.$longdate_indo.'</p>';
-                        // }else if($tgl=="bukan tanggal merah"){
-                            //     $tanggal ='<p class="text-dark">'.$longdate_indo.'</p>';
-                            // }else{
-                                //     $tanggal ='<p class="text-danger">'.$longdate_indo.'</br>'.$tgl.'</p>';
-                                // }
                 $bad_date = $data->tanggal;
-                $longdate_indo= longdate_indo($bad_date);
-                
+                $longdate_indo = longdate_indo($bad_date);
+
                 $json[] = [
                     $no++,
                     $data->fullname,
@@ -217,7 +201,8 @@ class Absensi extends CI_Controller
         die();
     }
 
-    public function ubah_keteranganKeb2(){
+    public function ubah_keteranganKeb2()
+    {
         $absensi_id = $this->input->post('absensi_id2', true);
         $ket_keberadaan = $this->input->post('ket2', true);
         $data = [
@@ -417,13 +402,13 @@ class Absensi extends CI_Controller
             $as = $this->absensi_Mod->get_cetak_bulanan1($id, $dt);
             $jadwal = $this->absensi_Mod->get_jadwal_absensi_forCetak(@$as->id_jdwlabnsi);
             $data['jdwl_jam_masuk'][] = $jadwal->jam_masuk;
-            if($as->ket_keberadaan=='izin (sakit/cuti)'){
-                if($as->ket !=""){
+            if ($as->ket_keberadaan == 'izin (sakit/cuti)') {
+                if ($as->ket != "") {
                     $data['ket_keberadaan'][] = @$as->ket;
-                }else{
-                    $data['ket_keberadaan'][] = @$as->ket_keberadaan;    
+                } else {
+                    $data['ket_keberadaan'][] = @$as->ket_keberadaan;
                 }
-            }else{
+            } else {
                 $data['ket_keberadaan'][] = @$as->ket_keberadaan;
             }
 
@@ -443,5 +428,86 @@ class Absensi extends CI_Controller
 
         $html2pdf->writeHTML($html);
         $html2pdf->output("Laporan_Absensi'_$pegawai->fullname'_$tanggal'_'$tanggal1'.pdf");
+    }
+
+    public function addInputAbsen()
+    {
+        $this->form_validation->set_rules(
+            'pegawai',
+            'Pegawai',
+            'required|trim',
+            ['required' => 'Pegawai Belum di Pilih']
+        );
+        $this->form_validation->set_rules(
+            'tanggal',
+            'Tanggal',
+            'required|trim',
+            ['required' => 'Tanggal Belum di Pilih']
+        );
+        $this->form_validation->set_rules(
+            'absensi_masuk',
+            'Absensi_masuk',
+            'required|trim',
+            ['required' => 'Jam Masuk Belum di PIlih']
+        );
+        $this->form_validation->set_rules(
+            'absensi_keluar',
+            'Absensi_keluar',
+            'required|trim',
+            ['required' => 'Jam Keluar Belum di Pilih']
+        );
+        $this->form_validation->set_rules(
+            'ket_keberadaan',
+            'Ket_keberadaan',
+            'required|trim',
+            ['required' => 'Keterangan Keberadaan Belum di Pilih']
+        );
+        if ($this->form_validation->run() == FALSE) {
+            $this->index();
+        } else {
+            $tanggal = $this->input->post('tanggal');
+            $jadwal = $this->absensi_Mod->get_jadwal_absensi2($tanggal);
+            $ket_keberadaan = $this->input->post('ket_keberadaan');
+            $ket = $this->input->post('ket');
+            $pegawai = $this->input->post('pegawai');
+            $cek_user = $this->user_Mod->get_user($pegawai);
+            $absensi_masuk = $this->input->post('absensi_masuk');
+            $absensi_keluar = $this->input->post('absensi_keluar');
+            $cek_jadwal = $this->absensi_Mod->cekAbsenManual($pegawai, $tanggal);
+            if ($cek_jadwal != '') {
+                $this->session->set_flashdata('pesanaddop', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Gagal Menambahkan Absensi, Karena  ' . $cek_user . ' Sudah Melakukan Perekaman Absen Pada Tanggal ' . longdate_indo($tanggal) . '
+                </div>');
+                redirect("Absensi/index");
+            } else {
+                $data = [
+                    'id' => $pegawai,
+                    'tanggal' => $tanggal,
+                    'absensi_masuk' => $absensi_masuk,
+                    'absensi_keluar' => $absensi_keluar,
+                    'ket_keberadaan' => $ket_keberadaan,
+                    'ket' => $ket,
+                    'id_jdwlabnsi' => $jadwal->id_jdwlabnsi
+                ];
+                if ($this->absensi_Mod->add_absensi($data) == true) {
+                    $this->session->set_flashdata('pesanaddop', '<div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Berhasil Melakukan Perekaman Absensi  ' . $cek_user . ' Pada Tanggal ' . longdate_indo($tanggal) . '
+                        </div>');
+                    redirect("Absensi/index");
+                    $log = [
+                        'tanggal' => time(),
+                        'aksi' => "Absensi",
+                        'Keterangan' => "Input Absen Pegawai Manual",
+                        'ip' => $this->input->ip_address(),
+                        'tipe_login' => $this->session->userdata('role_id'),
+                        'id_user' => $this->session->userdata('id'),
+                        'status' => 1
+                    ];
+                    $this->login_Mod->addlog($log);
+                }
+            }
+        }
     }
 }

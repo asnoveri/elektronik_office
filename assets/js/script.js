@@ -1478,6 +1478,7 @@ $(function () {
 // cetak persensi perhari dan perbulan.
 $(function () {
 	const url = $("#page-top").data('url');
+	$("#pilihKet").hide();
 	$('#tgl_absen_cetak').datetimepicker({
 		i18n: {
 			de: {
@@ -1583,7 +1584,48 @@ $(function () {
 		});
 	});
 
+	// input absen
+	$("#btn-input-absen").on('click', function (e) {
+		e.preventDefault();
+		$("#modal_inputAbsen").modal("show");
+		$('#seluserInputAbsn').select2({
+			ajax: {
+				url: url + 'User_Managemen/get_alluser_combobox',
+				method: 'post',
+				dataType: 'json',
+				// delay: 250,
+				data: function (params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function (response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
 
+			}
+		});
+		$('#tgl_absen_user').datetimepicker({
+			i18n: {
+				de: {
+					months: [
+						'Januari', 'Februari', 'Maret', 'April',
+						'Mai', 'Juni', 'Juli', 'Augustus',
+						'September', 'Oktober', 'November', 'Desember',
+					],
+					dayOfWeek: [
+						"So.", "Mo", "Di", "Mi",
+						"Do", "Fr", "Sa.",
+					]
+				}
+			},
+			timepicker: false,
+			format: 'Y-m-d'
+		});
+	});
 
 	// list absensi_untuk user_op_sekretaris
 	const table = $("#tbl_absensi_forUser").DataTable({
@@ -1647,6 +1689,16 @@ $(function () {
 				// console.log(data);
 			}
 		});
+	});
+
+
+	$('#ketIptabsnPeg').on('change', function () {
+		const ket = $(this).val();
+		if (ket == 'izin (sakit/cuti)') {
+			$("#pilihKet").show("");
+		} else {
+			$("#pilihKet").hide("");
+		}
 	});
 });
 
