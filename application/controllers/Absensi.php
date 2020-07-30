@@ -181,9 +181,11 @@ class Absensi extends CI_Controller
     {
         $absensi_id = $this->input->post('absensi_id', true);
         $ket_keberadaan = $this->input->post('ket', true);
-        $data = [
-            'ket_keberadaan' => $ket_keberadaan,
-        ];
+        
+            $data = [
+                'ket_keberadaan' => $ket_keberadaan,    
+                'ket'   => ''
+            ];
 
         $updateAbsen = $this->absensi_Mod->updateKetAbsen($absensi_id, $data);
         if ($updateAbsen == true) {
@@ -467,8 +469,20 @@ class Absensi extends CI_Controller
         } else {
             $tanggal = $this->input->post('tanggal');
             $jadwal = $this->absensi_Mod->get_jadwal_absensi2($tanggal);
-            $ket_keberadaan = $this->input->post('ket_keberadaan');
-            $ket = $this->input->post('ket');
+            
+            if($jadwal->id_jdwlabnsi==3){
+                $ket_keberadaan='lembur';
+            }else{
+                $ket_keberadaan = $this->input->post('ket_keberadaan');
+            }
+
+            if($ket_keberadaan=='izin (sakit/cuti)'){
+                $ket = $this->input->post('ket');
+            }else{
+                $ket='';
+            }
+            
+            
             $pegawai = $this->input->post('pegawai');
             $cek_user = $this->user_Mod->get_user($pegawai);
             $absensi_masuk = $this->input->post('absensi_masuk');
