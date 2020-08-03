@@ -886,11 +886,12 @@ $(function () {
 		const role_id = $("#role_id").val();
 		const ket_keberadaan = $("#sel-keberadaan").val();
 		const id_jdwlabnsi = $("#id_jadwal").val();
-		const d = new Date();
-		const h = d.getHours();
-		const m = d.getMinutes();
-		const s = d.getSeconds();
-		const jam = h + ':' + m + ':' + s;
+		// const d = new Date();
+		// const h = d.getHours();
+		// const m = d.getMinutes();
+		// const s = d.getSeconds();
+		// const jam = h + ':' + m + ':' + s;
+		const jam = $("#jam").text();
 
 		if (role_id == 2) {
 			var link = 'Operator/index/add_absensi';
@@ -1062,12 +1063,12 @@ $(function () {
 		const jk = $(".jk").data('id');
 		const role_id = $(".jk").data('role');
 		const usrket = $(".usrket").val();
-
-		const d = new Date();
-		const h = d.getHours();
-		const m = d.getMinutes();
-		const s = d.getSeconds();
-		const jam = h + ':' + m + ':' + s;
+		const jam = $("#jam").text();
+		// const d = new Date();
+		// const h = d.getHours();
+		// const m = d.getMinutes();
+		// const s = d.getSeconds();
+		// const jam = h + ':' + m + ':' + s;
 
 		if (role_id == 2) {
 			var link = 'Operator/index/add_absn_plng';
