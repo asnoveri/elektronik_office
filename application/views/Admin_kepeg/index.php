@@ -59,7 +59,7 @@
          </div>
        </div>
 
-      
+
        <div class="col-xl-3 col-md-6 mb-4">
          <div class="card border-left-danger shadow h-100 py-2">
            <div class="card-body">
@@ -149,6 +149,10 @@
                   $jam_klr = $ja->jam_keluar;
                 } elseif ($ja->id_jdwlabnsi == 2) {
                   $jadwal = " Jum`at";
+                  $jam_msk = $ja->jam_masuk;
+                  $jam_klr = $ja->jam_keluar;
+                } else {
+                  $jadwal = "Lembur";
                   $jam_msk = $ja->jam_masuk;
                   $jam_klr = $ja->jam_keluar;
                 }

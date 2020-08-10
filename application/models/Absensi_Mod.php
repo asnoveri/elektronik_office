@@ -336,4 +336,20 @@ class Absensi_Mod extends CI_Model
         $this->db->where('tanggal', $tanggal);
         return $this->db->get('absensi')->row();
     }
+
+    public function get_all_jdwl_absen_forEdit()
+    {
+        $this->db->where('id_jdwlabnsi !=', 3);
+        return  $this->db->get('jadwal_absensi')->result();
+    }
+
+    public function editJadwa($data)
+    {
+        $this->db->update_batch('jadwal_absensi', $data, 'id_jdwlabnsi');
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

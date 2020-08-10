@@ -181,11 +181,11 @@ class Absensi extends CI_Controller
     {
         $absensi_id = $this->input->post('absensi_id', true);
         $ket_keberadaan = $this->input->post('ket', true);
-        
-            $data = [
-                'ket_keberadaan' => $ket_keberadaan,    
-                'ket'   => ''
-            ];
+
+        $data = [
+            'ket_keberadaan' => $ket_keberadaan,
+            'ket'   => ''
+        ];
 
         $updateAbsen = $this->absensi_Mod->updateKetAbsen($absensi_id, $data);
         if ($updateAbsen == true) {
@@ -469,20 +469,20 @@ class Absensi extends CI_Controller
         } else {
             $tanggal = $this->input->post('tanggal');
             $jadwal = $this->absensi_Mod->get_jadwal_absensi2($tanggal);
-            
-            if($jadwal->id_jdwlabnsi==3){
-                $ket_keberadaan='lembur';
-            }else{
+
+            if ($jadwal->id_jdwlabnsi == 3) {
+                $ket_keberadaan = 'lembur';
+            } else {
                 $ket_keberadaan = $this->input->post('ket_keberadaan');
             }
 
-            if($ket_keberadaan=='izin (sakit/cuti)'){
+            if ($ket_keberadaan == 'izin (sakit/cuti)') {
                 $ket = $this->input->post('ket');
-            }else{
-                $ket='';
+            } else {
+                $ket = '';
             }
-            
-            
+
+
             $pegawai = $this->input->post('pegawai');
             $cek_user = $this->user_Mod->get_user($pegawai);
             $absensi_masuk = $this->input->post('absensi_masuk');
@@ -523,5 +523,45 @@ class Absensi extends CI_Controller
                 }
             }
         }
+    }
+
+    public function jdwl_absensi($param = "")
+    {
+        if ($param == "add") {
+            $id_jdwlabnsi = $this->input->post('id_jdwlabnsi', true);
+            $jam_masuk = $this->input->post('jam_masuk', true);
+            $jam_keluar = $this->input->post('jam_keluar', true);
+
+            $data = [
+                [
+                    'id_jdwlabnsi'  => $id_jdwlabnsi[0],
+                    'jam_masuk'     => $jam_masuk[0],
+                    'jam_keluar'    => $jam_keluar[0]
+                ],
+                [
+                    'id_jdwlabnsi'  => $id_jdwlabnsi[1],
+                    'jam_masuk'     => $jam_masuk[1],
+                    'jam_keluar'    => $jam_keluar[1]
+                ]
+            ];
+            $do_update = $this->absensi_Mod->editJadwa($data);
+            if ($do_update == true) {
+                $this->session->set_flashdata('pesanaddop', '<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Berhasil Merubah Jadwal Absensi  
+                </div>');
+                redirect("Absensi/jdwl_absensi");
+            } else {
+                $this->session->set_flashdata('pesanaddop', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    Gagal Merubah Jadwal Absensi  
+                </div>');
+                redirect("Absensi/jdwl_absensi");
+            }
+        }
+        $judul = 'Absensi';
+        $halaman = 'Absensi/jdwlAbsen';
+        $data['jadwal_absensi'] = $this->absensi_Mod->get_all_jdwl_absen_forEdit();
+        $this->template->TemplateGen($judul, $halaman, $data);
     }
 }
