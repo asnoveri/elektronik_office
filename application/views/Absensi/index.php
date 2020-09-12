@@ -113,7 +113,7 @@
                                 <input type="time" class="form-control mb-3" name="absensi_masuk">
                             </div>
                             <div class="col-sm-6 mt-2">
-                                <label for="">Pilih Jam Masuk</label>
+                                <label for="">Pilih Jam Pulang</label>
                                 <input type="time" class="form-control mb-3" name="absensi_keluar">
                             </div>
                         </div>
