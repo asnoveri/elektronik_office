@@ -69,11 +69,11 @@
     <div class="modal-dialog ">
         <div class=" modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="label_modal_absensi">Input Absensi Pegawai</h5>
+                <h5 class="modal-title" id="label_modal_input">Input Absensi Pegawai</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body">
-                <form action="<?= base_url() ?>Absensi/addInputAbsen" method="post">
+            <div class="modal-body" id="inpt-absn">
+                <form action="" method="post">
                     <div class="form-group">
                         <label for="">Pilih Pegawai</label>
                         <select class="form-control" id="seluserInputAbsn" name="pegawai">
@@ -133,7 +133,7 @@
                 <h5 class="modal-title" id="label_modal_absensi">Cetak Persensi Bulanan</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="ctk-bln">
                 <form action="" method="post" target="_blank">
                     <div class="form-group" id="slcgrp">
                         <select class="form-control" id="selusercetak" name="pegawai">

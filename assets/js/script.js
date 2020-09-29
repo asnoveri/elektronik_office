@@ -1562,7 +1562,7 @@ $(function () {
 		$("#label_modal_absensi").html("Cetak Persensi Bulanan");
 		$("#tgl_absen_cetak1").show();
 		$("#slcgrp").show();
-		$(".modal-body form").attr('action', url + 'Absensi/cetakAbsensiBulanan');
+		$("#ctk-bln form").attr('action', url + 'Absensi/cetakAbsensiBulanan');
 		$('#selusercetak').select2({
 			ajax: {
 				url: url + 'User_Managemen/get_alluser_combobox',
@@ -1589,6 +1589,7 @@ $(function () {
 	$("#btn-input-absen").on('click', function (e) {
 		e.preventDefault();
 		$("#modal_inputAbsen").modal("show");
+		$("#inpt-absn form").attr('action', url + 'Absensi/addInputAbsen');
 		$('#seluserInputAbsn').select2({
 			ajax: {
 				url: url + 'User_Managemen/get_alluser_combobox',
