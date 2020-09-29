@@ -123,8 +123,10 @@ class user_Mod extends CI_Model
     {
         if ($search) {
             $this->db->like('fullname', $search);
+            $this->db->where('is_active', 1);
             return $this->db->get('user')->result();
         } else {
+            $this->db->where('is_active', 1);
             return $this->db->get('user')->result();
         }
     }
@@ -417,6 +419,7 @@ class user_Mod extends CI_Model
 
     public function get_semua_user()
     {
+        $this->db->where('is_active', 1);
         return $this->db->get('user')->result();
     }
 
