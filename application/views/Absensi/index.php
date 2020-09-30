@@ -110,11 +110,11 @@
                             </div>
                             <div class="col-sm-6 mt-2">
                                 <label for="">Pilih Jam Masuk</label>
-                                <input type="time" class="form-control mb-3" name="absensi_masuk">
+                                <input type="text" readonly class="form-control mb-3" name="absensi_masuk" id="addjam-msk">
                             </div>
                             <div class="col-sm-6 mt-2">
                                 <label for="">Pilih Jam Pulang</label>
-                                <input type="time" class="form-control mb-3" name="absensi_keluar">
+                                <input type="text" readonly class="form-control mb-3" name="absensi_keluar" id="addjam-plng">
                             </div>
                         </div>
                     </div>
