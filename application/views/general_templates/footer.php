@@ -60,7 +60,6 @@
 
  <!-- sctipt js untuk edit data menu -->
  <script src="<?= base_url() ?>assets/js/script.js"></script>
-
  <!-- script pdfobject.js -->
  <script src="<?= base_url() ?>assets/js/PDFObject-master/pdfobject.js"></script>
 
