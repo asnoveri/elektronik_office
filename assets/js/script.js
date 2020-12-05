@@ -979,7 +979,64 @@ $(function () {
 					},
 				});
 			}
-		} else if (ket_keberadaan == 'piket kantor rengat') {
+		} else if (ket_keberadaan == 'lembur') {
+			console.log(ket_keberadaan);
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+
+				if ("geolocation" in navigator) { //check geolocation available 
+					//try to get user current location using getCurrentPosition() method
+					navigator.geolocation.getCurrentPosition(function (position) {
+						var latitudeUser = position.coords.latitude;
+						var longitudeUser = position.coords.longitude;
+						// console.log(latitudeUser);
+						// console.log(longitudeUser);
+						$.ajax({
+							url: url + link2,
+							data: {
+								ket_keberadaan: ket_keberadaan,
+								id_jdwlabnsi: id_jdwlabnsi,
+								absensi_masuk: jam,
+								latitudeUser: latitudeUser,
+								longitudeUser: longitudeUser
+							},
+							type: 'POST',
+							dataType: 'JSON',
+							success: function (data, status) {
+								if (status == 'success') {
+									document.location.href = url + link1;
+									// console.log(data);
+								}
+							},
+						});
+					});
+				} else {
+					console.log("Browser doesn't support geolocation!");
+				}
+			} else {
+				var latitudeUserDek = 0.526768;
+				var longitudeUserDek = 101.434658;
+				// console.log(latitudeUserDek);
+				// console.log(longitudeUserDek);
+				$.ajax({
+					url: url + link2,
+					data: {
+						ket_keberadaan: ket_keberadaan,
+						id_jdwlabnsi: id_jdwlabnsi,
+						absensi_masuk: jam,
+						latitudeUser: latitudeUserDek,
+						longitudeUser: longitudeUserDek
+					},
+					type: 'POST',
+					dataType: 'JSON',
+					success: function (data, status) {
+						if (status == 'success') {
+							document.location.href = url + link1;
+							// console.log(data);
+						}
+					},
+				});
+			}
+		}else if (ket_keberadaan == 'piket kantor rengat') {
 			// console.log(ket_keberadaan);
 			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 
@@ -1148,7 +1205,58 @@ $(function () {
 					},
 				});
 			}
-		} else if (usrket == 'piket kantor rengat') {
+		}else if (usrket == 'lembur') {
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				if ("geolocation" in navigator) { //check geolocation available 
+					//try to get user current location using getCurrentPosition() method
+					navigator.geolocation.getCurrentPosition(function (position) {
+						var latitudeUser = position.coords.latitude;
+						var longitudeUser = position.coords.longitude;
+						// console.log(latitudeUser);
+						// console.log(longitudeUser);
+						$.ajax({
+							url: url + link2,
+							data: {
+								latitudeUser: latitudeUser,
+								longitudeUser: longitudeUser,
+								absen_keluar: jam
+							},
+							type: 'POST',
+							dataType: 'JSON',
+							success: function (data, status) {
+								if (status == 'success') {
+									document.location.href = url + link1;
+									// console.log(data);
+								}
+							},
+						});
+					});
+				} else {
+					console.log("Browser doesn't support geolocation!");
+				}
+			} else {
+				var latitudeUserDek = 0.526768;
+				var longitudeUserDek = 101.434658;
+				// console.log(latitudeUserDek);
+				// console.log(longitudeUserDek);
+				$.ajax({
+					url: url + link2,
+					data: {
+						latitudeUser: latitudeUserDek,
+						longitudeUser: longitudeUserDek,
+						absen_keluar: jam
+					},
+					type: 'POST',
+					dataType: 'JSON',
+					success: function (data, status) {
+						if (status == 'success') {
+							document.location.href = url + link1;
+							// console.log(data);
+						}
+					},
+				});
+			}
+		}else if (usrket == 'piket kantor rengat') {
 			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
 				if ("geolocation" in navigator) { //check geolocation available 
 					//try to get user current location using getCurrentPosition() method

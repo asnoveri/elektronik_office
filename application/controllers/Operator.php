@@ -212,7 +212,7 @@ class Operator extends CI_Controller
                 $data->ket_keberadaan,
             ];
         }
-        $tot = $this->absensi_Mod->get_all_absensi_userid_count($where, $id_user,$search);
+        $tot = $this->absensi_Mod->get_all_absensi_userid_count($where, $id_user, $search);
         $respon = [
             'draw' => $draw,
             'recordsTotal' => $tot,
@@ -457,8 +457,9 @@ class Operator extends CI_Controller
     }
 
 
-    public function cet_AbsenBulan(){
-     ob_start();
+    public function cet_AbsenBulan()
+    {
+        ob_start();
         $tanggal = $this->input->post('tanggal');
         $tanggal1 = $this->input->post('tanggal1');
         $id = $this->input->post('pegawai');
@@ -476,13 +477,13 @@ class Operator extends CI_Controller
             $as = $this->absensi_Mod->get_cetak_bulanan1($id, $dt);
             $jadwal = $this->absensi_Mod->get_jadwal_absensi_forCetak(@$as->id_jdwlabnsi);
             $data['jdwl_jam_masuk'][] = $jadwal->jam_masuk;
-            if($as->ket_keberadaan=='izin (sakit/cuti)'){
-                if($as->ket !=""){
+            if ($as->ket_keberadaan == 'izin (sakit/cuti)') {
+                if ($as->ket != "") {
                     $data['ket_keberadaan'][] = @$as->ket;
-                }else{
-                    $data['ket_keberadaan'][] = @$as->ket_keberadaan;    
+                } else {
+                    $data['ket_keberadaan'][] = @$as->ket_keberadaan;
                 }
-            }else{
+            } else {
                 $data['ket_keberadaan'][] = @$as->ket_keberadaan;
             }
 
