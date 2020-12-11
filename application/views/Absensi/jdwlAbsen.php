@@ -18,7 +18,7 @@
                    <!-- Card Body -->
                    <div class="card-body">
                        <div class="table-responsive">
-                           <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">
+                           <button type="button" class="btn btn-primary mb-3 btn-editjdwl" data-toggle="modal" data-target="#exampleModal">
                                Edit Jadwal
                            </button>
                            <table class="table table-bordered">
@@ -86,7 +86,7 @@
                                            <div class="input-group-prepend">
                                                <span class="input-group-text" id="basic-addon1"> Masuk</span>
                                            </div>
-                                           <input type="text" class="form-control" id="jdwlmsk" readonly name="jam_masuk[]" value="<?= $jab->jam_masuk ?>">
+                                           <input type="text" class="form-control jm<?= $jab->id_jdwlabnsi ?>" id="jdwlmsk" readonly name="jam_masuk[]" value="<?= $jab->jam_masuk ?>">
                                        </div>
                                    </div>
                                    <div class="col-sm-6">
@@ -94,14 +94,14 @@
                                            <div class="input-group-prepend">
                                                <span class="input-group-text" id="basic-addon1"> Pulang</span>
                                            </div>
-                                           <input type="text" class="form-control" id="jdwlklr"  readonly name="jam_keluar[]" value="<?= $jab->jam_keluar ?>">
+                                           <input type="text" class="form-control jmk" id="jdwlklr" readonly name="jam_keluar[]" value="<?= $jab->jam_keluar ?>">
                                        </div>
                                    </div>
                                </div>
                            <?php }
                             ?>
                            <button type="submit" class="btn btn-primary">Edit</button>
-                           <button type="reset" class="btn btn-secondary" >Batal</button>
+                           <button type="reset" class="btn btn-secondary">Batal</button>
                        </form>
                    </div>
                </div>
