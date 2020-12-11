@@ -956,10 +956,10 @@ $(function () {
 					console.log("Browser doesn't support geolocation!");
 				}
 			} else {
-				var latitudeUserDek = 0.526768;
-				var longitudeUserDek = 101.434658;
-				// console.log(latitudeUserDek);
-				// console.log(longitudeUserDek);
+				// var latitudeUserDek = 0.526768;
+				// var longitudeUserDek = 101.434658;
+				var latitudeUserDek =  0.4703421;
+				var longitudeUserDek = 101.3810623;
 				$.ajax({
 					url: url + link2,
 					data: {
@@ -1013,10 +1013,13 @@ $(function () {
 					console.log("Browser doesn't support geolocation!");
 				}
 			} else {
-				var latitudeUserDek = 0.526768;
-				var longitudeUserDek = 101.434658;
+				// var latitudeUserDek = 0.526768;
+				// var longitudeUserDek = 101.434658;
 				// console.log(latitudeUserDek);
 				// console.log(longitudeUserDek);
+				var latitudeUserDek =  0.4703421;
+				var longitudeUserDek = 101.3810623;
+
 				$.ajax({
 					url: url + link2,
 					data: {
@@ -1070,10 +1073,13 @@ $(function () {
 					console.log("Browser doesn't support geolocation!");
 				}
 			} else {
-				var latitudeUserDek = -0.393361;
-				var longitudeUserDek = 102.446778;
+				// var latitudeUserDek = -0.393361;
+				// var longitudeUserDek = 102.446778;
 				// console.log(latitudeUserDek);
 				// console.log(longitudeUserDek);
+				var latitudeUserDek =  0.4703421;
+				var longitudeUserDek = 101.3810623;
+
 				$.ajax({
 					url: url + link3,
 					data: {
@@ -1184,10 +1190,13 @@ $(function () {
 					console.log("Browser doesn't support geolocation!");
 				}
 			} else {
-				var latitudeUserDek = 0.526768;
-				var longitudeUserDek = 101.434658;
+				// var latitudeUserDek = 0.526768;
+				// var longitudeUserDek = 101.434658;
 				// console.log(latitudeUserDek);
 				// console.log(longitudeUserDek);
+				var latitudeUserDek =  0.4703421;
+				var longitudeUserDek = 101.3810623;
+
 				$.ajax({
 					url: url + link2,
 					data: {
@@ -1235,10 +1244,13 @@ $(function () {
 					console.log("Browser doesn't support geolocation!");
 				}
 			} else {
-				var latitudeUserDek = 0.526768;
-				var longitudeUserDek = 101.434658;
+				// var latitudeUserDek = 0.526768;
+				// var longitudeUserDek = 101.434658;
 				// console.log(latitudeUserDek);
 				// console.log(longitudeUserDek);
+				var latitudeUserDek =  0.4703421;
+				var longitudeUserDek = 101.3810623;
+
 				$.ajax({
 					url: url + link2,
 					data: {
@@ -1286,10 +1298,13 @@ $(function () {
 					console.log("Browser doesn't support geolocation!");
 				}
 			} else {
-				var latitudeUserDek = -0.393361;
-				var longitudeUserDek = 102.446778;
+				// var latitudeUserDek = -0.393361;
+				// var longitudeUserDek = 102.446778;
 				// console.log(latitudeUserDek);
 				// console.log(longitudeUserDek);
+				var latitudeUserDek =  0.4703421;
+				var longitudeUserDek = 101.3810623;
+
 				$.ajax({
 					url: url + link3,
 					data: {
@@ -1881,8 +1896,6 @@ $(document).on('change', '#edt_ketKeb2', function () {
 
 // edit jadwal Masuk
 $(function () {
-
-
 
 	// $('#jdwlmsk').datetimepicker({
 	// 	timepicker: true,
